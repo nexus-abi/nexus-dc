@@ -4,8 +4,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="theme-color" content="#0f1b3d" id="tc">
-  <title>NEXUS DOCUMENT HUB</title>
+  <meta name="theme-color" content="#0b1220" id="tc">
+  <title>Nexus Document Hub</title>
   <link rel="manifest" href="manifest.json">
   <link rel="icon" type="image/png"
     href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAIAAAD8GO2jAAAFbElEQVR4nHWWS4wcVxWG//+cc6tfMz1jkowVG1s2dpxEEcLi4bADBCwAiYhNWMCKRYREeKyQIrxBggULFlEIrJBYZBEUlKVRJJQsCIJVFB4hIbYTO4knNrFMYmamq7uq7mFx6zXTTavUfVXq+s7r/+8tbhz9DGikkQoqGZq1gYHUtGb3HyPt0OaahQxQ0kAhDWKAsr6jZFqYpZ8legKtoIOqFsxCTRchDtCNlCaANnQ5QOnnvq8Od82yTDS46wq6JLoRBlFQbZmylPu++w5VDaQ6VtEhKVFAQSXMVlGMVMBUgkhqaGiimriqBlGDCyUQCoh7L/cenaIHOtPSVTXL57EoCxIgSCcjhO4ovYyoHAQqAiHoaGTuPbrUdEBX0k01m+XVvafvPvbhu9xFREEBLeWrZpsbazHS3Ul771Zx8c2d0dAcB+hGaKuZbgYqYb6IZ07d/fvffvfQ5hirPosSV7fLe44bgKKMP/rZyxeevzFd18q73AklVZb1LmLzhZ86efjQ5rgsY4zev6rKY/TZrNr+d/6312fzeQwmD5z5UFGSEnr0WpxywEFJvCLZooC7i3DlRWKQyc7MX70yB1CUTjFSO7pokoBgP521ZlRESa7sDwB3lBWEeP929db1sigpYkCXO2GAQJoZ7PeBkg5qi4sRDghBIgUdDeWBUwMVxAhVRmedH4RUSq1U/H8fONEFEOkSTwGywCwoADhAjIYGGKCkoPEBGGSVD1IkpApIlBX+/q9yb4aTx+TIlgCoKrz8aunA2fuNcFEWBapKRBRQiIECGKhllGV6EhVJSQF29/yR87vXbvjZ+/WZJ9bGQ+7O/FuP7QL449PT6QQAFgXe/y+GI4BUBakxSuWsosgSvS2ibhGJ0YBbd/Cfl6rHf5OTiBGTMSfjTgOkgqGsNJ9zb6Z7M8kXUlZKmizRU0GhP4PoKEtsrPHXv5u/8Jdic8pF4THW8BQhaTRtU6IqoiIBUOFKuli/gnmBw3fKNx4azBf4yS9n167H8ZBNgFoHtb6RHlRKANRAQd2Q0EYiDUiDap/GXu6PfnPw2XP2ysX401/NWr02SUgiQJQ13QwIDmFvq0h1gJps2ZdpVSEE/vj7oyNbfP7Pxc1bngW49ysI4EF6iJCeDwyrhgygLOGOnV0/dVx/+MhoNoc7yrKdkDshKoR19IgQmwqW6EYGQtoZbE65OWUIcMfXv5J99fNZCDi0QRKVRyGHvp7ng3SC1nQgAMHR5huwr0sR0LRJTEZ89sk1AJNRvTk9fn58e9dNMR5BKJc+2L51+K1PPXj02uUN0Txztv0J7tb1vecDQEIwB8rKVbA+AYCqqntOYHOdlUeBPHXpD9/705M5d+778pFPvPLYX587ZoNFiAyO4B4cyz5Qh2ZZ9s71gkAWRJVIW4fSlKZUJQClvD3f/s6LT/xn/sFddvhrR77w2n2/OH2i8pwZEeDB6xal9Lsw7mE80tcu7z56/h/3np66U0QAJekQUgBxguVw9+hVy6ofnHn4Y3eefObii1fmb3/0jr13X5+EUFhdBKzxQc8E1Og6Gduzz90sL9xqTog2lUAxEZ3n83OfPrb1xbU3dt6pol/YvvClrYduX50OLO/oDp449xRolJZeF0SYmomsePVLeocoFmtnP/fmS/f8/Ebx3seHnzz+wrffeGk4GZZW1QGCgycefJq1s3r0fZI1tEceOq8SJnDLB2c+EkfrO3vXpjffLVu6OTL3TqZE6A48WHrjaNa9+72dQIHMaYP8ymUJ5SSzfDKEVbSmOem7OehFm9w7Q+zLve6MUaz1qgHBJcsQQhkirULTGW9nUBt4mY4VdE37YOdVR4gwd2tSbq/2zv8A8R3x4QSUDyQAAAAASUVORK5CYII=">
@@ -1982,11 +1982,201 @@
     .cf input { margin: 0; padding: 10px 11px; font-size: 14px }
     .vpre { display: flex; gap: 6px; flex-wrap: wrap; margin: 10px 0 4px }
     .vpre button { padding: 6px 11px; border-radius: 16px; border: 1.5px dashed var(--bd); font-size: 12.5px; font-weight: 600; color: var(--t2) }
+
+    /* =====================================================================
+       v4 DESIGN LAYER: crisp, hairline-based, ink + one accent.
+       Only visuals live here; behaviour of every component is unchanged.
+       ===================================================================== */
+    :root {
+      --bg: #f1f3f8;
+      --sf: #ffffff;
+      --tx: #0b1220;
+      --t2: #5b6579;
+      --bd: #e2e6ee;
+      --hd: #0b1220;
+      --ok: #0f9d58;
+      --wn: #d97a00;
+      --er: #dc3a43;
+      --sh: 0 1px 0 #0b12200a, 0 1px 3px #0b12200d;
+      --sh2: 0 18px 40px -16px #0b122040, 0 2px 6px #0b12200f;
+      --dots: radial-gradient(#ffffff20 1px, transparent 1.3px) 0 0/16px 16px;
+      color-scheme: light
+    }
+
+    [data-t=dark] {
+      --bg: #07090d;
+      --sf: #0f1319;
+      --tx: #e8ecf4;
+      --t2: #8a95aa;
+      --bd: #1d2430;
+      --hd: #0b0f15;
+      --sh: 0 1px 0 #ffffff06 inset;
+      --sh2: 0 20px 44px -16px #000c, 0 2px 8px #0008;
+      color-scheme: dark
+    }
+
+    body {
+      font-family: Inter, "SF Pro Text", "Segoe UI Variable", system-ui, -apple-system, Roboto, sans-serif;
+      font-feature-settings: "cv11", "ss03", "tnum";
+      font-size: 15px;
+      line-height: 1.45;
+      -webkit-font-smoothing: antialiased
+    }
+
+    h1, h2, h3 { letter-spacing: -.02em; font-weight: 700 }
+    b { font-weight: 650 }
+    :focus-visible { outline: 2px solid var(--ac); outline-offset: 2px; border-radius: 8px }
+    input:focus-visible, select:focus-visible, textarea:focus-visible { outline: 0 }
+
+    /* surfaces */
+    .card { border-radius: 16px; padding: 18px; box-shadow: var(--sh) }
+    input, select, textarea { background: var(--sf); border: 1px solid var(--bd); border-radius: 12px; padding: 13px 14px }
+    input:hover, select:hover, textarea:hover { border-color: color-mix(in srgb, var(--ac) 35%, var(--bd)) }
+    input:focus, select:focus, textarea:focus { border-color: var(--ac); box-shadow: 0 0 0 3px color-mix(in srgb, var(--ac) 18%, transparent) }
+    .lb { font-size: 12.5px; font-weight: 600; letter-spacing: .01em }
+
+    /* buttons: flat accent with a crisp top highlight */
+    .btn { background: var(--ac); border-radius: 12px; font-weight: 650; letter-spacing: -.005em; box-shadow: inset 0 1px 0 #ffffff38, 0 1px 2px #0b122033, 0 6px 14px -6px color-mix(in srgb, var(--ac) 70%, transparent) }
+    .btn:hover { filter: brightness(1.06) }
+    .btn.sec { background: var(--sf); color: var(--tx); border: 1px solid var(--bd); box-shadow: var(--sh) }
+    .btn.sec:hover { border-color: color-mix(in srgb, var(--ac) 40%, var(--bd)); filter: none }
+    .btn.dg { background: var(--er); box-shadow: inset 0 1px 0 #ffffff30, 0 1px 2px #0b122033 }
+    .ib { background: var(--sf); border: 1px solid var(--bd); border-radius: 10px }
+    .tb .ib { background: #ffffff14; border-color: #ffffff1f }
+
+    /* auth / splash / lock: ink gradient with a fine dot grid */
+    #sp, #lk { background: var(--dots), var(--g) }
+    .brand { background: var(--dots), var(--g) }
+    .brand h1 { font-size: 30px; line-height: 1.08; letter-spacing: -.035em; font-weight: 750 }
+    .brand p { max-width: 34ch; line-height: 1.5 }
+    .brand li .i { background: #ffffff1c; border: 1px solid #ffffff22; border-radius: 10px }
+    .auth h1 { font-size: 28px; letter-spacing: -.03em; font-weight: 750 }
+    .lg { background: #ffffff1f; border: 1px solid #ffffff2e; border-radius: 13px }
+    .lg.sm, .side .lg { background: var(--ac); border: 0 }
+    @media(min-width:900px) { .brand h1 { font-size: 46px } }
+
+    /* top bar and desktop sidebar */
+    .tb { background: var(--hd); box-shadow: none; border-bottom: 1px solid #ffffff14 }
+    .tb b { font-size: 17px; letter-spacing: -.02em; font-weight: 700 }
+    .side { background: var(--sf) }
+    .side nav button { border-radius: 10px; font-weight: 600; font-size: 14.5px }
+    .side nav button.on { background: color-mix(in srgb, var(--ac) 11%, transparent); color: var(--ac) }
+    .side .me { border-radius: 14px; background: var(--bg) }
+
+    /* bottom dock: floating, frosted, rounded */
+    .tabs { left: 12px; right: 12px; bottom: calc(10px + var(--sab)); max-width: 520px; margin: 0 auto; padding: 8px 6px; border: 1px solid var(--bd); border-radius: 24px; background: color-mix(in srgb, var(--sf) 88%, transparent); -webkit-backdrop-filter: blur(18px) saturate(1.4); backdrop-filter: blur(18px) saturate(1.4); box-shadow: var(--sh2) }
+    .tabs button { font-size: 11px; letter-spacing: .005em; position: relative }
+    .tabs button.on:not(.plus)::after { content: ""; position: absolute; bottom: -3px; width: 18px; height: 3px; border-radius: 3px; background: var(--ac) }
+    .tabs .plus { width: 54px; height: 54px; border-radius: 18px; background: var(--ac); margin-top: -30px; box-shadow: inset 0 1px 0 #ffffff40, 0 12px 22px -8px color-mix(in srgb, var(--ac) 80%, transparent); border: 3px solid var(--bg) }
+
+    /* page headings: sentence case with a hairline that groups the content below */
+    .ph h2 { font-size: 26px; letter-spacing: -.03em; font-weight: 750 }
+    .h { display: flex; align-items: center; gap: 12px; margin: 26px 0 12px; font-size: 13px; font-weight: 650; color: var(--t2); text-transform: none; letter-spacing: 0 }
+    .h::after { content: ""; flex: 1; height: 1px; background: var(--bd) }
+
+    /* hero */
+    .hero { background: var(--dots), var(--g); border-radius: 20px; padding: 22px; box-shadow: var(--sh2) }
+    .hero:after { display: none }
+    .hero h2 { font-size: 28px; letter-spacing: -.035em; font-weight: 750 }
+    .hero .btn { background: #ffffff; color: #0b1220; box-shadow: 0 6px 16px -6px #0006; border: 0 }
+    .hero .btn:hover { filter: none; background: #f3f5fb }
+    .cover { background: var(--dots), var(--g); border-radius: 16px 16px 0 0 }
+    .cover:after { display: none }
+    .pfc, .card.pfc { border-radius: 16px; padding: 0 }
+    .av.xl { border-width: 4px }
+
+    /* numbers */
+    .stats { gap: 10px }
+    .st { border-radius: 14px; padding: 14px 8px 12px; box-shadow: var(--sh) }
+    .st b { font-size: 28px; font-weight: 750; letter-spacing: -.04em; line-height: 1.1 }
+    .st small { font-size: 12px; font-weight: 500 }
+    .qa button { border-radius: 14px; padding: 16px 4px 14px; box-shadow: var(--sh); transition: border-color .15s, transform .1s }
+    .qa button:hover { border-color: color-mix(in srgb, var(--ac) 45%, var(--bd)) }
+    .qa span { font-weight: 600; letter-spacing: -.005em }
+
+    /* list rows: documents / vehicles / vault entries */
+    .dc, .vc { border-radius: 14px; padding: 13px 14px; gap: 14px; box-shadow: var(--sh) }
+    .dc:hover, .vc:hover { border-color: color-mix(in srgb, var(--ac) 50%, var(--bd)) }
+    .in b { font-size: 15px; font-weight: 650; letter-spacing: -.012em }
+    .in small { font-size: 13px }
+    .ic, .vp { border-radius: 12px; background: color-mix(in srgb, var(--ac) 10%, var(--sf)) }
+    .ic.er { background: color-mix(in srgb, var(--er) 12%, var(--sf)) }
+    .ic.wn { background: color-mix(in srgb, var(--wn) 14%, var(--sf)) }
+    .ic.ok { background: color-mix(in srgb, var(--ok) 12%, var(--sf)) }
+    .vp { border-radius: 14px }
+    .rt { font-size: 12px; font-weight: 500 }
+
+    /* status badges: rectangular with a status dot */
+    .bd { border-radius: 8px; padding: 3px 9px; font-weight: 650; font-size: 12px; letter-spacing: .005em; display: inline-flex; align-items: center }
+    .bd.er::before, .bd.wn::before, .bd.ok::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; margin-right: 6px }
+    .er { background: color-mix(in srgb, var(--er) 12%, transparent) }
+    .wn { background: color-mix(in srgb, var(--wn) 14%, transparent) }
+    .ok { background: color-mix(in srgb, var(--ok) 12%, transparent) }
+    .vb { border-radius: 8px }
+    .vtag { border-radius: 8px }
+
+    /* filters: selected chip is solid ink */
+    .chip { border-radius: 10px; border-width: 1px; padding: 8px 15px; font-weight: 600; font-size: 13.5px }
+    .chip.on { background: var(--tx); color: var(--bg); border-color: var(--tx) }
+    .seg { border-radius: 12px; background: color-mix(in srgb, var(--tx) 6%, transparent) }
+    .seg button { border-radius: 9px }
+    .seg .on { box-shadow: 0 1px 3px #0b122022; color: var(--tx) }
+    .empty { border: 1.5px dashed var(--bd); border-radius: 16px; background: transparent }
+    .bk { font-weight: 650 }
+
+    /* settings rows */
+    .grp { padding: 4px 16px }
+    .row { padding: 13px 0 }
+    .ri { border-radius: 10px; background: color-mix(in srgb, var(--ac) 10%, var(--sf)) }
+    .row.rd .ri { background: color-mix(in srgb, var(--er) 12%, var(--sf)) }
+    .rb b { font-weight: 600 }
+    .sw span { background: color-mix(in srgb, var(--tx) 16%, var(--bg)) }
+    .pg2 { height: 6px }
+
+    /* upload */
+    .drop, .slot { border-radius: 14px; border-width: 1.5px }
+    .slot.has { border-style: solid; border-color: var(--bd) }
+    .sl-b button { border: 1px solid var(--bd); box-shadow: none; border-radius: 10px }
+    .fi { border-radius: 10px }
+
+    /* modal, sheets, toast, loader */
+    .ov { background: #060a14a6; -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px) }
+    .md { border-radius: 20px; border: 1px solid var(--bd); box-shadow: var(--sh2) }
+    .mh h3 { font-size: 18px; letter-spacing: -.02em }
+    .mi { border-radius: 11px; background: color-mix(in srgb, var(--ac) 11%, var(--sf)) }
+    .mi.er { background: color-mix(in srgb, var(--er) 12%, var(--sf)) }
+    .mi.wn { background: color-mix(in srgb, var(--wn) 14%, var(--sf)) }
+    .me { border-radius: 10px; background: color-mix(in srgb, var(--er) 11%, transparent) }
+    .si { border-radius: 12px }
+    .to { border-radius: 12px; font-weight: 600; box-shadow: var(--sh2) }
+    .lc { border-radius: 18px; border: 1px solid var(--bd); box-shadow: var(--sh2) }
+    @media(max-width:600px) { .md, .md.wide { border-radius: 20px 20px 0 0; border-bottom: 0 } }
+
+    /* vault */
+    .vlock .big { border-radius: 22px; background: var(--ac) }
+    .vib { border-radius: 10px; background: var(--sf) }
+    .vav { border-radius: 12px }
+    .ban { border-radius: 14px; border-width: 1px; border-color: color-mix(in srgb, var(--ac) 55%, var(--bd)) }
+    .ck span { border-width: 1px; border-radius: 10px; background: var(--sf) }
+    .sws button { border-color: var(--sf) }
+    .pad button { background: #ffffff1c; border: 1px solid #ffffff26 }
+    .pad button:active { background: #ffffff40 }
+
+    /* viewer */
+    #vw nav button, #vw nav a { border-radius: 10px; border: 1px solid #ffffff1f }
+
+    /* fixes */
+    .st.wn, .st.er, .st.ok { background: var(--sf) }
+    .side .me { color: var(--tx); font-size: 14px; font-weight: 600 }
+    .side .me small { color: var(--t2); font-weight: 500 }
+
+    @media(prefers-reduced-motion:reduce) { *, *:before, *:after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important } }
   </style>
 </head>
 
 <body>
-  <div id="sp"><img alt="" width="76" height="76" style="border-radius:22px;animation:pl 1.4s infinite"><b>NEXUS DOCUMENT HUB</b>
+  <div id="sp"><img alt="" width="76" height="76" style="border-radius:22px;animation:pl 1.4s infinite"><b>Nexus
+      Document Hub</b>
     <div class="bar"></div>
   </div>
   <div id="app"></div>
@@ -2323,7 +2513,7 @@
       const b = new Blob([JSON.stringify({ exportedOn: new Date().toISOString(), profile: S.user, vehicles: S.vs, documents: S.docs }, null, 2)], { type: 'application/json' }), a = document.createElement('a');
       a.href = URL.createObjectURL(b); a.download = 'nexus-data-' + new Date().toISOString().slice(0, 10) + '.json'; a.click(); toast('Data exported')
     }
-    function theme() { const t = document.documentElement.dataset.t == 'dark' ? 'light' : 'dark'; document.documentElement.dataset.t = t; localStorage.th = t; $('#tc').content = t == 'dark' ? '#0a1124' : '#0f1b3d'; barTheme() }
+    function theme() { const t = document.documentElement.dataset.t == 'dark' ? 'light' : 'dark'; document.documentElement.dataset.t = t; localStorage.th = t; $('#tc').content = t == 'dark' ? '#0b0f15' : '#0b1220'; barTheme() }
 
     /* ---------- FILES ---------- */
     const b64 = f => new Promise((r, j) => { const x = new FileReader(); x.onload = () => r(x.result.split(',')[1]); x.onerror = j; x.readAsDataURL(f) });
@@ -2983,7 +3173,7 @@
 
     /* ---------- INIT ---------- */
     document.documentElement.dataset.t = localStorage.th || (matchMedia('(prefers-color-scheme:dark)').matches ? 'dark' : 'light');
-    $('#tc').content = document.documentElement.dataset.t == 'dark' ? '#0a1124' : '#0f1b3d'; barTheme();
+    $('#tc').content = document.documentElement.dataset.t == 'dark' ? '#0b0f15' : '#0b1220'; barTheme();
     setTimeout(hideSplash, 7000);
     $('#sp img').src = LOGO; applyAc();
     let Q = new URLSearchParams(location.search).get('a') || '';
