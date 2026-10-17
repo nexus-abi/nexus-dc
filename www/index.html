@@ -2039,6 +2039,7 @@
     .star { border-radius: 50%; background: color-mix(in srgb, var(--tx) 7%, transparent); width: 36px; height: 36px }
     .chips { gap: 8px; margin-bottom: 14px }
     .chip { border: 0; border-radius: 999px; background: var(--sf); box-shadow: var(--sh); padding: 9px 17px; font-weight: 650; font-size: 14px }
+    .chip { display: inline-flex; align-items: center; gap: 6px }
     .chip.on { background: var(--tx); color: var(--bg) }
     .seg { background: color-mix(in srgb, var(--tx) 7%, transparent); border-radius: 999px }
     .seg button { border-radius: 999px }
@@ -2194,6 +2195,18 @@
     #ts { top: calc(var(--sat) + 78px); z-index: 500 }
     .to { border: 1px solid color-mix(in srgb, var(--bg) 22%, transparent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--ac) 28%, transparent), var(--sh2) }
     @media(min-width:900px) { #ts { top: 22px } }
+
+    /* vault folders */
+    .fgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 4px }
+    .ftile { position: relative; display: flex; flex-direction: column; justify-content: flex-end; gap: 2px; min-height: 128px; padding: 16px; border-radius: 28px; text-align: left; background: color-mix(in srgb, var(--c) 13%, var(--sf)); box-shadow: var(--sh); overflow: hidden; transition: transform .12s }
+    .ftile:active { transform: scale(.97) }
+    .ftile .vav { position: absolute; top: 14px; left: 14px; width: 42px; height: 42px; border-radius: 15px; background: var(--c); font-family: var(--fd) }
+    .ftile b { font-family: var(--fd); font-size: 18px; letter-spacing: -.03em; font-weight: 700; overflow-wrap: anywhere }
+    .ftile small { font-size: 13px; font-weight: 600; color: var(--t2) }
+    .ftile.new { background: transparent; border: 2px dashed var(--bd); box-shadow: none; color: var(--ac); align-items: flex-start; justify-content: center; gap: 4px }
+    .ftile.new b { color: var(--tx); font-size: 16px }
+    .vtag.vf { background: color-mix(in srgb, var(--tx) 7%, transparent); color: var(--t2) }
+    .vtag.vf .i { display: inline; vertical-align: -1px }
 
     @media(prefers-reduced-motion:reduce) { *, *:before, *:after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important } }
   </style>
@@ -2356,7 +2369,7 @@
       const r = await busy(() => api('resend', { email: AE, purpose: p }));
       if (r) { toast('New code sent' + (r.left != null ? ` · ${r.left} resend(s) left today` : '')); cool() }
     }
-    function logout(q) { if (!q && S.token) api('logout').catch(() => { }); S.token = ''; localStorage.removeItem('tk'); localStorage.removeItem('nxc'); localStorage.removeItem('nxpin'); localStorage.removeItem('nxv'); try { V.key = null; V.items = []; V.raw = []; V.meta = null; V.ok = 0; V.err = ''; V.q = ''; V.cat = 'all'; V.fv = 0 } catch (e) { } S.user = null; const lk = $('#lk'); lk && lk.classList.remove('on'); authView('login') }
+    function logout(q) { if (!q && S.token) api('logout').catch(() => { }); S.token = ''; localStorage.removeItem('tk'); localStorage.removeItem('nxc'); localStorage.removeItem('nxpin'); localStorage.removeItem('nxv'); try { V.key = null; V.items = []; V.raw = []; V.meta = null; V.ok = 0; V.err = ''; V.q = ''; V.cat = 'all'; V.fv = 0; V.fid = '' } catch (e) { } S.user = null; const lk = $('#lk'); lk && lk.classList.remove('on'); authView('login') }
 
     /* ---------- SHELL & NAV ---------- */
     const N = [['home', 'Home', 'home'], ['docs', 'Documents', 'folder'], ['veh', 'Vehicles', 'car'], ['vault', 'Vault', 'key'], ['me', 'Profile', 'user']];
@@ -2477,7 +2490,7 @@
     <div class="row"><div class="ri">${I('bell', 20)}</div><div class="rb"><b>Email reminders</b><small>Sent by email every morning at 8 AM</small></div><label class="sw"><input type="checkbox" ${u.remind ? 'checked' : ''} onchange="tgRem(this)"><span></span></label></div>
     <div class="row"><div class="ri">${I(dark ? 'moon' : 'sun', 20)}</div><div class="rb"><b>Dark mode</b><small>Easier on the eyes at night</small></div><label class="sw"><input type="checkbox" ${dark ? 'checked' : ''} onchange="theme();go('me',null,1)"><span></span></label></div>${notifRow()}${A('bell', 'Reminder timing', rdTxt(), 'remDays()')}${A('palette', 'Accent colour', AC[curAc()][0], 'accentPick()')}<div class="row"><div class="ri">${I('lock', 20)}</div><div class="rb"><b>App lock</b><small>Ask for a 4-digit PIN when the app opens</small></div><label class="sw"><input type="checkbox" ${localStorage.nxpin ? 'checked' : ''} onchange="tgLock(this)"><span></span></label></div></div>
   <h3 class="h">Security &amp; data</h3><div class="card grp">${A('lock', 'Change password', 'Update your account password', 'chPw()') + A('devices', 'Logout from all devices', 'End every active session', 'logAll()') + A('download', 'Export my data', 'Download all your details as a file', 'exportData()') + A('table', 'Export documents (CSV)', 'Open in Excel or Google Sheets', 'exportCSV()') + A('cal', 'Add expiry dates to calendar', 'Download an .ics file for any calendar app', 'exportICS()')}</div>
-  <h3 class="h">Account</h3><div class="card grp">${A('logout', 'Logout', 'Sign out from this device', 'logout()') + A('trash', 'Delete account', 'Permanently remove all your data', 'delAcc()', 'rd')}</div><p class="t2" style="text-align:center;font-size:12.5px;margin:18px 0 4px">Nexus Docs · UI version 4.2</p>
+  <h3 class="h">Account</h3><div class="card grp">${A('logout', 'Logout', 'Sign out from this device', 'logout()') + A('trash', 'Delete account', 'Permanently remove all your data', 'delAcc()', 'rd')}</div><p class="t2" style="text-align:center;font-size:12.5px;margin:18px 0 4px">Nexus Docs · UI version 4.3</p>
   <p class="t2" style="text-align:center;margin-top:20px;font-size:12px">Nexus Document Hub · v3.2</p>`}
 
     /* ---------- PROFILE ACTIONS ---------- */
@@ -2819,6 +2832,7 @@
       if ($('#vw.on')) { closeV(); return true }
       if ($('#app').style.display == 'block') { const h = $('.auth h1'); if (h && !/Welcome back/.test(h.textContent)) { authView('login'); return true } return false }
       if (S.tab == 'veh' && S.vid) { go('veh'); return true }
+      if (S.tab == 'vault' && V.fid) { V.fid = ''; V.q = ''; go('vault'); return true }
       if (S.tab != 'home') { go('home'); return true }
       return false
     }
@@ -2878,7 +2892,7 @@
     const VCAT = [['Social', 'user'], ['Email', 'mail'], ['Banking', 'shield'], ['Shopping', 'star'], ['Work', 'tool'], ['Entertainment', 'image'], ['Education', 'file'], ['Government', 'id'], ['Other', 'lock']];
     const VPRE = [['Linked email', 0], ['Linked phone', 0], ['Security question', 0], ['Security answer', 1], ['PIN', 1], ['Account / Customer ID', 0], ['Backup code', 1]];
     const vci = c => (VCAT.find(x => x[0] == c) || [0, 'lock'])[1];
-    let V = { ok: 0, ld: 0, err: '', meta: null, raw: [], items: [], key: null, ks: '', q: '', cat: 'all', fv: 0, t: 0, hid: 0 };
+    let V = { ok: 0, ld: 0, err: '', meta: null, raw: [], items: [], key: null, ks: '', q: '', cat: 'all', fv: 0, t: 0, hid: 0, fid: '' };
     const vte = new TextEncoder(), vtd = new TextDecoder();
     const v2s = u => { let s = ''; for (let i = 0; i < u.length; i++) s += String.fromCharCode(u[i]); return btoa(s) };
     const s2v = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
@@ -2925,7 +2939,7 @@
     }
     function vTouch() { clearTimeout(V.t); if (V.key) V.t = setTimeout(() => { if ($('.ov')) return vTouch(); vLock(1) }, 18e4) }
     function vLock(q) {
-      V.key = null; V.items = []; clearTimeout(V.t);
+      V.key = null; V.items = []; V.fid = ''; clearTimeout(V.t);
       if (S.tab == 'vault' && $('#shell.on')) go('vault', null, 1); if (!q) toast('Vault locked', 'inf')
     }
     ['click', 'keydown', 'touchstart'].forEach(ev => addEventListener(ev, () => { if (V.key) vTouch() }, true));
@@ -2966,31 +2980,73 @@
     const vPw = (id, ph, ac) => `<div class="fld">${I('lock', 18)}<input id="${id}" type="password" placeholder="${ph}" autocomplete="${ac}" autocapitalize="off" spellcheck="false"><button type="button" class="eye" onclick="const x=$('#${id}');x.type=x.type=='password'?'text':'password'" aria-label="Show password">${I('eye', 18)}</button></div>`;
     function addNew() {
       if (S.tab != 'vault') return docForm();
-      if (V.key) return vForm(); if (!V.ok) return toast('Loading vault…', 'inf'); V.meta ? vUnlock() : vSetup()
+      if (V.key) return vForm('', V.fid); if (!V.ok) return toast('Loading vault…', 'inf'); V.meta ? vUnlock() : vSetup()
     }
 
-    /* ---- page ---- */
-    const vCard = x => `<div class="dc" onclick="vView('${x.id}')"><div class="vav" style="background:${vCol(x.title)}">${esc((x.title || '?').trim()[0].toUpperCase())}</div><div class="in"><b>${esc(x.title)}${x.fav ? ` <span style="color:var(--wn)">${I('star', 13)}</span>` : ''}</b><small>${esc(x.user || 'No username')}</small><span class="vtag">${esc(x.cat)}</span></div><div class="vqa">${x.pass ? `<button class="vib" onclick="event.stopPropagation();vCopy('${x.id}')" aria-label="Copy password">${I('copy', 18)}</button>` : ''}${vUrl(x.url) ? `<button class="vib" onclick="event.stopPropagation();vOpenUrl('${x.id}')" aria-label="Open website">${I('ext', 18)}</button>` : ''}</div></div>`;
+    /* ---- folders: a group like "Instagram" that holds many logins. Folders are stored encrypted, like logins ---- */
+    const vLogins = () => V.items.filter(x => x.kind != 'folder'), vFolders = () => V.items.filter(x => x.kind == 'folder').sort((a, b) => a.title.localeCompare(b.title));
+    const vFol = x => x.fid && V.items.find(f => f.kind == 'folder' && f.id == x.fid);
+    const vIn = f => vLogins().filter(x => x.fid == f.id);
+    const vCard = x => { const f = !V.fid && vFol(x); return `<div class="dc" onclick="vView('${x.id}')"><div class="vav" style="background:${vCol(x.title)}">${esc((x.title || '?').trim()[0].toUpperCase())}</div><div class="in"><b>${esc(x.title)}${x.fav ? ` <span style="color:var(--wn)">${I('star', 13)}</span>` : ''}</b><small>${esc(x.user || 'No username')}</small><span class="vtag">${esc(x.cat)}</span>${f ? ` <span class="vtag vf">${I('folder', 11)} ${esc(f.title)}</span>` : ''}</div><div class="vqa">${x.pass ? `<button class="vib" onclick="event.stopPropagation();vCopy('${x.id}')" aria-label="Copy password">${I('copy', 18)}</button>` : ''}${vUrl(x.url) ? `<button class="vib" onclick="event.stopPropagation();vOpenUrl('${x.id}')" aria-label="Open website">${I('ext', 18)}</button>` : ''}</div></div>` };
     function vList() {
-      const q = V.q.toLowerCase().trim();
-      const a = V.items.filter(x => (V.cat == 'all' || x.cat == V.cat) && (!V.fv || x.fav) && (!q || [x.title, x.user, x.url, x.cat, x.notes, ...(x.extra || []).map(e => e.k + ' ' + (e.s ? '' : e.v))].join(' ').toLowerCase().includes(q)));
+      const q = V.q.toLowerCase().trim(), flt = q || V.cat != 'all' || V.fv, all = vLogins();
+      const a = all.filter(x => (V.fid ? x.fid == V.fid : (flt || !vFol(x))) && (V.cat == 'all' || x.cat == V.cat) && (!V.fv || x.fav) && (!q || [x.title, x.user, x.url, x.cat, x.notes, (vFol(x) || {}).title, ...(x.extra || []).map(e => e.k + ' ' + (e.s ? '' : e.v))].join(' ').toLowerCase().includes(q)));
       a.sort((x, y) => (y.fav ? 1 : 0) - (x.fav ? 1 : 0) || x.title.localeCompare(y.title));
-      return a.map(vCard).join('') || empty(V.items.length ? 'No matching logins' : 'No logins saved yet. Tap Add to save your first one', V.items.length ? 'search' : 'key')
+      return a.map(vCard).join('') || empty(V.fid ? (q ? 'No matching accounts' : 'No accounts in this folder yet. Tap Add account') : all.length ? (flt ? 'No matching logins' : 'Every login is inside a folder') : 'No logins saved yet. Tap Add to save your first one', q || (all.length && !V.fid) ? 'search' : 'key')
     }
+    const vFolderTile = f => { const n = vIn(f).length; return `<button class="ftile" style="--c:${vCol(f.title)}" onclick="V.fid='${f.id}';V.q='';V.cat='all';V.fv=0;go('vault',null,1)"><span class="vav">${esc((f.title || '?').trim()[0].toUpperCase())}</span><b>${esc(f.title)}</b><small>${n ? n + ' account' + (n > 1 ? 's' : '') : 'Empty'}</small></button>` };
+    function vSearchBox() { return `<div class="srch" style="margin-bottom:12px">${I('search', 18)}<input style="margin:0" placeholder="${V.fid ? 'Search in this folder' : 'Search site, username or notes'}" value="${esc(V.q)}" oninput="V.q=this.value;$('#vl').innerHTML=vList();const f=$('#vf');f&&(f.style.display=V.q.trim()?'none':'')" autocomplete="off"></div>` }
     function pVault() {
-      const hd = `<div class="ph"><h2>Vault</h2><div style="display:flex;gap:8px">${V.key ? `<button class="btn sm" onclick="vForm()">${I('plus', 16)} Add</button><button class="btn sm sec" onclick="vMenu()" aria-label="Vault options">${I('more', 16)}</button>` : ''}</div></div>`;
+      const F0 = V.fid && V.key ? V.items.find(f => f.kind == 'folder' && f.id == V.fid) : null; if (V.fid && V.key && !F0) V.fid = '';
+      const hd = `<div class="ph"><h2>${F0 ? esc(F0.title) : 'Vault'}</h2><div style="display:flex;gap:8px">${V.key ? `${F0 ? '' : `<button class="btn sm" onclick="vForm('',V.fid)">${I('plus', 16)} Add</button>`}<button class="btn sm sec" onclick="${F0 ? 'vFolderMenu(V.fid)' : 'vMenu()'}" aria-label="${F0 ? 'Folder options' : 'Vault options'}">${I('more', 16)}</button>` : ''}</div></div>`;
       if (!V.ok) {
         if (!V.ld && !V.err) vLoad();
         return hd + (V.err ? `<div class="card" style="text-align:center">${I('alert', 32)}<h3 style="margin:10px 0 6px">Could not load the vault</h3><p class="t2" style="margin:0 0 14px">${esc(V.err)}</p><button class="btn" onclick="V.err='';go('vault',null,1)">Try again</button></div>` : '<div class="sk" style="height:90px;margin-bottom:10px"></div>'.repeat(4))
       }
-      if (!V.meta) return hd + `<div class="card vlock"><div class="big">${I('key', 34)}</div><h3>Your private password vault</h3><p>Save logins for every site and app in one place.</p><ul><li>Encrypted on this phone before it is saved</li><li>Only your master password can open it</li><li>Works offline with your last synced data</li></ul><button class="btn full" onclick="vSetup()">Create vault</button></div>`;
-      if (!V.key) return hd + `<div class="card vlock"><div class="big">${I('lock', 34)}</div><h3>Vault is locked</h3><p>${V.raw.length ? V.raw.length + ' saved login' + (V.raw.length > 1 ? 's' : '') + ' inside. ' : ''}Enter your master password to open it.</p><button class="btn full" onclick="vUnlock()">${I('key', 18)} Unlock vault</button></div>`;
-      const cnt = c => c == 'all' ? V.items.length : V.items.filter(x => x.cat == c).length, cs = VCAT.map(x => x[0]).filter(c => cnt(c));
-      if (V.cat != 'all' && !cs.includes(V.cat)) V.cat = 'all';
+      if (!V.meta) return hd + `<div class="card vlock"><div class="big">${I('key', 34)}</div><h3>Your private password vault</h3><p>Save logins for every site and app in one place.</p><ul><li>Group many accounts in a folder, like Instagram</li><li>Encrypted on this phone before it is saved</li><li>Only your master password can open it</li><li>Works offline with your last synced data</li></ul><button class="btn full" onclick="vSetup()">Create vault</button></div>`;
+      if (!V.key) return hd + `<div class="card vlock"><div class="big">${I('lock', 34)}</div><h3>Vault is locked</h3><p>${V.raw.length ? 'Your saved logins are inside. ' : ''}Enter your master password to open it.</p><button class="btn full" onclick="vUnlock()">${I('key', 18)} Unlock vault</button></div>`;
       vTouch();
-      return hd + `<div class="srch" style="margin-bottom:12px">${I('search', 18)}<input style="margin:0" placeholder="Search site, username or notes" value="${esc(V.q)}" oninput="V.q=this.value;$('#vl').innerHTML=vList()" autocomplete="off"></div>
-  <div class="chips"><button class="chip ${V.cat == 'all' && !V.fv ? 'on' : ''}" onclick="V.cat='all';V.fv=0;go('vault',null,1)">All (${cnt('all')})</button><button class="chip ${V.fv ? 'on' : ''}" onclick="V.fv=V.fv?0:1;go('vault',null,1)">${I('star', 14)} Starred</button>${cs.map(c => `<button class="chip ${V.cat == c ? 'on' : ''}" data-c2="${c}" onclick="V.cat=this.dataset.c2;V.fv=0;go('vault',null,1)">${c} (${cnt(c)})</button>`).join('')}</div>
-  <div id="vl">${vList()}</div><p class="t2" style="text-align:center;font-size:12px;margin-top:16px">${I('lock', 12)} End-to-end encrypted · auto-locks after 3 minutes</p>`
+      const foot = `<p class="t2" style="text-align:center;font-size:12px;margin-top:16px">${I('lock', 12)} End-to-end encrypted · auto-locks after 3 minutes</p>`;
+      if (F0) { const n = vIn(F0).length; return `<button class="bk" onclick="V.fid='';V.q='';go('vault',null,1)">${I('left', 18)} All folders</button>` + hd + `<p class="t2" style="margin:-8px 0 14px">${n ? n + ' account' + (n > 1 ? 's' : '') : 'No accounts yet'}</p><button class="btn full" style="margin-bottom:14px" onclick="vForm('',V.fid)">${I('plus', 18)} Add account</button>` + vSearchBox() + `<div id="vl">${vList()}</div>` + foot }
+      const L = vLogins(), cnt = c => c == 'all' ? L.length : L.filter(x => x.cat == c).length, cs = VCAT.map(x => x[0]).filter(c => cnt(c)), FS = vFolders(), q = V.q.trim();
+      if (V.cat != 'all' && !cs.includes(V.cat)) V.cat = 'all';
+      return hd + vSearchBox() + `<div id="vf" style="${q ? 'display:none' : ''}"><h3 class="h" style="margin-top:6px">Folders</h3><div class="fgrid">${FS.map(vFolderTile).join('')}<button class="ftile new" onclick="vFolderForm()">${I('plus', 22)}<b>New folder</b><small>Group many accounts</small></button></div><h3 class="h">Logins</h3></div>
+  ${L.length ? `<div class="chips"><button class="chip ${V.cat == 'all' && !V.fv ? 'on' : ''}" onclick="V.cat='all';V.fv=0;go('vault',null,1)">All (${cnt('all')})</button><button class="chip ${V.fv ? 'on' : ''}" onclick="V.fv=V.fv?0:1;go('vault',null,1)">${I('star', 14)} Starred</button>${cs.map(c => `<button class="chip ${V.cat == c ? 'on' : ''}" data-c2="${c}" onclick="V.cat=this.dataset.c2;V.fv=0;go('vault',null,1)">${c} (${cnt(c)})</button>`).join('')}</div>` : ''}
+  <div id="vl">${vList()}</div>` + foot
+    }
+
+    /* ---- create / rename / delete folders ---- */
+    const VSUG = ['Instagram', 'Gmail', 'Facebook', 'Netflix', 'Banking', 'Work'];
+    async function vFolderForm(id) {
+      const x = V.items.find(i => i.id == id && i.kind == 'folder') || {};
+      const o = await modal({
+        title: id ? 'Rename folder' : 'New folder', icon: 'folder', sticky: 1, ok: 'Save', html: `<p class="mt" style="margin-bottom:12px">A folder keeps many accounts of one site or app together, like all your Instagram logins.</p>
+    <span class="lb">Folder name</span><input id="vf_n" placeholder="Instagram" value="${esc(x.title)}" maxlength="40" autocomplete="off">
+    ${id ? '' : `<div class="vpre">${VSUG.map(s => `<button type="button" data-nm="${s}">${s}</button>`).join('')}</div>`}`,
+        onOpen: el => { el.addEventListener('click', e => { const b = e.target.closest('[data-nm]'); if (b) { $('#vf_n').value = b.dataset.nm; $('#vf_n').focus() } }); if (!id) setTimeout(() => $('#vf_n') && $('#vf_n').focus(), 280) },
+        pre: el => {
+          const n = $('#vf_n').value.trim(); if (!n) return fail(el, 'Enter a folder name');
+          if (vFolders().some(f => f.id != id && f.title.toLowerCase() == n.toLowerCase())) return fail(el, 'A folder with this name already exists');
+          return n
+        }
+      });
+      if (!o) return;
+      const now = new Date().toISOString();
+      let nid = id;
+      if (await busy(async () => { nid = await vPut({ id: id || '', kind: 'folder', title: o, created: x.created || now, updated: now }) }, 'Saving…')) { if (!id) V.fid = nid; go('vault', null, 1); toast(id ? 'Folder renamed' : 'Folder created') }
+    }
+    async function vFolderMenu(id) {
+      const k = await sheet('Folder options', [{ k: 'rn', i: 'edit', t: 'Rename folder' }, { k: 'dl', i: 'trash', t: 'Delete folder', s: 'Accounts inside are kept', cls: 'rd' }]);
+      if (k == 'rn') vFolderForm(id); if (k == 'dl') vFolderDel(id)
+    }
+    async function vFolderDel(id) {
+      const f = V.items.find(i => i.id == id && i.kind == 'folder'); if (!f) return; const L = vIn(f);
+      if (!await confirmBox({ title: 'Delete folder?', text: `The folder <b>${esc(f.title)}</b> will be deleted. ${L.length ? 'Its ' + L.length + ' account' + (L.length > 1 ? 's are' : ' is') + ' <b>not</b> deleted. They move to your main logins list.' : ''}`, ok: 'Delete folder', danger: 1, icon: 'trash' })) return;
+      const ok = await busy(async () => {
+        for (const x of L) { x.fid = ''; await vPut({ ...x }) }
+        await api('vaultDelete', { id }); V.raw = V.raw.filter(z => z.id != id); V.items = V.items.filter(z => z.id != id); vCache()
+      }, 'Deleting folder…');
+      if (ok) { V.fid = ''; go('vault', null, 1); toast('Folder deleted') }
     }
 
     /* ---- copy / open ---- */
@@ -3047,13 +3103,14 @@
     }
 
     /* ---- add / edit ---- */
-    async function vForm(id) {
+    async function vForm(id, fid0) {
       const x = V.items.find(i => i.id == id) || {}, EX = (x.extra || []).map(e => ({ ...e }));
       const rx = () => { $('#vx_f').innerHTML = EX.map((e, i) => `<div class="cf"><input data-i="${i}" data-f="k" placeholder="Label" value="${esc(e.k)}" autocomplete="off"><input data-i="${i}" data-f="v" type="${e.s ? 'password' : 'text'}" placeholder="Value" value="${esc(e.v)}" autocomplete="off"><button type="button" class="vib" data-s="${i}" aria-label="Hide or show value">${I(e.s ? 'lock' : 'eye', 16)}</button><button type="button" class="vib" data-x="${i}" aria-label="Remove field">${I('x', 16)}</button></div>`).join('') };
       const mt = () => { const s = vStr($('#vx_p').value), m = $('#vx_m'); m.style.width = s[0] + '%'; m.style.background = s[2]; $('#vx_ml').textContent = s[1] ? s[1] + ' password' : '' };
       const o = await modal({
         title: id ? 'Edit login' : 'Add login', icon: 'key', wide: 1, sticky: 1, ok: 'Save', html: `
-    <span class="lb">Title (site or app name)</span><input id="vx_t" placeholder="Instagram, SBI NetBanking…" value="${esc(x.title)}" autocomplete="off">
+    <span class="lb">Title (site or app name)</span><input id="vx_t" placeholder="Instagram, SBI NetBanking…" value="${esc(x.title || ((V.items.find(f => f.id == fid0) || {}).title))}" autocomplete="off">
+    <span class="lb">Folder</span><select id="vx_fo"><option value="">No folder</option>${vFolders().map(f => `<option value="${f.id}" ${(id ? x.fid : fid0) == f.id ? 'selected' : ''}>${esc(f.title)}</option>`).join('')}</select>
     <div class="two"><div><span class="lb">Category</span><select id="vx_c">${VCAT.map(c => `<option ${(x.cat || 'Other') == c[0] ? 'selected' : ''}>${c[0]}</option>`).join('')}</select></div><div><span class="lb">Website link</span><input id="vx_l" type="url" inputmode="url" placeholder="instagram.com" value="${esc(x.url)}" autocomplete="off" autocapitalize="off"></div></div>
     <span class="lb">Username / ID / Email</span><input id="vx_u" value="${esc(x.user)}" autocomplete="off" autocapitalize="off" spellcheck="false">
     <span class="lb">Password</span><div class="fld">${I('lock', 18)}<input id="vx_p" type="password" value="${esc(x.pass)}" autocomplete="new-password" autocapitalize="off" spellcheck="false"><button type="button" class="eye" onclick="const q=$('#vx_p');q.type=q.type=='password'?'text':'password'" aria-label="Show password">${I('eye', 18)}</button></div>
@@ -3075,14 +3132,14 @@
             else if (b.id == 'vx_add') { EX.push({ k: '', v: '', s: false }); rx(); last() }
             else if (b.id == 'vx_gen') { const i = $('#vx_p'); i.value = vGen(); i.type = 'text'; mt() }
           });
-          if (!id) setTimeout(() => $('#vx_t') && $('#vx_t').focus(), 280)
+          if (!id && !fid0) setTimeout(() => $('#vx_t') && $('#vx_t').focus(), 280)
         },
         pre: el => {
           const t = $('#vx_t').value.trim(), u = $('#vx_u').value.trim(), p = $('#vx_p').value, l = $('#vx_l').value.trim();
           if (!t) return fail(el, 'Enter a title (site or app name)');
           if (l && !vUrl(l)) return fail(el, 'Enter a valid website link, like example.com');
           if (!u && !p) return fail(el, 'Add a username or a password');
-          return { title: t, cat: $('#vx_c').value, url: l ? vUrl(l) : '', user: u, pass: p, notes: $('#vx_n').value.trim(), extra: EX.filter(e => (e.k || '').trim() || (e.v || '').trim()).map(e => ({ k: (e.k || '').trim(), v: e.v || '', s: !!e.s })) }
+          return { title: t, fid: $('#vx_fo').value, cat: $('#vx_c').value, url: l ? vUrl(l) : '', user: u, pass: p, notes: $('#vx_n').value.trim(), extra: EX.filter(e => (e.k || '').trim() || (e.v || '').trim()).map(e => ({ k: (e.k || '').trim(), v: e.v || '', s: !!e.s })) }
         }
       });
       if (!o) return;
@@ -3106,8 +3163,8 @@
 
     /* ---- vault menu: lock, change master password, export, reset ---- */
     async function vMenu() {
-      const k = await sheet('Vault options', [{ k: 'lock', i: 'lock', t: 'Lock vault now' }, { k: 'pw', i: 'key', t: 'Change master password', s: 'Re-encrypts every login' }, { k: 'csv', i: 'download', t: 'Export as CSV', s: 'Not encrypted. Keep the file safe' }, { k: 'rs', i: 'trash', t: 'Reset vault', s: 'Deletes all saved logins', cls: 'rd' }]);
-      if (k == 'lock') vLock(); if (k == 'pw') vChange(); if (k == 'csv') vExport(); if (k == 'rs') vReset()
+      const k = await sheet('Vault options', [{ k: 'nf', i: 'folder', t: 'New folder', s: 'Group many accounts, like Instagram' }, { k: 'lock', i: 'lock', t: 'Lock vault now' }, { k: 'pw', i: 'key', t: 'Change master password', s: 'Re-encrypts every login' }, { k: 'csv', i: 'download', t: 'Export as CSV', s: 'Not encrypted. Keep the file safe' }, { k: 'rs', i: 'trash', t: 'Reset vault', s: 'Deletes all saved logins', cls: 'rd' }]);
+      if (k == 'nf') vFolderForm(); if (k == 'lock') vLock(); if (k == 'pw') vChange(); if (k == 'csv') vExport(); if (k == 'rs') vReset()
     }
     async function vChange() {
       const o = await modal({
@@ -3129,8 +3186,8 @@
       confirmBox({ title: 'Export passwords?', text: 'The CSV file is <b>not encrypted</b>. Anyone who opens it can read every password. Delete it after use.', ok: 'Export', icon: 'download' }).then(y => {
         if (!y) return;
         const q = v => { let t = String(v ?? ''); if (/^[=+\-@]/.test(t)) t = "'" + t; return '"' + t.replace(/"/g, '""') + '"' },
-          R = [['Title', 'Category', 'Website', 'Username', 'Password', 'Notes', 'Related details']];
-        V.items.forEach(x => R.push([x.title, x.cat, x.url, x.user, x.pass, x.notes, (x.extra || []).map(e => e.k + ': ' + e.v).join(' | ')]));
+          R = [['Folder', 'Title', 'Category', 'Website', 'Username', 'Password', 'Notes', 'Related details']];
+        vLogins().forEach(x => R.push([(vFol(x) || {}).title || '', x.title, x.cat, x.url, x.user, x.pass, x.notes, (x.extra || []).map(e => e.k + ': ' + e.v).join(' | ')]));
         dl2('nexus-vault-' + new Date().toISOString().slice(0, 10) + '.csv', '\ufeff' + R.map(r => r.map(q).join(',')).join('\r\n'), 'text/csv'); toast('CSV exported', 'inf')
       })
     }
