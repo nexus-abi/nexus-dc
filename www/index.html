@@ -16,6 +16,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="description"
     content="Keep all personal and vehicle documents in one secure place, with expiry reminders.">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Figtree:wght@400..800&display=swap">
   <style>
     :root {
       --bg: #f4f6fb;
@@ -1984,191 +1986,209 @@
     .vpre button { padding: 6px 11px; border-radius: 16px; border: 1.5px dashed var(--bd); font-size: 12.5px; font-weight: 600; color: var(--t2) }
 
     /* =====================================================================
-       v4 DESIGN LAYER: crisp, hairline-based, ink + one accent.
-       Only visuals live here; behaviour of every component is unchanged.
+       v5 "WALLET" DESIGN: soft tinted canvas, big rounded tiles, pill nav,
+       display type for numbers and titles. Accent colour drives the whole UI.
        ===================================================================== */
     :root {
-      --bg: #f1f3f8;
+      --bg: color-mix(in srgb, var(--ac) 5%, #f4f5f9);
       --sf: #ffffff;
-      --tx: #0b1220;
-      --t2: #5b6579;
-      --bd: #e2e6ee;
-      --hd: #0b1220;
-      --ok: #0f9d58;
-      --wn: #d97a00;
-      --er: #dc3a43;
-      --sh: 0 1px 0 #0b12200a, 0 1px 3px #0b12200d;
-      --sh2: 0 18px 40px -16px #0b122040, 0 2px 6px #0b12200f;
-      --dots: radial-gradient(#ffffff20 1px, transparent 1.3px) 0 0/16px 16px;
+      --tx: #10131c;
+      --t2: #646e84;
+      --bd: #e5e8f0;
+      --hd: #0d1120;
+      --ok: #0e9f6e;
+      --wn: #d97706;
+      --er: #e0364a;
+      --fd: "Bricolage Grotesque", "Figtree", Inter, system-ui, sans-serif;
+      --sh: 0 1px 2px #10142010, 0 12px 28px -16px #1014203a;
+      --sh2: 0 24px 56px -20px #10142066, 0 4px 12px #1014201a;
       color-scheme: light
     }
 
     [data-t=dark] {
-      --bg: #07090d;
-      --sf: #0f1319;
-      --tx: #e8ecf4;
-      --t2: #8a95aa;
-      --bd: #1d2430;
-      --hd: #0b0f15;
-      --sh: 0 1px 0 #ffffff06 inset;
-      --sh2: 0 20px 44px -16px #000c, 0 2px 8px #0008;
+      --bg: #0a0c12;
+      --sf: #141821;
+      --tx: #f2f4fa;
+      --t2: #8f99ae;
+      --bd: #232938;
+      --hd: #0a0d18;
+      --sh: 0 1px 0 #ffffff08 inset;
+      --sh2: 0 24px 56px -20px #000d, 0 4px 14px #0008;
       color-scheme: dark
     }
 
-    body {
-      font-family: Inter, "SF Pro Text", "Segoe UI Variable", system-ui, -apple-system, Roboto, sans-serif;
-      font-feature-settings: "cv11", "ss03", "tnum";
-      font-size: 15px;
-      line-height: 1.45;
-      -webkit-font-smoothing: antialiased
-    }
-
-    h1, h2, h3 { letter-spacing: -.02em; font-weight: 700 }
+    body { font-family: Figtree, Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; font-size: 15.5px; line-height: 1.45; -webkit-font-smoothing: antialiased }
+    h1, h2, h3 { font-family: var(--fd); letter-spacing: -.03em; font-weight: 700 }
     b { font-weight: 650 }
-    :focus-visible { outline: 2px solid var(--ac); outline-offset: 2px; border-radius: 8px }
+    :focus-visible { outline: 2px solid var(--ac); outline-offset: 2px; border-radius: 10px }
     input:focus-visible, select:focus-visible, textarea:focus-visible { outline: 0 }
 
-    /* surfaces */
-    .card { border-radius: 16px; padding: 18px; box-shadow: var(--sh) }
-    input, select, textarea { background: var(--sf); border: 1px solid var(--bd); border-radius: 12px; padding: 13px 14px }
-    input:hover, select:hover, textarea:hover { border-color: color-mix(in srgb, var(--ac) 35%, var(--bd)) }
-    input:focus, select:focus, textarea:focus { border-color: var(--ac); box-shadow: 0 0 0 3px color-mix(in srgb, var(--ac) 18%, transparent) }
-    .lb { font-size: 12.5px; font-weight: 600; letter-spacing: .01em }
-
-    /* buttons: flat accent with a crisp top highlight */
-    .btn { background: var(--ac); border-radius: 12px; font-weight: 650; letter-spacing: -.005em; box-shadow: inset 0 1px 0 #ffffff38, 0 1px 2px #0b122033, 0 6px 14px -6px color-mix(in srgb, var(--ac) 70%, transparent) }
-    .btn:hover { filter: brightness(1.06) }
-    .btn.sec { background: var(--sf); color: var(--tx); border: 1px solid var(--bd); box-shadow: var(--sh) }
-    .btn.sec:hover { border-color: color-mix(in srgb, var(--ac) 40%, var(--bd)); filter: none }
-    .btn.dg { background: var(--er); box-shadow: inset 0 1px 0 #ffffff30, 0 1px 2px #0b122033 }
-    .ib { background: var(--sf); border: 1px solid var(--bd); border-radius: 10px }
-    .tb .ib { background: #ffffff14; border-color: #ffffff1f }
-
-    /* auth / splash / lock: ink gradient with a fine dot grid */
-    #sp, #lk { background: var(--dots), var(--g) }
-    .brand { background: var(--dots), var(--g) }
-    .brand h1 { font-size: 30px; line-height: 1.08; letter-spacing: -.035em; font-weight: 750 }
-    .brand p { max-width: 34ch; line-height: 1.5 }
-    .brand li .i { background: #ffffff1c; border: 1px solid #ffffff22; border-radius: 10px }
-    .auth h1 { font-size: 28px; letter-spacing: -.03em; font-weight: 750 }
-    .lg { background: #ffffff1f; border: 1px solid #ffffff2e; border-radius: 13px }
-    .lg.sm, .side .lg { background: var(--ac); border: 0 }
-    @media(min-width:900px) { .brand h1 { font-size: 46px } }
-
-    /* top bar and desktop sidebar */
-    .tb { background: var(--hd); box-shadow: none; border-bottom: 1px solid #ffffff14 }
-    .tb b { font-size: 17px; letter-spacing: -.02em; font-weight: 700 }
-    .side { background: var(--sf) }
-    .side nav button { border-radius: 10px; font-weight: 600; font-size: 14.5px }
-    .side nav button.on { background: color-mix(in srgb, var(--ac) 11%, transparent); color: var(--ac) }
-    .side .me { border-radius: 14px; background: var(--bg) }
-
-    /* bottom dock: floating, frosted, rounded */
-    .tabs { left: 12px; right: 12px; bottom: calc(10px + var(--sab)); max-width: 520px; margin: 0 auto; padding: 8px 6px; border: 1px solid var(--bd); border-radius: 24px; background: color-mix(in srgb, var(--sf) 88%, transparent); -webkit-backdrop-filter: blur(18px) saturate(1.4); backdrop-filter: blur(18px) saturate(1.4); box-shadow: var(--sh2) }
-    .tabs button { font-size: 11px; letter-spacing: .005em; position: relative }
-    .tabs button.on:not(.plus)::after { content: ""; position: absolute; bottom: -3px; width: 18px; height: 3px; border-radius: 3px; background: var(--ac) }
-    .tabs .plus { width: 54px; height: 54px; border-radius: 18px; background: var(--ac); margin-top: -30px; box-shadow: inset 0 1px 0 #ffffff40, 0 12px 22px -8px color-mix(in srgb, var(--ac) 80%, transparent); border: 3px solid var(--bg) }
-
-    /* page headings: sentence case with a hairline that groups the content below */
-    .ph h2 { font-size: 26px; letter-spacing: -.03em; font-weight: 750 }
-    .h { display: flex; align-items: center; gap: 12px; margin: 26px 0 12px; font-size: 13px; font-weight: 650; color: var(--t2); text-transform: none; letter-spacing: 0 }
-    .h::after { content: ""; flex: 1; height: 1px; background: var(--bd) }
-
-    /* hero */
-    .hero { background: var(--dots), var(--g); border-radius: 20px; padding: 22px; box-shadow: var(--sh2) }
-    .hero:after { display: none }
-    .hero h2 { font-size: 28px; letter-spacing: -.035em; font-weight: 750 }
-    .hero .btn { background: #ffffff; color: #0b1220; box-shadow: 0 6px 16px -6px #0006; border: 0 }
-    .hero .btn:hover { filter: none; background: #f3f5fb }
-    .cover { background: var(--dots), var(--g); border-radius: 16px 16px 0 0 }
-    .cover:after { display: none }
-    .pfc, .card.pfc { border-radius: 16px; padding: 0 }
-    .av.xl { border-width: 4px }
-
-    /* numbers */
-    .stats { gap: 10px }
-    .st { border-radius: 14px; padding: 14px 8px 12px; box-shadow: var(--sh) }
-    .st b { font-size: 28px; font-weight: 750; letter-spacing: -.04em; line-height: 1.1 }
-    .st small { font-size: 12px; font-weight: 500 }
-    .qa button { border-radius: 14px; padding: 16px 4px 14px; box-shadow: var(--sh); transition: border-color .15s, transform .1s }
-    .qa button:hover { border-color: color-mix(in srgb, var(--ac) 45%, var(--bd)) }
-    .qa span { font-weight: 600; letter-spacing: -.005em }
-
-    /* list rows: documents / vehicles / vault entries */
-    .dc, .vc { border-radius: 14px; padding: 13px 14px; gap: 14px; box-shadow: var(--sh) }
-    .dc:hover, .vc:hover { border-color: color-mix(in srgb, var(--ac) 50%, var(--bd)) }
-    .in b { font-size: 15px; font-weight: 650; letter-spacing: -.012em }
-    .in small { font-size: 13px }
-    .ic, .vp { border-radius: 12px; background: color-mix(in srgb, var(--ac) 10%, var(--sf)) }
-    .ic.er { background: color-mix(in srgb, var(--er) 12%, var(--sf)) }
-    .ic.wn { background: color-mix(in srgb, var(--wn) 14%, var(--sf)) }
-    .ic.ok { background: color-mix(in srgb, var(--ok) 12%, var(--sf)) }
-    .vp { border-radius: 14px }
-    .rt { font-size: 12px; font-weight: 500 }
-
-    /* status badges: rectangular with a status dot */
-    .bd { border-radius: 8px; padding: 3px 9px; font-weight: 650; font-size: 12px; letter-spacing: .005em; display: inline-flex; align-items: center }
+    /* ---- controls ---- */
+    .card { border: 0; border-radius: 26px; padding: 20px; box-shadow: var(--sh) }
+    input, select, textarea { background: color-mix(in srgb, var(--tx) 5%, var(--sf)); border: 1.5px solid transparent; border-radius: 16px; padding: 14px 16px }
+    input:hover, select:hover, textarea:hover { background: color-mix(in srgb, var(--tx) 7%, var(--sf)) }
+    input:focus, select:focus, textarea:focus { background: var(--sf); border-color: var(--ac); box-shadow: 0 0 0 4px color-mix(in srgb, var(--ac) 16%, transparent) }
+    .lb { font-size: 13px; font-weight: 650; color: var(--t2); margin-bottom: 6px }
+    .btn { border-radius: 999px; background: var(--ac); padding: 14px 24px; font-weight: 650; letter-spacing: -.005em; box-shadow: 0 14px 24px -14px color-mix(in srgb, var(--ac) 90%, #000) }
+    .btn:hover { filter: brightness(1.07) }
+    .btn.sm { padding: 9px 17px; border-radius: 999px }
+    .btn.sec { background: color-mix(in srgb, var(--tx) 7%, transparent); color: var(--tx); border: 0; box-shadow: none }
+    .btn.sec:hover { filter: none; background: color-mix(in srgb, var(--tx) 11%, transparent) }
+    .btn.dg { background: var(--er); box-shadow: 0 14px 24px -14px var(--er) }
+    .ib { border-radius: 50%; background: color-mix(in srgb, var(--tx) 7%, transparent); border: 0; width: 36px; height: 36px }
+    .star { border-radius: 50%; background: color-mix(in srgb, var(--tx) 7%, transparent); width: 36px; height: 36px }
+    .chips { gap: 8px; margin-bottom: 14px }
+    .chip { border: 0; border-radius: 999px; background: var(--sf); box-shadow: var(--sh); padding: 9px 17px; font-weight: 650; font-size: 14px }
+    .chip.on { background: var(--tx); color: var(--bg) }
+    .seg { background: color-mix(in srgb, var(--tx) 7%, transparent); border-radius: 999px }
+    .seg button { border-radius: 999px }
+    .seg .on { background: var(--sf); color: var(--tx); box-shadow: var(--sh) }
+    .bd { border-radius: 999px; padding: 4px 11px; font-weight: 650; font-size: 12.5px; display: inline-flex; align-items: center }
     .bd.er::before, .bd.wn::before, .bd.ok::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; margin-right: 6px }
-    .er { background: color-mix(in srgb, var(--er) 12%, transparent) }
-    .wn { background: color-mix(in srgb, var(--wn) 14%, transparent) }
-    .ok { background: color-mix(in srgb, var(--ok) 12%, transparent) }
-    .vb { border-radius: 8px }
-    .vtag { border-radius: 8px }
-
-    /* filters: selected chip is solid ink */
-    .chip { border-radius: 10px; border-width: 1px; padding: 8px 15px; font-weight: 600; font-size: 13.5px }
-    .chip.on { background: var(--tx); color: var(--bg); border-color: var(--tx) }
-    .seg { border-radius: 12px; background: color-mix(in srgb, var(--tx) 6%, transparent) }
-    .seg button { border-radius: 9px }
-    .seg .on { box-shadow: 0 1px 3px #0b122022; color: var(--tx) }
-    .empty { border: 1.5px dashed var(--bd); border-radius: 16px; background: transparent }
+    .er { background: color-mix(in srgb, var(--er) 13%, transparent) }
+    .wn { background: color-mix(in srgb, var(--wn) 15%, transparent) }
+    .ok { background: color-mix(in srgb, var(--ok) 13%, transparent) }
+    .vb, .vtag { border-radius: 999px }
+    .empty { border: 2px dashed var(--bd); border-radius: 26px; background: transparent }
     .bk { font-weight: 650 }
 
+    /* ---- sign in / splash / pin lock ---- */
+    #sp, #lk { background: radial-gradient(120% 70% at 50% 0%, color-mix(in srgb, var(--ac) 60%, #0b0e1a), #0b0e1a 70%) }
+    .brand { background: color-mix(in srgb, var(--ac) 11%, var(--bg)); color: var(--tx); padding-bottom: 34px }
+    .brand h1 { font-family: var(--fd); font-size: 40px; line-height: .98; letter-spacing: -.05em; font-weight: 750; margin-top: 22px }
+    .brand p { opacity: 1; color: var(--t2); font-size: 16px; max-width: 30ch }
+    .brand .lg, .brand .lgi { background: var(--ac); border-radius: 18px; border: 0 }
+    .brand li .i { background: var(--sf); color: var(--ac); border-radius: 12px }
+    .auth h1 { font-size: 32px; letter-spacing: -.045em; font-weight: 750 }
+    @media(min-width:900px) { .brand h1 { font-size: 64px } .brand { padding: 72px } }
+
+    /* ---- top cap: stays dark so the Android status icons stay readable ---- */
+    .tb { background: var(--hd); border-radius: 0 0 26px 26px; box-shadow: none; padding-bottom: 14px }
+    .tb b { font-family: var(--fd); font-size: 19px; letter-spacing: -.035em; font-weight: 700 }
+    .tb .ib { background: #ffffff1a; color: #fff }
+
+    /* ---- bottom navigation: active item expands into a pill ---- */
+    .tabs { left: 0; right: 0; bottom: 0; max-width: none; margin: 0; gap: 2px; border: 0; border-radius: 28px 28px 0 0; background: var(--sf); box-shadow: 0 -14px 34px -16px #10142030; padding: 10px 12px calc(10px + var(--sab)) }
+    .tabs button { flex-direction: row; gap: 8px; padding: 11px 14px; border-radius: 999px; font-size: 14px; font-weight: 650; color: var(--t2); transition: background .2s, color .2s }
+    .tabs button span { display: none }
+    .tabs button.on { background: color-mix(in srgb, var(--ac) 14%, transparent); color: var(--ac) }
+    .tabs button.on span { display: inline }
+    .tabs .plus { width: 54px; height: 54px; padding: 0; border-radius: 50%; background: var(--tx); color: var(--bg); margin-top: -30px; border: 5px solid var(--bg); box-shadow: var(--sh2) }
+
+    /* ---- desktop sidebar ---- */
+    .side { background: var(--sf); border-right: 0; box-shadow: 1px 0 0 var(--bd) }
+    .side nav button { border-radius: 999px; font-weight: 650; font-size: 15px }
+    .side nav button.on { background: color-mix(in srgb, var(--ac) 13%, transparent); color: var(--ac) }
+    .side nav button.on span { display: inline }
+    .side .me { color: var(--tx); font-size: 14px; font-weight: 600; background: var(--bg); border: 0; border-radius: 20px }
+    .side .me small { color: var(--t2); font-weight: 500 }
+
+    /* ---- page titles ---- */
+    .ph h2 { font-size: 36px; letter-spacing: -.05em; font-weight: 750 }
+    .h { font-family: var(--fd); font-size: 19px; font-weight: 650; letter-spacing: -.03em; color: var(--tx); text-transform: none; margin: 28px 0 12px }
+
+    /* ---- home: greeting + bento tiles ---- */
+    .gh { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin: 6px 0 20px }
+    .gh small { font-size: 15px; color: var(--t2); font-weight: 500 }
+    .gh h2 { font-size: 38px; line-height: 1; letter-spacing: -.055em; font-weight: 750; margin-top: 4px }
+    .gh .av { width: 56px; height: 56px; font-size: 22px; border: 0; box-shadow: 0 0 0 4px var(--sf) }
+    .bento { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 18px }
+    .bt { position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: flex-end; gap: 2px; min-height: 124px; padding: 16px 18px; border-radius: 28px; background: var(--sf); box-shadow: var(--sh); text-align: left }
+    .bt b { font-family: var(--fd); font-size: 46px; line-height: .95; letter-spacing: -.06em; font-weight: 750 }
+    .bt small { font-size: 13.5px; font-weight: 650; color: var(--t2) }
+    .bt .ti { position: absolute; top: 14px; right: 14px; width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; background: color-mix(in srgb, var(--sf) 70%, transparent) }
+    .bt.ta { background: color-mix(in srgb, var(--ac) 13%, var(--sf)) }
+    .bt.ta .ti { color: var(--ac) }
+    .bt.tb2 { background: color-mix(in srgb, #0ea5a4 14%, var(--sf)) }
+    .bt.tb2 .ti { color: #0b8e8d }
+    .bt.tw { background: color-mix(in srgb, var(--wn) 15%, var(--sf)) }
+    .bt.tw .ti, .bt.tw b { color: var(--wn) }
+    .bt.te { background: color-mix(in srgb, var(--er) 13%, var(--sf)) }
+    .bt.te .ti, .bt.te b { color: var(--er) }
+    .bt.big { grid-column: 1/-1; min-height: 168px; color: #fff; cursor: pointer; background: linear-gradient(150deg, var(--ac), color-mix(in srgb, var(--ac) 62%, #070a18)); box-shadow: 0 26px 40px -24px color-mix(in srgb, var(--ac) 85%, #000) }
+    .bt.big::after { content: ""; position: absolute; right: -46px; top: -46px; width: 190px; height: 190px; border-radius: 50%; border: 30px solid #ffffff17; pointer-events: none }
+    .bt.big::before { content: ""; position: absolute; right: 26px; top: 26px; width: 58px; height: 58px; border-radius: 50%; border: 12px solid #ffffff12; pointer-events: none }
+    .bt.big b { font-size: 84px; color: #fff; letter-spacing: -.07em }
+    .bt.big small { color: #ffffffd0; font-size: 14.5px }
+    .bt.big p { color: #ffffffe0; font-size: 14px; margin-top: 4px; max-width: 90% }
+    .bt.big.good { background: linear-gradient(150deg, var(--ok), color-mix(in srgb, var(--ok) 60%, #04120b)) }
+    @media(min-width:900px) { .bento { grid-template-columns: repeat(4, 1fr) } .bt.big { min-height: 190px } }
+
+    /* quick actions: one scrolling row of pills */
+    .qa { display: flex; gap: 8px; overflow-x: auto; margin: 0 -16px 6px; padding: 4px 16px 10px; scrollbar-width: none }
+    .qa::-webkit-scrollbar { display: none }
+    .qa button { flex: none; flex-direction: row; gap: 8px; padding: 11px 17px; border: 0; border-radius: 999px; background: var(--sf); box-shadow: 0 1px 2px #10142018; color: var(--ac); transition: transform .1s }
+    .qa button .i { width: 18px; height: 18px }
+    .qa span { font-size: 14px; font-weight: 650; color: var(--tx); white-space: nowrap }
+    @media(min-width:900px) { .qa { margin: 0 0 6px; padding: 4px 0 10px; flex-wrap: wrap } }
+
+    /* summary tiles on the profile page */
+    .stats { gap: 10px }
+    .st { border: 0; border-radius: 22px; padding: 16px 8px 14px; box-shadow: var(--sh); background: var(--sf) }
+    .st b { font-family: var(--fd); font-size: 32px; letter-spacing: -.06em; font-weight: 750; line-height: 1 }
+    .st small { font-size: 12.5px; font-weight: 600; margin-top: 4px; display: block }
+    .st.wn, .st.er, .st.ok { background: var(--sf) }
+
+    /* ---- document and vehicle cards: tinted by status ---- */
+    .dc, .vc { border: 0; border-radius: 26px; padding: 14px 16px 14px 14px; gap: 14px; box-shadow: var(--sh); transition: transform .15s, box-shadow .15s }
+    .dc:hover, .vc:hover { transform: translateY(-1px); box-shadow: var(--sh2) }
+    .dc[data-s=er] { background: color-mix(in srgb, var(--er) 8%, var(--sf)) }
+    .dc[data-s=wn] { background: color-mix(in srgb, var(--wn) 9%, var(--sf)) }
+    .ic, .vp { width: 54px; height: 54px; border-radius: 19px; background: color-mix(in srgb, var(--ac) 14%, var(--sf)) }
+    .ic.er { background: color-mix(in srgb, var(--er) 16%, var(--sf)) }
+    .ic.wn { background: color-mix(in srgb, var(--wn) 18%, var(--sf)) }
+    .ic.ok { background: color-mix(in srgb, var(--ok) 15%, var(--sf)) }
+    .vp { width: 62px; height: 62px; border-radius: 20px }
+    .in b { font-family: var(--fd); font-size: 17px; letter-spacing: -.025em; font-weight: 650 }
+    .in small { font-size: 13.5px; margin: 3px 0 7px }
+    .rt { font-size: 12px; font-weight: 600 }
+
+    /* hero (vehicle details) and profile cover */
+    .hero { border-radius: 28px; box-shadow: 0 26px 40px -26px color-mix(in srgb, var(--ac) 85%, #000) }
+    .hero h2 { font-size: 30px; letter-spacing: -.05em }
+    .hero .btn { background: #fff; color: #10131c; box-shadow: none }
+    .cover { border-radius: 26px 26px 0 0 }
+    .pfc { border-radius: 26px; padding: 0 }
+    .pg2 { height: 8px }
+
     /* settings rows */
-    .grp { padding: 4px 16px }
-    .row { padding: 13px 0 }
-    .ri { border-radius: 10px; background: color-mix(in srgb, var(--ac) 10%, var(--sf)) }
-    .row.rd .ri { background: color-mix(in srgb, var(--er) 12%, var(--sf)) }
-    .rb b { font-weight: 600 }
-    .sw span { background: color-mix(in srgb, var(--tx) 16%, var(--bg)) }
-    .pg2 { height: 6px }
+    .grp { padding: 4px 18px }
+    .row { padding: 14px 0 }
+    .ri { border-radius: 14px; background: color-mix(in srgb, var(--ac) 12%, var(--sf)) }
+    .row.rd .ri { background: color-mix(in srgb, var(--er) 14%, var(--sf)) }
+    .sw span { background: color-mix(in srgb, var(--tx) 18%, var(--bg)) }
 
     /* upload */
-    .drop, .slot { border-radius: 14px; border-width: 1.5px }
-    .slot.has { border-style: solid; border-color: var(--bd) }
-    .sl-b button { border: 1px solid var(--bd); box-shadow: none; border-radius: 10px }
-    .fi { border-radius: 10px }
+    .drop, .slot { border-radius: 20px; border-width: 1.5px }
+    .slot.has { border-color: var(--bd) }
+    .sl-b button { border-radius: 999px }
+    .fi { border-radius: 14px }
+    .ck span { border: 0; border-radius: 14px; background: color-mix(in srgb, var(--tx) 6%, var(--sf)) }
 
-    /* modal, sheets, toast, loader */
-    .ov { background: #060a14a6; -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px) }
-    .md { border-radius: 20px; border: 1px solid var(--bd); box-shadow: var(--sh2) }
-    .mh h3 { font-size: 18px; letter-spacing: -.02em }
-    .mi { border-radius: 11px; background: color-mix(in srgb, var(--ac) 11%, var(--sf)) }
-    .mi.er { background: color-mix(in srgb, var(--er) 12%, var(--sf)) }
-    .mi.wn { background: color-mix(in srgb, var(--wn) 14%, var(--sf)) }
-    .me { border-radius: 10px; background: color-mix(in srgb, var(--er) 11%, transparent) }
-    .si { border-radius: 12px }
-    .to { border-radius: 12px; font-weight: 600; box-shadow: var(--sh2) }
-    .lc { border-radius: 18px; border: 1px solid var(--bd); box-shadow: var(--sh2) }
-    @media(max-width:600px) { .md, .md.wide { border-radius: 20px 20px 0 0; border-bottom: 0 } }
+    /* ---- sheets, dialogs, toast ---- */
+    .ov { background: #070a14a8; -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px) }
+    .md { border-radius: 30px; box-shadow: var(--sh2) }
+    .mh h3 { font-size: 21px; letter-spacing: -.04em }
+    .mi { border-radius: 16px; background: color-mix(in srgb, var(--ac) 13%, var(--sf)) }
+    .mi.er { background: color-mix(in srgb, var(--er) 14%, var(--sf)) }
+    .mi.wn { background: color-mix(in srgb, var(--wn) 16%, var(--sf)) }
+    .mx { border-radius: 50%; background: color-mix(in srgb, var(--tx) 7%, transparent) }
+    .me { border-radius: 14px; background: color-mix(in srgb, var(--er) 11%, transparent) }
+    .si { border-radius: 18px }
+    .to { border-radius: 999px; padding: 12px 20px; box-shadow: var(--sh2) }
+    .lc { border-radius: 26px; box-shadow: var(--sh2) }
+    @media(max-width:600px) {
+      .md, .md.wide { border-radius: 30px 30px 0 0 }
+      .md::before { content: ""; flex: none; width: 42px; height: 5px; border-radius: 5px; background: color-mix(in srgb, var(--tx) 16%, transparent); margin: 10px auto 0 }
+    }
 
-    /* vault */
-    .vlock .big { border-radius: 22px; background: var(--ac) }
-    .vib { border-radius: 10px; background: var(--sf) }
-    .vav { border-radius: 12px }
-    .ban { border-radius: 14px; border-width: 1px; border-color: color-mix(in srgb, var(--ac) 55%, var(--bd)) }
-    .ck span { border-width: 1px; border-radius: 10px; background: var(--sf) }
-    .sws button { border-color: var(--sf) }
-    .pad button { background: #ffffff1c; border: 1px solid #ffffff26 }
-    .pad button:active { background: #ffffff40 }
-
-    /* viewer */
-    #vw nav button, #vw nav a { border-radius: 10px; border: 1px solid #ffffff1f }
-
-    /* fixes */
-    .st.wn, .st.er, .st.ok { background: var(--sf) }
-    .side .me { color: var(--tx); font-size: 14px; font-weight: 600 }
-    .side .me small { color: var(--t2); font-weight: 500 }
+    /* ---- vault ---- */
+    .vlock .big { border-radius: 30px; background: linear-gradient(150deg, var(--ac), color-mix(in srgb, var(--ac) 62%, #070a18)) }
+    .vav { border-radius: 18px }
+    .vib { border-radius: 50%; border: 0; background: color-mix(in srgb, var(--tx) 7%, transparent) }
+    .ban { border: 0; border-radius: 22px; box-shadow: var(--sh), 0 0 0 1.5px color-mix(in srgb, var(--ac) 50%, transparent) }
+    .pad button { background: #ffffff1c; border: 0 }
+    #vw nav button, #vw nav a { border-radius: 999px }
 
     @media(prefers-reduced-motion:reduce) { *, *:before, *:after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important } }
   </style>
@@ -2335,7 +2355,7 @@
 
     /* ---------- SHELL & NAV ---------- */
     const N = [['home', 'Home', 'home'], ['docs', 'Documents', 'folder'], ['veh', 'Vehicles', 'car'], ['vault', 'Vault', 'key'], ['me', 'Profile', 'user']];
-    const nb = n => `<button data-n="${n[0]}" onclick="go('${n[0]}')">${I(n[2], 22)}<span>${n[1]}</span></button>`;
+    const nb = n => `<button data-n="${n[0]}" aria-label="${n[1]}" onclick="go('${n[0]}')">${I(n[2], 22)}<span>${n[1]}</span></button>`;
     const av = (u, c = '') => u.photo ? `<img class="av ${c}" src="${esc(u.photo)}" alt="" onerror="this.style.visibility='hidden'">` : `<div class="av ${c}">${esc((u.name || '?')[0].toUpperCase())}</div>`;
     const skel = () => '<div class="sk" style="height:120px;margin-bottom:14px"></div><div class="stats">' + '<div class="sk" style="height:80px"></div>'.repeat(4) + '</div>' + '<div class="sk" style="height:78px;margin-bottom:10px"></div>'.repeat(3);
     function chrome() {
@@ -2386,7 +2406,7 @@
     const bad = d => ['er', 'wn'].includes(st(d.expiry)[0]);
     function card(d) {
       const s = st(d.expiry), v = d.kind == 'vehicle' && S.vs.find(x => x.id == d.vehicleId), n = d.files.length;
-      return `<div class="dc" onclick="view('${d.id}')"><div class="ic ${s[0]}">${ico(d.kind, d.title)}</div><div class="in"><b>${esc(d.title)}</b><small>${esc(d.number || 'No number')}${v ? ' · ' + esc(v.number) : ''}${d.holder ? ' · ' + esc(d.holder) : ''}</small><span class="bd ${s[0]}">${s[1]}</span></div><div class="rt">${pgTxt(d.files)}<span style="display:flex;gap:6px"><button class="star ${d.fav ? 'on' : ''}" onclick="event.stopPropagation();fav('${d.id}')" aria-label="Star document">${I('star', 17)}</button><button class="ib" onclick="event.stopPropagation();dmenu('${d.id}')" aria-label="Options">${I('more', 18)}</button></span></div></div>`
+      return `<div class="dc" data-s="${s[0]}" onclick="view('${d.id}')"><div class="ic ${s[0]}">${ico(d.kind, d.title)}</div><div class="in"><b>${esc(d.title)}</b><small>${esc(d.number || 'No number')}${v ? ' · ' + esc(v.number) : ''}${d.holder ? ' · ' + esc(d.holder) : ''}</small><span class="bd ${s[0]}">${s[1]}</span></div><div class="rt">${pgTxt(d.files)}<span style="display:flex;gap:6px"><button class="star ${d.fav ? 'on' : ''}" onclick="event.stopPropagation();fav('${d.id}')" aria-label="Star document">${I('star', 17)}</button><button class="ib" onclick="event.stopPropagation();dmenu('${d.id}')" aria-label="Options">${I('more', 18)}</button></span></div></div>`
     }
     /* a document can have a Front and a Back side; they count as ONE document */
     const lbOf = x => x.lb || ((/^\[(Front|Back)\]/.exec(x.f ? '' : (x.n || '')) || [])[1]) || '';
@@ -2402,8 +2422,9 @@
     /* ---------- PAGES ---------- */
     function pHome() {
       const D = S.docs, att = D.filter(bad).sort((a, b) => st(a.expiry)[2] - st(b.expiry)[2]), ex = D.filter(d => st(d.expiry)[0] == 'er').length, u = S.user, pn = D.filter(d => d.fav), sn = D.filter(d => { const n = st(d.expiry)[2]; return n > 30 && n <= 90 }).sort((a, b) => st(a.expiry)[2] - st(b.expiry)[2]);
-      return `${banner()}<div class="hero"><div style="position:relative;z-index:1"><small>${greet()}</small><h2>${esc(u.name.split(' ')[0])}</h2><p>${att.length ? `${att.length} document${att.length > 1 ? 's need' : ' needs'} your attention` : 'All your documents are up to date'}</p></div><button onclick="go('me')" aria-label="Profile">${av(u, 'lg')}</button></div>
-  <div class="stats">${[['Documents', D.length, ''], ['Vehicles', S.vs.length, ''], ['Expiring', att.length - ex, 'wn'], ['Expired', ex, 'er']].map(x => `<div class="st ${x[2]}"><b>${x[1]}</b><small>${x[0]}</small></div>`).join('')}</div>
+      const n0 = att[0], big = att.length ? `<div class="bt big" onclick="S.st='all';go('docs')"><small>Needs attention</small><b>${att.length}</b><p>${esc(n0.title)} · ${st(n0.expiry)[1]}</p></div>` : `<div class="bt big good" onclick="go('docs')"><small>All good</small><b>${D.length}</b><p>${D.length ? 'documents, all up to date' : 'No documents yet. Tap + to add one'}</p></div>`;
+      return `${banner()}<div class="gh"><div><small>${greet()}</small><h2>${esc(u.name.split(' ')[0])}</h2></div></div>
+  <div class="bento">${big}${[['Documents', D.length, 'ta', 'file', "S.st='all';go('docs')"], ['Vehicles', S.vs.length, 'tb2', 'car', "go('veh')"], ['Expiring soon', att.length - ex, 'tw', 'bell', "S.st='wn';go('docs')"], ['Expired', ex, 'te', 'alert', "S.st='er';go('docs')"]].map(x => `<button class="bt ${x[2]}" onclick="${x[4]}"><span class="ti">${I(x[3], 18)}</span><b>${x[1]}</b><small>${x[0]}</small></button>`).join('')}</div>
   <div class="qa"><button onclick="docForm()">${I('file', 24)}<span>Add document</span></button><button onclick="vehForm()">${I('car', 24)}<span>Add vehicle</span></button><button onclick="go('docs')">${I('search', 24)}<span>Search</span></button><button onclick="S.fv=1;S.f='all';go('docs')">${I('star', 24)}<span>Starred</span></button><button onclick="exportICS()">${I('cal', 24)}<span>Calendar</span></button><button onclick="exportCSV()">${I('table', 24)}<span>Export CSV</span></button></div>
   ${att.length ? '<h3 class="h">Needs attention</h3>' + att.map(card).join('') : ''}
   ${pn.length ? '<h3 class="h">Pinned</h3>' + pn.map(card).join('') : ''}${sn.length ? '<h3 class="h">Next 90 days</h3>' + sn.map(card).join('') : ''}<h3 class="h">Recent documents</h3>${D.slice(-5).reverse().map(card).join('') || empty('No documents yet. Tap + to add one', 'file')}`
