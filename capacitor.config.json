@@ -1,0 +1,19 @@
+{
+  "appId": "com.nexus.dochub",
+  "appName": "Nexus Docs",
+  "webDir": "www",
+  "server": {
+    "androidScheme": "https",
+    "errorPath": "offline.html"
+  },
+  "android": {
+    "allowMixedContent": false,
+    "backgroundColor": "#0F1B3D"
+  },
+  "plugins": {
+    "LocalNotifications": {
+      "smallIcon": "ic_stat_nexus",
+      "iconColor": "#2D4BF0"
+    }
+  }
+}

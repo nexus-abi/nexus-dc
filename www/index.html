@@ -1,0 +1,2998 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#0f1b3d" id="tc">
+  <title>Nexus Document Hub</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/png"
+    href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAIAAAD8GO2jAAAFbElEQVR4nHWWS4wcVxWG//+cc6tfMz1jkowVG1s2dpxEEcLi4bADBCwAiYhNWMCKRYREeKyQIrxBggULFlEIrJBYZBEUlKVRJJQsCIJVFB4hIbYTO4knNrFMYmamq7uq7mFx6zXTTavUfVXq+s7r/+8tbhz9DGikkQoqGZq1gYHUtGb3HyPt0OaahQxQ0kAhDWKAsr6jZFqYpZ8legKtoIOqFsxCTRchDtCNlCaANnQ5QOnnvq8Od82yTDS46wq6JLoRBlFQbZmylPu++w5VDaQ6VtEhKVFAQSXMVlGMVMBUgkhqaGiimriqBlGDCyUQCoh7L/cenaIHOtPSVTXL57EoCxIgSCcjhO4ovYyoHAQqAiHoaGTuPbrUdEBX0k01m+XVvafvPvbhu9xFREEBLeWrZpsbazHS3Ul771Zx8c2d0dAcB+hGaKuZbgYqYb6IZ07d/fvffvfQ5hirPosSV7fLe44bgKKMP/rZyxeevzFd18q73AklVZb1LmLzhZ86efjQ5rgsY4zev6rKY/TZrNr+d/6312fzeQwmD5z5UFGSEnr0WpxywEFJvCLZooC7i3DlRWKQyc7MX70yB1CUTjFSO7pokoBgP521ZlRESa7sDwB3lBWEeP929db1sigpYkCXO2GAQJoZ7PeBkg5qi4sRDghBIgUdDeWBUwMVxAhVRmedH4RUSq1U/H8fONEFEOkSTwGywCwoADhAjIYGGKCkoPEBGGSVD1IkpApIlBX+/q9yb4aTx+TIlgCoKrz8aunA2fuNcFEWBapKRBRQiIECGKhllGV6EhVJSQF29/yR87vXbvjZ+/WZJ9bGQ+7O/FuP7QL449PT6QQAFgXe/y+GI4BUBakxSuWsosgSvS2ibhGJ0YBbd/Cfl6rHf5OTiBGTMSfjTgOkgqGsNJ9zb6Z7M8kXUlZKmizRU0GhP4PoKEtsrPHXv5u/8Jdic8pF4THW8BQhaTRtU6IqoiIBUOFKuli/gnmBw3fKNx4azBf4yS9n167H8ZBNgFoHtb6RHlRKANRAQd2Q0EYiDUiDap/GXu6PfnPw2XP2ysX401/NWr02SUgiQJQ13QwIDmFvq0h1gJps2ZdpVSEE/vj7oyNbfP7Pxc1bngW49ysI4EF6iJCeDwyrhgygLOGOnV0/dVx/+MhoNoc7yrKdkDshKoR19IgQmwqW6EYGQtoZbE65OWUIcMfXv5J99fNZCDi0QRKVRyGHvp7ng3SC1nQgAMHR5huwr0sR0LRJTEZ89sk1AJNRvTk9fn58e9dNMR5BKJc+2L51+K1PPXj02uUN0Txztv0J7tb1vecDQEIwB8rKVbA+AYCqqntOYHOdlUeBPHXpD9/705M5d+778pFPvPLYX587ZoNFiAyO4B4cyz5Qh2ZZ9s71gkAWRJVIW4fSlKZUJQClvD3f/s6LT/xn/sFddvhrR77w2n2/OH2i8pwZEeDB6xal9Lsw7mE80tcu7z56/h/3np66U0QAJekQUgBxguVw9+hVy6ofnHn4Y3eefObii1fmb3/0jr13X5+EUFhdBKzxQc8E1Og6Gduzz90sL9xqTog2lUAxEZ3n83OfPrb1xbU3dt6pol/YvvClrYduX50OLO/oDp449xRolJZeF0SYmomsePVLeocoFmtnP/fmS/f8/Ebx3seHnzz+wrffeGk4GZZW1QGCgycefJq1s3r0fZI1tEceOq8SJnDLB2c+EkfrO3vXpjffLVu6OTL3TqZE6A48WHrjaNa9+72dQIHMaYP8ymUJ5SSzfDKEVbSmOem7OehFm9w7Q+zLve6MUaz1qgHBJcsQQhkirULTGW9nUBt4mY4VdE37YOdVR4gwd2tSbq/2zv8A8R3x4QSUDyQAAAAASUVORK5CYII=">
+  <link rel="apple-touch-icon" href="icons/icon-180.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Nexus Docs">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="description"
+    content="Keep all personal and vehicle documents in one secure place, with expiry reminders.">
+  <style>
+    :root {
+      --bg: #f4f6fb;
+      --sf: #fff;
+      --tx: #0f1b3d;
+      --t2: #6a7592;
+      --ac: #3b5bfd;
+      --bd: #e6eaf4;
+      --ok: #12a150;
+      --wn: #e08a00;
+      --er: #e5484d;
+      --sh: 0 1px 2px #1b2a6b0d, 0 8px 24px #1b2a6b10;
+      --g: linear-gradient(135deg, #0f1b3d, #2d4bf0 75%, #7c3aed);
+      --hd: #0f1b3d;
+      --sat: env(safe-area-inset-top, 0px);
+      --sab: env(safe-area-inset-bottom, 0px)
+    }
+
+    [data-t=dark] {
+      --bg: #080d1a;
+      --sf: #111a2e;
+      --tx: #eef2ff;
+      --t2: #8d9bbd;
+      --bd: #1f2b47;
+      --sh: 0 8px 24px #0006;
+      --hd: #0a1124
+    }
+
+    * {
+      box-sizing: border-box
+    }
+
+    html {
+      -webkit-text-size-adjust: 100%;
+      overscroll-behavior-y: contain
+    }
+
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--tx);
+      -webkit-tap-highlight-color: transparent;
+      line-height: 1.4
+    }
+
+    button,
+    input,
+    select,
+    textarea {
+      font: inherit;
+      color: inherit
+    }
+
+    button {
+      cursor: pointer;
+      border: 0;
+      background: none;
+      padding: 0
+    }
+
+    a {
+      color: var(--ac);
+      cursor: pointer;
+      font-weight: 600
+    }
+
+    small,
+    .t2 {
+      color: var(--t2)
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin: 0
+    }
+
+    .i {
+      flex: none;
+      display: block
+    }
+
+    /* splash */
+    #sp {
+      position: fixed;
+      inset: 0;
+      background: var(--g);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 18px;
+      z-index: 300;
+      transition: opacity .45s;
+      color: #fff
+    }
+
+    #sp .lg {
+      width: 72px;
+      height: 72px;
+      font-size: 34px;
+      border-radius: 22px;
+      animation: pl 1.4s infinite
+    }
+
+    #sp b {
+      font-size: 20px;
+      letter-spacing: .3px
+    }
+
+    #sp .bar {
+      width: 140px;
+      height: 4px;
+      border-radius: 4px;
+      background: #ffffff33;
+      overflow: hidden
+    }
+
+    #sp .bar:after {
+      content: "";
+      display: block;
+      height: 100%;
+      width: 40%;
+      background: #fff;
+      border-radius: 4px;
+      animation: ld 1.1s infinite ease-in-out
+    }
+
+    @keyframes pl {
+      50% {
+        transform: scale(1.07)
+      }
+    }
+
+    @keyframes ld {
+      0% {
+        margin-left: -40%
+      }
+
+      100% {
+        margin-left: 100%
+      }
+    }
+
+    .lg {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      background: #ffffff26;
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      font-size: 21px;
+      color: #fff;
+      flex: none
+    }
+
+    .lg.sm {
+      width: 34px;
+      height: 34px;
+      font-size: 16px;
+      border-radius: 11px;
+      background: var(--g)
+    }
+
+    /* base ui */
+    .card {
+      background: var(--sf);
+      border: 1px solid var(--bd);
+      border-radius: 18px;
+      padding: 20px;
+      box-shadow: var(--sh)
+    }
+
+    .fld {
+      position: relative;
+      margin-bottom: 12px
+    }
+
+    .fld>.i {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--t2);
+      pointer-events: none
+    }
+
+    .fld input {
+      padding-left: 44px
+    }
+
+    .fld .eye {
+      position: absolute;
+      right: 6px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      color: var(--t2)
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      padding: 13px 14px;
+      margin-bottom: 12px;
+      border: 1.5px solid var(--bd);
+      border-radius: 12px;
+      background: var(--bg);
+      outline: 0;
+      transition: border-color .15s, box-shadow .15s
+    }
+
+    .fld input {
+      margin: 0
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: var(--ac);
+      box-shadow: 0 0 0 4px color-mix(in srgb, var(--ac) 12%, transparent)
+    }
+
+    .lb {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--t2);
+      display: block;
+      margin: 0 0 5px
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 13px 20px;
+      border-radius: 12px;
+      background: var(--g);
+      color: #fff;
+      font-weight: 700;
+      box-shadow: 0 6px 16px color-mix(in srgb, var(--ac) 27%, transparent);
+      transition: transform .1s, opacity .15s
+    }
+
+    .btn:active {
+      transform: scale(.97)
+    }
+
+    .btn.full {
+      width: 100%
+    }
+
+    .btn+.btn.full {
+      margin-top: 10px
+    }
+
+    .btn.sec {
+      background: var(--bg);
+      color: var(--tx);
+      box-shadow: none;
+      border: 1.5px solid var(--bd)
+    }
+
+    .btn.dg {
+      background: var(--er);
+      box-shadow: 0 6px 16px #e5484d44
+    }
+
+    .btn.sm {
+      padding: 9px 14px;
+      font-size: 14px;
+      border-radius: 10px
+    }
+
+    /* auth */
+    .split {
+      display: grid;
+      min-height: 100vh;
+      min-height: 100dvh
+    }
+
+    .brand {
+      background: var(--g);
+      color: #fff;
+      padding: calc(28px + var(--sat)) 24px 28px
+    }
+
+    .brand h1 {
+      margin: 14px 0 6px;
+      font-size: 26px
+    }
+
+    .brand p {
+      opacity: .85
+    }
+
+    .brand ul {
+      list-style: none;
+      padding: 0;
+      margin: 26px 0 0;
+      display: none;
+      gap: 14px;
+      flex-direction: column
+    }
+
+    .brand li {
+      display: flex;
+      gap: 12px;
+      align-items: center
+    }
+
+    .brand li .i {
+      background: #ffffff22;
+      padding: 8px;
+      border-radius: 10px;
+      width: 36px;
+      height: 36px
+    }
+
+    .fm {
+      display: grid;
+      place-items: center;
+      padding: 20px
+    }
+
+    .auth {
+      width: 100%;
+      max-width: 400px
+    }
+
+    .auth h1 {
+      font-size: 24px;
+      margin-bottom: 4px
+    }
+
+    .auth>p {
+      color: var(--t2);
+      margin-bottom: 18px
+    }
+
+    .sub {
+      text-align: center;
+      margin-top: 16px;
+      color: var(--t2);
+      font-size: 14px;
+      line-height: 2
+    }
+
+    @media(min-width:900px) {
+      .split {
+        grid-template-columns: 1.1fr 1fr
+      }
+
+      .brand {
+        padding: 60px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center
+      }
+
+      .brand h1 {
+        font-size: 40px
+      }
+
+      .brand ul {
+        display: flex
+      }
+    }
+
+    /* shell */
+    #shell {
+      display: none
+    }
+
+    #shell.on {
+      display: block
+    }
+
+    .side {
+      display: none
+    }
+
+    .col {
+      min-width: 0
+    }
+
+    main {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 16px 16px calc(120px + var(--sab));
+      animation: fi .25s
+    }
+
+    @keyframes fi {
+      from {
+        opacity: 0;
+        transform: translateY(6px)
+      }
+    }
+
+    .tb {
+      position: sticky;
+      top: 0;
+      z-index: 15;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: calc(10px + var(--sat)) 16px 10px;
+      background: var(--hd);
+      color: #fff;
+      box-shadow: 0 2px 12px #0003
+    }
+
+    .tb .ib {
+      background: #ffffff1f;
+      color: #fff
+    }
+
+    .tb b {
+      flex: 1
+    }
+
+    .tabs {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      background: var(--sf);
+      border-top: 1px solid var(--bd);
+      padding: 8px 6px calc(8px + var(--sab));
+      z-index: 20
+    }
+
+    .tabs button,
+    .side nav button {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      font-size: 11px;
+      color: var(--t2);
+      font-weight: 600;
+      padding: 4px 12px
+    }
+
+    .tabs button.on,
+    .side button.on {
+      color: var(--ac)
+    }
+
+    .tabs .plus {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: var(--g);
+      color: #fff;
+      margin-top: -26px;
+      box-shadow: 0 8px 18px color-mix(in srgb, var(--ac) 40%, transparent);
+      justify-content: center;
+      padding: 0
+    }
+
+    @media(min-width:900px) {
+      #shell.on {
+        display: grid;
+        grid-template-columns: 250px 1fr
+      }
+
+      .tabs,
+      .tb {
+        display: none
+      }
+
+      main {
+        width: 100%;
+        max-width: 880px;
+        padding: 32px
+      }
+
+      .side {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        position: sticky;
+        top: 0;
+        height: 100vh;
+        padding: 24px 14px;
+        background: var(--sf);
+        border-right: 1px solid var(--bd)
+      }
+
+      .side .lg {
+        background: var(--g)
+      }
+
+      .side nav {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        margin-top: 18px
+      }
+
+      .side nav button {
+        flex-direction: row;
+        gap: 12px;
+        font-size: 15px;
+        padding: 12px 14px;
+        border-radius: 12px;
+        width: 100%
+      }
+
+      .side nav button:hover {
+        background: var(--bg)
+      }
+
+      .side nav button.on {
+        background: color-mix(in srgb, var(--ac) 9%, transparent)
+      }
+
+      .side .add {
+        margin-top: 14px
+      }
+
+      .side .me {
+        margin-top: auto;
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        padding: 10px;
+        border-radius: 14px;
+        border: 1px solid var(--bd);
+        text-align: left;
+        width: 100%
+      }
+
+      .side .me div {
+        min-width: 0
+      }
+
+      .side .me b,
+      .side .me small {
+        display: block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        font-size: 13px
+      }
+    }
+
+    /* avatar */
+    .av {
+      border-radius: 50%;
+      background: var(--g);
+      color: #fff;
+      font-weight: 800;
+      display: grid;
+      place-items: center;
+      object-fit: cover;
+      flex: none;
+      width: 42px;
+      height: 42px;
+      font-size: 17px
+    }
+
+    .av.sm {
+      width: 34px;
+      height: 34px;
+      font-size: 14px
+    }
+
+    .av.lg {
+      width: 64px;
+      height: 64px;
+      font-size: 26px;
+      border: 2px solid #fff6
+    }
+
+    .av.xl {
+      width: 104px;
+      height: 104px;
+      font-size: 42px;
+      border: 4px solid var(--sf);
+      box-shadow: var(--sh)
+    }
+
+    /* pages */
+    .ph {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px
+    }
+
+    .ph h2 {
+      font-size: 24px
+    }
+
+    .h {
+      margin: 24px 0 10px;
+      font-size: 13px;
+      color: var(--t2);
+      text-transform: uppercase;
+      letter-spacing: .7px;
+      font-weight: 700
+    }
+
+    .hero {
+      background: var(--g);
+      color: #fff;
+      border-radius: 22px;
+      padding: 22px;
+      box-shadow: 0 12px 28px color-mix(in srgb, var(--ac) 27%, transparent);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      justify-content: space-between
+    }
+
+    .hero:after {
+      content: "";
+      position: absolute;
+      right: -40px;
+      top: -50px;
+      width: 170px;
+      height: 170px;
+      border-radius: 50%;
+      background: #ffffff14;
+      pointer-events: none
+    }
+
+    .hero small {
+      color: #ffffffb3
+    }
+
+    .hero h2 {
+      font-size: 26px;
+      margin: 2px 0 6px
+    }
+
+    .hero p {
+      opacity: .9;
+      font-size: 14px
+    }
+
+    .hero button {
+      position: relative;
+      z-index: 1
+    }
+
+    .hero.vh {
+      justify-content: flex-start
+    }
+
+    .hero.vh img {
+      width: 84px;
+      height: 84px;
+      border-radius: 16px;
+      object-fit: cover;
+      border: 2px solid #fff6;
+      cursor: pointer
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(78px, 1fr));
+      gap: 10px;
+      margin: 14px 0
+    }
+
+    .st {
+      background: var(--sf);
+      border: 1px solid var(--bd);
+      border-radius: 16px;
+      padding: 14px 8px;
+      text-align: center;
+      box-shadow: var(--sh)
+    }
+
+    .st b {
+      font-size: 24px;
+      display: block
+    }
+
+    .st small {
+      font-size: 12px
+    }
+
+    .st.wn b {
+      color: var(--wn)
+    }
+
+    .st.er b {
+      color: var(--er)
+    }
+
+    .qa {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin: 14px 0
+    }
+
+    .qa button {
+      background: var(--sf);
+      border: 1px solid var(--bd);
+      border-radius: 16px;
+      padding: 16px 4px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      align-items: center;
+      box-shadow: var(--sh);
+      color: var(--ac);
+      transition: transform .1s
+    }
+
+    .qa button:active {
+      transform: scale(.96)
+    }
+
+    .qa span {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--tx)
+    }
+
+    .dc,
+    .vc {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px;
+      margin-bottom: 10px;
+      background: var(--sf);
+      border: 1px solid var(--bd);
+      border-radius: 16px;
+      cursor: pointer;
+      box-shadow: var(--sh);
+      transition: transform .12s, border-color .15s
+    }
+
+    .dc:hover,
+    .vc:hover {
+      border-color: var(--ac)
+    }
+
+    .dc:active,
+    .vc:active {
+      transform: scale(.99)
+    }
+
+    .ic,
+    .vp {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      background: color-mix(in srgb, var(--ac) 9%, transparent);
+      color: var(--ac);
+      display: grid;
+      place-items: center;
+      flex: none
+    }
+
+    .ic.er {
+      background: #e5484d1f;
+      color: var(--er)
+    }
+
+    .ic.wn {
+      background: #e08a001f;
+      color: var(--wn)
+    }
+
+    .ic.ok {
+      background: #12a1501f;
+      color: var(--ok)
+    }
+
+    .vp {
+      width: 60px;
+      height: 60px;
+      object-fit: cover
+    }
+
+    .in {
+      flex: 1;
+      min-width: 0
+    }
+
+    .in b {
+      display: block
+    }
+
+    .in small {
+      display: block;
+      margin: 2px 0 6px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis
+    }
+
+    .rt {
+      text-align: right;
+      font-size: 12px;
+      color: var(--t2);
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 4px
+    }
+
+    .ib {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      background: var(--bg);
+      display: grid;
+      place-items: center
+    }
+
+    .ch {
+      color: var(--t2)
+    }
+
+    .bd {
+      font-size: 12px;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 12px;
+      display: inline-block;
+      background: var(--bg);
+      color: var(--t2)
+    }
+
+    .er {
+      color: var(--er);
+      background: #e5484d1f
+    }
+
+    .wn {
+      color: var(--wn);
+      background: #e08a001f
+    }
+
+    .ok {
+      color: var(--ok);
+      background: #12a1501f
+    }
+
+    .chips {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      margin: 0 0 12px;
+      padding-bottom: 2px
+    }
+
+    .chip {
+      padding: 8px 16px;
+      border-radius: 20px;
+      border: 1.5px solid var(--bd);
+      background: var(--sf);
+      white-space: nowrap;
+      font-weight: 600;
+      font-size: 14px
+    }
+
+    .chip.on {
+      background: var(--ac);
+      color: #fff;
+      border-color: var(--ac)
+    }
+
+    .srch {
+      position: relative
+    }
+
+    .srch .i {
+      position: absolute;
+      left: 14px;
+      top: 14px;
+      color: var(--t2)
+    }
+
+    .srch input {
+      padding-left: 44px
+    }
+
+    .two {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px
+    }
+
+    .empty {
+      text-align: center;
+      color: var(--t2);
+      padding: 34px 10px;
+      border: 2px dashed var(--bd);
+      border-radius: 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px
+    }
+
+    .bk {
+      color: var(--ac);
+      font-weight: 700;
+      margin-bottom: 12px;
+      font-size: 15px;
+      display: flex;
+      align-items: center;
+      gap: 4px
+    }
+
+    .sk {
+      background: linear-gradient(90deg, var(--bd), var(--bg), var(--bd));
+      background-size: 200% 100%;
+      animation: sh 1.2s infinite;
+      border-radius: 16px
+    }
+
+    @keyframes sh {
+      to {
+        background-position: -200% 0
+      }
+    }
+
+    /* profile */
+    .cover {
+      height: 120px;
+      border-radius: 22px 22px 0 0;
+      background: var(--g);
+      position: relative;
+      overflow: hidden
+    }
+
+    .cover:after {
+      content: "";
+      position: absolute;
+      right: -30px;
+      top: -60px;
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      background: #ffffff14
+    }
+
+    .pfc {
+      padding: 0;
+      overflow: hidden
+    }
+
+    .pfh {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-end;
+      gap: 14px;
+      padding: 0 20px 20px;
+      margin-top: -52px
+    }
+
+    .avw {
+      position: relative;
+      border-radius: 50%
+    }
+
+    .cam {
+      position: absolute;
+      right: 2px;
+      bottom: 4px;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--ac);
+      color: #fff;
+      display: grid;
+      place-items: center;
+      border: 3px solid var(--sf)
+    }
+
+    .pfi {
+      flex: 1;
+      min-width: 160px;
+      padding-top: 56px
+    }
+
+    .pfi h2 {
+      font-size: 22px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap
+    }
+
+    .pfi small {
+      display: block
+    }
+
+    .vb {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--ok);
+      background: #12a1501f;
+      padding: 3px 9px;
+      border-radius: 12px
+    }
+
+    .pg2 {
+      height: 8px;
+      border-radius: 8px;
+      background: var(--bg);
+      overflow: hidden;
+      margin: 10px 0 8px
+    }
+
+    .pg2 i {
+      display: block;
+      height: 100%;
+      background: var(--g);
+      border-radius: 8px;
+      transition: width .6s
+    }
+
+    .grp {
+      padding: 6px 18px
+    }
+
+    .row {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+      width: 100%;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--bd);
+      text-align: left
+    }
+
+    .grp>.row:last-child {
+      border: 0
+    }
+
+    .ri {
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      background: color-mix(in srgb, var(--ac) 8%, transparent);
+      color: var(--ac);
+      display: grid;
+      place-items: center;
+      flex: none
+    }
+
+    .row.rd .ri {
+      background: #e5484d1a;
+      color: var(--er)
+    }
+
+    .row.rd b {
+      color: var(--er)
+    }
+
+    .rb {
+      flex: 1;
+      min-width: 0
+    }
+
+    .rb b {
+      display: block;
+      font-size: 15px;
+      font-weight: 600;
+      overflow-wrap: anywhere
+    }
+
+    .rb small {
+      display: block;
+      font-size: 12.5px
+    }
+
+    .rb i {
+      color: var(--t2);
+      font-weight: 400;
+      font-style: normal
+    }
+
+    .sw {
+      position: relative;
+      width: 48px;
+      height: 28px;
+      flex: none
+    }
+
+    .sw input {
+      position: absolute;
+      opacity: 0;
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      cursor: pointer;
+      z-index: 1
+    }
+
+    .sw span {
+      position: absolute;
+      inset: 0;
+      background: var(--bd);
+      border-radius: 20px;
+      transition: .2s
+    }
+
+    .sw span:after {
+      content: "";
+      position: absolute;
+      left: 3px;
+      top: 3px;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: #fff;
+      box-shadow: 0 1px 4px #0004;
+      transition: .2s
+    }
+
+    .sw input:checked+span {
+      background: var(--ac)
+    }
+
+    .sw input:checked+span:after {
+      transform: translateX(20px)
+    }
+
+    /* forms in modal */
+    .seg {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+      background: var(--bg);
+      padding: 4px;
+      border-radius: 12px;
+      margin-bottom: 12px
+    }
+
+    .seg button {
+      padding: 10px;
+      border-radius: 9px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      color: var(--t2)
+    }
+
+    .seg .on {
+      background: var(--sf);
+      color: var(--ac);
+      box-shadow: var(--sh)
+    }
+
+    .drop {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      text-align: center;
+      padding: 18px;
+      border: 2px dashed var(--ac);
+      border-radius: 14px;
+      color: var(--ac);
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      margin: 2px 0 10px;
+      background: color-mix(in srgb, var(--ac) 5%, transparent)
+    }
+
+    .drop.dg {
+      background: color-mix(in srgb, var(--ac) 13%, transparent)
+    }
+
+    .fi {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 12px;
+      background: var(--bg);
+      border-radius: 10px;
+      margin-bottom: 6px;
+      font-size: 14px
+    }
+
+    .fi span {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      display: flex;
+      gap: 8px;
+      align-items: center
+    }
+
+    .fi button {
+      color: var(--er)
+    }
+
+    .pv {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+      margin-bottom: 12px
+    }
+
+    .pv img,
+    .pv .vp {
+      width: 64px;
+      height: 64px;
+      border-radius: 14px;
+      object-fit: cover
+    }
+
+    /* custom modal / sheet / toast / loader */
+    .ov {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      background: #050a1a99;
+      backdrop-filter: blur(4px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      opacity: 0;
+      transition: opacity .2s
+    }
+
+    .ov.on {
+      opacity: 1
+    }
+
+    .md {
+      width: 100%;
+      max-width: 440px;
+      max-height: calc(100dvh - 32px);
+      display: flex;
+      flex-direction: column;
+      background: var(--sf);
+      border-radius: 22px;
+      box-shadow: 0 24px 60px #0007;
+      transform: translateY(18px) scale(.97);
+      transition: transform .25s cubic-bezier(.2, .9, .3, 1.15)
+    }
+
+    .ov.on .md {
+      transform: none
+    }
+
+    .md.wide {
+      max-width: 560px
+    }
+
+    .mh {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 18px 20px 6px
+    }
+
+    .mh h3 {
+      flex: 1;
+      font-size: 19px;
+      overflow-wrap: anywhere
+    }
+
+    .mi {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      background: color-mix(in srgb, var(--ac) 9%, transparent);
+      color: var(--ac);
+      display: grid;
+      place-items: center;
+      flex: none
+    }
+
+    .mi.er {
+      background: #e5484d1f;
+      color: var(--er)
+    }
+
+    .mi.wn {
+      background: #e08a001f;
+      color: var(--wn)
+    }
+
+    .mx {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      display: grid;
+      place-items: center;
+      color: var(--t2)
+    }
+
+    .mx:hover {
+      background: var(--bg)
+    }
+
+    .mb {
+      padding: 10px 20px;
+      overflow: auto;
+      -webkit-overflow-scrolling: touch
+    }
+
+    .mb p.mt {
+      color: var(--t2);
+      line-height: 1.6
+    }
+
+    .me {
+      display: none;
+      margin: 2px 0 6px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      background: #e5484d1a;
+      color: var(--er);
+      font-size: 13.5px;
+      font-weight: 600
+    }
+
+    .me.on {
+      display: block
+    }
+
+    .mf {
+      display: flex;
+      gap: 10px;
+      padding: 12px 20px 20px
+    }
+
+    .mf .btn {
+      flex: 1;
+      margin: 0
+    }
+
+    .sl {
+      display: flex;
+      flex-direction: column;
+      padding-bottom: 12px
+    }
+
+    .si {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 13px 6px;
+      border-radius: 12px;
+      text-align: left;
+      width: 100%
+    }
+
+    .si:hover {
+      background: var(--bg)
+    }
+
+    .si .i {
+      color: var(--ac)
+    }
+
+    .si span {
+      flex: 1
+    }
+
+    .si b {
+      display: block;
+      font-weight: 600
+    }
+
+    .si small {
+      display: block;
+      font-size: 12.5px
+    }
+
+    .si.rd,
+    .si.rd .i {
+      color: var(--er)
+    }
+
+    @media(max-width:600px) {
+      .ov {
+        align-items: flex-end;
+        padding: 0
+      }
+
+      .md,
+      .md.wide {
+        max-width: none;
+        border-radius: 22px 22px 0 0;
+        transform: translateY(100%);
+        max-height: 92dvh
+      }
+
+      .mf {
+        padding-bottom: calc(20px + var(--sab))
+      }
+    }
+
+    #ts {
+      position: fixed;
+      z-index: 200;
+      left: 50%;
+      transform: translateX(-50%);
+      top: calc(14px + var(--sat));
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      width: calc(100% - 28px);
+      max-width: 420px;
+      pointer-events: none
+    }
+
+    .to {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 16px;
+      border-radius: 14px;
+      background: var(--tx);
+      color: var(--bg);
+      font-weight: 600;
+      font-size: 14px;
+      box-shadow: 0 10px 30px #0004;
+      opacity: 0;
+      transform: translateY(-14px);
+      transition: .28s
+    }
+
+    .to.in {
+      opacity: 1;
+      transform: none
+    }
+
+    .to.ok .i {
+      color: #4ade80
+    }
+
+    .to.er .i {
+      color: #ff8b8f
+    }
+
+    .to.inf .i {
+      color: #8aa4ff
+    }
+
+    .ld {
+      position: fixed;
+      inset: 0;
+      z-index: 150;
+      background: #050a1a80;
+      backdrop-filter: blur(3px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .2s
+    }
+
+    .ld.on {
+      opacity: 1;
+      pointer-events: auto
+    }
+
+    .lc {
+      background: var(--sf);
+      border-radius: 20px;
+      padding: 26px 30px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+      box-shadow: 0 20px 50px #0006;
+      min-width: 190px
+    }
+
+    .sp {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      border: 4px solid var(--bd);
+      border-top-color: var(--ac);
+      animation: sn .8s linear infinite
+    }
+
+    @keyframes sn {
+      to {
+        transform: rotate(360deg)
+      }
+    }
+
+    /* viewer */
+    #vw {
+      position: fixed;
+      inset: 0;
+      background: #05080f;
+      z-index: 50;
+      display: none;
+      flex-direction: column;
+      padding-bottom: var(--sab)
+    }
+
+    #vw.on {
+      display: flex
+    }
+
+    #vw nav {
+      height: calc(56px + var(--sat));
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: var(--sat) 12px 0;
+      color: #fff;
+      flex: none
+    }
+
+    #vw nav b {
+      flex: 1;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis
+    }
+
+    #vw nav button,
+    #vw nav a {
+      background: #ffffff1f;
+      color: #fff;
+      border: 0;
+      padding: 8px 14px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-size: 14px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px
+    }
+
+    #zc {
+      flex: 1;
+      overflow: hidden;
+      display: grid;
+      place-items: center;
+      touch-action: none;
+      min-height: 0
+    }
+
+    #zc img {
+      max-width: 100%;
+      max-height: 100%
+    }
+
+    #zc iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      background: #fff
+    }
+
+    .pg {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 16px;
+      padding: 12px;
+      color: #fff;
+      flex: none
+    }
+
+    .pg button {
+      background: #ffffff1f;
+      color: #fff;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center
+    }
+
+    .star {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      display: grid;
+      place-items: center;
+      color: var(--t2);
+      background: var(--bg)
+    }
+
+    .star.on {
+      color: #f5a623
+    }
+
+    .star.on svg {
+      fill: #f5a623
+    }
+
+    .off {
+      background: var(--wn);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 12px;
+      display: none
+    }
+
+    .off.on {
+      display: inline-block
+    }
+
+    .lgi {
+      display: block;
+      border-radius: 11px;
+      flex: none
+    }
+
+    .ban {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      padding: 14px;
+      margin-bottom: 14px;
+      border-radius: 16px;
+      background: var(--sf);
+      border: 1.5px solid var(--ac);
+      box-shadow: var(--sh)
+    }
+
+    .ban img {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      flex: none
+    }
+
+    .ban .in small {
+      margin: 2px 0 0
+    }
+
+    .cks {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px
+    }
+
+    .ck {
+      position: relative
+    }
+
+    .ck input {
+      position: absolute;
+      opacity: 0;
+      margin: 0;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      cursor: pointer
+    }
+
+    .ck span {
+      display: block;
+      text-align: center;
+      padding: 11px 4px;
+      border: 1.5px solid var(--bd);
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 14px;
+      background: var(--bg)
+    }
+
+    .ck input:checked+span {
+      background: var(--ac);
+      border-color: var(--ac);
+      color: #fff
+    }
+
+    .sws {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin: 4px 0 10px
+    }
+
+    .sws button {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: 3px solid var(--sf);
+      box-shadow: 0 0 0 2px var(--bd);
+      display: grid;
+      place-items: center;
+      color: #fff
+    }
+
+    .sws button.on {
+      box-shadow: 0 0 0 3px var(--tx)
+    }
+
+    #lk {
+      position: fixed;
+      inset: 0;
+      z-index: 400;
+      background: var(--g);
+      color: #fff;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      padding: calc(24px + var(--sat)) 24px calc(24px + var(--sab));
+      user-select: none
+    }
+
+    #lk.on {
+      display: flex
+    }
+
+    .dots {
+      display: flex;
+      gap: 16px;
+      margin: 8px 0 12px
+    }
+
+    .dots i {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      border: 2px solid #fff;
+      display: block
+    }
+
+    .dots i.f {
+      background: #fff
+    }
+
+    .pad {
+      display: grid;
+      grid-template-columns: repeat(3, 72px);
+      gap: 14px
+    }
+
+    .pad button {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: #ffffff22;
+      color: #fff;
+      font-size: 26px;
+      font-weight: 600;
+      display: grid;
+      place-items: center
+    }
+
+    .pad button:active {
+      background: #ffffff4d
+    }
+
+    .shake {
+      animation: shk .35s
+    }
+
+    @keyframes shk {
+      25% {
+        transform: translateX(-10px)
+      }
+
+      75% {
+        transform: translateX(10px)
+      }
+    }
+    /* ---- v3: pull to refresh, front/back slots ---- */
+    #ptr {
+      position: fixed;
+      top: calc(var(--sat) + 56px);
+      left: 50%;
+      width: 40px;
+      height: 40px;
+      margin-left: -20px;
+      border-radius: 50%;
+      background: var(--sf);
+      color: var(--ac);
+      box-shadow: var(--sh);
+      display: grid;
+      place-items: center;
+      z-index: 40;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-60px)
+    }
+
+    .slots {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 10px
+    }
+
+    .slot {
+      position: relative;
+      min-height: 124px;
+      border: 2px dashed var(--ac);
+      border-radius: 14px;
+      background: color-mix(in srgb, var(--ac) 5%, transparent);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 28px 8px 10px;
+      overflow: hidden
+    }
+
+    .slot.has {
+      border-style: solid;
+      padding: 0;
+      background: var(--bg)
+    }
+
+    .slot img {
+      width: 100%;
+      height: 124px;
+      object-fit: cover;
+      display: block
+    }
+
+    .slot .pdf {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      padding: 28px 10px 10px;
+      color: var(--t2);
+      max-width: 100%
+    }
+
+    .slot .pdf small {
+      max-width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap
+    }
+
+    .sl-l {
+      position: absolute;
+      top: 8px;
+      left: 10px;
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--ac);
+      z-index: 1
+    }
+
+    .slot.has .sl-l {
+      background: var(--ac);
+      color: #fff;
+      padding: 2px 9px;
+      border-radius: 10px;
+      top: 8px;
+      left: 8px
+    }
+
+    .sl-b {
+      display: flex;
+      gap: 8px
+    }
+
+    .sl-b button {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      padding: 8px 14px;
+      border-radius: 10px;
+      background: var(--sf);
+      color: var(--ac);
+      font-size: 12px;
+      font-weight: 700;
+      box-shadow: var(--sh)
+    }
+
+    .sl-x {
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #000a;
+      color: #fff;
+      display: grid;
+      place-items: center;
+      z-index: 2
+    }
+
+    .pgb {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 10px
+    }
+
+    .pgb button {
+      flex: 1;
+      white-space: nowrap;
+      padding-left: 8px;
+      padding-right: 8px
+    }
+
+    .two > * {
+      min-width: 0
+    }
+
+    input[type=date] {
+      min-width: 0;
+      max-width: 100%
+    }
+    /* ---------- v3.1 password vault ---------- */
+    .tabs button { padding: 4px 8px }
+    .vav { width: 48px; height: 48px; border-radius: 14px; display: grid; place-items: center; flex: none; color: #fff; font-weight: 800; font-size: 19px }
+    .vtag { display: inline-block; font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 20px; background: color-mix(in srgb, var(--ac) 10%, transparent); color: var(--ac) }
+    .vqa { display: flex; gap: 6px; flex: none }
+    .vib { width: 36px; height: 36px; border-radius: 11px; display: grid; place-items: center; flex: none; color: var(--t2); background: var(--bg); border: 1px solid var(--bd) }
+    .vib:active { transform: scale(.94) }
+    .vlock { text-align: center; padding: 34px 22px }
+    .vlock .big { width: 76px; height: 76px; border-radius: 24px; background: var(--g); color: #fff; display: grid; place-items: center; margin: 0 auto 16px; box-shadow: 0 10px 24px color-mix(in srgb, var(--ac) 35%, transparent) }
+    .vlock h3 { margin: 0 0 6px; font-size: 20px }
+    .vlock p { color: var(--t2); margin: 0 0 16px; line-height: 1.5 }
+    .vlock ul { text-align: left; color: var(--t2); padding-left: 20px; margin: 0 0 20px; line-height: 1.7; font-size: 14px }
+    .vrow { display: flex; align-items: center; gap: 12px; padding: 11px 0; border-bottom: 1px solid var(--bd) }
+    .vrow .rb b.mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: .4px }
+    .vact { display: flex; gap: 8px; margin-top: 14px }
+    .vact .btn { flex: 1; padding: 10px 8px }
+    .vmeta { font-size: 12px; color: var(--t2); margin: 14px 0 0; line-height: 1.6 }
+    .vmeta.wn { color: var(--wn) }
+    .vmeter { height: 5px; border-radius: 3px; background: var(--bd); overflow: hidden; margin: -4px 0 4px }
+    .vmeter i { display: block; height: 100%; width: 0; transition: width .2s, background .2s }
+    .vml { font-size: 12px; color: var(--t2); display: block; margin-bottom: 10px; min-height: 16px }
+    .vgen { margin: 0 0 12px }
+    .cf { display: grid; grid-template-columns: 1fr 1fr 36px 36px; gap: 6px; margin-bottom: 8px; align-items: center }
+    .cf input { margin: 0; padding: 10px 11px; font-size: 14px }
+    .vpre { display: flex; gap: 6px; flex-wrap: wrap; margin: 10px 0 4px }
+    .vpre button { padding: 6px 11px; border-radius: 16px; border: 1.5px dashed var(--bd); font-size: 12.5px; font-weight: 600; color: var(--t2) }
+  </style>
+</head>
+
+<body>
+  <div id="sp"><img alt="" width="76" height="76" style="border-radius:22px;animation:pl 1.4s infinite"><b>Nexus
+      Document Hub</b>
+    <div class="bar"></div>
+  </div>
+  <div id="app"></div>
+  <div id="shell">
+    <aside class="side" id="side"></aside>
+    <div class="col">
+      <header class="tb" id="top"></header>
+      <main id="main"></main>
+    </div>
+    <div class="tabs" id="tabs"></div>
+  </div>
+  <div id="vw">
+    <nav><button onclick="closeV()" id="vb"></button><b id="vt"></b><button id="vsh" onclick="vShare()"></button><a id="vd" target="_blank" rel="noopener"></a>
+    </nav>
+    <div id="zc"></div>
+    <div class="pg" id="pg"><button id="pp" onclick="step(-1)" aria-label="Previous"></button><span
+        id="vn"></span><button id="pn" onclick="step(1)" aria-label="Next"></button></div>
+  </div>
+  <script src="config.js"></script>
+  <script>
+    const API = window.NEXUS_API || 'https://script.google.com/macros/s/AKfycbyoUI9XTWBGhkSbduh6Z4ck2WANW3Wcrok7zk4gOqZRePt5zKVAqrU21YM4S6tjW2A5WQ/exec', $ = s => document.querySelector(s);
+    const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    /* status bar / navigation bar sizes come from the Android shell (MainActivity) */
+    function setIns(v) { try { const a = String(v).split(',').map(Number), r = document.documentElement.style; r.setProperty('--sat', (a[0] || 0) + 'px'); r.setProperty('--sab', (a[1] || 0) + 'px') } catch (e) { } }
+    window.__ins = setIns;
+    try { if (window.NexusInsets) setIns(NexusInsets.get()) } catch (e) { }
+    const barTheme = () => { try { window.NexusInsets && NexusInsets.bars(document.documentElement.dataset.t == 'dark') } catch (e) { } };
+    const plug = n => { try { const C = window.Capacitor; return (C.Plugins && C.Plugins[n]) || (C.registerPlugin ? C.registerPlugin(n) : null) } catch (e) { return null } };
+    let S = { token: localStorage.tk || '', user: null, vs: [], docs: [], tab: 'home', vid: null, q: '', f: 'all', st: 'all', so: 'exp', hf: 'all', fv: 0, off: 0 }, AE = '';
+    const LOGO = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAIAAABt+uBvAAAQHUlEQVR4nO2ce5AlVX3Hv9/f6b537p3nzuyyS+RlAEsUCkiqWCVsUlFLiBFiBVBLrFgRUpAgCMQUGCManxSJioYkSkAqmqAhVmmEIJAgKUArkpWwrKy1IIsrILvA7rznzr3dfX75o5/3MTP3dt8ZZlOc6prquef0Oef36e/vdx7d93L0VdsAggKQ8QlAkISEJ4AAJBlnJYVbsgRkSxZIZrIAMtMEIHFhAtKhHpAi42ODFCEEAIi40aZ6ACzXRHSldOpPmJs0mmRJ2JJEloCZk5hO+i+zZdhWvvk8/ZfLVStc8vLoULBUcsUYREbGdFqbRqaS9l6luWyuP2Ynbd0TACSdzD3vqJ3sje0gNGaU0g/ttMlTUS65kRmRdrKFs9oJTVpROy2dX1I7YSsOmq9ZX3QAY0zJdVQT7awFnSgHBCjM6mp90aEqXdcRCSmsMR0BCdJZr9qJyrjGrKVnpXQiR0tdbN3RCa0yjonqwdpqJ27RiZtfb3QEoAgdx6gKkyF8regkBjrrUjvx2EySElu1ltpJJwrOOqVDqtIxJorQUc1rRSfOQhqh1xmdsIxE8klC5lrSYXidsw61k3a9qfza0oEQQByk1yEdqiY2Y821E9EBxInbWF90ktsIEgmpNaZDAeisQ+2k9TC2n1xz7USHtHV9vdAhGfhqbdyBNdVO2tt4Jr3O6ERdT8ujtYlVpYO4t6CERz/pgG0G56JDWqXvqzBuZc3phEG6r9oBKSJiUht6E10TO1UqKMaoQpUghZKtOcYqoUtCaVX7SAegk7nnfaAjRjxf56YXXNdJb7uSzExPm2979vZEWo7rVEVgqSrWwnUdQj0/iDtpM721gPi+DpRNZcANLPpDhwTSiWJf6JhazRsbHbzswt/e9sbjHMeQ4d1O/kbzmfiD9MOmEwKadJuOEQUanswtBJs2iLVMSoV/wu203Xumv3Xn3ieenh0ZKlmL4tqJMiZ+9d19oEOS4vs6OlK9/ZYLTz3pSPQ7eQF2Pll/7avL1fKSZWZmvT/5yI8e2zVVrThWi2ontDpZixUds0Rkbr7xyQ+ffepJR9brfmBtELQfmh626yPQwOr8gr9Q8x/ZNb/vJU9V/UCtbTo8z44Mu5+55tRyyfSHDgVsmijmp0OK59nDN4++adtrrNVSycSjSR+SKkgIaYTGYM9znggPG3fCz5MkQmv1yMMHTzphw/88Ojk0aJYI2N1qJywsxekAQogqy+XSQNkV6RuaTrRgBD97pvHCQZ9EvJmfJhLVAddqGEMKaScs7ySo8tNhdK4K29bj1UghIwDtOgJgFVFIJXLSyZjsZGpB0blyH/2qAKPYUkKRm05yxAoqSAdhB9eMz/KM2Dx3z6GdNAY5abnC2omenb98jFJAIEEtSCccnRFHkPx0Ej9fOw9rZRTFbACAhoY0zc57p5NxMWam/3nX6E2O9vIwAnDYuBMbHHemgHYApDGoEB1mh79VBLGMRh2Dp1JG2YhRgE48ihWmE6NhovJVSKrwPLVm6RYUu/YsOk5VJI4YWoBOa5AuSAfxvVqFFFY9UJZXH1FaSkHhKBZYbXi24YEUIuSTXzvRdkc2JuXfG6QANp6brUoql3jEZrebko4TTRFBFKATjVpOUe1k9wZXeRRrX1i0JGtVwiWqEiSU+enEezhOf+iEubq6gFbkH9+jpIfIq51k7zjacu2HdjTZAH3ZU9JbFKITPxcrTCcqrOuDTkiGUZDOr50oy+kPnTQiRn3s2HPVzhsUy/uOtd2XDzPCvf3UyDx0GHlo8lys2POscAa0UpDIF8elhxWeApxfCGqLdqjKaIancc+TeJRhl/m3iQ4JktaKU9izkihol3GxwMIIvnufd9sd9dEhBqEoCBvgLz9YOfJwsYqWjbZwarNQ02v+ujY7r46BENNz+p6zy+e82Q0r7NxWwNl5dZzAdaTsinEYTh3DBaNq4jFIp8cUZlZw1iII0PDYaKjTDzpZfS5xZxUAnn7W3vuQt2kD/SCSxuy8GoN/+PSgWsB0uNDz8eB278CUlhwYwYuT+sZTXSw75JMkqcqFRa3V1Rh1jHVd4xiY8AGaxOMJCYiCUFrLwDKw8H0bBLRKVSWbnosVesuAXbhYuYTRIQ4PMQgAQIHRYd77kPcvdzXe9bZSEMC0MSIxPEjfh+tABA0P5dIyLTBFhEg4QSQHBawIQRihJH5LC2VgCYjV0AZhqDgRZLY7Cj4pzsS8pZMqAgtrEdjoxPMxPMjrb6o987wV6bxjmy0f2JWni3FcjnoopEj4+JoKqtIP2PDQ8NDw4Xn0/OgRbvhQOKQTRfRk0VGMjmTWur0lVZRcTE7rJ26ska0DVt6URuKWMYsQJimEQVIksjoLIR7RpCmq533LACRUohflekx+gLGRyNEcg9D7iiXJ+IS0drVlRG8a/lsgCCgR0UJ04gaWCdJLpTBqBRbDQ7zuK7Unfh4Y0xcdCQrSiQ9pw5aHTqZYD8kqAgsSqnAdzMzpX3y+5vvQLtaly6ZQ0kt0tSvtZEJY4rEFtCMkowV014ysolJmdYBBABJBgLFh/vej/s3/WjdSSERMzMtNJ2YSBtd4Qzovnai66KRLG+D7mBjjhy4cqDeiTYAwGP3N1xZ/+lRBR8saXIhOGu2L0cnmdptEMD2n5/9O6byzSpMz6hiowgjqnn7sizXfz00HGZ/oAx2J3bUAHTKSNaWn0EGgVtdrLq4cuUVqdQgRWIwMxo7WaWLdXb1NLpafjkI0fZ5VgA6SCnsL0iKo1zE6zI9+oLJY13CSENjU0dC2lO+aUNPMLqd2MidShA7j3BzDvDFQxZnb3PPPKk1ONznatTfUrIVIzyNadpDOT0ebMBWi0yzpnhMJq+jgaDv8r36rPpIs/XtDFI0bhegkLpZZ2uaik7ljeQgB1mJ8rM3Rhvmlry0+/Jg/MsjeHC2NGH3QTvat0tx0sguZPMkIggBvPaPV0RqefuyLtYVFXWrrZ+nUNAHOQycRUROsfHSYrAnzrMXCRIkc7YjQ0QRWUS5x73N2Kp4EdE+HYUjtDx3GNuemE7eU18NCm6CK8TF+/LKK50UwVOG6EOntgXbY0Uzn89OJDWuqJQed/BE6m4zAD/CW33AvPL98cEodEzHqPXW0KxcdTVZhRegw3l4o4GIJo8Di8vcNvP54M1/TXrbrs3yiV6eK0wk9K/bV3HSi8SvJzZ9CFQ5W+PHLK31ZixXUThJWk1py0+l2R5FsOtpT6GhbT3bef1754JS6zsqXdGikuYf5tJPFRAD56SQTxZUAhZvQybHUijTc7ggdbWpGW65aWVnpqqCYdjQ2OKoxN500Iq4QMyoDmBjjhhGOj3J8lGMj7KgIEho72vgYx+LyG0Y4McbKwAp8jNAYRk8m8kXltIA6zbXkp7O8i4VD0gXnlM89s5Qsr0gMVYk49DQbCVVsPdn5r38aCSyI6MGttRgoM6kwm1Q1ULVWD8z4L04FxpGBkgBiFbnpiMJJZzG56ZCghM+el7+35RLKpW6jOAlVDFZXLq9Qq2ooriGAK965+deP87fvqj2ye6FcYrVigiAnHQJOxuC8dKKJQicltBvTPK9Z/gou8W2M5gqVpCF/uXBg+4u7d03+YnALT3/v0Rc4x+17YvOnbprd8aS3aZQ2yENHkrc7itFJz1cE1Ot0cvnyVlXIqcbchx++5d/2/uClxWnPBrAQmi2DoxeccMatN7z/728evPXbcxtHjA16pKMZQIXopMNvj9YXS1atUPbO7T/nno8+dnDPhtLQWGkoDPuquuA3/urhO+7/xa7vX/HJxuLIN++a2zhq1O8AZSntJAtUaf1Oca90EF244ijWx6RQAJ71/+iBz+08+PSWyriQgVrfBr4NArWumInq8PZndpx3z/XXXOoctdn16mrYNZ2WDbOCdMJiquz4itRqpFA+Nz7+nf94dvvmyljDetlmHZrJxtzJE8d+4oxL79/zv9946duXvmtkbj4w0gsdTcsU0w4JsOSafS/Ud+6eIeH5NiS1aocS4tvgtp99v+pWfGsN07eLhFy0jYny8Je3XXHFiecOVYa/uuu+N5zuTww7tpOLLa8diQfpQnTCwzjymRt3z8z6JVda1gd9P4R8auaXe2afHzAlCzvdmFcgHEwJ1vz6Lb/5Z8ePvOqs7129YBf3HHxhtvr8icdW6ou2RUTLaCc8cbKW56dDWsVgxXlk58x7Lv/xlRcde8rrR5u+FZ5OkroM5MsVC9SWHbOvdnDOXxxxqwp921FbH3j+MV+DilPeN/fCZ99wye8etfXiB7/ww/2Pb6lOHFiYmcHk4RNHBMFc+GRqBToZlTW9QJWbTphlLcdGSzt2zf7BlTu2bBzIrNFaf+EvO3dH6wOVZJuifb9JCBrDyVl7zraJ379EYOnbYKw0eNubPnLH3h++9/7rpuszF7/u9645+d3X7fjmTbu+u3lwo2+DcLmoqqHN2jUdZn5YoCid8CQIUK04pEzN+BpXRVjEVZGMv7SQvTD0j6afXYh/WyHsW3jbFYQQtToe3b14ETZvqg7XfG//4tSZd139wNlfqPmNm35655e3Xfnvz/zo2u23bqqOhyPapurIhG75+TP1iksq2DWd0MX6Ric7ljmOiXPTOtvEstyLW1kdtWQND/HJZ+v24KZTNh9179M7JyojP9j/k9+686rvnfXZ973mrY9P7r3ogc9VnLJChZxpLJ5+xPFyYONTe6eqZYHtgU4arftFJ5FA+LIbEJ1Ety0+iV41bc7KFo6zpGM9QqnV9Tv32KtOeYfnB6p208DYg88/9va7//w/n3vk4gc/f2BxekBKVlUonh9cdco77rlb64s2Xnl2RSdCc/Rp/9h3OktLYMUmsvVkCzepjKSCXsD7bx7/0kt/e91Dt28ZOwzArFfzrF827oApKeDQ7Jvaf/UZ7/zTiUvP/8ODJREhqL1oR5MgfejQCeUpIv4iPvDpua/fcNFMY+Hvfnx3yS0NlQaG3IqqNqy/4DUaXv2PT3v7tSdc9MHL5oIGTBWw3WonxqQ85rSvp2YcCnSimkHXcGY2+LXXlq770NDO6n1f+cndj76w96XaLICNleGTDzv64hPPOnX+zZ+6fu7xXY2xYVFfWzc9VqIjAI/Z+s+HkHYSOmEh12B+TqsDuOTcDW95Mzj+4v5gH4DNZgsObHrgPtx6+2RjEaODtLnoiILHbL3tEKUjABWuwAaYnvE3DJvXHTPwKxvLBPa/WH9iz+LcXLBh2HEFGuSlA/CYrd9IzTik6DTt2hioj3rdBr6KouSwWhZXoAHY9ZjVTkcA5xDVTsuSMtzoGRoQiZUFCxv0MKJ3oBNvmB3KdJptho2Xfb3MlZfSTurIUecOcTpdrdG7p5Ou5v9faGeV6EQ6yvbmFTotl8S/SP4KnSUu6fiD26/QaXaxTkf28+w3pWMzMmXYVn6lerIXtlfbAx0uTwedOXZPh/FzsVg+L792otxWOisIAS1P+3rTzkqXtPwU2cuonSXorCAEdHja15N2lkX/fxJoSnh1D9jjAAAAAElFTkSuQmCC';
+
+    /* ---------- ICONS (inline SVG, no emoji) ---------- */
+    const P = {
+      copy: '<rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/>',
+      home: '<path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/>',
+      folder: '<path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>',
+      car: '<path d="M5 17h14M3 13l2-6h14l2 6v4H3z"/><circle cx="7.5" cy="17" r="1.5"/><circle cx="16.5" cy="17" r="1.5"/>',
+      user: '<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/>',
+      plus: '<path d="M12 5v14M5 12h14"/>', search: '<circle cx="11" cy="11" r="7"/><path d="M21 21l-5-5"/>',
+      edit: '<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/>',
+      trash: '<path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14"/>', x: '<path d="M18 6L6 18M6 6l12 12"/>', check: '<path d="M20 6L9 17l-5-5"/>',
+      bell: '<path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/>',
+      lock: '<rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/>',
+      moon: '<path d="M21 13A9 9 0 1 1 11 3a7 7 0 0 0 10 10z"/>',
+      logout: '<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5M21 12H9"/>',
+      camera: '<path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/>',
+      file: '<path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/>',
+      download: '<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5M12 15V3"/>',
+      alert: '<path d="M10.3 3.9L1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/>',
+      info: '<circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/>',
+      right: '<path d="M9 18l6-6-6-6"/>', left: '<path d="M15 18l-6-6 6-6"/>',
+      mail: '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/>',
+      phone: '<path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/>',
+      id: '<rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2"/><path d="M14 10h4M14 14h4M6 16c.5-1.5 5.5-1.5 6 0"/>',
+      shield: '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>',
+      tool: '<path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.5 2.5-2.4-.6-.6-2.4z"/>',
+      more: '<circle cx="5" cy="12" r="1.3"/><circle cx="12" cy="12" r="1.3"/><circle cx="19" cy="12" r="1.3"/>',
+      pin: '<path d="M12 22s7-6.3 7-12a7 7 0 0 0-14 0c0 5.7 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/>',
+      drop: '<path d="M12 2.7l5.7 5.6a8 8 0 1 1-11.4 0z"/>',
+      cal: '<rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>',
+      sun: '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>',
+      eye: '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8S1 12 1 12z"/><circle cx="12" cy="12" r="3"/>',
+      upload: '<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M17 8l-5-5-5 5M12 3v12"/>',
+      clock: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+      image: '<rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/>',
+      devices: '<rect x="2" y="4" width="14" height="11" rx="2"/><path d="M8 19h2M5 19h8"/><rect x="18" y="8" width="4" height="9" rx="1"/>',
+      star: '<path d="M12 2l3.1 6.3 6.9 1-5 4.9 1.2 6.9L12 17.8 5.8 21.1 7 14.2 2 9.3l6.9-1z"/>',
+      share: '<circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/>',
+      refresh: '<path d="M21 12a9 9 0 0 1-15.5 6.2L3 16"/><path d="M3 21v-5h5"/><path d="M3 12A9 9 0 0 1 18.5 5.8L21 8"/><path d="M21 3v5h-5"/>',
+      table: '<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M3 15h18M9 4v16"/>',
+      palette: '<path d="M12 3a9 9 0 1 0 0 18c1.4 0 2-1 1.6-2.1-.4-1.2.3-2.4 1.6-2.4H17a4 4 0 0 0 4-4A9 9 0 0 0 12 3z"/><circle cx="7.5" cy="11" r="1"/><circle cx="10" cy="7" r="1"/><circle cx="15" cy="7.5" r="1"/>',
+      backspace: '<path d="M21 5H9l-6 7 6 7h12z"/><path d="M13 9l4 6M17 9l-4 6"/>',
+    };
+    const I = (n, s = 20) => `<svg class="i" width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${P[n] || ''}</svg>`;
+    const T = { person: [['Driving Licence', 'id'], ['Aadhaar', 'id'], ['PAN Card', 'id'], ['Passport', 'file'], ['Voter ID', 'id'], ['Health Insurance', 'shield'], ['Life Insurance', 'shield'], ['Birth Certificate', 'file'], ['Marriage Certificate', 'file'], ['Ration Card', 'id'], ['Bank Passbook', 'file'], ['Education Certificate', 'file'], ['Visa', 'file'], ['Other', 'file']], vehicle: [['RC Book', 'file'], ['Insurance', 'shield'], ['PUC', 'check'], ['Fitness Certificate', 'check'], ['Permit', 'file'], ['Road Tax', 'file'], ['Service Record', 'tool'], ['Loan / Hypothecation', 'file'], ['Warranty', 'shield'], ['Other', 'file']] };
+    const ico = (k, t) => I((T[k].find(x => x[0] == t) || [0, 'file'])[1], 22);
+    const empty = (t = 'Nothing here yet', i = 'folder') => `<div class="empty">${I(i, 30)}<span>${t}</span></div>`;
+    const BG = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'];
+
+    /* ---------- CUSTOM UI: modal, sheet, confirm, alert, toast, loader ---------- */
+    let MS = [];
+    function modal(o) {
+      return new Promise(res => {
+        const el = document.createElement('div'); el.className = 'ov';
+        const b = (o.cancel === null ? '' : `<button class="btn sec" data-c>${o.cancel || 'Cancel'}</button>`) + (o.ok === null ? '' : `<button class="btn ${o.danger ? 'dg' : ''}" data-o>${o.ok || 'OK'}</button>`);
+        el.innerHTML = `<div class="md ${o.wide ? 'wide' : ''}" role="dialog" aria-modal="true"><div class="mh">${o.icon ? `<div class="mi ${o.tone || ''}">${I(o.icon, 22)}</div>` : ''}<h3>${o.title || ''}</h3><button class="mx" data-c aria-label="Close">${I('x', 18)}</button></div><div class="mb">${o.html || ''}<div class="me"></div></div>${b ? `<div class="mf">${b}</div>` : ''}</div>`;
+        let done = 0; const ent = { close: v => { if (done) return; done = 1; MS = MS.filter(x => x !== ent); el.classList.remove('on'); setTimeout(() => { el.remove(); if (!MS.length) document.body.style.overflow = '' }, 220); res(v) } };
+        el.addEventListener('click', e => {
+          if (e.target === el && !o.sticky) return ent.close(null);
+          if (e.target.closest('[data-c]')) return ent.close(null);
+          if (e.target.closest('[data-o]')) { const v = o.pre ? o.pre(el) : true; if (v === false) return; ent.close(v === undefined ? true : v) }
+        });
+        el.addEventListener('keydown', e => { if (e.key == 'Enter' && e.target.tagName == 'INPUT' && e.target.type != 'file' && o.ok !== null) { e.preventDefault(); const k = el.querySelector('[data-o]'); k && k.click() } });
+        el.addEventListener('input', () => el.querySelector('.me').classList.remove('on'));
+        MS.push(ent); document.body.appendChild(el); document.body.style.overflow = 'hidden';
+        requestAnimationFrame(() => el.classList.add('on'));
+        o.onOpen && o.onOpen(el, ent.close);
+        if (!o.noFocus) setTimeout(() => { const f = el.querySelector('input:not([type=file]):not([type=checkbox]):not([type=date]),select'); f && f.focus() }, 260)
+      })
+    }
+    const fail = (el, m) => { const e = el.querySelector('.me'); e.textContent = m; e.classList.add('on'); return false };
+    const confirmBox = o => modal({ icon: o.icon || 'alert', tone: o.danger ? 'er' : 'wn', ok: o.ok || 'Confirm', danger: o.danger, title: o.title, html: `<p class="mt">${o.text || ''}</p>`, noFocus: 1 });
+    const alertBox = (t, title = 'Something went wrong') => modal({ icon: 'alert', tone: 'er', title, html: `<p class="mt">${esc(t)}</p>`, ok: 'Got it', cancel: null, noFocus: 1 });
+    const sheet = (title, items) => modal({ title, ok: null, cancel: null, noFocus: 1, html: '<div class="sl">' + items.map(x => `<button class="si ${x.cls || ''}" data-k="${x.k}">${I(x.i, 22)}<span><b>${x.t}</b>${x.s ? `<small>${x.s}</small>` : ''}</span></button>`).join('') + '</div>', onOpen: (el, c) => el.querySelectorAll('.si').forEach(b => b.onclick = () => c(b.dataset.k)) });
+    function toast(m, t = 'ok') {
+      let w = $('#ts'); if (!w) { w = document.createElement('div'); w.id = 'ts'; document.body.appendChild(w) }
+      const e = document.createElement('div'); e.className = 'to ' + t; e.innerHTML = I(t == 'ok' ? 'check' : t == 'er' ? 'alert' : 'info', 18) + `<span>${esc(m)}</span>`; w.appendChild(e);
+      requestAnimationFrame(() => e.classList.add('in')); setTimeout(() => { e.classList.remove('in'); setTimeout(() => e.remove(), 300) }, 3200)
+    }
+    let LD;
+    function loader(t) { if (!LD) { LD = document.createElement('div'); LD.className = 'ld'; LD.innerHTML = '<div class="lc"><div class="sp"></div><b id="lt"></b></div>'; document.body.appendChild(LD) } LD.querySelector('#lt').textContent = t || 'Please wait…'; requestAnimationFrame(() => LD.classList.add('on')) }
+    const unload = () => LD && LD.classList.remove('on'), prog = t => { if (LD) LD.querySelector('#lt').textContent = t };
+    async function busy(f, t) { loader(t); try { const r = await f(); unload(); return r ?? true } catch (e) { unload(); alertBox(e.message || 'Network error'); return null } }
+    async function api(action, d = {}) {
+      if (API.includes('PASTE')) throw Error('Set your Apps Script URL in index.html (API constant)');
+      let j; try { const r = await fetch(API, { method: 'POST', body: JSON.stringify({ action, token: S.token, ...d }) }); j = await r.json() } catch (e) { throw Error('Network error. Check your internet and try again') }
+      if (!j.ok) { if (/session/i.test(j.error)) logout(1); throw Error(j.error) } return j.data
+    }
+    const hideSplash = () => { const s = $('#sp'); if (!s) return; s.style.opacity = 0; setTimeout(() => s.remove(), 450) };
+
+    /* ---------- AUTH ---------- */
+    const inp = (id, ph, t = 'text', ac = '', ic = '') => `<div class="fld">${ic ? I(ic, 18) : ''}<input id="${id}" type="${t}" placeholder="${ph}" autocomplete="${ac}">${t == 'password' ? `<button type="button" class="eye" onclick="const x=$('#${id}');x.type=x.type=='password'?'text':'password'" aria-label="Show password">${I('eye', 18)}</button>` : ''}</div>`;
+    let ci, ct;
+    function cool(s = 60) { clearInterval(ci); ct = s; const tick = () => { const a = $('#rs'); if (!a) return clearInterval(ci); a.textContent = ct > 0 ? `Resend code in ${ct}s` : 'Resend code'; a.style.pointerEvents = ct > 0 ? 'none' : 'auto'; a.style.opacity = ct > 0 ? .5 : 1; ct--; if (ct < -1) clearInterval(ci) }; tick(); ci = setInterval(tick, 1000) }
+    function authView(m, msg) {
+      $('#app').style.display = 'block'; $('#shell').classList.remove('on');
+      const L = (t, x) => `<a onclick="authView('${x}')">${t}</a>`;
+      const C = {
+        login: ['Welcome back', 'Login to your Nexus Document Hub', inp('e', 'Email', 'email', 'username', 'mail') + inp('p', 'Password', 'password', 'current-password', 'lock'), 'Login', L('Forgot password?', 'forgot') + '<br>New here? ' + L('Create account', 'signup')],
+        signup: ['Create account', 'Free. Takes less than a minute', inp('n', 'Full name', 'text', 'name', 'user') + inp('e', 'Email', 'email', 'username', 'mail') + inp('ph', 'Phone', 'tel', 'tel', 'phone') + inp('p', 'Password (min 8 characters)', 'password', 'new-password', 'lock'), 'Create account', 'Already registered? ' + L('Login', 'login')],
+        forgot: ['Forgot password', 'We will email you a 6-digit code (max 5 per day)', inp('e', 'Registered email', 'email', '', 'mail'), 'Send code', L('Back to login', 'login')],
+        verify: ['Verify your email', 'Enter the code sent to ' + esc(AE), inp('o', '6-digit code', 'text', 'one-time-code', 'shield'), 'Verify & continue', '<a id="rs" onclick="resend(\'verify\')"></a> <small>(max 3 per day)</small><br>' + L('Back to login', 'login')],
+        reset: ['Reset password', 'Enter the code sent to ' + esc(AE), inp('o', '6-digit code', 'text', 'one-time-code', 'shield') + inp('p', 'New password (min 8 characters)', 'password', 'new-password', 'lock'), 'Reset password', '<a id="rs" onclick="resend(\'reset\')"></a><br>' + L('Back to login', 'login')]
+      }[m];
+      const F = ['Multi-page uploads: PDF, images, any file', 'Email reminders before documents expire', 'Unlimited vehicles & documents', 'Private, password-protected account'], FI = ['upload', 'bell', 'car', 'lock'];
+      $('#app').innerHTML = `<div class="split"><div class="brand"><img src="${LOGO}" width="52" height="52" alt="" style="border-radius:16px"><h1>Nexus Document Hub</h1><p>All your personal &amp; vehicle documents in one secure place.</p><ul>${F.map((t, i) => `<li>${I(FI[i], 20)}<span>${t}</span></li>`).join('')}</ul></div><div class="fm"><div class="card auth"><h1>${C[0]}</h1><p>${C[1]}</p>${C[2]}<button class="btn full" onclick="submit('${m}')">${C[3]}</button><div class="sub">${C[4]}</div></div></div></div>`;
+      document.querySelectorAll('.auth input').forEach(i => i.addEventListener('keydown', e => { if (e.key == 'Enter') submit(m) }));
+      if ($('#rs')) cool();
+      if (msg) toast(msg, 'inf'); hideSplash()
+    }
+    async function submit(m) {
+      const v = id => ($('#' + id)?.value || '').trim();
+      if ($('#e')) AE = v('e').toLowerCase();
+      const M = { login: ['login', () => ({ email: AE, password: $('#p').value })], signup: ['register', () => ({ name: v('n'), email: AE, phone: v('ph'), password: $('#p').value })], forgot: ['forgot', () => ({ email: AE })], verify: ['verify', () => ({ email: AE, otp: v('o') })], reset: ['reset', () => ({ email: AE, otp: v('o'), password: $('#p').value })] }[m];
+      const r = await busy(() => api(M[0], M[1]())); if (!r) return;
+      if (r.token) { S.token = r.token; localStorage.tk = r.token; S.tab = 'home'; load('sk') }
+      else if (r.verify) authView('verify', 'Verification code sent to your email')
+      else if (m == 'forgot') authView('reset', 'If this email is registered, a code has been sent' + (r.left != null ? ` (${r.left} left today)` : ''))
+      else if (m == 'reset') authView('login', 'Password updated. Please login')
+    }
+    async function resend(p) {
+      const r = await busy(() => api('resend', { email: AE, purpose: p }));
+      if (r) { toast('New code sent' + (r.left != null ? ` · ${r.left} resend(s) left today` : '')); cool() }
+    }
+    function logout(q) { if (!q && S.token) api('logout').catch(() => { }); S.token = ''; localStorage.removeItem('tk'); localStorage.removeItem('nxc'); localStorage.removeItem('nxpin'); localStorage.removeItem('nxv'); try { V.key = null; V.items = []; V.raw = []; V.meta = null; V.ok = 0; V.err = ''; V.q = ''; V.cat = 'all'; V.fv = 0 } catch (e) { } S.user = null; const lk = $('#lk'); lk && lk.classList.remove('on'); authView('login') }
+
+    /* ---------- SHELL & NAV ---------- */
+    const N = [['home', 'Home', 'home'], ['docs', 'Documents', 'folder'], ['veh', 'Vehicles', 'car'], ['vault', 'Vault', 'key'], ['me', 'Profile', 'user']];
+    const nb = n => `<button data-n="${n[0]}" onclick="go('${n[0]}')">${I(n[2], 22)}<span>${n[1]}</span></button>`;
+    const av = (u, c = '') => u.photo ? `<img class="av ${c}" src="${esc(u.photo)}" alt="" onerror="this.style.visibility='hidden'">` : `<div class="av ${c}">${esc((u.name || '?')[0].toUpperCase())}</div>`;
+    const skel = () => '<div class="sk" style="height:120px;margin-bottom:14px"></div><div class="stats">' + '<div class="sk" style="height:80px"></div>'.repeat(4) + '</div>' + '<div class="sk" style="height:78px;margin-bottom:10px"></div>'.repeat(3);
+    function chrome() {
+      const u = S.user;
+      $('#side').innerHTML = `<div style="display:flex;gap:12px;align-items:center"><img class="lgi" src="${LOGO}" width="40" height="40" alt=""><b>Nexus<br>Document Hub</b></div><nav>${N.map(nb).join('')}</nav><button class="btn full add" onclick="docForm()">${I('plus', 18)} Add document</button><button class="btn full sec sm" onclick="refresh()">${I('refresh', 16)} Sync now</button><button class="me" onclick="go('me')">${av(u)}<div><b>${esc(u.name)}</b><small>${esc(u.email)}</small></div></button>`;
+      $('#top').innerHTML = `<img class="lgi" src="${LOGO}" width="34" height="34" alt=""><b>Nexus Document Hub</b><span class="off ${S.off ? 'on' : ''}">Offline</span><button class="ib" onclick="refresh()" aria-label="Sync">${I('refresh', 18)}</button><button onclick="go('me')" aria-label="Profile">${av(u, 'sm')}</button>`;
+      $('#tabs').innerHTML = nb(N[0]) + nb(N[1]) + `<button class="plus" onclick="addNew()" aria-label="Add new">${I('plus', 26)}</button>` + nb(N[2]) + nb(N[3]) + nb(N[4]);
+      document.querySelectorAll('[data-n]').forEach(b => b.classList.toggle('on', b.dataset.n == S.tab))
+    }
+    /* The Google Sheet can return dates as 2026-10-12, 2026-10-12T18:30:00.000Z, 12/10/2026, a serial number etc.
+       Everything is converted to a plain YYYY-MM-DD (local) so expiry maths is always right. */
+    const p2 = n => String(n).padStart(2, '0'), ymd = d => d.getFullYear() + '-' + p2(d.getMonth() + 1) + '-' + p2(d.getDate());
+    function nd(x) {
+      if (x == null || x === '') return '';
+      if (x instanceof Date) return isNaN(x) ? '' : ymd(x);
+      if (typeof x == 'number') return x > 20000 && x < 80000 ? ymd(new Date(Math.round((x - 25569) * 864e5) + new Date().getTimezoneOffset() * 6e4)) : '';
+      x = String(x).trim(); let m;
+      if (/^\d{4}-\d{1,2}-\d{1,2}$/.test(x)) { m = x.split('-'); return m[0] + '-' + p2(m[1]) + '-' + p2(m[2]) }
+      if (m = /^(\d{4})-(\d{2})-(\d{2})T00:00:00(?:\.0+)?Z$/.exec(x)) return m[1] + '-' + m[2] + '-' + m[3];
+      if (m = /^(\d{1,2})[\/.\-](\d{1,2})[\/.\-](\d{4})$/.exec(x)) return m[3] + '-' + p2(m[2]) + '-' + p2(m[1]);
+      if (/^\d{5}$/.test(x)) return nd(+x);
+      const d = new Date(x); return isNaN(d) ? '' : ymd(d)
+    }
+    const MAP = d => ({ user: d.user && { ...d.user, dob: nd(d.user.dob) }, vs: d.vehicles, docs: (d.docs || []).map(x => ({ ...x, issue: nd(x.issue), expiry: nd(x.expiry), files: x.files || [] })) });
+    async function sync() {
+      try { const d = await api('data'); Object.assign(S, MAP(d), { off: 0 }); try { localStorage.nxc = JSON.stringify(d) } catch (e) { } schedLocal() }
+      catch (e) { const c = localStorage.nxc; if (c && /network/i.test(e.message)) { try { Object.assign(S, MAP(JSON.parse(c)), { off: 1 }); toast('You are offline. Showing saved data', 'inf'); return } catch (x) { } } throw e }
+    }
+    const draw = () => { S.day = ymd(new Date()); chrome(); go(S.tab, S.vid, 1) };
+    async function load(m) {
+      $('#app').style.display = 'none'; $('#shell').classList.add('on');
+      if (m == 'sk') {
+        $('#main').innerHTML = skel(); $('#top').innerHTML = '<img class="lgi" src="' + LOGO + '" width="34" height="34" alt=""><b>Nexus Document Hub</b>';
+        try { await sync() } catch (e) { if (!S.token) return; hideSplash(); $('#main').innerHTML = `<div class="card" style="text-align:center">${I('alert', 32)}<h3 style="margin:10px 0 6px">Could not load your data</h3><p class="t2" style="margin-bottom:16px">${esc(e.message)}</p><button class="btn" onclick="load('sk')">Try again</button></div>`; return }
+      }
+      else if (!await busy(sync)) return;
+      S.day = ymd(new Date()); chrome(); go(S.tab, S.vid); hideSplash(); if (Q == 'doc') { Q = ''; docForm() }
+    }
+    function go(t, v, keep) { S.tab = t; S.vid = v || null; document.querySelectorAll('[data-n]').forEach(b => b.classList.toggle('on', b.dataset.n == t)); const m = $('#main'); m.innerHTML = ({ home: pHome, docs: pDocs, veh: pVeh, vault: pVault, me: pMe })[t](); if (!keep) { m.style.animation = 'none'; m.offsetHeight; m.style.animation = ''; scrollTo(0, 0) } }
+
+    /* ---------- HELPERS ---------- */
+    const fd = x => { x = nd(x); if (!x) return ''; const [y, m, d] = x.split('-').map(Number); return new Date(y, m - 1, d).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }) };
+    function st(x) {
+      x = nd(x); if (!x) return ['', 'No expiry date', 9e9];
+      const [y, m, dd] = x.split('-').map(Number), t = new Date(), d = Math.round((new Date(y, m - 1, dd) - new Date(t.getFullYear(), t.getMonth(), t.getDate())) / 864e5);
+      return d < 0 ? ['er', `Expired ${-d} day${d < -1 ? 's' : ''} ago`, d] : d == 0 ? ['er', 'Expires today', 0] : d <= 30 ? ['wn', `${d} day${d > 1 ? 's' : ''} left`, d] : ['ok', 'Valid till ' + fd(x), d]
+    }
+    const bad = d => ['er', 'wn'].includes(st(d.expiry)[0]);
+    function card(d) {
+      const s = st(d.expiry), v = d.kind == 'vehicle' && S.vs.find(x => x.id == d.vehicleId), n = d.files.length;
+      return `<div class="dc" onclick="view('${d.id}')"><div class="ic ${s[0]}">${ico(d.kind, d.title)}</div><div class="in"><b>${esc(d.title)}</b><small>${esc(d.number || 'No number')}${v ? ' · ' + esc(v.number) : ''}${d.holder ? ' · ' + esc(d.holder) : ''}</small><span class="bd ${s[0]}">${s[1]}</span></div><div class="rt">${pgTxt(d.files)}<span style="display:flex;gap:6px"><button class="star ${d.fav ? 'on' : ''}" onclick="event.stopPropagation();fav('${d.id}')" aria-label="Star document">${I('star', 17)}</button><button class="ib" onclick="event.stopPropagation();dmenu('${d.id}')" aria-label="Options">${I('more', 18)}</button></span></div></div>`
+    }
+    /* a document can have a Front and a Back side; they count as ONE document */
+    const lbOf = x => x.lb || ((/^\[(Front|Back)\]/.exec(x.f ? '' : (x.n || '')) || [])[1]) || '';
+    const nmOf = x => String(x.f ? x.f.name : (x.n || 'File')).replace(/^\[(Front|Back)\]\s*/, '');
+    function pgTxt(F) {
+      F = F || []; const L = F.map(lbOf), n = F.length;
+      if (L.includes('Front') && L.includes('Back')) return n > 2 ? `Front + Back +${n - 2}` : 'Front + Back';
+      return n == 1 ? '1 page' : n + ' pages'
+    }
+    const vph = v => v.photo ? `<img class="vp" src="${esc(v.photo)}" alt="">` : `<div class="vp">${I('car', 28)}</div>`;
+    const greet = () => { const h = new Date().getHours(); return h < 12 ? 'Good morning' : h < 17 ? 'Good afternoon' : 'Good evening' };
+
+    /* ---------- PAGES ---------- */
+    function pHome() {
+      const D = S.docs, att = D.filter(bad).sort((a, b) => st(a.expiry)[2] - st(b.expiry)[2]), ex = D.filter(d => st(d.expiry)[0] == 'er').length, u = S.user, pn = D.filter(d => d.fav), sn = D.filter(d => { const n = st(d.expiry)[2]; return n > 30 && n <= 90 }).sort((a, b) => st(a.expiry)[2] - st(b.expiry)[2]);
+      return `${banner()}<div class="hero"><div style="position:relative;z-index:1"><small>${greet()}</small><h2>${esc(u.name.split(' ')[0])}</h2><p>${att.length ? `${att.length} document${att.length > 1 ? 's need' : ' needs'} your attention` : 'All your documents are up to date'}</p></div><button onclick="go('me')" aria-label="Profile">${av(u, 'lg')}</button></div>
+  <div class="stats">${[['Documents', D.length, ''], ['Vehicles', S.vs.length, ''], ['Expiring', att.length - ex, 'wn'], ['Expired', ex, 'er']].map(x => `<div class="st ${x[2]}"><b>${x[1]}</b><small>${x[0]}</small></div>`).join('')}</div>
+  <div class="qa"><button onclick="docForm()">${I('file', 24)}<span>Add document</span></button><button onclick="vehForm()">${I('car', 24)}<span>Add vehicle</span></button><button onclick="go('docs')">${I('search', 24)}<span>Search</span></button><button onclick="S.fv=1;S.f='all';go('docs')">${I('star', 24)}<span>Starred</span></button><button onclick="exportICS()">${I('cal', 24)}<span>Calendar</span></button><button onclick="exportCSV()">${I('table', 24)}<span>Export CSV</span></button></div>
+  ${att.length ? '<h3 class="h">Needs attention</h3>' + att.map(card).join('') : ''}
+  ${pn.length ? '<h3 class="h">Pinned</h3>' + pn.map(card).join('') : ''}${sn.length ? '<h3 class="h">Next 90 days</h3>' + sn.map(card).join('') : ''}<h3 class="h">Recent documents</h3>${D.slice(-5).reverse().map(card).join('') || empty('No documents yet. Tap + to add one', 'file')}`
+    }
+    function dlist() {
+      const q = S.q.toLowerCase();
+      let a = S.docs.filter(d => (S.f == 'all' || d.kind == S.f) && (!S.fv || d.fav) && (S.hf == 'all' || d.holder == S.hf) && (S.st == 'all' || st(d.expiry)[0] == S.st) && (d.title + ' ' + d.number + ' ' + d.notes + ' ' + (d.holder || '')).toLowerCase().includes(q));
+      if (S.so == 'exp') a.sort((x, y) => st(x.expiry)[2] - st(y.expiry)[2]); else if (S.so == 'new') a.reverse(); else a.sort((x, y) => x.title.localeCompare(y.title));
+      return a.map(card).join('') || empty('No documents found', 'search')
+    }
+    const dl = () => { $('#dl').innerHTML = dlist() };
+    function pDocs() {
+      const c = k => k == 'all' ? S.docs.length : S.docs.filter(d => d.kind == k).length, o = (v, t, c) => `<option value="${v}" ${c == v ? 'selected' : ''}>${t}</option>`;
+      return `<div class="ph"><h2>Documents</h2><button class="btn sm" onclick="docForm()">${I('plus', 16)} Add</button></div>
+  <div class="srch" style="margin-bottom:12px">${I('search', 18)}<input style="margin:0" placeholder="Search by name, number or notes" value="${esc(S.q)}" oninput="S.q=this.value;dl()"></div>
+  <div class="chips">${[['all', 'All'], ['person', 'Personal'], ['vehicle', 'Vehicle']].map(x => `<button class="chip ${S.f == x[0] ? 'on' : ''}" onclick="S.f='${x[0]}';go('docs',null,1)">${x[1]} (${c(x[0])})</button>`).join('')}<button class="chip ${S.fv ? 'on' : ''}" onclick="S.fv=S.fv?0:1;go('docs',null,1)">${I('star', 14)} Starred (${S.docs.filter(d => d.fav).length})</button></div>${hchips()}
+  <div class="two"><select onchange="S.st=this.value;dl()">${o('all', 'All status', S.st) + o('ok', 'Valid', S.st) + o('wn', 'Expiring soon', S.st) + o('er', 'Expired', S.st)}</select><select onchange="S.so=this.value;dl()">${o('exp', 'Sort: Expiry', S.so) + o('new', 'Sort: Newest', S.so) + o('az', 'Sort: A to Z', S.so)}</select></div><div id="dl">${dlist()}</div>`
+    }
+    function pVeh() {
+      if (S.vid) return pVD();
+      return `<div class="ph"><h2>Vehicles</h2><button class="btn sm" onclick="vehForm()">${I('plus', 16)} Add</button></div>` + (S.vs.map(v => { const n = S.docs.filter(d => d.vehicleId == v.id), b = n.filter(bad).length; return `<div class="vc" onclick="go('veh','${v.id}')">${vph(v)}<div class="in"><b>${esc(v.number)}</b><small>${esc(v.model || 'Vehicle')} · ${esc(v.owner)}</small><span class="bd ${b ? 'wn' : 'ok'}">${n.length} docs${b ? ' · ' + b + ' need attention' : ''}</span></div><span class="ch">${I('right', 22)}</span></div>` }).join('') || empty('No vehicles added yet', 'car'))
+    }
+    function pVD() {
+      const v = S.vs.find(x => x.id == S.vid); if (!v) { S.vid = null; return pVeh() }
+      return `<button class="bk" onclick="go('veh')">${I('left', 18)} All vehicles</button><div class="hero vh">${v.photo ? `<img src="${esc(v.photo)}" onclick="openV('${esc(v.number)}',[{src:this.src,img:1,dl:this.src}])" alt="">` : ''}<div style="position:relative;z-index:1"><h2>${esc(v.number)}</h2><p>${esc(v.model || '')}</p><small>${esc(v.owner)} · ${esc(v.phone)}</small></div></div>
+  <div class="qa"><button onclick="docForm(0,'${v.id}')">${I('file', 24)}<span>Add document</span></button><button onclick="vehForm('${v.id}')">${I('edit', 24)}<span>Edit</span></button><button onclick="delVeh('${v.id}')" style="color:var(--er)">${I('trash', 24)}<span>Delete</span></button></div>
+  <h3 class="h">Documents</h3>${S.docs.filter(d => d.vehicleId == v.id).map(card).join('') || empty('No documents for this vehicle', 'file')}`
+    }
+
+    /* ---------- PROFILE PAGE ---------- */
+    function pMe() {
+      const u = S.user, fc = S.docs.reduce((a, d) => a + d.files.length, 0), att = S.docs.filter(bad).length;
+      const fl = [['Name', u.name], ['Phone', u.phone], ['Photo', u.photo], ['Date of birth', u.dob], ['Address', u.address], ['Blood group', u.blood], ['Emergency contact', u.emergency]];
+      const done = fl.filter(x => x[1]).length, pc = Math.round(done / fl.length * 100), miss = fl.filter(x => !x[1]).map(x => x[0].toLowerCase());
+      const since = u.created ? new Date(u.created).toLocaleDateString('en-IN', { month: 'long', year: 'numeric' }) : '';
+      const R = (i, l, v) => `<div class="row"><div class="ri">${I(i, 20)}</div><div class="rb"><small>${l}</small><b>${v ? esc(v) : '<i>Not added</i>'}</b></div></div>`;
+      const A = (i, t, s, fn, c = '') => `<button class="row ${c}" onclick="${fn}"><div class="ri">${I(i, 20)}</div><div class="rb"><b>${t}</b><small>${s}</small></div>${c ? '' : `<span class="ch">${I('right', 18)}</span>`}</button>`;
+      const dark = document.documentElement.dataset.t == 'dark';
+      return `<div class="card pfc"><div class="cover"></div><div class="pfh"><button class="avw" onclick="photoMenu()" aria-label="Change profile photo">${av(u, 'xl')}<span class="cam">${I('camera', 16)}</span></button>
+    <div class="pfi"><h2>${esc(u.name)} <span class="vb">${I('check', 12)} Verified</span></h2><small>${esc(u.email)}</small>${since ? `<small>Member since ${since}</small>` : ''}</div><button class="btn sm sec" onclick="prof()">${I('edit', 16)} Edit profile</button></div></div>
+  <div class="stats"><div class="st"><b>${S.docs.length}</b><small>Documents</small></div><div class="st"><b>${S.docs.filter(d => d.fav).length}</b><small>Starred</small></div><div class="st"><b>${S.vs.length}</b><small>Vehicles</small></div><div class="st ${att ? 'wn' : ''}"><b>${att}</b><small>Need attention</small></div></div>
+  ${pc < 100 ? `<div class="card" style="margin-bottom:14px"><div style="display:flex;justify-content:space-between"><b>Complete your profile</b><b style="color:var(--ac)">${pc}%</b></div><div class="pg2"><i style="width:${pc}%"></i></div><small>Add your ${miss.slice(0, 3).join(', ')}${miss.length > 3 ? ' and more' : ''} to finish.</small></div>` : ''}
+  <h3 class="h">Personal information</h3><div class="card grp">${R('user', 'Full name', u.name) + R('mail', 'Email', u.email) + R('phone', 'Phone', u.phone) + R('cal', 'Date of birth', u.dob ? fd(u.dob) : '') + R('drop', 'Blood group', u.blood) + R('pin', 'Address', u.address) + R('phone', 'Emergency contact', u.emergency)}</div>
+  <h3 class="h">Preferences</h3><div class="card grp">${standalone() ? '' : A('download', 'Install app', 'Add Nexus Docs to your home screen', 'installApp()')}
+    <div class="row"><div class="ri">${I('bell', 20)}</div><div class="rb"><b>Email reminders</b><small>Sent by email every morning at 8 AM</small></div><label class="sw"><input type="checkbox" ${u.remind ? 'checked' : ''} onchange="tgRem(this)"><span></span></label></div>
+    <div class="row"><div class="ri">${I(dark ? 'moon' : 'sun', 20)}</div><div class="rb"><b>Dark mode</b><small>Easier on the eyes at night</small></div><label class="sw"><input type="checkbox" ${dark ? 'checked' : ''} onchange="theme();go('me',null,1)"><span></span></label></div>${notifRow()}${A('bell', 'Reminder timing', rdTxt(), 'remDays()')}${A('palette', 'Accent colour', AC[curAc()][0], 'accentPick()')}<div class="row"><div class="ri">${I('lock', 20)}</div><div class="rb"><b>App lock</b><small>Ask for a 4-digit PIN when the app opens</small></div><label class="sw"><input type="checkbox" ${localStorage.nxpin ? 'checked' : ''} onchange="tgLock(this)"><span></span></label></div></div>
+  <h3 class="h">Security &amp; data</h3><div class="card grp">${A('lock', 'Change password', 'Update your account password', 'chPw()') + A('devices', 'Logout from all devices', 'End every active session', 'logAll()') + A('download', 'Export my data', 'Download all your details as a file', 'exportData()') + A('table', 'Export documents (CSV)', 'Open in Excel or Google Sheets', 'exportCSV()') + A('cal', 'Add expiry dates to calendar', 'Download an .ics file for any calendar app', 'exportICS()')}</div>
+  <h3 class="h">Account</h3><div class="card grp">${A('logout', 'Logout', 'Sign out from this device', 'logout()') + A('trash', 'Delete account', 'Permanently remove all your data', 'delAcc()', 'rd')}</div>
+  <p class="t2" style="text-align:center;margin-top:20px;font-size:12px">Nexus Document Hub · v3.2</p>`}
+
+    /* ---------- PROFILE ACTIONS ---------- */
+    const sq = f => new Promise((r, j) => { const i = new Image(); i.onload = () => { const m = Math.min(i.width, i.height), c = document.createElement('canvas'); c.width = c.height = 480; c.getContext('2d').drawImage(i, (i.width - m) / 2, (i.height - m) / 2, m, m, 0, 0, 480, 480); URL.revokeObjectURL(i.src); r(c.toDataURL('image/jpeg', .88).split(',')[1]) }; i.onerror = () => j(Error('Could not read this image')); i.src = URL.createObjectURL(f) });
+    async function photoMenu() {
+      const u = S.user, it = [{ k: 'new', i: 'camera', t: u.photo ? 'Change photo' : 'Upload photo', s: 'Auto-cropped to a square' }];
+      if (u.photo) { it.unshift({ k: 'view', i: 'image', t: 'View photo' }); it.push({ k: 'rm', i: 'trash', t: 'Remove photo', cls: 'rd' }) }
+      const k = await sheet('Profile photo', it);
+      if (k == 'view') openV(u.name, [{ src: u.photo, img: 1, dl: u.photo }]);
+      if (k == 'new') pickPhoto();
+      if (k == 'rm' && await confirmBox({ title: 'Remove photo?', text: 'Your profile will show your initial instead.', ok: 'Remove', danger: 1, icon: 'trash' })) {
+        if (await busy(async () => { await api('updateProfile', { photo: '' }); await sync() }, 'Removing…')) { draw(); toast('Photo removed') }
+      }
+    }
+    function pickPhoto() {
+      const f = document.createElement('input'); f.type = 'file'; f.accept = 'image/*';
+      f.onchange = async () => {
+        const x = f.files[0]; if (!x) return;
+        const ok = await busy(async () => { const d = await sq(x); const r = await api('upload', { data: d, mime: 'image/jpeg', name: 'profile.jpg' }); await api('updateProfile', { photo: 'https://lh3.googleusercontent.com/d/' + r.id }); await sync() }, 'Uploading photo…');
+        if (ok) { draw(); toast('Profile photo updated') }
+      }; f.click()
+    }
+    async function prof() {
+      const u = S.user, o = await modal({
+        title: 'Edit profile', icon: 'user', sticky: 1, ok: 'Save changes', html: `
+    <span class="lb">Full name</span><input id="a" value="${esc(u.name)}" autocomplete="name">
+    <div class="two"><div><span class="lb">Phone</span><input id="b" type="tel" value="${esc(u.phone)}"></div><div><span class="lb">Blood group</span><select id="c"><option value="">Select</option>${BG.map(x => `<option ${u.blood == x ? 'selected' : ''}>${x}</option>`).join('')}</select></div></div>
+    <span class="lb">Date of birth</span><input id="d" type="date" max="${new Date().toISOString().slice(0, 10)}" value="${esc(u.dob)}">
+    <span class="lb">Address</span><textarea id="f" rows="2" style="resize:none" placeholder="House no, street, city">${esc(u.address)}</textarea>
+    <span class="lb">Emergency contact</span><input id="g" placeholder="Name and phone number" value="${esc(u.emergency)}">`,
+        pre: el => { const n = $('#a').value.trim(); if (!n) return fail(el, 'Name is required'); return { name: n, phone: $('#b').value.trim(), blood: $('#c').value, dob: $('#d').value, address: $('#f').value.trim(), emergency: $('#g').value.trim() } }
+      });
+      if (o && await busy(async () => { await api('updateProfile', o); await sync() }, 'Saving…')) { draw(); toast('Profile updated') }
+    }
+    async function chPw() {
+      const o = await modal({
+        title: 'Change password', icon: 'lock', sticky: 1, ok: 'Update password', html: `<span class="lb">Current password</span><input id="a" type="password" autocomplete="current-password"><span class="lb">New password</span><input id="b" type="password" placeholder="Minimum 8 characters" autocomplete="new-password"><span class="lb">Confirm new password</span><input id="c" type="password" autocomplete="new-password">`,
+        pre: el => { if (!$('#a').value) return fail(el, 'Enter your current password'); if ($('#b').value.length < 8) return fail(el, 'New password must be at least 8 characters'); if ($('#b').value !== $('#c').value) return fail(el, 'Passwords do not match'); return { oldPassword: $('#a').value, password: $('#b').value } }
+      });
+      if (o && await busy(() => api('changePass', o), 'Updating…')) toast('Password changed')
+    }
+    async function logAll() {
+      if (await confirmBox({ title: 'Logout from all devices?', text: 'You will be signed out everywhere, including this device.', ok: 'Logout all', icon: 'devices' })) {
+        if (await busy(() => api('logoutAll'))) logout(1)
+      }
+    }
+    async function delAcc() {
+      const o = await modal({
+        title: 'Delete account?', icon: 'trash', tone: 'er', danger: 1, sticky: 1, ok: 'Delete forever', html: `<p class="mt" style="margin-bottom:12px">This permanently deletes all your vehicles, documents and files. This cannot be undone.</p><input id="a" type="password" placeholder="Enter password to confirm">`,
+        pre: el => $('#a').value ? $('#a').value : fail(el, 'Enter your password to continue')
+      });
+      if (o && await busy(() => api('deleteAccount', { password: o }), 'Deleting…')) { logout(1); toast('Account deleted', 'inf') }
+    }
+    async function tgRem(el) {
+      const v = el.checked;
+      if (await busy(() => api('updateProfile', { remind: v ? '1' : '0' }), 'Saving…')) { S.user.remind = v; toast(v ? 'Email reminders turned on' : 'Email reminders turned off', 'inf') } else el.checked = !v
+    }
+    function exportData() {
+      const b = new Blob([JSON.stringify({ exportedOn: new Date().toISOString(), profile: S.user, vehicles: S.vs, documents: S.docs }, null, 2)], { type: 'application/json' }), a = document.createElement('a');
+      a.href = URL.createObjectURL(b); a.download = 'nexus-data-' + new Date().toISOString().slice(0, 10) + '.json'; a.click(); toast('Data exported')
+    }
+    function theme() { const t = document.documentElement.dataset.t == 'dark' ? 'light' : 'dark'; document.documentElement.dataset.t = t; localStorage.th = t; $('#tc').content = t == 'dark' ? '#0a1124' : '#0f1b3d'; barTheme() }
+
+    /* ---------- FILES ---------- */
+    const b64 = f => new Promise((r, j) => { const x = new FileReader(); x.onload = () => r(x.result.split(',')[1]); x.onerror = j; x.readAsDataURL(f) });
+    const img2b64 = f => new Promise((r, j) => { const i = new Image(); i.onload = () => { const k = Math.min(1, 1800 / Math.max(i.width, i.height)), c = document.createElement('canvas'); c.width = i.width * k; c.height = i.height * k; c.getContext('2d').drawImage(i, 0, 0, c.width, c.height); r(c.toDataURL('image/jpeg', .85).split(',')[1]) }; i.onerror = j; i.src = URL.createObjectURL(f) });
+    async function prep(f) {
+      if (/^image\/(jpeg|png|webp)$/.test(f.type) && f.size > 1.2e6) return { data: await img2b64(f), mime: 'image/jpeg' };
+      if (f.size > 9e6) throw Error(f.name + ' is larger than 9 MB');
+      return { data: await b64(f), mime: f.type || 'application/octet-stream' }
+    }
+    const fIco = t => I(/^image/.test(t || '') ? 'image' : 'file', 16);
+
+    /* ---------- DOCUMENT FORM ---------- */
+    let PF = [], K = 'person';
+    function kind(k) { K = k; $('#kp').classList.toggle('on', k == 'person'); $('#kv').classList.toggle('on', k == 'vehicle'); $('#vsw').style.display = k == 'vehicle' ? 'block' : 'none'; $('#hsw').style.display = k == 'person' ? 'block' : 'none'; $('#ty').innerHTML = T[k].map(x => `<option>${x[0]}</option>`).join(''); oth() }
+    const oth = () => $('#ct').style.display = $('#ty').value == 'Other' ? 'block' : 'none';
+    function slotHTML(lb) {
+      const i = PF.findIndex(x => lbOf(x) == lb), x = PF[i];
+      if (!x) return `<div class="slot"><span class="sl-l">${lb} side${lb == 'Back' ? ' (optional)' : ''}</span><div class="sl-b"><button type="button" onclick="pickPF('${lb}',1)">${I('camera', 18)}<span>Scan</span></button><button type="button" onclick="pickPF('${lb}',0)">${I('upload', 18)}<span>Upload</span></button></div></div>`;
+      const img = x.f ? /^image/.test(x.f.type) : /^image/.test(x.t || ''), src = x.f ? (x.u || (x.u = URL.createObjectURL(x.f))) : `https://lh3.googleusercontent.com/d/${x.id}=w300`;
+      return `<div class="slot has"><span class="sl-l">${lb}</span>${img ? `<img src="${esc(src)}" alt="${lb}">` : `<div class="pdf">${I('file', 28)}<small>${esc(nmOf(x))}</small></div>`}<button type="button" class="sl-x" onclick="rmPF(${i})" aria-label="Remove ${lb}">${I('x', 14)}</button></div>`
+    }
+    function rfl() {
+      const ex = PF.map((x, i) => [x, i]).filter(([x]) => !['Front', 'Back'].includes(lbOf(x)));
+      $('#fl').innerHTML = `<div class="slots">${slotHTML('Front')}${slotHTML('Back')}</div>` + ex.map(([x, i], k) => `<div class="fi"><span>${fIco(x.f ? x.f.type : x.t)} Page ${k + 1} · ${esc(nmOf(x))}</span><button type="button" onclick="rmPF(${i})" aria-label="Remove page">${I('x', 16)}</button></div>`).join('')
+    }
+    const rmPF = i => { PF.splice(i, 1); rfl() };
+    function pickPF(lb, cam) {
+      document.querySelectorAll('input.tmpf').forEach(x => x.remove());
+      const i = document.createElement('input'); i.type = 'file'; i.className = 'tmpf'; i.style.display = 'none';
+      i.accept = cam || lb ? 'image/*' + (cam ? '' : ',application/pdf') : '';
+      if (cam) i.setAttribute('capture', 'environment'); if (!lb && !cam) i.multiple = true;
+      i.onchange = () => {
+        const L = [...i.files]; i.remove(); if (!L.length) return;
+        if (lb) { const k = PF.findIndex(x => lbOf(x) == lb); if (k > -1) PF.splice(k, 1); PF.push({ f: L[0], lb }) }
+        else L.forEach(f => PF.push({ f, lb: '' }));
+        rfl()
+      };
+      document.body.appendChild(i); i.click()
+    }
+    async function docForm(id, vid) {
+      const d = S.docs.find(x => x.id == id) || {}; vid = d.vehicleId || vid || (!id && S.tab == 'veh' && S.vid) || '';
+      PF = (d.files || []).slice();
+      const o = await modal({
+        title: id ? 'Edit document' : 'Add document', icon: 'file', wide: 1, sticky: 1, ok: 'Save document', html: `
+    <div class="seg"><button type="button" id="kp" onclick="kind('person')">${I('user', 16)} Personal</button><button type="button" id="kv" onclick="kind('vehicle')">${I('car', 16)} Vehicle</button></div>
+    <div id="vsw"><span class="lb">Vehicle</span><select id="vs">${S.vs.map(v => `<option value="${v.id}" ${v.id == vid ? 'selected' : ''}>${esc(v.number)}</option>`).join('') || '<option value="">Add a vehicle first</option>'}</select></div>
+    <div id="hsw"><span class="lb">Belongs to</span><input id="ho" list="hl" placeholder="Self, Spouse, Father…" value="${esc(d.holder)}" autocomplete="off"><datalist id="hl">${[...new Set(['Self', 'Spouse', 'Father', 'Mother', 'Son', 'Daughter', ...holders()])].map(x => `<option value="${esc(x)}">`).join('')}</datalist></div><span class="lb">Document type</span><select id="ty" onchange="oth()"></select><input id="ct" placeholder="Document name" style="display:none">
+    <span class="lb">Document / policy number</span><input id="nu" value="${esc(d.number)}">
+    <div class="two"><div><span class="lb">Issue date</span><input id="is" type="date" value="${esc(d.issue)}"></div><div><span class="lb">Expiry date</span><input id="ex" type="date" value="${esc(d.expiry)}"></div></div>
+    <span class="lb">Notes (optional)</span><input id="no" value="${esc(d.notes)}">
+    <span class="lb">Document pages</span>
+    <div id="fl"></div>
+    <div class="pgb"><button type="button" class="btn sec sm" onclick="pickPF('',0)">${I('upload', 16)} Add pages</button><button type="button" class="btn sec sm" onclick="pickPF('',1)">${I('camera', 16)} Scan page</button></div>`,
+        onOpen: () => {
+          kind(d.kind || (vid ? 'vehicle' : 'person'));
+          if (d.title) { const has = T[d.kind].some(x => x[0] == d.title); $('#ty').value = has ? d.title : 'Other'; if (!has) $('#ct').value = d.title; oth() }
+          const z = $('#fl'); z.ondragover = e => { e.preventDefault() }; z.ondrop = e => { e.preventDefault(); [...e.dataTransfer.files].forEach(f => PF.push({ f, lb: '' })); rfl() }; rfl()
+        },
+        pre: el => {
+          const t = $('#ty').value == 'Other' ? $('#ct').value.trim() : $('#ty').value;
+          if (!t) return fail(el, 'Enter the document name');
+          if (K == 'vehicle' && !$('#vs').value) return fail(el, 'Add a vehicle first');
+          if ($('#is').value && $('#ex').value && $('#ex').value < $('#is').value) return fail(el, 'Expiry date cannot be before the issue date');
+          if (!PF.length) return fail(el, 'Add at least one file');
+          return { k: K, v: $('#vs').value, t, n: $('#nu').value.trim(), i: $('#is').value, x: $('#ex').value, no: $('#no').value.trim(), h: K == 'person' ? $('#ho').value.trim() : '' }
+        }
+      });
+      if (!o) return;
+      const ok = await busy(async () => {
+        const fl = [], n = PF.filter(x => x.f).length; let i = 0;
+        const ord = x => ({ Front: 0, Back: 1 }[lbOf(x)] ?? 2); PF = PF.map((x, k) => [x, k]).sort((a, b) => ord(a[0]) - ord(b[0]) || a[1] - b[1]).map(a => a[0]);
+        for (const x of PF) {
+          if (x.f) { prog(`Uploading ${++i} of ${n}…`); const p = await prep(x.f), nm = x.lb ? `[${x.lb}] ${x.f.name}` : x.f.name, r = await api('upload', { ...p, name: nm }); fl.push({ ...r, n: /^\[/.test(r.n || '') ? r.n : nm, ...(x.lb ? { lb: x.lb } : {}) }) }
+          else fl.push(x)
+        }
+        prog('Saving…'); await api('saveDoc', { id, kind: o.k, vehicleId: o.v, title: o.t, number: o.n, issue: o.i, expiry: o.x, notes: o.no, holder: o.h, files: fl }); await sync()
+      }, 'Please wait…');
+      if (ok) { draw(); toast(id ? 'Document updated' : 'Document added') }
+    }
+    async function dmenu(id) {
+      const d = S.docs.find(x => x.id == id), k = await sheet(esc(d.title), [{ k: 'v', i: 'eye', t: 'View document', s: pgTxt(d.files) }, { k: 'f', i: 'star', t: d.fav ? 'Remove star' : 'Star document' }, { k: 'e', i: 'edit', t: 'Edit details' }, ...(d.number ? [{ k: 'n', i: 'copy', t: 'Copy number', s: esc(d.number) }] : []), ...(d.expiry ? [{ k: 'c', i: 'cal', t: 'Add to calendar', s: 'Download an .ics reminder' }] : []), { k: 'sf', i: 'share', t: 'Share file', s: 'Send the actual PDF / image' }, { k: 'df', i: 'download', t: 'Download file', s: NATIVE() ? 'Save to Files / Drive' : 'Save to this device' }, { k: 's', i: 'share', t: 'Share link', s: 'Anyone with the link can view' }, { k: 'd', i: 'trash', t: 'Delete', cls: 'rd' }]);
+      if (k == 'v') view(id); if (k == 'e') docForm(id); if (k == 'f') fav(id); if (k == 'c') exportICS(d); if (k == 's') shareDoc(d); if (k == 'sf') docFiles(d, 'share'); if (k == 'df') docFiles(d, 'download'); if (k == 'n') copyNum(d);
+      if (k == 'd' && await confirmBox({ title: 'Delete this document?', text: 'All its files will be removed permanently.', ok: 'Delete', danger: 1, icon: 'trash' })) {
+        if (await busy(async () => { await api('deleteDoc', { id }); await sync() }, 'Deleting…')) { draw(); toast('Document deleted') }
+      }
+    }
+
+    /* ---------- VEHICLE FORM ---------- */
+    async function vehForm(id) {
+      const v = S.vs.find(x => x.id == id) || {};
+      const o = await modal({
+        title: id ? 'Edit vehicle' : 'Add vehicle', icon: 'car', sticky: 1, ok: 'Save vehicle', html: `
+    <div class="pv" id="pv">${vph(v)}<div style="flex:1"><span class="lb">Vehicle photo (optional)</span><input id="f" type="file" accept="image/*" style="margin:0;padding:9px"></div></div>
+    <span class="lb">Vehicle number</span><input id="a" placeholder="TN 72 AB 1234" value="${esc(v.number)}" style="text-transform:uppercase">
+    <span class="lb">Make / model</span><input id="m" placeholder="Honda Shine" value="${esc(v.model)}">
+    <span class="lb">Owner name</span><input id="b" value="${esc(v.owner || S.user.name)}">
+    <span class="lb">Phone</span><input id="c" type="tel" value="${esc(v.phone || S.user.phone)}">`,
+        onOpen: () => { $('#f').onchange = e => { const x = e.target.files[0]; if (x) $('#pv').firstElementChild.outerHTML = `<img class="vp" src="${URL.createObjectURL(x)}" alt="">` } },
+        pre: el => $('#a').value.trim() ? { a: $('#a').value, m: $('#m').value, b: $('#b').value, c: $('#c').value, f: $('#f').files[0] } : fail(el, 'Vehicle number is required')
+      });
+      if (!o) return;
+      const ok = await busy(async () => { const p = { id, number: o.a, model: o.m, owner: o.b, phone: o.c }; if (o.f) { const u = await api('upload', { ...await prep(o.f), name: o.f.name }); p.photo = 'https://lh3.googleusercontent.com/d/' + u.id } await api('saveVehicle', p); await sync() }, 'Saving…');
+      if (ok) { draw(); toast(id ? 'Vehicle updated' : 'Vehicle added') }
+    }
+    async function delVeh(id) {
+      if (await confirmBox({ title: 'Delete vehicle?', text: 'All documents of this vehicle will be deleted too.', ok: 'Delete', danger: 1, icon: 'trash' })) {
+        S.vid = null; S.tab = 'veh'; if (await busy(async () => { await api('deleteVehicle', { id }); await sync() }, 'Deleting…')) { draw(); toast('Vehicle deleted') }
+      }
+    }
+
+    /* ---------- VIEWER (multi-page, zoom, swipe, PDF) ---------- */
+    let VP = [], vi = 0, sc = 1, tx = 0, ty = 0, d0 = 0, s0 = 1, px = 0, py = 0, sx = 0;
+    const zc = $('#zc'), di = () => $('#di'), tf = () => { if (di()) di().style.transform = `translate(${tx}px,${ty}px) scale(${sc})` }, dist = e => Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY), rz = () => { sc = 1; tx = ty = 0; tf() };
+    $('#vb').innerHTML = I('left', 18) + ' Back'; $('#vd').innerHTML = I('download', 16) + ' Download'; $('#vsh').innerHTML = I('share', 16) + ' Share'; $('#pp').innerHTML = I('left', 22); $('#pn').innerHTML = I('right', 22);
+    const pgOf = f => { const lb = lbOf(f), img = /^image/.test(f.t || ''); return { lb, img, id: f.id, f, src: img ? `https://lh3.googleusercontent.com/d/${f.id}` : `https://drive.google.com/file/d/${f.id}/preview`, dl: `https://drive.google.com/uc?export=download&id=${f.id}` } };
+    function view(id) { const d = S.docs.find(x => x.id == id); openV(d.title, d.files.map(pgOf)) }
+    function openV(t, P) { VP = P; vi = 0; $('#vt').textContent = t; $('#vw').classList.add('on'); history.pushState({ v: 1 }, ''); rend() }
+    function rend() {
+      const p = VP[vi]; zc.innerHTML = p.img ? `<img id="di" src="${esc(p.src)}" alt="">` : `<iframe src="${esc(p.src)}"></iframe>`; rz();
+      $('#vd').href = p.dl || p.src; $('#vsh').style.display = p.id ? '' : 'none'; $('#pg').style.display = VP.length > 1 ? 'flex' : 'none'; $('#vn').textContent = `${p.lb ? p.lb + ' · ' : ''}Page ${vi + 1} of ${VP.length}`
+    }
+    function step(n) { const k = vi + n; if (k >= 0 && k < VP.length) { vi = k; rend() } }
+    const hideV = () => { $('#vw').classList.remove('on'); zc.innerHTML = '' };
+    const closeV = () => { if (history.state && history.state.v) history.back(); else hideV() };
+    onpopstate = hideV;
+    zc.addEventListener('touchstart', e => { if (e.touches.length == 2) { d0 = dist(e); s0 = sc } else { sx = e.touches[0].clientX; px = sx - tx; py = e.touches[0].clientY - ty } }, { passive: true });
+    zc.addEventListener('touchmove', e => { if (!di()) return; e.preventDefault(); if (e.touches.length == 2) { sc = Math.min(5, Math.max(1, s0 * dist(e) / d0)); if (sc == 1) tx = ty = 0 } else if (sc > 1) { tx = e.touches[0].clientX - px; ty = e.touches[0].clientY - py } tf() }, { passive: false });
+    zc.addEventListener('touchend', e => { const dx = e.changedTouches[0].clientX - sx; if (sc == 1 && Math.abs(dx) > 70 && !e.touches.length) step(dx < 0 ? 1 : -1) });
+    zc.addEventListener('wheel', e => { if (!di()) return; e.preventDefault(); sc = Math.min(5, Math.max(1, sc - e.deltaY / 300)); if (sc == 1) tx = ty = 0; tf() }, { passive: false });
+    zc.ondblclick = rz;
+    document.addEventListener('keydown', e => {
+      if (e.key == 'Escape' && MS.length) return MS[MS.length - 1].close(null);
+      if (MS.length || !$('#vw').classList.contains('on')) return;
+      if (e.key == 'Escape') closeV(); if (e.key == 'ArrowRight') step(1); if (e.key == 'ArrowLeft') step(-1)
+    });
+
+
+    /* ---------- NEW: refresh, favourites, holders, exports, share ---------- */
+    async function refresh(q) { const ok = await busy(sync, 'Syncing…'); if (ok) { draw(); if (V.ok) vLoad(1); if (!q) toast(S.off ? 'Still offline. Showing saved data' : 'Up to date') } }
+    async function fav(id) {
+      const d = S.docs.find(x => x.id == id); if (!d) return; const v = !d.fav; d.fav = v;
+      const re = () => S.tab == 'docs' ? (chrome(), dl()) : go(S.tab, S.vid, 1); re();
+      try { await api('toggleFav', { id, fav: v }) } catch (e) { d.fav = !v; re(); toast(e.message, 'er') }
+    }
+    const holders = () => [...new Set(S.docs.filter(d => d.kind == 'person' && d.holder).map(d => d.holder))].sort();
+    function hchips() {
+      const h = holders(); if (S.hf != 'all' && !h.includes(S.hf)) S.hf = 'all';
+      return h.length ? `<div class="chips">${['all', ...h].map(x => `<button class="chip ${S.hf == x ? 'on' : ''}" data-h="${esc(x)}" onclick="S.hf=this.dataset.h;go('docs',null,1)">${x == 'all' ? 'Everyone' : esc(x)}</button>`).join('')}</div>` : ''
+    }
+    async function nativeSave(name, text) { const P = Capacitor.Plugins, w = await P.Filesystem.writeFile({ path: name, data: text, directory: 'CACHE', encoding: 'utf8' }); await P.Share.share({ title: name, url: w.uri, dialogTitle: 'Save or send file' }) }
+    function dl2(name, text, type) {
+      if (NATIVE() && Capacitor.Plugins.Filesystem && Capacitor.Plugins.Share) { nativeSave(name, text).catch(() => toast('Could not export the file', 'er')); return }
+      const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([text], { type })); a.download = name; a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 4000)
+    }
+    const icsEsc = x => String(x || '').replace(/[\\;,]/g, m => '\\' + m).replace(/\r?\n/g, '\\n');
+    function icsOf(L) {
+      const z = x => x.replace(/-/g, ''), nx = x => { const [y, m, d] = x.split('-').map(Number); return new Date(Date.UTC(y, m - 1, d + 1)).toISOString().slice(0, 10) };
+      const stamp = new Date().toISOString().replace(/[-:]/g, '').slice(0, 15) + 'Z', o = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Nexus Document Hub//EN', 'CALSCALE:GREGORIAN'];
+      L.forEach(d => {
+        const v = d.kind == 'vehicle' && S.vs.find(x => x.id == d.vehicleId);
+        o.push('BEGIN:VEVENT', 'UID:' + d.id + '@nexus-docs', 'DTSTAMP:' + stamp, 'DTSTART;VALUE=DATE:' + z(d.expiry), 'DTEND;VALUE=DATE:' + z(nx(d.expiry)), 'SUMMARY:' + icsEsc(d.title + (v ? ' (' + v.number + ')' : '') + ' expires'), 'DESCRIPTION:' + icsEsc((d.number ? 'Number: ' + d.number + '\n' : '') + (d.notes || '')), 'BEGIN:VALARM', 'TRIGGER:-P7D', 'ACTION:DISPLAY', 'DESCRIPTION:Document expires in 7 days', 'END:VALARM', 'BEGIN:VALARM', 'TRIGGER:-P1D', 'ACTION:DISPLAY', 'DESCRIPTION:Document expires tomorrow', 'END:VALARM', 'END:VEVENT')
+      });
+      o.push('END:VCALENDAR'); return o.join('\r\n')
+    }
+    function exportICS(one) {
+      const L = one ? [one] : S.docs.filter(d => d.expiry); if (!L.length) return toast('No documents with an expiry date', 'inf');
+      dl2(one ? 'expiry-' + String(one.title).replace(/\W+/g, '-').toLowerCase() + '.ics' : 'nexus-expiry-dates.ics', icsOf(L), 'text/calendar'); toast('Calendar file downloaded')
+    }
+    function exportCSV() {
+      if (!S.docs.length) return toast('No documents to export', 'inf');
+      const q = x => { let t = String(x ?? ''); if (/^[=+\-@]/.test(t)) t = "'" + t; return '"' + t.replace(/"/g, '""') + '"' },
+        R = [['Type', 'Document', 'Number', 'Holder / Vehicle', 'Issue date', 'Expiry date', 'Status', 'Starred', 'Notes', 'Files']];
+      S.docs.forEach(d => { const v = d.kind == 'vehicle' && S.vs.find(x => x.id == d.vehicleId); R.push([d.kind == 'vehicle' ? 'Vehicle' : 'Personal', d.title, d.number, v ? v.number : (d.holder || ''), d.issue, d.expiry, st(d.expiry)[1], d.fav ? 'Yes' : '', d.notes, d.files.length]) });
+      dl2('nexus-documents-' + new Date().toISOString().slice(0, 10) + '.csv', '﻿' + R.map(r => r.map(q).join(',')).join('\r\n'), 'text/csv'); toast('CSV exported')
+    }
+    async function shareDoc(d) {
+      if (!await confirmBox({ title: 'Share this document?', text: 'The link lets anyone who has it view the file' + (d.files.length > 1 ? ' (all pages are included)' : '') + '. Only share it with people you trust.', ok: 'Continue', icon: 'share' })) return;
+      const L = d.files.map(f => 'https://drive.google.com/file/d/' + f.id + '/view'), t = d.title + (d.number ? ' · ' + d.number : ''),
+        body = L.length > 1 ? t + '\n' + d.files.map((f, i) => (lbOf(f) || 'Page ' + (i + 1)) + ': ' + L[i]).join('\n') : L[0],
+        sp = L.length > 1 ? { title: t, text: body } : { title: t, text: t, url: L[0] };
+      const NS = plug('Share');
+      if (NATIVE() && NS) { try { await NS.share(sp) } catch (e) { } }
+      else if (navigator.share) { try { await navigator.share(sp) } catch (e) { } }
+      else { try { await navigator.clipboard.writeText(body); toast('Link copied') } catch (e) { alertBox(body, 'Copy this link') } }
+    }
+    async function copyNum(d) {
+      try { await navigator.clipboard.writeText(d.number); toast('Number copied') }
+      catch (e) { const t = document.createElement('textarea'); t.value = d.number; document.body.appendChild(t); t.select(); try { document.execCommand('copy'); toast('Number copied') } catch (x) { toast('Could not copy', 'er') } t.remove() }
+    }
+
+    /* ---------- NEW: reminder timing, accent colour ---------- */
+    const rd = () => (S.user.rdays || '30,7,1,0').split(',').map(Number);
+    const rdTxt = () => rd().map(n => n == 0 ? 'on expiry' : n + ' day' + (n > 1 ? 's' : '')).join(', ');
+    async function remDays() {
+      const cur = rd(), o = await modal({
+        title: 'Reminder timing', icon: 'bell', sticky: 1, ok: 'Save', noFocus: 1, html: `<p class="mt" style="margin-bottom:12px">Choose when to get an email before a document expires.</p><div class="cks">${[90, 60, 30, 15, 7, 3, 1, 0].map(n => `<label class="ck"><input type="checkbox" value="${n}" ${cur.includes(n) ? 'checked' : ''}><span>${n == 0 ? 'On expiry' : n + ' day' + (n > 1 ? 's' : '')}</span></label>`).join('')}</div>`,
+        pre: el => { const v = [...el.querySelectorAll('.ck input:checked')].map(x => x.value); return v.length ? v.join(',') : fail(el, 'Select at least one option') }
+      });
+      if (o && await busy(async () => { await api('updateProfile', { rdays: o }); await sync() }, 'Saving…')) { draw(); toast('Reminder timing saved') }
+    }
+    const AC = { blue: ['Ocean blue', '#3b5bfd', '#2d4bf0', '#7c3aed', '#0f1b3d'], green: ['Emerald', '#12a150', '#0f8a5f', '#0d9488', '#06281d'], purple: ['Violet', '#7c3aed', '#6d28d9', '#c026d3', '#1e1038'], orange: ['Sunset', '#e8590c', '#dd4b1a', '#d6336c', '#2b1206'], teal: ['Teal', '#0891b2', '#0e7490', '#2563eb', '#06222b'] };
+    const curAc = () => AC[localStorage.ac] ? localStorage.ac : 'blue';
+    function applyAc() { const a = AC[curAc()], r = document.documentElement.style; r.setProperty('--ac', a[1]); r.setProperty('--g', 'linear-gradient(135deg,' + a[4] + ',' + a[2] + ' 75%,' + a[3] + ')') }
+    async function accentPick() {
+      const k = await modal({ title: 'Accent colour', icon: 'palette', ok: null, cancel: null, noFocus: 1, html: `<div class="sws">${Object.keys(AC).map(x => `<button style="background:${AC[x][1]}" class="${curAc() == x ? 'on' : ''}" data-k="${x}" aria-label="${AC[x][0]}">${curAc() == x ? I('check', 20) : ''}</button>`).join('')}</div>`, onOpen: (el, c) => el.querySelectorAll('.sws button').forEach(b => b.onclick = () => c(b.dataset.k)) });
+      if (k) { localStorage.ac = k; applyAc(); draw() }
+    }
+
+    /* ---------- NEW: install app, offline events ---------- */
+    let DP = null;
+    const NATIVE = () => !!(window.Capacitor && Capacitor.isNativePlatform && Capacitor.isNativePlatform());
+    const standalone = () => NATIVE() || matchMedia('(display-mode:standalone)').matches || navigator.standalone === true;
+    const isIos = () => /iphone|ipad|ipod/i.test(navigator.userAgent);
+    addEventListener('beforeinstallprompt', e => { e.preventDefault(); DP = e; if (S.user && S.tab == 'home') go('home', null, 1) });
+    addEventListener('appinstalled', () => { DP = null; toast('App installed'); if (S.user) go(S.tab, S.vid, 1) });
+    async function installApp() {
+      if (DP) { DP.prompt(); const r = await DP.userChoice; DP = null; if (r.outcome == 'accepted') toast('Installing…', 'inf'); if (S.user) go(S.tab, S.vid, 1); return }
+      await modal({ title: 'Install Nexus Docs', icon: 'download', ok: 'Got it', cancel: null, noFocus: 1, html: isIos() ? '<p class="mt">On iPhone or iPad, tap the <b>Share</b> button in Safari, then choose <b>Add to Home Screen</b>.</p>' : '<p class="mt">Open your browser menu and choose <b>Install app</b> or <b>Add to Home screen</b>. The site must be opened over https for this option to appear.</p>' })
+    }
+    const banner = () => standalone() || localStorage.nxb || (!DP && !isIos()) ? '' : `<div class="ban"><img src="${LOGO}" alt=""><div class="in"><b>Install Nexus Docs</b><small>Open it like an app, even offline</small></div><button class="btn sm" onclick="installApp()">Install</button><button class="ib" onclick="localStorage.nxb=1;go('home',null,1)" aria-label="Dismiss">${I('x', 16)}</button></div>`;
+    addEventListener('offline', () => { S.off = 1; toast('You are offline. Showing saved data', 'inf'); if (S.user) chrome() });
+    addEventListener('online', () => { toast('Back online'); if (S.user) refresh(1) });
+    if ('serviceWorker' in navigator && /^https?:/.test(location.protocol) && location.hostname !== 'localhost') addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => { }));
+
+    /* ---------- NEW: PIN app lock (stored on this device only) ---------- */
+    const sha = async x => { try { const b = await crypto.subtle.digest('SHA-256', new TextEncoder().encode('nx:' + x)); return [...new Uint8Array(b)].map(v => v.toString(16).padStart(2, '0')).join('') } catch (e) { let h = 5381; for (const c of 'nx:' + x) h = (h * 33) ^ c.charCodeAt(0); return 'w' + (h >>> 0) } };
+    function pinPad(o) {
+      return new Promise(res => {
+        let b = '', el = $('#lk'); if (!el) { el = document.createElement('div'); el.id = 'lk'; document.body.appendChild(el) }
+        el.innerHTML = `<img src="${LOGO}" width="56" height="56" alt="" style="border-radius:16px"><h2 style="margin:0">${o.title}</h2><p style="margin:0;opacity:.85;text-align:center">${o.sub || ''}</p><div class="dots"><i></i><i></i><i></i><i></i></div><div class="pad">${[1, 2, 3, 4, 5, 6, 7, 8, 9].map(n => `<button data-k="${n}">${n}</button>`).join('')}<button data-k="x" style="font-size:14px;${o.cancel ? '' : 'visibility:hidden'}">Cancel</button><button data-k="0">0</button><button data-k="b" aria-label="Delete">${I('backspace', 24)}</button></div>${o.forgot ? '<a data-f style="color:#fff;opacity:.85;margin-top:8px">Forgot PIN?</a>' : ''}`;
+        el.classList.add('on');
+        const dots = () => el.querySelectorAll('.dots i').forEach((d, i) => d.classList.toggle('f', i < b.length));
+        const done = v => { document.removeEventListener('keydown', kd); el.classList.remove('on'); res(v) };
+        const press = async k => {
+          if (k == 'x') return o.cancel && done(null);
+          if (k == 'b') b = b.slice(0, -1); else if (b.length < 4) b += k;
+          dots();
+          if (b.length == 4) { const p = b; if (o.check && !await o.check(p)) { b = ''; const d = el.querySelector('.dots'); d.classList.remove('shake'); d.offsetWidth; d.classList.add('shake'); setTimeout(dots, 50); return } done(p) }
+        };
+        const kd = e => { if (/^\d$/.test(e.key)) press(e.key); else if (e.key == 'Backspace') press('b'); else if (e.key == 'Escape') press('x') };
+        document.addEventListener('keydown', kd);
+        el.onclick = e => { const k = e.target.closest('[data-k]'); if (k) press(k.dataset.k); else if (e.target.closest('[data-f]')) done('forgot') }
+      })
+    }
+    let LOCKED = 0;
+    async function lockNow() {
+      const h = localStorage.nxpin; if (!h || LOCKED || !S.token) return; LOCKED = 1;
+      const r = await pinPad({ title: 'Enter PIN', sub: 'Nexus Document Hub is locked', forgot: 1, check: async p => await sha(p) == h });
+      LOCKED = 0;
+      if (r == 'forgot') { if (await confirmBox({ title: 'Forgot your PIN?', text: 'You will be logged out. Login again with your password to continue.', ok: 'Logout', icon: 'logout' })) logout(1); else lockNow() }
+    }
+    async function tgLock(el) {
+      if (el.checked) {
+        const a = await pinPad({ title: 'Set a PIN', sub: 'Choose 4 digits', cancel: 1 }); if (!a) { el.checked = false; return }
+        const c = await pinPad({ title: 'Confirm PIN', sub: 'Enter the same 4 digits again', cancel: 1, check: async p => p == a }); if (!c) { el.checked = false; return }
+        localStorage.nxpin = await sha(a); toast('App lock turned on')
+      }
+      else {
+        const h = localStorage.nxpin, r = await pinPad({ title: 'Enter PIN', sub: 'Confirm to turn off app lock', cancel: 1, check: async p => await sha(p) == h });
+        if (r) { localStorage.removeItem('nxpin'); toast('App lock turned off', 'inf') } else el.checked = true
+      }
+    }
+    let HID = 0;
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) { HID = Date.now(); return }
+      if (!S.token || !S.user || !HID) return;
+      const away = Date.now() - HID; if (S.day && S.day != ymd(new Date())) { S.day = ymd(new Date()); draw(); schedLocal() }
+      if (localStorage.nxpin && away > 30000) lockNow();
+      if (away > 3e5) sync().then(() => draw()).catch(() => { })
+    });
+
+    /* ---------- v3: hardware back button ---------- */
+    let BX = 0;
+    function handleBack() {
+      if ($('#lk.on') || $('.ld.on')) return true;
+      if (MS.length) { MS[MS.length - 1].close(null); return true }
+      if ($('#vw.on')) { closeV(); return true }
+      if ($('#app').style.display == 'block') { const h = $('.auth h1'); if (h && !/Welcome back/.test(h.textContent)) { authView('login'); return true } return false }
+      if (S.tab == 'veh' && S.vid) { go('veh'); return true }
+      if (S.tab != 'home') { go('home'); return true }
+      return false
+    }
+    function exitFlow() {
+      if (Date.now() - BX < 2200) { const A = plug('App'); if (A && A.exitApp) A.exitApp(); return }
+      BX = Date.now(); toast('Press back again to exit', 'inf')
+    }
+    if (NATIVE()) { const A = plug('App'); try { A && A.addListener('backButton', () => { if (!handleBack()) exitFlow() }) } catch (e) { } }
+
+    /* ---------- v3: pull down to refresh ---------- */
+    (() => {
+      let y0 = 0, pull = 0, on = false; const ind = document.createElement('div'); ind.id = 'ptr'; ind.innerHTML = I('refresh', 20); document.body.appendChild(ind);
+      const ok = () => S.user && $('#shell.on') && !MS.length && !$('#vw.on') && !$('#lk.on') && !$('.ld.on') && scrollY <= 0;
+      addEventListener('touchstart', e => { on = e.touches.length == 1 && ok(); y0 = e.touches[0].clientY; pull = 0 }, { passive: true });
+      addEventListener('touchmove', e => { if (!on) return; const dy = e.touches[0].clientY - y0; if (dy <= 0) { pull = 0; ind.style.opacity = 0; return } pull = Math.min(dy * .5, 90); ind.style.opacity = Math.min(1, pull / 60); ind.style.transform = `translateY(${pull - 60}px) rotate(${pull * 4}deg)` }, { passive: true });
+      addEventListener('touchend', () => { if (!on) return; on = false; const p = pull; pull = 0; ind.style.opacity = 0; ind.style.transform = ''; if (p >= 70) refresh() })
+    })();
+
+    /* ---------- v3: phone notifications for expiry dates (works offline) ---------- */
+    const LN = () => NATIVE() && plug('LocalNotifications');
+    const notifRow = () => LN() ? `<div class="row"><div class="ri">${I('bell', 20)}</div><div class="rb"><b>Phone notifications</b><small>Alerts on this phone, even without internet</small></div><label class="sw"><input type="checkbox" ${localStorage.nxln == '1' ? 'checked' : ''} onchange="tgNotif(this)"><span></span></label></div>` : '';
+    async function tgNotif(el) {
+      const P = LN(); if (!P) { el.checked = false; return }
+      if (!el.checked) { localStorage.nxln = '0'; try { const q = await P.getPending(); if (q.notifications.length) await P.cancel({ notifications: q.notifications.map(n => ({ id: n.id })) }) } catch (e) { } toast('Phone notifications turned off', 'inf'); return }
+      try {
+        let r = await P.checkPermissions(); if (r.display != 'granted') r = await P.requestPermissions();
+        if (r.display != 'granted') { el.checked = false; return alertBox('Notification permission is blocked. Allow it in Android Settings > Apps > Nexus Docs > Notifications.', 'Permission needed') }
+        localStorage.nxln = '1'; await schedLocal(); toast('Phone notifications turned on')
+      } catch (e) { el.checked = false; alertBox('Could not turn on notifications on this device') }
+    }
+    async function schedLocal() {
+      const P = LN(); if (!P || localStorage.nxln != '1' || !S.user) return;
+      try {
+        const q = await P.getPending(); if (q.notifications.length) await P.cancel({ notifications: q.notifications.map(n => ({ id: n.id })) });
+        const now = Date.now(), L = [];
+        S.docs.forEach(d => {
+          if (!d.expiry) return; const [y, m, dd] = d.expiry.split('-').map(Number), v = d.kind == 'vehicle' && S.vs.find(x => x.id == d.vehicleId), nm = d.title + (v ? ' (' + v.number + ')' : d.holder ? ' · ' + d.holder : '');
+          rd().forEach(n => { const at = new Date(y, m - 1, dd - n, 9, 0, 0); if (at.getTime() > now) L.push({ at, title: n == 0 ? 'Document expires today' : 'Document expiring soon', body: n == 0 ? nm + ' expires today' : nm + ' expires in ' + n + ' day' + (n > 1 ? 's' : '') }) })
+        });
+        L.sort((a, b) => a.at - b.at); const out = L.slice(0, 60).map((x, i) => ({ id: i + 1, title: x.title, body: x.body, schedule: { at: x.at, allowWhileIdle: true } }));
+        if (out.length) await P.schedule({ notifications: out })
+      } catch (e) { }
+    }
+
+    /* ---------- v3.1: PASSWORD VAULT ----------
+       Everything is encrypted ON THE PHONE (AES-256-GCM, key from your master password via PBKDF2).
+       The Google Sheet only ever stores unreadable ciphertext. */
+    Object.assign(P, {
+      key: '<circle cx="8" cy="15" r="4"/><path d="M10.8 12.2L21 2M17 6l3 3M14 9l2 2"/>',
+      ext: '<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="M15 3h6v6M10 14L21 3"/>',
+      eyeoff: '<path d="M17.9 17.9A10.9 10.9 0 0 1 12 20C5 20 1 12 1 12a18.7 18.7 0 0 1 5.1-5.9M9.9 4.2A9.1 9.1 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.2 3.2M1 1l22 22"/>',
+      globe: '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/>',
+      history: '<path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5M12 7v5l3 2"/>',
+      tag: '<path d="M20.6 13.4l-7.2 7.2a2 2 0 0 1-2.8 0L3 13V3h10l7.6 7.6a2 2 0 0 1 0 2.8z"/><circle cx="7.5" cy="7.5" r="1.2"/>',
+      note: '<path d="M4 4h16v12l-4 4H4z"/><path d="M16 20v-4h4M8 9h8M8 13h5"/>'
+    });
+    const VCAT = [['Social', 'user'], ['Email', 'mail'], ['Banking', 'shield'], ['Shopping', 'star'], ['Work', 'tool'], ['Entertainment', 'image'], ['Education', 'file'], ['Government', 'id'], ['Other', 'lock']];
+    const VPRE = [['Linked email', 0], ['Linked phone', 0], ['Security question', 0], ['Security answer', 1], ['PIN', 1], ['Account / Customer ID', 0], ['Backup code', 1]];
+    const vci = c => (VCAT.find(x => x[0] == c) || [0, 'lock'])[1];
+    let V = { ok: 0, ld: 0, err: '', meta: null, raw: [], items: [], key: null, ks: '', q: '', cat: 'all', fv: 0, t: 0, hid: 0 };
+    const vte = new TextEncoder(), vtd = new TextDecoder();
+    const v2s = u => { let s = ''; for (let i = 0; i < u.length; i++) s += String.fromCharCode(u[i]); return btoa(s) };
+    const s2v = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
+    const vRand = n => crypto.getRandomValues(new Uint8Array(n));
+    async function vDerive(pw, salt) {
+      const m = await crypto.subtle.importKey('raw', vte.encode(pw), 'PBKDF2', false, ['deriveKey']);
+      return crypto.subtle.deriveKey({ name: 'PBKDF2', salt, iterations: 250000, hash: 'SHA-256' }, m, { name: 'AES-GCM', length: 256 }, false, ['encrypt', 'decrypt'])
+    }
+    async function vSeal(k, o) {
+      const iv = vRand(12), c = new Uint8Array(await crypto.subtle.encrypt({ name: 'AES-GCM', iv }, k, vte.encode(JSON.stringify(o)))), r = new Uint8Array(12 + c.length);
+      r.set(iv); r.set(c, 12); return v2s(r)
+    }
+    async function vOpen(k, s) { const u = s2v(s); return JSON.parse(vtd.decode(await crypto.subtle.decrypt({ name: 'AES-GCM', iv: u.slice(0, 12) }, k, u.slice(12)))) }
+    function vInt(n) { const m = 256 - 256 % n; let b; do { b = vRand(1)[0] } while (b >= m); return b % n }
+    const vPick = s => s[vInt(s.length)];
+    function vGen(n = 16) {
+      const S = ['abcdefghijkmnopqrstuvwxyz', 'ABCDEFGHJKLMNPQRSTUVWXYZ', '23456789', '!@#$%^&*-_+=?'], o = S.map(vPick), all = S.join('');
+      while (o.length < n) o.push(vPick(all));
+      for (let i = o.length - 1; i > 0; i--) { const j = vInt(i + 1);[o[i], o[j]] = [o[j], o[i]] }
+      return o.join('')
+    }
+    function vStr(p) {
+      p = p || ''; if (!p) return [0, '', 'var(--bd)']; let s = 0;
+      if (p.length >= 8) s++; if (p.length >= 12) s++; if (p.length >= 16) s++;
+      if (/[a-z]/.test(p) && /[A-Z]/.test(p)) s++; if (/\d/.test(p)) s++; if (/[^A-Za-z0-9]/.test(p)) s++;
+      return s <= 2 ? [22, 'Weak', 'var(--er)'] : s == 3 ? [48, 'Fair', 'var(--wn)'] : s == 4 ? [74, 'Good', '#7cb518'] : [100, 'Strong', 'var(--ok)']
+    }
+    const vUrl = u => { u = String(u || '').trim(); if (!u) return ''; if (!/^[a-z][a-z0-9+.\-]*:/i.test(u)) u = 'https://' + u; try { const x = new URL(u); return /^https?:$/.test(x.protocol) && x.hostname.includes('.') ? x.href : '' } catch (e) { return '' } };
+    const vCol = s => 'hsl(' + (Math.abs([...String(s)].reduce((h, c) => (h * 31 + c.charCodeAt(0)) | 0, 7)) % 360) + ' 52% 45%)';
+    const vCache = () => { try { localStorage.nxv = JSON.stringify({ meta: V.meta ? JSON.stringify(V.meta) : '', items: V.raw }) } catch (e) { } };
+
+    /* ---- loading / locking ---- */
+    async function vDecryptAll() { const L = []; for (const r of V.raw) { try { L.push({ ...(await vOpen(V.key, r.data)), id: r.id }) } catch (e) { } } V.items = L }
+    async function vLoad(force) {
+      if (V.ld || (V.ok && !force)) return; V.ld = 1; V.err = '';
+      try {
+        let d; try { d = await api('vaultGet'); try { localStorage.nxv = JSON.stringify(d) } catch (e) { } }
+        catch (e) { const c = localStorage.nxv; if (c && /network/i.test(e.message)) d = JSON.parse(c); else throw e }
+        V.meta = d.meta ? JSON.parse(d.meta) : null; V.raw = d.items || []; V.ok = 1;
+        if (V.key && (!V.meta || V.meta.salt != V.ks)) { V.key = null; V.items = []; toast('Vault master password changed elsewhere. Unlock again', 'inf') }
+        else if (V.key) await vDecryptAll()
+      } catch (e) { V.err = e.message || 'Could not load the vault' }
+      V.ld = 0; if (S.tab == 'vault' && !$('.ov')) go('vault', null, 1)
+    }
+    function vTouch() { clearTimeout(V.t); if (V.key) V.t = setTimeout(() => { if ($('.ov')) return vTouch(); vLock(1) }, 18e4) }
+    function vLock(q) {
+      V.key = null; V.items = []; clearTimeout(V.t);
+      if (S.tab == 'vault' && $('#shell.on')) go('vault', null, 1); if (!q) toast('Vault locked', 'inf')
+    }
+    ['click', 'keydown', 'touchstart'].forEach(ev => addEventListener(ev, () => { if (V.key) vTouch() }, true));
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) { V.hid = Date.now(); return }
+      if (V.key && V.hid && Date.now() - V.hid > 6e4) { MS.slice().forEach(m => m.close(null)); vLock(1) }
+    });
+
+    /* ---- setup / unlock ---- */
+    async function vSetup() {
+      const o = await modal({
+        title: 'Create master password', icon: 'key', sticky: 1, ok: 'Create vault', html: `
+    <p class="mt" style="margin-bottom:12px">This one password opens your vault. It is <b>never stored or sent anywhere</b>, so it <b>cannot be recovered</b> if you forget it.</p>
+    <span class="lb">Master password</span>${vPw('vm_a', 'At least 8 characters', 'new-password')}
+    <span class="lb">Confirm master password</span>${vPw('vm_b', 'Type it again', 'new-password')}`,
+        pre: el => { const a = $('#vm_a').value; if (a.length < 8) return fail(el, 'Master password must be at least 8 characters'); if (a != $('#vm_b').value) return fail(el, 'Passwords do not match'); return a }
+      });
+      if (!o) return;
+      const ok = await busy(async () => {
+        const salt = vRand(16), k = await vDerive(o, salt), meta = { v: 1, salt: v2s(salt), chk: await vSeal(k, { ok: 1 }) };
+        await api('vaultMeta', { meta: JSON.stringify(meta) }); V.meta = meta; V.key = k; V.ks = meta.salt; V.raw = []; V.items = []; vCache()
+      }, 'Creating vault…');
+      if (ok) { vTouch(); go('vault', null, 1); toast('Vault created') }
+    }
+    async function vUnlock() {
+      const o = await modal({
+        title: 'Unlock vault', icon: 'lock', sticky: 1, ok: 'Unlock', html: `<span class="lb">Master password</span>${vPw('vm_a', 'Your master password', 'off')}`,
+        pre: el => $('#vm_a').value || fail(el, 'Enter your master password')
+      });
+      if (!o) return;
+      const ok = await busy(async () => {
+        const k = await vDerive(o, s2v(V.meta.salt));
+        try { await vOpen(k, V.meta.chk) } catch (e) { throw Error('Wrong master password') }
+        V.key = k; V.ks = V.meta.salt; await vDecryptAll()
+      }, 'Unlocking…');
+      if (ok) { vTouch(); go('vault', null, 1) }
+    }
+    const vPw = (id, ph, ac) => `<div class="fld">${I('lock', 18)}<input id="${id}" type="password" placeholder="${ph}" autocomplete="${ac}" autocapitalize="off" spellcheck="false"><button type="button" class="eye" onclick="const x=$('#${id}');x.type=x.type=='password'?'text':'password'" aria-label="Show password">${I('eye', 18)}</button></div>`;
+    function addNew() {
+      if (S.tab != 'vault') return docForm();
+      if (V.key) return vForm(); if (!V.ok) return toast('Loading vault…', 'inf'); V.meta ? vUnlock() : vSetup()
+    }
+
+    /* ---- page ---- */
+    const vCard = x => `<div class="dc" onclick="vView('${x.id}')"><div class="vav" style="background:${vCol(x.title)}">${esc((x.title || '?').trim()[0].toUpperCase())}</div><div class="in"><b>${esc(x.title)}${x.fav ? ` <span style="color:var(--wn)">${I('star', 13)}</span>` : ''}</b><small>${esc(x.user || 'No username')}</small><span class="vtag">${esc(x.cat)}</span></div><div class="vqa">${x.pass ? `<button class="vib" onclick="event.stopPropagation();vCopy('${x.id}')" aria-label="Copy password">${I('copy', 18)}</button>` : ''}${vUrl(x.url) ? `<button class="vib" onclick="event.stopPropagation();vOpenUrl('${x.id}')" aria-label="Open website">${I('ext', 18)}</button>` : ''}</div></div>`;
+    function vList() {
+      const q = V.q.toLowerCase().trim();
+      const a = V.items.filter(x => (V.cat == 'all' || x.cat == V.cat) && (!V.fv || x.fav) && (!q || [x.title, x.user, x.url, x.cat, x.notes, ...(x.extra || []).map(e => e.k + ' ' + (e.s ? '' : e.v))].join(' ').toLowerCase().includes(q)));
+      a.sort((x, y) => (y.fav ? 1 : 0) - (x.fav ? 1 : 0) || x.title.localeCompare(y.title));
+      return a.map(vCard).join('') || empty(V.items.length ? 'No matching logins' : 'No logins saved yet. Tap Add to save your first one', V.items.length ? 'search' : 'key')
+    }
+    function pVault() {
+      const hd = `<div class="ph"><h2>Vault</h2><div style="display:flex;gap:8px">${V.key ? `<button class="btn sm" onclick="vForm()">${I('plus', 16)} Add</button><button class="btn sm sec" onclick="vMenu()" aria-label="Vault options">${I('more', 16)}</button>` : ''}</div></div>`;
+      if (!V.ok) {
+        if (!V.ld && !V.err) vLoad();
+        return hd + (V.err ? `<div class="card" style="text-align:center">${I('alert', 32)}<h3 style="margin:10px 0 6px">Could not load the vault</h3><p class="t2" style="margin:0 0 14px">${esc(V.err)}</p><button class="btn" onclick="V.err='';go('vault',null,1)">Try again</button></div>` : '<div class="sk" style="height:90px;margin-bottom:10px"></div>'.repeat(4))
+      }
+      if (!V.meta) return hd + `<div class="card vlock"><div class="big">${I('key', 34)}</div><h3>Your private password vault</h3><p>Save logins for every site and app in one place.</p><ul><li>Encrypted on this phone before it is saved</li><li>Only your master password can open it</li><li>Works offline with your last synced data</li></ul><button class="btn full" onclick="vSetup()">Create vault</button></div>`;
+      if (!V.key) return hd + `<div class="card vlock"><div class="big">${I('lock', 34)}</div><h3>Vault is locked</h3><p>${V.raw.length ? V.raw.length + ' saved login' + (V.raw.length > 1 ? 's' : '') + ' inside. ' : ''}Enter your master password to open it.</p><button class="btn full" onclick="vUnlock()">${I('key', 18)} Unlock vault</button></div>`;
+      const cnt = c => c == 'all' ? V.items.length : V.items.filter(x => x.cat == c).length, cs = VCAT.map(x => x[0]).filter(c => cnt(c));
+      if (V.cat != 'all' && !cs.includes(V.cat)) V.cat = 'all';
+      vTouch();
+      return hd + `<div class="srch" style="margin-bottom:12px">${I('search', 18)}<input style="margin:0" placeholder="Search site, username or notes" value="${esc(V.q)}" oninput="V.q=this.value;$('#vl').innerHTML=vList()" autocomplete="off"></div>
+  <div class="chips"><button class="chip ${V.cat == 'all' && !V.fv ? 'on' : ''}" onclick="V.cat='all';V.fv=0;go('vault',null,1)">All (${cnt('all')})</button><button class="chip ${V.fv ? 'on' : ''}" onclick="V.fv=V.fv?0:1;go('vault',null,1)">${I('star', 14)} Starred</button>${cs.map(c => `<button class="chip ${V.cat == c ? 'on' : ''}" data-c2="${c}" onclick="V.cat=this.dataset.c2;V.fv=0;go('vault',null,1)">${c} (${cnt(c)})</button>`).join('')}</div>
+  <div id="vl">${vList()}</div><p class="t2" style="text-align:center;font-size:12px;margin-top:16px">${I('lock', 12)} End-to-end encrypted · auto-locks after 3 minutes</p>`
+    }
+
+    /* ---- copy / open ---- */
+    async function vCopyTxt(t, label) {
+      try { await navigator.clipboard.writeText(t) }
+      catch (e) { const a = document.createElement('textarea'); a.value = t; a.style.cssText = 'position:fixed;opacity:0'; document.body.appendChild(a); a.select(); let ok = 0; try { ok = document.execCommand('copy') } catch (x) { } a.remove(); if (!ok) return toast('Could not copy', 'er') }
+      toast(label + ' copied')
+    }
+    const vCopy = id => { const x = V.items.find(i => i.id == id); x && vCopyTxt(x.pass, 'Password') };
+    function vOpenUrl(id) {
+      const x = V.items.find(i => i.id == id), u = x && vUrl(x.url); if (!u) return toast('No valid website link saved', 'er');
+      const a = document.createElement('a'); a.href = u; a.target = '_blank'; a.rel = 'noopener noreferrer'; document.body.appendChild(a); a.click(); a.remove()
+    }
+
+    /* ---- detail view ---- */
+    const vRow = (f, k) => `<div class="vrow"><div class="ri">${I(f.i, 20)}</div><div class="rb"><small>${esc(f.l)}</small><b class="${f.m ? 'mono' : ''}">${f.m ? '••••••••••' : esc(f.v)}</b>${f.n || ''}</div>${f.m ? `<button class="vib" data-eye="${k}" aria-label="Show or hide">${I('eye', 18)}</button>` : ''}<button class="vib" data-cp="${k}" aria-label="Copy">${I('copy', 18)}</button></div>`;
+    function vBind(el, F) {
+      el.addEventListener('click', e => {
+        const b = e.target.closest('button'); if (!b) return;
+        if (b.dataset.eye !== undefined) { const k = +b.dataset.eye, t = el.querySelectorAll('.vrow')[k].querySelector('.rb b'), sh = t.dataset.s == '1'; t.textContent = sh ? '••••••••••' : F[k].v; t.dataset.s = sh ? '' : '1'; b.innerHTML = I(sh ? 'eye' : 'eyeoff', 18) }
+        else if (b.dataset.cp !== undefined) { const f = F[+b.dataset.cp]; vCopyTxt(f.v, f.l) }
+      })
+    }
+    async function vView(id) {
+      const x = V.items.find(i => i.id == id); if (!x) return;
+      const days = Math.floor((Date.now() - new Date(x.pwAt || x.updated || x.created || Date.now())) / 864e5), old = x.pass && days > 180, sg = vStr(x.pass), F = [];
+      if (x.url) F.push({ i: 'globe', l: 'Website', v: x.url });
+      if (x.user) F.push({ i: 'user', l: 'Username / ID', v: x.user });
+      if (x.pass) F.push({ i: 'lock', l: 'Password', v: x.pass, m: 1, n: `<small style="color:${sg[2]};font-weight:700">${sg[1]} password</small>` });
+      (x.extra || []).forEach(e => F.push({ i: e.s ? 'lock' : 'tag', l: e.k || 'Detail', v: e.v, m: e.s }));
+      if (x.notes) F.push({ i: 'note', l: 'Notes', v: x.notes });
+      await modal({
+        title: esc(x.title), icon: vci(x.cat), wide: 1, ok: null, cancel: null, noFocus: 1, html: `
+    <div style="margin:2px 0 6px"><span class="vtag">${esc(x.cat)}</span></div>${F.map(vRow).join('')}
+    ${vUrl(x.url) ? `<button class="btn full" style="margin-top:14px" data-act="open">${I('ext', 18)} Open website</button>` : ''}
+    <div class="vact"><button class="btn sec sm" data-act="edit">${I('edit', 16)} Edit</button><button class="btn sec sm" data-act="fav">${I('star', 16)} ${x.fav ? 'Unstar' : 'Star'}</button>${(x.hist || []).length ? `<button class="btn sec sm" data-act="hist">${I('history', 16)} History</button>` : ''}<button class="btn sec sm" data-act="del" style="color:var(--er)" aria-label="Delete">${I('trash', 16)}</button></div>
+    <p class="vmeta ${old ? 'wn' : ''}">${x.pass ? `Password changed ${days < 1 ? 'today' : days + ' day' + (days > 1 ? 's' : '') + ' ago'}${old ? '. Consider updating it.' : '.'}<br>` : ''}Last edited ${fd(x.updated || x.created)}</p>`,
+        onOpen: (el, close) => {
+          vBind(el, F);
+          el.addEventListener('click', async e => {
+            const a = e.target.closest('[data-act]'); if (!a) return; const k = a.dataset.act;
+            if (k == 'open') vOpenUrl(id);
+            if (k == 'edit') { close(null); vForm(id) }
+            if (k == 'fav') { close(null); vFav(id) }
+            if (k == 'hist') vHist(id);
+            if (k == 'del' && await confirmBox({ title: 'Delete this login?', text: esc(x.title) + ' will be removed from your vault permanently.', ok: 'Delete', danger: 1, icon: 'trash' })) { close(null); vDel(id) }
+          })
+        }
+      })
+    }
+    async function vHist(id) {
+      const x = V.items.find(i => i.id == id), F = (x.hist || []).map(h => ({ i: 'history', l: 'Used until ' + fd(h.d), v: h.p, m: 1 }));
+      await modal({ title: 'Old passwords', icon: 'history', ok: null, cancel: null, noFocus: 1, html: `<p class="mt" style="margin-bottom:6px">The last ${F.length} password${F.length > 1 ? 's' : ''} you used for ${esc(x.title)}.</p>${F.map(vRow).join('')}`, onOpen: el => vBind(el, F) })
+    }
+
+    /* ---- add / edit ---- */
+    async function vForm(id) {
+      const x = V.items.find(i => i.id == id) || {}, EX = (x.extra || []).map(e => ({ ...e }));
+      const rx = () => { $('#vx_f').innerHTML = EX.map((e, i) => `<div class="cf"><input data-i="${i}" data-f="k" placeholder="Label" value="${esc(e.k)}" autocomplete="off"><input data-i="${i}" data-f="v" type="${e.s ? 'password' : 'text'}" placeholder="Value" value="${esc(e.v)}" autocomplete="off"><button type="button" class="vib" data-s="${i}" aria-label="Hide or show value">${I(e.s ? 'lock' : 'eye', 16)}</button><button type="button" class="vib" data-x="${i}" aria-label="Remove field">${I('x', 16)}</button></div>`).join('') };
+      const mt = () => { const s = vStr($('#vx_p').value), m = $('#vx_m'); m.style.width = s[0] + '%'; m.style.background = s[2]; $('#vx_ml').textContent = s[1] ? s[1] + ' password' : '' };
+      const o = await modal({
+        title: id ? 'Edit login' : 'Add login', icon: 'key', wide: 1, sticky: 1, ok: 'Save', html: `
+    <span class="lb">Title (site or app name)</span><input id="vx_t" placeholder="Instagram, SBI NetBanking…" value="${esc(x.title)}" autocomplete="off">
+    <div class="two"><div><span class="lb">Category</span><select id="vx_c">${VCAT.map(c => `<option ${(x.cat || 'Other') == c[0] ? 'selected' : ''}>${c[0]}</option>`).join('')}</select></div><div><span class="lb">Website link</span><input id="vx_l" type="url" inputmode="url" placeholder="instagram.com" value="${esc(x.url)}" autocomplete="off" autocapitalize="off"></div></div>
+    <span class="lb">Username / ID / Email</span><input id="vx_u" value="${esc(x.user)}" autocomplete="off" autocapitalize="off" spellcheck="false">
+    <span class="lb">Password</span><div class="fld">${I('lock', 18)}<input id="vx_p" type="password" value="${esc(x.pass)}" autocomplete="new-password" autocapitalize="off" spellcheck="false"><button type="button" class="eye" onclick="const q=$('#vx_p');q.type=q.type=='password'?'text':'password'" aria-label="Show password">${I('eye', 18)}</button></div>
+    <div class="vmeter"><i id="vx_m"></i></div><span class="vml" id="vx_ml"></span>
+    <div class="vgen"><button type="button" class="btn sec sm" id="vx_gen">${I('refresh', 16)} Generate strong password</button></div>
+    <span class="lb">Notes (optional)</span><textarea id="vx_n" rows="2" style="resize:none" placeholder="Anything else to remember">${esc(x.notes)}</textarea>
+    <span class="lb">Related details</span><div id="vx_f"></div>
+    <button type="button" class="btn sec sm" id="vx_add">${I('plus', 16)} Add field</button>
+    <div class="vpre">${VPRE.map((p, i) => `<button type="button" data-pre="${i}">+ ${p[0]}</button>`).join('')}</div>`,
+        onOpen: el => {
+          rx(); mt(); $('#vx_p').addEventListener('input', mt);
+          el.addEventListener('input', e => { const t = e.target; if (t.dataset.i !== undefined) EX[+t.dataset.i][t.dataset.f] = t.value });
+          el.addEventListener('click', e => {
+            const b = e.target.closest('button'); if (!b) return;
+            const last = () => { const L = $('#vx_f').querySelectorAll('.cf'); const c = L[L.length - 1]; c && c.querySelector(EX[EX.length - 1].k ? '[data-f=v]' : '[data-f=k]').focus() };
+            if (b.dataset.x !== undefined) { EX.splice(+b.dataset.x, 1); rx() }
+            else if (b.dataset.s !== undefined) { const f = EX[+b.dataset.s]; f.s = !f.s; rx() }
+            else if (b.dataset.pre !== undefined) { const p = VPRE[+b.dataset.pre]; EX.push({ k: p[0], v: '', s: !!p[1] }); rx(); last() }
+            else if (b.id == 'vx_add') { EX.push({ k: '', v: '', s: false }); rx(); last() }
+            else if (b.id == 'vx_gen') { const i = $('#vx_p'); i.value = vGen(); i.type = 'text'; mt() }
+          });
+          if (!id) setTimeout(() => $('#vx_t') && $('#vx_t').focus(), 280)
+        },
+        pre: el => {
+          const t = $('#vx_t').value.trim(), u = $('#vx_u').value.trim(), p = $('#vx_p').value, l = $('#vx_l').value.trim();
+          if (!t) return fail(el, 'Enter a title (site or app name)');
+          if (l && !vUrl(l)) return fail(el, 'Enter a valid website link, like example.com');
+          if (!u && !p) return fail(el, 'Add a username or a password');
+          return { title: t, cat: $('#vx_c').value, url: l ? vUrl(l) : '', user: u, pass: p, notes: $('#vx_n').value.trim(), extra: EX.filter(e => (e.k || '').trim() || (e.v || '').trim()).map(e => ({ k: (e.k || '').trim(), v: e.v || '', s: !!e.s })) }
+        }
+      });
+      if (!o) return;
+      const now = new Date().toISOString(), e = { ...o, id: id || '', fav: !!x.fav, hist: x.hist || [], created: x.created || now, updated: now, pwAt: x.pwAt || x.created || now };
+      if (id && x.pass && x.pass != o.pass) { e.hist = [{ p: x.pass, d: now }, ...e.hist].slice(0, 5); e.pwAt = now } else if (!id) e.pwAt = now;
+      if (await busy(() => vPut(e), 'Encrypting & saving…')) { go('vault', null, 1); toast(id ? 'Login updated' : 'Login saved') }
+    }
+    async function vPut(e) {
+      const { id, ...r } = e, data = await vSeal(V.key, r), res = await api('vaultSave', { id: id || '', data }), nid = res.id || id;
+      const rw = { id: nid, data, updated: r.updated }, i = V.raw.findIndex(z => z.id == nid); if (i < 0) V.raw.push(rw); else V.raw[i] = rw;
+      const it = { ...r, id: nid }, j = V.items.findIndex(z => z.id == nid); if (j < 0) V.items.push(it); else V.items[j] = it;
+      vCache(); return nid
+    }
+    async function vFav(id) {
+      const x = V.items.find(i => i.id == id); if (!x) return; x.fav = !x.fav; go('vault', null, 1);
+      try { await vPut({ ...x }) } catch (e) { x.fav = !x.fav; go('vault', null, 1); toast(e.message, 'er') }
+    }
+    async function vDel(id) {
+      if (await busy(async () => { await api('vaultDelete', { id }); V.raw = V.raw.filter(z => z.id != id); V.items = V.items.filter(z => z.id != id); vCache() }, 'Deleting…')) { go('vault', null, 1); toast('Login deleted') }
+    }
+
+    /* ---- vault menu: lock, change master password, export, reset ---- */
+    async function vMenu() {
+      const k = await sheet('Vault options', [{ k: 'lock', i: 'lock', t: 'Lock vault now' }, { k: 'pw', i: 'key', t: 'Change master password', s: 'Re-encrypts every login' }, { k: 'csv', i: 'download', t: 'Export as CSV', s: 'Not encrypted. Keep the file safe' }, { k: 'rs', i: 'trash', t: 'Reset vault', s: 'Deletes all saved logins', cls: 'rd' }]);
+      if (k == 'lock') vLock(); if (k == 'pw') vChange(); if (k == 'csv') vExport(); if (k == 'rs') vReset()
+    }
+    async function vChange() {
+      const o = await modal({
+        title: 'Change master password', icon: 'key', sticky: 1, ok: 'Change', html: `<span class="lb">Current master password</span>${vPw('vm_a', 'Current', 'off')}<span class="lb">New master password</span>${vPw('vm_b', 'At least 8 characters', 'new-password')}<span class="lb">Confirm new password</span>${vPw('vm_c', 'Type it again', 'new-password')}`,
+        pre: el => { if (!$('#vm_a').value) return fail(el, 'Enter your current master password'); if ($('#vm_b').value.length < 8) return fail(el, 'New password must be at least 8 characters'); if ($('#vm_b').value != $('#vm_c').value) return fail(el, 'Passwords do not match'); return { a: $('#vm_a').value, b: $('#vm_b').value } }
+      });
+      if (!o) return;
+      const ok = await busy(async () => {
+        const k0 = await vDerive(o.a, s2v(V.meta.salt)); try { await vOpen(k0, V.meta.chk) } catch (e) { throw Error('Current master password is wrong') }
+        const d = await api('vaultGet'); V.raw = d.items || []; await vDecryptAll();
+        const salt = vRand(16), k = await vDerive(o.b, salt), meta = { v: 1, salt: v2s(salt), chk: await vSeal(k, { ok: 1 }) }, items = [];
+        for (const it of V.items) { const { id, ...r } = it; items.push({ id, data: await vSeal(k, r) }) }
+        await api('vaultBulk', { meta: JSON.stringify(meta), items });
+        V.meta = meta; V.key = k; V.ks = meta.salt; V.raw = items; vCache()
+      }, 'Re-encrypting…');
+      if (ok) toast('Master password changed')
+    }
+    function vExport() {
+      confirmBox({ title: 'Export passwords?', text: 'The CSV file is <b>not encrypted</b>. Anyone who opens it can read every password. Delete it after use.', ok: 'Export', icon: 'download' }).then(y => {
+        if (!y) return;
+        const q = v => { let t = String(v ?? ''); if (/^[=+\-@]/.test(t)) t = "'" + t; return '"' + t.replace(/"/g, '""') + '"' },
+          R = [['Title', 'Category', 'Website', 'Username', 'Password', 'Notes', 'Related details']];
+        V.items.forEach(x => R.push([x.title, x.cat, x.url, x.user, x.pass, x.notes, (x.extra || []).map(e => e.k + ': ' + e.v).join(' | ')]));
+        dl2('nexus-vault-' + new Date().toISOString().slice(0, 10) + '.csv', '\ufeff' + R.map(r => r.map(q).join(',')).join('\r\n'), 'text/csv'); toast('CSV exported', 'inf')
+      })
+    }
+    async function vReset() {
+      const o = await modal({ title: 'Reset vault?', icon: 'trash', tone: 'er', danger: 1, sticky: 1, ok: 'Delete everything', html: `<p class="mt" style="margin-bottom:12px">All saved logins will be deleted permanently and the vault returns to its first-time state. Type <b>RESET</b> to confirm.</p><input id="vm_a" placeholder="RESET" autocomplete="off" autocapitalize="characters">`, pre: el => $('#vm_a').value.trim().toUpperCase() == 'RESET' ? true : fail(el, 'Type RESET to confirm') });
+      if (o && await busy(async () => { await api('vaultReset'); V.meta = null; V.key = null; V.raw = []; V.items = []; localStorage.removeItem('nxv') }, 'Resetting…')) { go('vault', null, 1); toast('Vault reset', 'inf') }
+    }
+
+    /* ---------- v3.2: share / download the actual FILE (not just a link) ---------- */
+    const FEXT = { 'image/jpeg': 'jpg', 'image/png': 'png', 'image/webp': 'webp', 'image/gif': 'gif', 'image/heic': 'heic', 'application/pdf': 'pdf', 'text/plain': 'txt', 'application/msword': 'doc', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document': 'docx', 'application/vnd.ms-excel': 'xls', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': 'xlsx' };
+    const fsafe = s => String(s || '').replace(/[\\/:*?"<>|\u0000-\u001f]+/g, '').replace(/\s+/g, ' ').trim().slice(0, 80) || 'document';
+    function fileNm(d, f, mime, i) {
+      const o = nmOf(f), m = /\.([A-Za-z0-9]{1,5})$/.exec(o), ext = m ? m[1].toLowerCase() : (FEXT[mime] || 'bin'), lb = lbOf(f) || (d.files.length > 1 ? 'Page ' + (i + 1) : '');
+      return fsafe(d.title + (lb ? ' - ' + lb : '')) + '.' + ext
+    }
+    const b2blob = (b, t) => { const s = atob(b), u = new Uint8Array(s.length); for (let i = 0; i < s.length; i++) u[i] = s.charCodeAt(i); return new Blob([u], { type: t || 'application/octet-stream' }) };
+    /* downloads the real bytes from Google Drive through your own backend (only your own files are served) */
+    async function fetchFiles(d, list) {
+      const out = [];
+      for (let k = 0; k < list.length; k++) {
+        const f = list[k]; prog(list.length > 1 ? `Preparing file ${k + 1} of ${list.length}…` : 'Preparing file…');
+        const r = await api('getFile', { id: f.id }), mime = r.mime && r.mime != 'application/octet-stream' ? r.mime : (f.t || r.mime || 'application/octet-stream');
+        out.push({ name: fileNm(d, f, mime, d.files.indexOf(f)), mime, data: r.data })
+      }
+      return out
+    }
+    async function pickFiles(d, verb) {
+      if (d.files.length < 2) return d.files;
+      const k = await sheet(verb + ' which file?', [{ k: 'all', i: 'file', t: 'All pages', s: pgTxt(d.files) }, ...d.files.map((f, i) => ({ k: String(i), i: /^image/.test(f.t || '') ? 'image' : 'file', t: lbOf(f) ? lbOf(f) + ' side' : 'Page ' + (i + 1), s: esc(nmOf(f)) }))]);
+      return k == null ? null : k == 'all' ? d.files : [d.files[+k]]
+    }
+    function webSave(out) { out.forEach((f, i) => setTimeout(() => { const a = document.createElement('a'); a.href = URL.createObjectURL(b2blob(f.data, f.mime)); a.download = f.name; document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 6000) }, i * 400)) }
+    async function nativeFiles(out, title, dlg) {
+      const FS = plug('Filesystem'), SH = plug('Share'), uris = [];
+      for (const f of out) { const w = await FS.writeFile({ path: 'share/' + Date.now() + '/' + f.name, data: f.data, directory: 'CACHE', recursive: true }); uris.push(w.uri) }
+      await SH.share({ title, files: uris, dialogTitle: dlg })
+    }
+    async function docFiles(d, mode) {
+      const list = await pickFiles(d, mode == 'share' ? 'Share' : 'Download'); if (!list) return;
+      await sendFiles(d, list, mode)
+    }
+    async function sendFiles(d, list, mode) {
+      const out = await busy(() => fetchFiles(d, list)); if (!out) return;
+      const nat = NATIVE() && plug('Filesystem') && plug('Share');
+      try {
+        if (nat) { await nativeFiles(out, d.title, mode == 'share' ? 'Share file' : 'Save file'); return }
+        if (mode == 'share') {
+          const fl = out.map(f => new File([b2blob(f.data, f.mime)], f.name, { type: f.mime }));
+          if (navigator.canShare && navigator.canShare({ files: fl })) {
+            try { await navigator.share({ files: fl, title: d.title }) }
+            catch (e) { // the browser wants a fresh tap after a slow download: ask for one
+              if (e && e.name == 'NotAllowedError') { const go2 = await modal({ icon: 'share', title: 'File is ready', ok: 'Share now', sticky: 1, noFocus: 1, html: `<p class="mt">${esc(fl.map(f => f.name).join(', '))}</p>`, pre: () => { navigator.share({ files: fl, title: d.title }).catch(() => { }); return true } }); return }
+              throw e
+            }
+            return
+          }
+          webSave(out); toast('Sharing files is not supported here. Downloaded instead', 'inf'); return
+        }
+        webSave(out); toast(out.length > 1 ? 'Downloading ' + out.length + ' files' : 'Downloading file')
+      } catch (e) { if (!(e && (e.name == 'AbortError' || /cancel/i.test(e.message || '')))) toast('Could not ' + (mode == 'share' ? 'share' : 'save') + ' the file', 'er') }
+    }
+    function vShare() {
+      const p = VP[vi]; if (!p || !p.id) return;
+      sendFiles({ title: $('#vt').textContent, files: VP.map(x => x.f).filter(Boolean) }, [p.f], 'share')
+    }
+
+    /* ---------- INIT ---------- */
+    document.documentElement.dataset.t = localStorage.th || (matchMedia('(prefers-color-scheme:dark)').matches ? 'dark' : 'light');
+    $('#tc').content = document.documentElement.dataset.t == 'dark' ? '#0a1124' : '#0f1b3d'; barTheme();
+    setTimeout(hideSplash, 7000);
+    $('#sp img').src = LOGO; applyAc();
+    let Q = new URLSearchParams(location.search).get('a') || '';
+    if (Q == 'expiring' || Q == 'veh') { S.tab = Q == 'veh' ? 'veh' : 'docs'; Q = '' }
+    try { history.replaceState(null, '', location.pathname) } catch (e) { }
+    S.token ? load('sk') : authView('login');
+    if (S.token && localStorage.nxpin) lockNow();
+  </script>
+</body>
+
+</html>

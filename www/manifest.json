@@ -1,0 +1,30 @@
+{
+  "name": "Nexus Document Hub",
+  "short_name": "Nexus Docs",
+  "description": "All your personal and vehicle documents in one secure place, with expiry reminders.",
+  "id": "./",
+  "start_url": "./?source=pwa",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0f1b3d",
+  "theme_color": "#0f1b3d",
+  "categories": ["productivity", "utilities"],
+  "icons": [
+    {"src": "icons/icon-72.png", "sizes": "72x72", "type": "image/png"},
+    {"src": "icons/icon-96.png", "sizes": "96x96", "type": "image/png"},
+    {"src": "icons/icon-128.png", "sizes": "128x128", "type": "image/png"},
+    {"src": "icons/icon-144.png", "sizes": "144x144", "type": "image/png"},
+    {"src": "icons/icon-152.png", "sizes": "152x152", "type": "image/png"},
+    {"src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any"},
+    {"src": "icons/icon-384.png", "sizes": "384x384", "type": "image/png"},
+    {"src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any"},
+    {"src": "icons/maskable-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable"},
+    {"src": "icons/maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"}
+  ],
+  "shortcuts": [
+    {"name": "Add document", "short_name": "Add doc", "url": "./?a=doc", "icons": [{"src": "icons/icon-96.png", "sizes": "96x96"}]},
+    {"name": "Expiring soon", "short_name": "Expiring", "url": "./?a=expiring", "icons": [{"src": "icons/icon-96.png", "sizes": "96x96"}]},
+    {"name": "Vehicles", "short_name": "Vehicles", "url": "./?a=veh", "icons": [{"src": "icons/icon-96.png", "sizes": "96x96"}]}
+  ]
+}
