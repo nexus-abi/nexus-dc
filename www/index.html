@@ -2191,8 +2191,8 @@
     #vw nav button, #vw nav a { border-radius: 999px }
 
     /* toasts sit BELOW the top cap so they are never hidden behind it */
-    #ts { top: calc(var(--sat) + 78px) }
-    .to { border: 1px solid color-mix(in srgb, var(--bg) 18%, transparent) }
+    #ts { top: calc(var(--sat) + 78px); z-index: 500 }
+    .to { border: 1px solid color-mix(in srgb, var(--bg) 22%, transparent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--ac) 28%, transparent), var(--sh2) }
     @media(min-width:900px) { #ts { top: 22px } }
 
     @media(prefers-reduced-motion:reduce) { *, *:before, *:after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important } }
@@ -2477,7 +2477,7 @@
     <div class="row"><div class="ri">${I('bell', 20)}</div><div class="rb"><b>Email reminders</b><small>Sent by email every morning at 8 AM</small></div><label class="sw"><input type="checkbox" ${u.remind ? 'checked' : ''} onchange="tgRem(this)"><span></span></label></div>
     <div class="row"><div class="ri">${I(dark ? 'moon' : 'sun', 20)}</div><div class="rb"><b>Dark mode</b><small>Easier on the eyes at night</small></div><label class="sw"><input type="checkbox" ${dark ? 'checked' : ''} onchange="theme();go('me',null,1)"><span></span></label></div>${notifRow()}${A('bell', 'Reminder timing', rdTxt(), 'remDays()')}${A('palette', 'Accent colour', AC[curAc()][0], 'accentPick()')}<div class="row"><div class="ri">${I('lock', 20)}</div><div class="rb"><b>App lock</b><small>Ask for a 4-digit PIN when the app opens</small></div><label class="sw"><input type="checkbox" ${localStorage.nxpin ? 'checked' : ''} onchange="tgLock(this)"><span></span></label></div></div>
   <h3 class="h">Security &amp; data</h3><div class="card grp">${A('lock', 'Change password', 'Update your account password', 'chPw()') + A('devices', 'Logout from all devices', 'End every active session', 'logAll()') + A('download', 'Export my data', 'Download all your details as a file', 'exportData()') + A('table', 'Export documents (CSV)', 'Open in Excel or Google Sheets', 'exportCSV()') + A('cal', 'Add expiry dates to calendar', 'Download an .ics file for any calendar app', 'exportICS()')}</div>
-  <h3 class="h">Account</h3><div class="card grp">${A('logout', 'Logout', 'Sign out from this device', 'logout()') + A('trash', 'Delete account', 'Permanently remove all your data', 'delAcc()', 'rd')}</div>
+  <h3 class="h">Account</h3><div class="card grp">${A('logout', 'Logout', 'Sign out from this device', 'logout()') + A('trash', 'Delete account', 'Permanently remove all your data', 'delAcc()', 'rd')}</div><p class="t2" style="text-align:center;font-size:12.5px;margin:18px 0 4px">Nexus Docs · UI version 4.2</p>
   <p class="t2" style="text-align:center;margin-top:20px;font-size:12px">Nexus Document Hub · v3.2</p>`}
 
     /* ---------- PROFILE ACTIONS ---------- */
