@@ -2190,6 +2190,11 @@
     .pad button { background: #ffffff1c; border: 0 }
     #vw nav button, #vw nav a { border-radius: 999px }
 
+    /* toasts sit BELOW the top cap so they are never hidden behind it */
+    #ts { top: calc(var(--sat) + 78px) }
+    .to { border: 1px solid color-mix(in srgb, var(--bg) 18%, transparent) }
+    @media(min-width:900px) { #ts { top: 22px } }
+
     @media(prefers-reduced-motion:reduce) { *, *:before, *:after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important } }
   </style>
 </head>
