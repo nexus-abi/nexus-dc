@@ -8,6 +8,7 @@ self.addEventListener('fetch', e => {
   if (r.method !== 'GET') return;
   const u = new URL(r.url);
   if (u.origin !== location.origin) return;            // never touch Google API / Drive files
+  if (u.pathname.endsWith('/version.json')) return;     // update check must always hit the network and is never cached
   if (r.mode === 'navigate' || u.pathname.endsWith('/config.js')) { // always fresh when online; cached copy when offline                           // network first, offline fallback
     const k = r.mode === 'navigate' ? './index.html' : r;
     e.respondWith(fetch(r, { cache: 'no-cache' }).then(x => { if (x.ok) { const c = x.clone(); caches.open(V).then(h => h.put(k, c)); } return x; }).catch(() => caches.match(k)));
