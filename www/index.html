@@ -2581,6 +2581,64 @@
     .inx { grid-template-columns: minmax(0, 1fr) }
     @media(min-width:700px) { .inx { grid-template-columns: repeat(2, minmax(0, 1fr)) } }
 
+  /* ===== Paste this at the VERY END of your <style> block (after the v7 block) ===== */
+
+/* 1) Stop words breaking in the middle ("Documen / ts").
+      break-word only wraps when a single word cannot fit at all, "anywhere" broke every word. */
+.gh h2, .ph h2, .pfi h2, .in b, .idc b, .tt b, .emc b, .hero h2, .side b {
+  overflow-wrap: break-word;
+  word-break: normal;
+  hyphens: none;
+}
+
+/* 2) Big headings stay on one line; fitText() shrinks the font until they fit */
+.ph { flex-wrap: nowrap; }
+.ph h2 {
+  flex: 1 1 0;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  padding-bottom: .08em;
+  font-size: clamp(28px, 9vw, 40px);
+}
+.ph > div, .ph > button { flex: none; }
+.gh h2 { white-space: nowrap; overflow: hidden; padding-bottom: .08em; }
+.hero h2 { white-space: nowrap; overflow: hidden; padding-bottom: .08em; }
+
+/* 3) Photo cropper */
+.crop {
+  position: relative;
+  width: min(300px, 100%);
+  aspect-ratio: 1;
+  margin: 4px auto 14px;
+  overflow: hidden;
+  border-radius: var(--rc);
+  background: #000;
+  touch-action: none;
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.crop:active { cursor: grabbing; }
+.crop img {
+  position: absolute;
+  max-width: none;
+  max-height: none;
+  pointer-events: none;
+  -webkit-user-drag: none;
+}
+.crop .crm {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  box-shadow: 0 0 0 999px rgba(0, 0, 0, .55);
+  pointer-events: none;
+}
+.crz { display: flex; align-items: center; gap: 10px; }
+.crz input { margin: 0; flex: 1; }
+.crz .i { color: var(--t2); }
+
   </style>
 </head>
 
@@ -2894,13 +2952,71 @@
         if (await busy(async () => { await api('updateProfile', { photo: '' }); await sync() }, 'Removing…')) { draw(); toast('Photo removed') }
       }
     }
+    /* Manual crop: drag to move, pinch / mouse wheel / slider to zoom. Returns base64 JPEG (480x480) or null */
+    function cropPhoto(file) {
+      return new Promise(async res => {
+        const url = URL.createObjectURL(file), img = new Image();
+        try { await new Promise((ok, no) => { img.onload = ok; img.onerror = no; img.src = url }) }
+        catch (e) { URL.revokeObjectURL(url); toast('Could not read this image', 'er'); return res(null) }
+        const nw = img.naturalWidth, nh = img.naturalHeight;
+        let BOX = 280, base = 1, z = 1, x = 0, y = 0, box, im, zr;
+        const clamp = () => {
+          const w = nw * base * z, h = nh * base * z, mx = Math.max(0, (w - BOX) / 2), my = Math.max(0, (h - BOX) / 2);
+          x = Math.max(-mx, Math.min(mx, x)); y = Math.max(-my, Math.min(my, y))
+        };
+        const paint = () => {
+          clamp(); const w = nw * base * z, h = nh * base * z;
+          im.style.width = w + 'px'; im.style.height = h + 'px';
+          im.style.left = (BOX / 2 + x - w / 2) + 'px'; im.style.top = (BOX / 2 + y - h / 2) + 'px';
+          zr.value = z
+        };
+        const o = await modal({
+          title: 'Crop photo', icon: 'camera', sticky: 1, ok: 'Use photo', noFocus: 1,
+          html: `<div class="crop" id="cp_b"><img id="cp_i" src="${url}" alt="" draggable="false"><span class="crm"></span></div>
+            <div class="crz">${I('image', 16)}<input id="cp_z" type="range" min="1" max="4" step="0.01" value="1" aria-label="Zoom">${I('image', 24)}</div>
+            <p class="t2" style="font-size:12.5px;text-align:center;margin-top:8px">Drag to move. Pinch or use the slider to zoom.</p>`,
+          onOpen: el => {
+            box = el.querySelector('#cp_b'); im = el.querySelector('#cp_i'); zr = el.querySelector('#cp_z');
+            BOX = box.clientWidth || 280; base = BOX / Math.min(nw, nh); paint();
+            const P = new Map(); let d0 = 0, z0 = 1;
+            const pd = () => { const a = [...P.values()]; return Math.hypot(a[0].x - a[1].x, a[0].y - a[1].y) };
+            box.addEventListener('pointerdown', e => { box.setPointerCapture(e.pointerId); P.set(e.pointerId, { x: e.clientX, y: e.clientY }); if (P.size == 2) { d0 = pd(); z0 = z } });
+            box.addEventListener('pointermove', e => {
+              const p = P.get(e.pointerId); if (!p) return;
+              if (P.size == 1) { x += e.clientX - p.x; y += e.clientY - p.y }
+              p.x = e.clientX; p.y = e.clientY;
+              if (P.size == 2 && d0) z = Math.max(1, Math.min(4, z0 * pd() / d0));
+              paint()
+            });
+            const up = e => { P.delete(e.pointerId); d0 = 0 };
+            box.addEventListener('pointerup', up); box.addEventListener('pointercancel', up);
+            box.addEventListener('wheel', e => { e.preventDefault(); z = Math.max(1, Math.min(4, z - e.deltaY / 400)); paint() }, { passive: false });
+            zr.addEventListener('input', () => { z = +zr.value; paint() })
+          },
+          pre: () => {
+            const s = base * z, w = nw * s, h = nh * s, c = document.createElement('canvas'); c.width = c.height = 480;
+            const sx = (w / 2 - BOX / 2 - x) / s, sy = (h / 2 - BOX / 2 - y) / s, sw = BOX / s;
+            const g = c.getContext('2d'); g.fillStyle = '#fff'; g.fillRect(0, 0, 480, 480);
+            g.drawImage(img, sx, sy, sw, sw, 0, 0, 480, 480);
+            return c.toDataURL('image/jpeg', .9).split(',')[1]
+          }
+        });
+        URL.revokeObjectURL(url); res(o || null)
+      })
+    }
     function pickPhoto() {
       const f = document.createElement('input'); f.type = 'file'; f.accept = 'image/*';
       f.onchange = async () => {
         const x = f.files[0]; if (!x) return;
-        const ok = await busy(async () => { const d = await sq(x); const r = await api('upload', { data: d, mime: 'image/jpeg', name: 'profile.jpg' }); await api('updateProfile', { photo: 'https://lh3.googleusercontent.com/d/' + r.id }); await sync() }, 'Uploading photo…');
+        const d = await cropPhoto(x); if (!d) return;
+        const ok = await busy(async () => {
+          const r = await api('upload', { data: d, mime: 'image/jpeg', name: 'profile.jpg' });
+          await api('updateProfile', { photo: 'https://lh3.googleusercontent.com/d/' + r.id });
+          await sync()
+        }, 'Uploading photo…');
         if (ok) { draw(); toast('Profile photo updated') }
-      }; f.click()
+      };
+      f.click()
     }
     async function prof() {
       const u = S.user, o = await modal({
@@ -4122,6 +4238,22 @@
     }
     function bulkBar() { return S.selm ? `<div class="bulk"><b>${S.sel.size} selected</b><button onclick="selAll()">All</button><button onclick="bulkStar()" aria-label="Star">${I('star', 18)}</button><button onclick="exportCSV()" aria-label="Export">${I('table', 18)}</button><button onclick="bulkDel()" aria-label="Delete" style="color:#ff7b8a">${I('trash', 18)}</button><button onclick="selMode(0)" class="on">Done</button></div>` : '' }
     document.addEventListener('visibilitychange', () => { if (UP.vbg && document.hidden && V.key) vLock(1) });
+    /* Auto-fit: shrink big headings until they fit the screen width (never breaks a word) */
+const FIT = '.ph h2, .gh h2, .hero h2';
+function fitText() {
+  document.querySelectorAll(FIT).forEach(el => {
+    el.style.fontSize = '';
+    if (!el.clientWidth) return;
+    let s = parseFloat(getComputedStyle(el).fontSize);
+    while (el.scrollWidth > el.clientWidth + 1 && s > 18) { s -= 1; el.style.fontSize = s + 'px' }
+  })
+}
+(() => {
+  let t; const run = () => { cancelAnimationFrame(t); t = requestAnimationFrame(fitText) };
+  new MutationObserver(run).observe($('#main'), { childList: true });
+  addEventListener('resize', run);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(run);
+})();
     /* ---------- INIT ---------- */
     applyPrefs();
     setTimeout(hideSplash, 7000);
