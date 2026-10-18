@@ -2569,7 +2569,9 @@
     .hs .vav { min-width: 54px; width: auto; padding: 0 8px; font-size: 12px }
     @media(min-width:900px) { .tabs { display: none } }
     .brand { background: color-mix(in srgb, var(--ac) 9%, var(--bg)) }
-    html, body { max-width: 100%; overflow-x: hidden }
+    /* Keep the top header fixed while scrolling */
+html, body { overflow-x: clip !important; }
+.tb { position: sticky; top: 0; z-index: 30; }
     main, .gh, .ph, .ph h2, .pfi, .pfi h2, .in, .rb { min-width: 0 }
     .gh h2 { font-size: clamp(26px, 9.5vw, 40px); overflow-wrap: anywhere; word-break: break-word; hyphens: auto }
     .ph h2, .pfi h2, .in b, .idc b, .tt b, .emc b, .hero h2, .side b { overflow-wrap: anywhere; word-break: break-word }
