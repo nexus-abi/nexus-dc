@@ -2209,6 +2209,317 @@
     .vtag.vf .i { display: inline; vertical-align: -1px }
 
     @media(prefers-reduced-motion:reduce) { *, *:before, *:after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important } }
+  
+    /* ===== NEXUS PLUS ===== */
+/* =========================================================================
+   NEXUS PLUS  ·  alignment fixes + theme / style options + new components
+   Add this file AFTER the main <style> block in index.html
+   ========================================================================= */
+
+html { --fz: 15.5px; --chev: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%238a93a8' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") }
+body { font-family: var(--fb, Figtree, Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif); font-size: var(--fz) }
+
+/* ---------------------------------------------------------------------
+   1. ALIGNMENT FIXES
+   --------------------------------------------------------------------- */
+
+/* top bar */
+.tb { gap: 8px }
+.tb b { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap }
+.tb .ib, .tb .av, .tb .lgi, .tb .off { flex: none }
+
+/* bottom bar: items share the width equally, active one grows, never overflows */
+.tabs { gap: 2px; padding-left: max(8px, env(safe-area-inset-left, 0px)); padding-right: max(8px, env(safe-area-inset-right, 0px)) }
+.tabs button { flex: 1 1 0; min-width: 0; justify-content: center; padding: 11px 0; gap: 6px; overflow: hidden; white-space: nowrap }
+.tabs button.on { flex: 2.1 1 0; padding: 11px 6px }
+.tabs button .i { flex: none }
+.tabs .plus { flex: none; width: 54px; height: 54px; padding: 0; margin: -30px 4px 0; overflow: visible }
+
+/* page headers */
+.ph { gap: 12px }
+.ph h2 { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: clamp(26px, 8vw, 36px) }
+.ph > div, .ph > .btn { flex: none }
+
+/* inputs: same height everywhere, dates and selects no longer look different */
+input:not([type=checkbox]):not([type=file]):not([type=range]):not([type=color]), select { min-height: 50px }
+input[type=date], input[type=time], input[type=month] { display: block; -webkit-appearance: none; appearance: none; text-align: left; line-height: 1.2 }
+input[type=date]::-webkit-date-and-time-value { text-align: left; min-height: 1.2em }
+select, select:hover, select:focus { -webkit-appearance: none; appearance: none; padding-right: 40px; background-image: var(--chev); background-repeat: no-repeat; background-position: right 15px center; background-size: 16px }
+input[type=range] { padding: 0; min-height: 30px; accent-color: var(--ac); background: none }
+input[type=color] { padding: 2px; cursor: pointer }
+.srch .i { top: 50%; transform: translateY(-50%) }
+.two { align-items: start }
+
+/* cards: text column takes the free space, right column never squeezes it */
+.dc, .vc { position: relative; gap: 12px }
+.dc .in, .vc .in { flex: 1 1 auto; min-width: 0 }
+.in b { overflow: hidden; text-overflow: ellipsis; white-space: nowrap }
+.dc .rt { flex: none; white-space: nowrap; justify-content: center }
+.dc .rt > span { display: flex; gap: 6px; align-items: center }
+.vqa { flex: none }
+@media(max-width:390px) {
+  .dc .rt { font-size: 0 }
+  .dc .rt .star, .dc .rt .ib { width: 32px; height: 32px }
+  .ic, .vp { width: 46px; height: 46px; border-radius: 16px }
+}
+
+/* summary tiles: always one tidy row (was 3 + 1 on small phones) */
+.stats { grid-template-columns: repeat(4, minmax(0, 1fr)) }
+.st { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 86px }
+.st small { font-size: 11.5px; line-height: 1.2; text-align: center }
+@media(max-width:340px) { .stats { grid-template-columns: repeat(2, minmax(0, 1fr)) } }
+
+/* profile header: avatar left, name next to it, button below / right */
+.cover { height: 132px }
+.pfh { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: start; gap: 10px 16px; padding: 0 20px 20px; margin-top: -52px }
+.pfh .avw { align-self: start }
+.pfh .pfi { min-width: 0; padding-top: 0; margin-top: 58px }
+.pfh > .btn { grid-column: 1 / -1; justify-self: stretch }
+.pfi h2 { font-size: 22px; line-height: 1.15 }
+.pfi small { overflow-wrap: anywhere }
+@media(min-width:620px) {
+  .pfh { grid-template-columns: auto minmax(0, 1fr) auto }
+  .pfh > .btn { grid-column: auto; justify-self: end; margin-top: 58px }
+}
+
+/* settings rows, hero, chips, vault actions */
+.row .rb small { overflow-wrap: anywhere }
+.hero > div { min-width: 0 }
+.hero h2, .hero p, .hero small { overflow-wrap: anywhere }
+.chips, .qa { scrollbar-width: none }
+.chips::-webkit-scrollbar { display: none }
+.chip { flex: none }
+.vact { flex-wrap: wrap }
+.vact .btn { flex: 1 1 calc(50% - 8px) }
+.mf { gap: 10px }
+.mf .btn { min-width: 0 }
+.md .mb { overscroll-behavior: contain }
+#dl { margin-top: 4px }
+
+/* ---------------------------------------------------------------------
+   2. TYPOGRAPHY / STYLE OPTIONS  (set from Profile > Appearance)
+   --------------------------------------------------------------------- */
+html[data-fs=s] { --fz: 14px }
+html[data-fs=m] { --fz: 15.5px }
+html[data-fs=l] { --fz: 17px }
+html[data-fs=xl] { --fz: 18.5px }
+html[data-fs=s] .in small, html[data-fs=s] .rb small { font-size: 12px }
+html[data-fs=l] .in small, html[data-fs=l] .rb small { font-size: 14.5px }
+html[data-fs=xl] .in small, html[data-fs=xl] .rb small { font-size: 15.5px }
+
+html[data-ff=system] { --fb: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; --fd: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif }
+html[data-ff=serif] { --fb: "Iowan Old Style", "Palatino Linotype", Georgia, serif; --fd: "Iowan Old Style", "Palatino Linotype", Georgia, serif }
+html[data-ff=mono] { --fb: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; --fd: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace }
+html[data-ff=display] { --fb: "Bricolage Grotesque", Figtree, system-ui, sans-serif; --fd: "Bricolage Grotesque", Figtree, system-ui, sans-serif }
+html[data-ff=mono] h1, html[data-ff=mono] h2 { letter-spacing: -.02em }
+
+/* corners */
+html[data-rd=sharp] :is(.card, .dc, .vc, .bt, .st, .ftile, .hero, .pfc, .ban, .empty, .slot, .drop, .nxhc, .nxnote, .nxtt, .nxice, .nxpw) { border-radius: 10px }
+html[data-rd=sharp] .md { border-radius: 14px }
+html[data-rd=sharp] :is(input, select, textarea) { border-radius: 10px }
+html[data-rd=sharp] :is(.btn, .chip, .bd, .seg, .seg button, .to, .nxs, .nxs button, .vtag, .vb, .tabs button:not(.plus)) { border-radius: 10px }
+html[data-rd=sharp] :is(.ic, .vp, .ri, .mi, .vav) { border-radius: 9px }
+html[data-rd=round] :is(.card, .dc, .vc, .bt, .st, .ftile, .hero, .pfc, .nxhc, .nxnote, .nxtt) { border-radius: 34px }
+html[data-rd=round] :is(input, select, textarea) { border-radius: 24px }
+
+/* density */
+html[data-dn=compact] main { padding-top: 10px }
+html[data-dn=compact] :is(.dc, .vc) { padding: 9px 12px; margin-bottom: 7px; gap: 11px }
+html[data-dn=compact] :is(.ic, .vp) { width: 42px; height: 42px; border-radius: 14px }
+html[data-dn=compact] .in small { margin: 1px 0 4px }
+html[data-dn=compact] .bt { min-height: 100px }
+html[data-dn=compact] .bt.big { min-height: 138px }
+html[data-dn=compact] .bt.big b { font-size: 64px }
+html[data-dn=compact] .h { margin: 20px 0 8px }
+html[data-dn=compact] .card { padding: 15px }
+html[data-dn=roomy] :is(.dc, .vc) { padding: 18px 18px 18px 16px; margin-bottom: 14px }
+html[data-dn=roomy] .h { margin: 34px 0 14px }
+html[data-dn=roomy] .card { padding: 24px }
+html[data-dn=roomy] .bt { min-height: 140px }
+
+/* card style */
+html[data-cs=outline] :is(.dc, .vc, .card, .bt:not(.big), .st, .ftile:not(.new), .nxhc, .nxtt) { box-shadow: none; border: 1.5px solid var(--bd) }
+html[data-cs=outline] .dc[data-s=er] { border-color: color-mix(in srgb, var(--er) 50%, var(--bd)) }
+html[data-cs=outline] .dc[data-s=wn] { border-color: color-mix(in srgb, var(--wn) 50%, var(--bd)) }
+html[data-cs=flat] :is(.dc, .vc, .card, .bt, .st, .ftile, .nxhc, .nxtt) { box-shadow: none }
+html[data-cs=flat] :is(.dc, .vc):hover { box-shadow: none; transform: none }
+html[data-cs=glass] :is(.dc, .vc, .card, .bt:not(.big), .st, .ftile:not(.new), .nxhc, .nxtt) { background: color-mix(in srgb, var(--sf) 58%, transparent); -webkit-backdrop-filter: blur(16px) saturate(1.4); backdrop-filter: blur(16px) saturate(1.4); border: 1px solid color-mix(in srgb, var(--tx) 10%, transparent); box-shadow: none }
+html[data-cs=glass] .dc[data-s=er] { background: color-mix(in srgb, var(--er) 16%, transparent) }
+html[data-cs=glass] .dc[data-s=wn] { background: color-mix(in srgb, var(--wn) 16%, transparent) }
+html[data-cs=glass] .tabs { background: color-mix(in srgb, var(--sf) 70%, transparent); -webkit-backdrop-filter: blur(18px); backdrop-filter: blur(18px) }
+
+/* wallpapers */
+html[data-bg=dots] body { background-image: radial-gradient(color-mix(in srgb, var(--tx) 15%, transparent) 1.2px, transparent 1.5px); background-size: 20px 20px }
+html[data-bg=grid] body { background-image: linear-gradient(color-mix(in srgb, var(--tx) 7%, transparent) 1px, transparent 1px), linear-gradient(90deg, color-mix(in srgb, var(--tx) 7%, transparent) 1px, transparent 1px); background-size: 28px 28px }
+html[data-bg=mesh] body { background-attachment: fixed; background-image: radial-gradient(60% 40% at 8% 0%, color-mix(in srgb, var(--ac) 28%, transparent), transparent 70%), radial-gradient(55% 40% at 100% 18%, color-mix(in srgb, #ec4899 20%, transparent), transparent 70%), radial-gradient(60% 45% at 0% 100%, color-mix(in srgb, #14b8a6 20%, transparent), transparent 70%) }
+html[data-bg=aurora] body { background-attachment: fixed; background-image: linear-gradient(160deg, color-mix(in srgb, var(--ac) 22%, transparent), transparent 40%), linear-gradient(20deg, color-mix(in srgb, #a855f7 18%, transparent), transparent 45%) }
+html[data-bg=stripes] body { background-image: repeating-linear-gradient(45deg, color-mix(in srgb, var(--tx) 5%, transparent) 0 2px, transparent 2px 16px) }
+
+/* bottom bar labels */
+html[data-nl=all] .tabs button:not(.plus) { flex-direction: column; gap: 3px; font-size: 10.5px; padding: 7px 0 }
+html[data-nl=all] .tabs button span { display: inline }
+html[data-nl=all] .tabs button.on { flex: 1 1 0; background: transparent }
+html[data-nl=icon] .tabs button span, html[data-nl=icon] .tabs button.on span { display: none }
+html[data-nl=icon] .tabs button.on { flex: 1 1 0 }
+
+/* desktop page width */
+html[data-w=narrow] main { max-width: 600px }
+html[data-w=wide] main { max-width: 1120px }
+
+/* animations off */
+html[data-mo=off] *, html[data-mo=off] *::before, html[data-mo=off] *::after { animation: none !important; transition: none !important }
+
+/* ---------------------------------------------------------------------
+   3. NEW COMPONENTS
+   --------------------------------------------------------------------- */
+.nxs { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 14px }
+.nxs button { padding: 8px 14px; border-radius: 999px; font-weight: 650; font-size: 13.5px; background: color-mix(in srgb, var(--tx) 7%, transparent); color: var(--t2) }
+.nxs button.on { background: var(--ac); color: #fff }
+.nxs.ico { flex-wrap: nowrap }
+.nxs.ico button { width: 40px; height: 36px; padding: 0; display: grid; place-items: center }
+
+.nxtb { display: flex; gap: 8px; align-items: center; margin: 0 0 12px }
+.nxtb .nxs { margin: 0; flex: none; gap: 2px; padding: 3px; border-radius: 999px; background: color-mix(in srgb, var(--tx) 7%, transparent) }
+.nxtb .nxs button { background: none; color: var(--t2) }
+.nxtb .nxs button.on { background: var(--sf); color: var(--ac); box-shadow: var(--sh) }
+.nxtb select { flex: 1; min-width: 0; margin: 0; min-height: 44px; padding-top: 9px; padding-bottom: 9px }
+.nxtb .btn { flex: none }
+.btn.sec.on { background: var(--ac); color: #fff }
+
+/* docs views */
+#dl.nxv-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 10px }
+#dl.nxv-grid .dc { margin: 0 }
+#dl.nxv-cmp .dc { padding: 8px 12px; margin-bottom: 6px; border-radius: 16px }
+#dl.nxv-cmp .in small, #dl.nxv-cmp .nxvb { display: none }
+#dl.nxv-cmp .ic { width: 38px; height: 38px; border-radius: 13px }
+.nxgh { grid-column: 1 / -1; display: flex; justify-content: space-between; align-items: baseline; margin: 16px 2px 8px; font-family: var(--fd); font-weight: 650; font-size: 15px; letter-spacing: -.02em }
+.nxgh small { font-family: var(--fb); font-weight: 600 }
+.nxgh:first-child { margin-top: 4px }
+
+/* validity bar on cards */
+.nxvb { height: 5px; border-radius: 5px; background: color-mix(in srgb, var(--tx) 9%, transparent); overflow: hidden; margin-top: 8px }
+.nxvb i { display: block; height: 100%; border-radius: 5px; background: var(--ok) }
+.nxvb.wn i { background: var(--wn) }
+.nxvb.er i { background: var(--er) }
+
+/* select mode */
+.dc.nxsel { outline: 2.5px solid var(--ac); outline-offset: -2px }
+.dc.nxsel::after { content: "\2713"; position: absolute; top: 8px; left: 8px; width: 22px; height: 22px; border-radius: 50%; background: var(--ac); color: #fff; font-size: 13px; font-weight: 800; display: grid; place-items: center }
+.nxselmode .dc { cursor: copy }
+#nxbulk { position: fixed; z-index: 30; left: 12px; right: 12px; bottom: calc(86px + var(--sab)); display: flex; align-items: center; gap: 6px; padding: 8px 8px 8px 16px; border-radius: 999px; background: var(--tx); color: var(--bg); box-shadow: var(--sh2) }
+#nxbulk b { flex: 1; font-size: 14px; white-space: nowrap }
+#nxbulk button { height: 38px; min-width: 38px; padding: 0 12px; border-radius: 999px; background: color-mix(in srgb, var(--bg) 18%, transparent); color: var(--bg); font-weight: 650; font-size: 13.5px; display: inline-flex; align-items: center; justify-content: center; gap: 5px }
+#nxbulk button.dg { background: var(--er); color: #fff }
+#nxbulk button:disabled { opacity: .4 }
+@media(min-width:900px) { #nxbulk { left: calc(50% - 220px + 125px); right: auto; width: 440px; bottom: 24px } }
+
+/* home: health card */
+.nxhc { display: flex; align-items: center; gap: 14px; padding: 14px 16px; margin: 4px 0 6px; border-radius: 26px; background: var(--sf); box-shadow: var(--sh); cursor: pointer }
+.nxhc .in { flex: 1; min-width: 0 }
+.nxring { --p: 0; --c: var(--ok); position: relative; flex: none; width: 62px; height: 62px; border-radius: 50%; display: grid; place-items: center; background: conic-gradient(var(--c) calc(var(--p) * 1%), color-mix(in srgb, var(--tx) 10%, transparent) 0) }
+.nxring::before { content: ""; position: absolute; inset: 7px; border-radius: 50%; background: var(--sf) }
+.nxring b { position: relative; font-family: var(--fd); font-size: 14.5px; font-weight: 750 }
+.nxqa { margin-top: -2px }
+
+/* appearance */
+.nxthg { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin: 0 0 14px }
+.nxth { display: flex; flex-direction: column; gap: 7px; padding: 8px; border-radius: 18px; background: color-mix(in srgb, var(--tx) 5%, transparent); text-align: left; box-shadow: 0 0 0 2px transparent; transition: box-shadow .15s }
+.nxth.on { box-shadow: 0 0 0 2.5px var(--ac) }
+.nxth .pv { position: relative; display: block; height: 58px; border-radius: 12px; background: var(--b); overflow: hidden; box-shadow: inset 0 0 0 1px #8884 }
+.nxth .pv i { position: absolute; left: 8px; right: 8px; height: 12px; border-radius: 6px; background: var(--s) }
+.nxth .pv i:nth-child(1) { top: 9px }
+.nxth .pv i:nth-child(2) { top: 26px; right: 30px }
+.nxth .pv u { position: absolute; right: 9px; bottom: 9px; width: 16px; height: 16px; border-radius: 50%; background: var(--a) }
+.nxth b { font-size: 12.5px; font-weight: 650; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis }
+.nxswg { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin: 0 0 14px }
+.nxswg button, .nxcc { width: 36px; height: 36px; border-radius: 50%; border: 0; display: grid; place-items: center; color: #fff; box-shadow: 0 0 0 2px var(--bd) }
+.nxswg button.on { box-shadow: 0 0 0 3px var(--tx) }
+.nxswg .auto { width: auto; padding: 0 14px; border-radius: 999px; background: color-mix(in srgb, var(--tx) 8%, transparent); color: var(--tx); font-weight: 650; font-size: 13px }
+.nxcc { position: relative; overflow: hidden; background: conic-gradient(#f43f5e, #f59e0b, #22c55e, #06b6d4, #6366f1, #d946ef, #f43f5e); cursor: pointer }
+.nxcc input { position: absolute; inset: -8px; width: 60px; height: 60px; opacity: 0; cursor: pointer; margin: 0; padding: 0 }
+
+/* calendar */
+.nxcl-h { display: flex; align-items: center; gap: 8px; margin-bottom: 10px }
+.nxcl-h b { flex: 1; text-align: center; font-family: var(--fd); font-size: 17px }
+.nxcal { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 4px; text-align: center }
+.nxcal .dow { font-size: 11px; font-weight: 700; color: var(--t2); padding: 4px 0 }
+.nxcal button { aspect-ratio: 1; border-radius: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; font-weight: 600; font-size: 14px; background: color-mix(in srgb, var(--tx) 4%, transparent) }
+.nxcal button.today { box-shadow: inset 0 0 0 2px var(--ac) }
+.nxcal button.sel { background: var(--ac); color: #fff }
+.nxcal .dts { display: flex; gap: 2px; height: 5px }
+.nxcal .dts i { width: 5px; height: 5px; border-radius: 50%; background: var(--ok) }
+.nxcal .dts i.er { background: var(--er) }
+.nxcal .dts i.wn { background: var(--wn) }
+.nxcal button.sel .dts i { box-shadow: 0 0 0 1.5px #fff }
+
+/* insights */
+.nxin { display: flex; align-items: center; gap: 18px; margin-bottom: 8px }
+.nxdn { flex: none; position: relative; width: 120px; height: 120px; border-radius: 50%; display: grid; place-items: center }
+.nxdn::before { content: ""; position: absolute; inset: 15px; border-radius: 50%; background: var(--sf) }
+.nxdn div { position: relative; text-align: center; line-height: 1 }
+.nxdn b { display: block; font-family: var(--fd); font-size: 28px; font-weight: 750; letter-spacing: -.05em }
+.nxdn small { font-size: 11px }
+.nxlg { display: flex; flex-direction: column; gap: 7px; font-size: 14px; font-weight: 600; min-width: 0 }
+.nxlg span { display: flex; align-items: center; gap: 8px }
+.nxlg i { width: 10px; height: 10px; border-radius: 50%; flex: none }
+.nxlg em { margin-left: auto; font-style: normal; color: var(--t2) }
+.nxbr { display: grid; grid-template-columns: 96px 1fr 26px; gap: 10px; align-items: center; font-size: 13px; font-weight: 600; margin: 7px 0 }
+.nxbr span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap }
+.nxbr div { height: 9px; border-radius: 9px; background: color-mix(in srgb, var(--tx) 8%, transparent); overflow: hidden }
+.nxbr div i { display: block; height: 100%; border-radius: 9px; background: var(--g) }
+.nxbr em { font-style: normal; color: var(--t2); text-align: right }
+.nxcols { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 5px; align-items: end; height: 110px; margin: 6px 0 0 }
+.nxcols div { display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 4px; height: 100%; font-size: 10px; color: var(--t2); font-weight: 600 }
+.nxcols i { display: block; width: 100%; min-height: 3px; border-radius: 6px 6px 3px 3px; background: var(--ac) }
+.nxcols b { font-size: 11px; color: var(--tx) }
+.nxsub { font-family: var(--fd); font-size: 15px; font-weight: 650; margin: 18px 0 6px; display: block }
+.nxkv { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin-bottom: 12px }
+.nxkv div { padding: 10px 12px; border-radius: 16px; background: color-mix(in srgb, var(--tx) 5%, transparent); min-width: 0 }
+.nxkv small { display: block; font-size: 11.5px; font-weight: 600 }
+.nxkv b { font-family: var(--fd); font-size: 17px; overflow-wrap: anywhere }
+
+/* tools hub */
+.nxtg { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding-bottom: 8px }
+.nxtt { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; padding: 14px; border-radius: 22px; background: color-mix(in srgb, var(--tx) 5%, var(--sf)); text-align: left; min-width: 0; transition: transform .12s }
+.nxtt:active { transform: scale(.97) }
+.nxtt .ti2 { width: 38px; height: 38px; border-radius: 13px; display: grid; place-items: center; margin-bottom: 6px; background: color-mix(in srgb, var(--ac) 14%, transparent); color: var(--ac) }
+.nxtt b { font-family: var(--fd); font-size: 15.5px; letter-spacing: -.02em }
+.nxtt small { font-size: 12.5px; line-height: 1.3 }
+
+/* emergency card */
+.nxice { border-radius: 26px; padding: 20px; color: #fff; background: linear-gradient(150deg, #7f1d1d, #dc2626 70%, #f87171); box-shadow: 0 22px 36px -22px #dc2626 }
+.nxice small { color: #ffffffc8; font-weight: 700; letter-spacing: .08em; font-size: 11.5px }
+.nxice h2 { font-size: 26px; margin: 4px 0 12px; overflow-wrap: anywhere }
+.nxice .bg { font-family: var(--fd); font-size: 60px; font-weight: 800; letter-spacing: -.05em; line-height: 1 }
+.nxice dl { margin: 16px 0 0; display: grid; gap: 10px }
+.nxice dt { font-size: 11.5px; opacity: .78; font-weight: 700; letter-spacing: .04em; text-transform: uppercase }
+.nxice dd { margin: 2px 0 0; font-weight: 650; overflow-wrap: anywhere }
+
+/* generators / calculators */
+.nxpw { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 19px; font-weight: 600; letter-spacing: .3px; word-break: break-all; padding: 16px; border-radius: 18px; background: color-mix(in srgb, var(--tx) 6%, var(--sf)); margin-bottom: 10px; line-height: 1.4 }
+.nxrg { display: flex; align-items: center; gap: 12px; margin: 0 0 12px }
+.nxrg input { margin: 0; flex: 1 }
+.nxrg b { min-width: 30px; text-align: right; font-family: var(--fd) }
+.nxbig { text-align: center; padding: 16px 10px; border-radius: 20px; margin: 4px 0 12px; background: color-mix(in srgb, var(--ac) 12%, var(--sf)) }
+.nxbig small { display: block; font-weight: 600 }
+.nxbig b { font-family: var(--fd); font-size: 34px; letter-spacing: -.05em; color: var(--ac) }
+.nxsplit { height: 12px; border-radius: 12px; overflow: hidden; display: flex; background: var(--bd); margin: 6px 0 8px }
+.nxsplit i { display: block; height: 100% }
+
+/* notes */
+.nxnote { --nc: #fde68a; display: block; width: 100%; text-align: left; padding: 12px 14px; margin-bottom: 10px; border-radius: 20px; background: color-mix(in srgb, var(--nc) 22%, var(--sf)); border-left: 5px solid var(--nc) }
+.nxnote b { display: flex; align-items: center; gap: 6px; font-family: var(--fd); font-size: 16px }
+.nxnote p { margin-top: 4px; font-size: 14px; color: var(--t2); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; white-space: pre-wrap }
+.nxnote small { display: block; margin-top: 6px; font-size: 11.5px }
+
+/* vehicle log */
+.nxlr { display: flex; align-items: center; gap: 12px; width: 100%; padding: 11px 0; border-bottom: 1px solid var(--bd); text-align: left }
+.nxlr:last-of-type { border-bottom: 0 }
+.nxlr .ri { width: 36px; height: 36px }
+.nxlr .rb { flex: 1; min-width: 0 }
+.nxlr strong { font-family: var(--fd); font-weight: 650; white-space: nowrap }
+.nxqe { font-size: 12.5px; font-weight: 650; color: var(--t2); align-self: center }
+
   </style>
 </head>
 
@@ -3264,6 +3575,604 @@
     try { history.replaceState(null, '', location.pathname) } catch (e) { }
     S.token ? load('sk') : authView('login');
     if (S.token && localStorage.nxpin) lockNow();
+  </script>
+  <script>
+/* =========================================================================
+   NEXUS PLUS  ·  18 themes, appearance options, calendar, insights, tools,
+   notes, vehicle log, bulk select, search palette and more.
+   Add this file AFTER the main <script> block in index.html.
+   ========================================================================= */
+(() => {
+  'use strict';
+  const LS = window.localStorage;
+
+  /* ---------- state ---------- */
+  const DEF = { th: 'default', ac: '', gs: 'classic', ff: 'modern', fs: 'm', rd: 'n', dn: 'c', cs: 'tint', bg: 'none', nl: 'act', w: 'n', mo: 'on', mask: 0, vbar: 1, date: 1, vw: 'list', grp: 'none', hs: { att: 1, tiles: 1, qa: 1, ins: 1, pin: 1, next: 1, recent: 1 } };
+  let NX;
+  try { NX = { ...DEF, ...JSON.parse(LS.nxp || '{}') } } catch (e) { NX = { ...DEF } }
+  NX.hs = { ...DEF.hs, ...(NX.hs || {}) };
+  const save = () => { try { LS.nxp = JSON.stringify(NX) } catch (e) { } };
+  const lsGet = (k, d) => { try { const v = JSON.parse(LS[k]); return v == null ? d : v } catch (e) { return d } };
+  const lsSet = (k, v) => { try { LS[k] = JSON.stringify(v) } catch (e) { } };
+  const money = n => '₹' + Math.round(n || 0).toLocaleString('en-IN');
+  const today = () => { const t = new Date(); return new Date(t.getFullYear(), t.getMonth(), t.getDate()) };
+  const pd = s => { const [y, m, d] = String(s).split('-').map(Number); return new Date(y, m - 1, d) };
+  const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+  const rerender = () => { try { if (S.user && $('#shell.on')) go(S.tab, S.vid, 1) } catch (e) { } };
+  const fmtD = d => d.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
+
+  /* ---------- extra icons ---------- */
+  Object.assign(P, {
+    grid: '<rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/>',
+    list: '<path d="M8 6h13M8 12h13M8 18h13"/><circle cx="3.5" cy="6" r="1"/><circle cx="3.5" cy="12" r="1"/><circle cx="3.5" cy="18" r="1"/>',
+    rows: '<path d="M3 5h18M3 10h18M3 15h18M3 20h18"/>',
+    sel: '<rect x="3" y="3" width="18" height="18" rx="5"/><path d="M8 12l3 3 5-6"/>',
+    chart: '<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>',
+    calc: '<rect x="4" y="2" width="16" height="20" rx="3"/><path d="M8 6h8M8 11h.01M12 11h.01M16 11h.01M8 15h.01M12 15h.01M16 15h.01M8 19h.01M12 19h.01M16 19h.01"/>',
+    sos: '<path d="M12 21s-7-4.4-9.3-9A5.3 5.3 0 0 1 12 6.3 5.3 5.3 0 0 1 21.3 12C19 16.6 12 21 12 21z"/><path d="M12 9v5M9.5 11.5h5"/>',
+    sliders: '<path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M1 14h6M9 8h6M17 16h6"/>',
+    layout: '<rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 9h18M9 21V9"/>',
+    wrench: '<path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.5 2.5-2.4-.6-.6-2.4z"/>',
+    book: '<path d="M4 4h12a4 4 0 0 1 4 4v12H8a4 4 0 0 1-4-4z"/><path d="M4 16a4 4 0 0 1 4-4h12"/>'
+  });
+
+  /* ---------- THEMES ---------- */
+  const TH = {
+    default: { n: 'Default' },
+    auto: { n: 'Auto' },
+    snow: { n: 'Snow', d: 0, ac: '#3b5bfd', bg: '#f6f7fb', sf: '#ffffff', tx: '#10131c', t2: '#646e84', bd: '#e5e8f0', hd: '#0d1120' },
+    ocean: { n: 'Ocean', d: 0, ac: '#0891b2', bg: '#eaf6fb', sf: '#ffffff', tx: '#0b2a3a', t2: '#5b7d8d', bd: '#cfe6f0', hd: '#0b2a3a' },
+    mint: { n: 'Mint', d: 0, ac: '#10b981', bg: '#ecfaf4', sf: '#ffffff', tx: '#0c2b20', t2: '#5a7f70', bd: '#cdeee0', hd: '#0c2b20' },
+    sunset: { n: 'Sunset', d: 0, ac: '#ea580c', bg: '#fff4ec', sf: '#ffffff', tx: '#3b1d10', t2: '#8a6553', bd: '#f5dccd', hd: '#2b1206' },
+    rose: { n: 'Rose', d: 0, ac: '#e11d48', bg: '#fff1f4', sf: '#ffffff', tx: '#3a1220', t2: '#8c5a6b', bd: '#f7d4de', hd: '#3a1220' },
+    lavender: { n: 'Lavender', d: 0, ac: '#7c3aed', bg: '#f4f0ff', sf: '#ffffff', tx: '#1f1740', t2: '#6e6590', bd: '#e2daf8', hd: '#1f1740' },
+    paper: { n: 'Paper', d: 0, ac: '#b45309', bg: '#f3ecdd', sf: '#fbf6ea', tx: '#3a2f1f', t2: '#7d6b52', bd: '#e3d7bd', hd: '#3a2f1f' },
+    solar: { n: 'Solarized', d: 0, ac: '#268bd2', bg: '#fdf6e3', sf: '#fffcf2', tx: '#073642', t2: '#657b83', bd: '#eee8d5', hd: '#073642' },
+    midnight: { n: 'Midnight', d: 1, ac: '#5b7cff', bg: '#070b17', sf: '#101831', tx: '#e8ecff', t2: '#8a96c0', bd: '#1d2748', hd: '#060a14' },
+    amoled: { n: 'AMOLED', d: 1, ac: '#3b82f6', bg: '#000000', sf: '#0c0c0e', tx: '#f5f5f7', t2: '#8b8b95', bd: '#1c1c20', hd: '#000000' },
+    forest: { n: 'Forest', d: 1, ac: '#34d399', bg: '#08130e', sf: '#0f1f17', tx: '#e6f4ea', t2: '#86a594', bd: '#1b3326', hd: '#06100b' },
+    mocha: { n: 'Mocha', d: 1, ac: '#d4a373', bg: '#14100e', sf: '#1f1916', tx: '#f3e9e2', t2: '#a69486', bd: '#342b25', hd: '#0f0c0a' },
+    nord: { n: 'Nord', d: 1, ac: '#88c0d0', bg: '#2e3440', sf: '#3b4252', tx: '#eceff4', t2: '#a3adc2', bd: '#4c566a', hd: '#272c36' },
+    dracula: { n: 'Dracula', d: 1, ac: '#bd93f9', bg: '#1e1f29', sf: '#282a36', tx: '#f8f8f2', t2: '#a0a4c0', bd: '#3a3d52', hd: '#191a23' },
+    slate: { n: 'Slate', d: 1, ac: '#38bdf8', bg: '#0f172a', sf: '#1e293b', tx: '#f1f5f9', t2: '#94a3b8', bd: '#334155', hd: '#0b1222' },
+    cyber: { n: 'Cyber', d: 1, ac: '#e879f9', bg: '#0a0612', sf: '#150c24', tx: '#f4eaff', t2: '#a58fc9', bd: '#2a1847', hd: '#07040d' }
+  };
+  const VARS = [['--bg', 'bg'], ['--sf', 'sf'], ['--tx', 'tx'], ['--t2', 't2'], ['--bd', 'bd'], ['--hd', 'hd']];
+  const SW = ['#3b5bfd', '#2563eb', '#0891b2', '#0d9488', '#12a150', '#65a30d', '#ca8a04', '#e8590c', '#dc2626', '#e11d48', '#c026d3', '#7c3aed', '#4f46e5', '#475569', '#78350f', '#db2777'];
+  const sysDark = () => { try { return matchMedia('(prefers-color-scheme:dark)').matches } catch (e) { return false } };
+  const effTheme = () => NX.th === 'auto' ? (sysDark() ? TH.midnight : TH.snow) : (TH[NX.th] || TH.default);
+  const grad = a => NX.gs === 'flat' ? `linear-gradient(135deg,${a},${a})` : NX.gs === 'soft' ? `linear-gradient(135deg,${a},color-mix(in srgb,${a} 60%,#fff))` : `linear-gradient(135deg,color-mix(in srgb,${a} 30%,#070a18),${a} 72%,color-mix(in srgb,${a} 55%,#d946ef))`;
+  function applyAll() {
+    const r = document.documentElement, s = r.style, t = effTheme(), isDef = !t.bg;
+    if (isDef) { VARS.forEach(v => s.removeProperty(v[0])); r.dataset.t = LS.th || (sysDark() ? 'dark' : 'light') }
+    else { VARS.forEach(v => s.setProperty(v[0], t[v[1]])); r.dataset.t = t.d ? 'dark' : 'light' }
+    const A = NX.ac || t.ac || '';
+    if (!A && NX.gs === 'classic') applyAc();
+    else { const a = A || AC[curAc()][1]; s.setProperty('--ac', a); s.setProperty('--g', grad(a)) }
+    ['ff', 'fs', 'rd', 'dn', 'cs', 'bg', 'nl', 'w', 'mo'].forEach(k => r.setAttribute('data-' + k, NX[k]));
+    const tc = $('#tc'); if (tc) tc.content = isDef ? (r.dataset.t === 'dark' ? '#0b0f15' : '#0b1220') : t.hd;
+    try { barTheme() } catch (e) { }
+  }
+  window.theme = () => { const dark = document.documentElement.dataset.t === 'dark'; NX.th = 'default'; save(); LS.th = dark ? 'light' : 'dark'; applyAll() };
+  window.accentPick = () => appearance();
+
+  /* ---------- APPEARANCE ---------- */
+  const OPT = {
+    gs: [['classic', 'Classic'], ['soft', 'Soft'], ['flat', 'Flat']],
+    ff: [['modern', 'Modern'], ['display', 'Display'], ['system', 'System'], ['serif', 'Serif'], ['mono', 'Mono']],
+    fs: [['s', 'Small'], ['m', 'Normal'], ['l', 'Large'], ['xl', 'Extra large']],
+    rd: [['sharp', 'Sharp'], ['n', 'Soft'], ['round', 'Round']],
+    dn: [['compact', 'Compact'], ['c', 'Normal'], ['roomy', 'Roomy']],
+    cs: [['tint', 'Tinted'], ['outline', 'Outline'], ['flat', 'Flat'], ['glass', 'Glass']],
+    bg: [['none', 'Plain'], ['dots', 'Dots'], ['grid', 'Grid'], ['mesh', 'Mesh'], ['aurora', 'Aurora'], ['stripes', 'Stripes']],
+    nl: [['act', 'Active label'], ['all', 'All labels'], ['icon', 'Icons only']],
+    w: [['n', 'Normal'], ['narrow', 'Narrow'], ['wide', 'Wide']],
+    mo: [['on', 'On'], ['off', 'Off']]
+  };
+  const LAB = { gs: 'Gradient style', ff: 'Font', fs: 'Text size', rd: 'Corners', dn: 'Density', cs: 'Card style', bg: 'Background', nl: 'Bottom bar', w: 'Page width (desktop)', mo: 'Animations' };
+  const seg = k => `<span class="lb">${LAB[k]}</span><div class="nxs">${OPT[k].map(([v, t]) => `<button type="button" data-opt="${k}" data-v="${v}" class="${NX[k] === v ? 'on' : ''}">${t}</button>`).join('')}</div>`;
+  const accNow = () => NX.ac || effTheme().ac || AC[curAc()][1];
+  function apHTML() {
+    const tiles = Object.entries(TH).map(([k, t]) => {
+      const two = k === 'default' || k === 'auto';
+      return `<button type="button" class="nxth ${NX.th === k ? 'on' : ''}" data-th="${k}" style="--b:${two ? 'linear-gradient(135deg,#f4f5f9 50%,#0a0c12 50%)' : t.bg};--s:${two ? '#8d99b8' : t.sf};--a:${two ? '#3b5bfd' : t.ac}"><span class="pv"><i></i><i></i><u></u></span><b>${t.n}</b></button>`
+    }).join('');
+    const sw = SW.map(c => `<button type="button" style="background:${c}" data-ac="${c}" class="${NX.ac === c ? 'on' : ''}" aria-label="${c}">${NX.ac === c ? I('check', 18) : ''}</button>`).join('');
+    return `<span class="lb">Theme (${Object.keys(TH).length} available)</span><div class="nxthg">${tiles}</div>
+    <span class="lb">Accent colour</span><div class="nxswg"><button type="button" class="auto ${NX.ac ? '' : 'on'}" data-ac="">Theme</button>${sw}<label class="nxcc" title="Custom colour"><input type="color" data-cc value="${accNow().length === 7 ? accNow() : '#3b5bfd'}"></label></div>
+    ${['gs', 'ff', 'fs', 'rd', 'dn', 'cs', 'bg', 'nl', 'w', 'mo'].map(seg).join('')}
+    <div class="vact"><button type="button" class="btn sec sm" data-reset>${I('refresh', 16)} Reset appearance</button></div>`
+  }
+  async function appearance() {
+    await modal({
+      title: 'Appearance', icon: 'palette', wide: 1, ok: 'Done', cancel: null, noFocus: 1, html: '<div id="nxap"></div>',
+      onOpen: el => {
+        const box = el.querySelector('#nxap'), mb = el.querySelector('.mb');
+        const R = () => { const y = mb.scrollTop; box.innerHTML = apHTML(); mb.scrollTop = y };
+        R();
+        el.addEventListener('click', e => {
+          const b = e.target.closest('#nxap button'); if (!b) return;
+          if (b.dataset.th !== undefined) { NX.th = b.dataset.th; NX.ac = '' }
+          else if (b.dataset.ac !== undefined) NX.ac = b.dataset.ac;
+          else if (b.dataset.opt) NX[b.dataset.opt] = b.dataset.v;
+          else if (b.dataset.reset !== undefined) ['th', 'ac', 'gs', 'ff', 'fs', 'rd', 'dn', 'cs', 'bg', 'nl', 'w', 'mo'].forEach(k => NX[k] = DEF[k]);
+          else return;
+          save(); applyAll(); R()
+        });
+        el.addEventListener('input', e => { if (e.target.matches('[data-cc]')) { NX.ac = e.target.value; save(); applyAll() } });
+        el.addEventListener('change', e => { if (e.target.matches('[data-cc]')) R() })
+      }
+    });
+    rerender()
+  }
+
+  /* ---------- small data helpers ---------- */
+  const cnt = () => { const c = { er: 0, wn: 0, ok: 0, '': 0 }; S.docs.forEach(d => c[st(d.expiry)[0]]++); return c };
+  function stats() {
+    const D = S.docs, c = cnt(), n = D.length, badN = c.er + c.wn, score = n ? Math.round((n - badN) / n * 100) : 100;
+    return { D, c, n, badN, score, col: score >= 80 ? 'var(--ok)' : score >= 50 ? 'var(--wn)' : 'var(--er)' }
+  }
+  const nextExp = () => S.docs.filter(d => d.expiry && st(d.expiry)[2] >= 0).sort((a, b) => st(a.expiry)[2] - st(b.expiry)[2])[0];
+  const vNum = d => { const v = d.kind === 'vehicle' && S.vs.find(x => x.id == d.vehicleId); return v ? v.number : '' };
+
+  /* ---------- HOME ---------- */
+  const _pHome = pHome;
+  function healthCard() {
+    const h = stats(); if (!h.n) return '';
+    const nx = nextExp();
+    return `<div class="nxhc" onclick="NXP.open('ins')"><div class="nxring" style="--p:${h.score};--c:${h.col}"><b>${h.score}%</b></div><div class="in"><b>Document health</b><small>${h.badN ? h.badN + ' need attention' : 'Everything is in good shape'}</small>${nx ? `<span class="bd ${st(nx.expiry)[0]}">Next: ${esc(nx.title)} · ${st(nx.expiry)[1]}</span>` : ''}</div><span class="ch">${I('right', 20)}</span></div>`
+  }
+  const qb = (k, ic, t) => `<button onclick="NXP.open('${k}')">${I(ic, 24)}<span>${t}</span></button>`;
+  window.pHome = () => {
+    const box = document.createElement('div'); box.innerHTML = _pHome(); const hs = NX.hs;
+    if (!hs.tiles) box.querySelector('.bento')?.remove();
+    if (!hs.qa) box.querySelector('.qa')?.remove();
+    const H = { 'Needs attention': 'att', 'Pinned': 'pin', 'Next 90 days': 'next', 'Recent documents': 'recent' };
+    box.querySelectorAll('h3.h').forEach(h3 => {
+      const key = H[h3.textContent.trim()];
+      if (key && !hs[key]) { let n = h3.nextElementSibling; h3.remove(); while (n && !n.matches('h3.h')) { const x = n.nextElementSibling; n.remove(); n = x } }
+    });
+    const extra = `<div class="qa nxqa">${qb('search', 'search', 'Quick search')}${qb('cal', 'cal', 'Calendar view')}${qb('ins', 'chart', 'Insights')}${qb('tools', 'wrench', 'Tools')}${qb('ice', 'sos', 'Emergency')}${qb('notes', 'note', 'Notes')}${qb('ap', 'palette', 'Themes')}</div>` + (hs.ins ? healthCard() : '');
+    const anchor = box.querySelector('.qa') || box.querySelector('.bento') || box.querySelector('.gh');
+    anchor ? anchor.insertAdjacentHTML('afterend', extra) : box.insertAdjacentHTML('afterbegin', extra);
+    if (NX.date) { const s = box.querySelector('.gh small'); if (s) s.textContent += ' · ' + new Date().toLocaleDateString('en-IN', { weekday: 'short', day: 'numeric', month: 'short' }) }
+    return box.innerHTML
+  };
+
+  /* ---------- CARDS: mask numbers + validity bar ---------- */
+  const _card = card;
+  window.card = d => {
+    let dd = d;
+    if (NX.mask && d.number) { const n = String(d.number); dd = { ...d, number: n.length > 4 ? '•••• ' + n.slice(-4) : '••••' } }
+    let h = _card(dd);
+    if (NX.vbar && d.expiry) {
+      const s = st(d.expiry); let w;
+      if (d.issue) { const a = pd(d.issue), b = pd(d.expiry), tot = b - a; w = tot > 0 ? 1 - (today() - a) / tot : s[2] > 0 ? 1 : 0 }
+      else w = s[2] / 365;
+      w = Math.max(0, Math.min(1, w)); if (s[2] < 0) w = 0;
+      h = h.replace('</span></div><div class="rt">', `</span><div class="nxvb ${s[0]}"><i style="width:${Math.round(w * 100)}%"></i></div></div><div class="rt">`)
+    }
+    return h
+  };
+
+  /* ---------- DOCUMENTS PAGE: more sorts, views, grouping, select ---------- */
+  const _pDocs = pDocs; let SEL = null;
+  window.pDocs = () => {
+    let hh = _pDocs();
+    hh = hh.replace('<option value="az"', `<option value="far" ${S.so == 'far' ? 'selected' : ''}>Sort: Expiry (latest)</option><option value="iss" ${S.so == 'iss' ? 'selected' : ''}>Sort: Issue date</option><option value="az"`);
+    const vb = (v, ic) => `<button type="button" data-vw="${v}" class="${NX.vw == v ? 'on' : ''}" onclick="NXP.vw('${v}')" aria-label="${v} view">${I(ic, 18)}</button>`;
+    const G = [['none', 'No grouping'], ['type', 'Group: Type'], ['holder', 'Group: Person / vehicle'], ['status', 'Group: Status'], ['month', 'Group: Expiry month']];
+    const bar = `<div class="nxtb"><div class="nxs ico">${vb('list', 'list')}${vb('grid', 'grid')}${vb('cmp', 'rows')}</div><select onchange="NXP.grp(this.value)" aria-label="Group by">${G.map(([v, t]) => `<option value="${v}" ${NX.grp == v ? 'selected' : ''}>${t}</option>`).join('')}</select><button type="button" class="btn sm sec ${SEL ? 'on' : ''}" onclick="NXP.sel()">${I('sel', 16)} Select</button></div>`;
+    return hh.replace('<div id="dl">', bar + `<div id="dl" class="nxv-${NX.vw}">`)
+  };
+  window.dlist = () => {
+    const q = S.q.toLowerCase();
+    const a = S.docs.filter(d => (S.f == 'all' || d.kind == S.f) && (!S.fv || d.fav) && (S.hf == 'all' || d.holder == S.hf) && (S.st == 'all' || st(d.expiry)[0] == S.st) && (d.title + ' ' + d.number + ' ' + d.notes + ' ' + (d.holder || '')).toLowerCase().includes(q));
+    const k = d => d.expiry ? st(d.expiry)[2] : 9e9;
+    if (S.so == 'exp') a.sort((x, y) => k(x) - k(y));
+    else if (S.so == 'far') a.sort((x, y) => (y.expiry ? k(y) : -1e12) - (x.expiry ? k(x) : -1e12));
+    else if (S.so == 'iss') a.sort((x, y) => (y.issue || '').localeCompare(x.issue || ''));
+    else if (S.so == 'new') a.reverse();
+    else a.sort((x, y) => x.title.localeCompare(y.title));
+    if (!a.length) return empty('No documents found', 'search');
+    if (NX.grp == 'none') return a.map(card).join('');
+    const SL = { er: 'Expired', wn: 'Expiring soon', ok: 'Valid', '': 'No expiry date' };
+    const key = d => NX.grp == 'type' ? d.title : NX.grp == 'holder' ? (d.kind == 'vehicle' ? 'Vehicle · ' + (vNum(d) || 'Unknown') : (d.holder || 'Unassigned')) : NX.grp == 'status' ? SL[st(d.expiry)[0]] : (d.expiry ? pd(d.expiry).toLocaleDateString('en-IN', { month: 'long', year: 'numeric' }) : 'No expiry date');
+    const m = new Map(); a.forEach(d => { const x = key(d); if (!m.has(x)) m.set(x, []); m.get(x).push(d) });
+    let L = [...m.entries()];
+    if (NX.grp == 'status') { const o = Object.values(SL); L.sort((x, y) => o.indexOf(x[0]) - o.indexOf(y[0])) }
+    return L.map(([x, v]) => `<div class="nxgh"><span>${esc(x)}</span><small>${v.length}</small></div>` + v.map(card).join('')).join('')
+  };
+
+  /* ---------- bulk select ---------- */
+  function decorate() {
+    const m = $('#main'); if (!m) return;
+    m.querySelectorAll('.dc:not([data-id])').forEach(c => { const x = /^view\('([^']+)'\)/.exec(c.getAttribute('onclick') || ''); if (x) c.dataset.id = x[1] });
+    m.querySelectorAll('.dc[data-id]').forEach(c => c.classList.toggle('nxsel', !!SEL && SEL.has(c.dataset.id)));
+    m.classList.toggle('nxselmode', !!SEL);
+    if (SEL && !['docs', 'home', 'veh'].includes(S.tab)) { SEL = null; bulkBar() }
+  }
+  function bulkBar() {
+    let b = $('#nxbulk');
+    if (!SEL) { b && b.remove(); return }
+    if (!b) { b = document.createElement('div'); b.id = 'nxbulk'; document.body.appendChild(b); b.addEventListener('click', onBulk) }
+    const n = SEL.size, off = n ? '' : 'disabled';
+    b.innerHTML = `<b>${n} selected</b><button data-a="all">All</button><button data-a="star" ${off} aria-label="Star selected">${I('star', 16)}</button><button data-a="ics" ${off} aria-label="Add selected to calendar">${I('cal', 16)}</button><button class="dg" data-a="del" ${off} aria-label="Delete selected">${I('trash', 16)}</button><button data-a="done">Done</button>`
+  }
+  async function onBulk(e) {
+    const b = e.target.closest('button'); if (!b || b.disabled) return; const a = b.dataset.a, ids = [...SEL];
+    if (a == 'done') { SEL = null; bulkBar(); decorate(); return go(S.tab, S.vid, 1) }
+    if (a == 'all') { document.querySelectorAll('#main .dc[data-id]').forEach(c => SEL.add(c.dataset.id)); bulkBar(); decorate(); return }
+    if (a == 'ics') { const L = S.docs.filter(d => SEL.has(d.id) && d.expiry); if (!L.length) return toast('No expiry dates in the selection', 'inf'); dl2('nexus-selected-expiry.ics', icsOf(L), 'text/calendar'); return toast('Calendar file downloaded') }
+    if (a == 'star') { if (await busy(async () => { for (const id of ids) await api('toggleFav', { id, fav: true }); await sync() }, 'Starring…')) { SEL = null; bulkBar(); draw(); toast(ids.length + ' starred') } return }
+    if (a == 'del') {
+      if (!await confirmBox({ title: 'Delete ' + ids.length + ' document' + (ids.length > 1 ? 's' : '') + '?', text: 'All their files will be removed permanently.', ok: 'Delete', danger: 1, icon: 'trash' })) return;
+      if (await busy(async () => { for (const id of ids) await api('deleteDoc', { id }); await sync() }, 'Deleting…')) { SEL = null; bulkBar(); draw(); toast(ids.length + ' deleted') }
+    }
+  }
+  document.addEventListener('click', e => {
+    if (!SEL) return; const c = e.target.closest('#main .dc[data-id]'); if (!c) return;
+    e.preventDefault(); e.stopPropagation();
+    const id = c.dataset.id; SEL.has(id) ? SEL.delete(id) : SEL.add(id); decorate(); bulkBar()
+  }, true);
+  const mo = new MutationObserver(() => { if (mo.t) return; mo.t = requestAnimationFrame(() => { mo.t = 0; decorate() }) });
+  if ($('#main')) mo.observe($('#main'), { childList: true, subtree: true });
+
+  /* ---------- expiry quick-set chips inside the document form ---------- */
+  new MutationObserver(() => {
+    const ex = $('#ex'); if (!ex || ex.dataset.nx || !$('#is')) return; ex.dataset.nx = 1;
+    const row = document.createElement('div'); row.className = 'vpre';
+    row.innerHTML = '<span class="nxqe">Quick set:</span><button type="button" data-y="t">Issued today</button>' + [1, 3, 5, 10, 20].map(y => `<button type="button" data-y="${y}">+${y} yr</button>`).join('') + '<button type="button" data-y="x">Clear expiry</button>';
+    const two = ex.closest('.two'); two && two.insertAdjacentElement('afterend', row);
+    row.onclick = e => {
+      const b = e.target.closest('[data-y]'); if (!b) return; const y = b.dataset.y;
+      if (y == 'x') { ex.value = ''; return }
+      if (y == 't') { $('#is').value = ymd(new Date()); return }
+      const base = $('#is').value ? pd($('#is').value) : today(); base.setFullYear(base.getFullYear() + +y); ex.value = ymd(base)
+    }
+  }).observe(document.body, { childList: true, subtree: true });
+
+  /* ---------- PROFILE: personalise group ---------- */
+  const _pMe = pMe;
+  const prow = (i, t, s, fn) => `<button class="row" onclick="${fn}"><div class="ri">${I(i, 20)}</div><div class="rb"><b>${t}</b><small>${s}</small></div><span class="ch">${I('right', 18)}</span></button>`;
+  const psw = (i, t, s, k) => `<div class="row"><div class="ri">${I(i, 20)}</div><div class="rb"><b>${t}</b><small>${s}</small></div><label class="sw"><input type="checkbox" ${NX[k] ? 'checked' : ''} onchange="NXP.tg('${k}',this.checked)"><span></span></label></div>`;
+  window.pMe = () => {
+    let h = _pMe();
+    h = h.replace(/<p class="t2" style="text-align:center;font-size:12\.5px;margin:18px 0 4px">[^<]*<\/p>\s*/, '').replace('Nexus Document Hub · v3.2', 'Nexus Document Hub · v3.3 Plus');
+    h = h.replace(/(<b>Accent colour<\/b><small>)[^<]*/, '$1Colours, fonts and style');
+    const th = NX.th === 'default' ? 'Default' : NX.th === 'auto' ? 'Auto (follows phone)' : (TH[NX.th] || TH.default).n;
+    const hsN = Object.values(NX.hs).filter(Boolean).length;
+    const grp = `<h3 class="h">Personalise</h3><div class="card grp">${prow('palette', 'Appearance &amp; themes', 'Theme: ' + th + ' · ' + Object.keys(TH).length + ' themes', 'appearance()') + prow('layout', 'Home screen layout', hsN + ' of ' + Object.keys(NX.hs).length + ' sections shown', "NXP.open('hl')") + psw('eyeoff', 'Mask document numbers', 'Show only the last 4 characters', 'mask') + psw('clock', 'Validity bars on cards', 'Small bar showing time left', 'vbar') + psw('cal', 'Show date on home', 'Today\'s date next to the greeting', 'date')}</div>
+    <h3 class="h">Tools &amp; extras</h3><div class="card grp">${prow('wrench', 'Tools', 'Calendar, insights, generator, calculators', "NXP.open('tools')") + prow('sos', 'Emergency card', 'Blood group and contact on one screen', "NXP.open('ice')") + prow('note', 'Notes', 'Private notes saved on this device', "NXP.open('notes')") + prow('download', 'Backup &amp; restore settings', 'Export or import your preferences', "NXP.open('bk')") + prow('info', 'Help &amp; shortcuts', 'Tips and keyboard shortcuts', "NXP.open('help')")}</div>`;
+    return h.replace('<h3 class="h">Security &amp; data</h3>', grp + '<h3 class="h">Security &amp; data</h3>')
+  };
+
+  /* ---------- VEHICLE: service & expense log (stored on this device) ---------- */
+  const VT = ['Service', 'Fuel', 'Repair', 'Insurance', 'Tyres', 'Wash', 'Other'];
+  const getVL = () => lsGet('nxvl', {}), getVN = () => lsGet('nxvn', {});
+  const _pVD = pVD;
+  window.pVD = () => {
+    const h = _pVD(), v = S.vs.find(x => x.id == S.vid); if (!v) return h;
+    const L = (getVL()[v.id] || []).slice().sort((a, b) => b.d.localeCompare(a.d)), tot = L.reduce((s, x) => s + (+x.a || 0), 0), od = L.find(x => x.k), nx = getVN()[v.id], vid = esc(v.id);
+    const nxs = nx && nx.d ? `<p class="vmeta" style="margin:0 0 10px">Next service: <b>${fd(nx.d)}</b> · <span class="bd ${st(nx.d)[0] || 'ok'}">${st(nx.d)[2] < 9e9 ? (st(nx.d)[2] < 0 ? 'Overdue' : st(nx.d)[2] + ' days left') : ''}</span>${nx.k ? ' · at ' + Number(nx.k).toLocaleString('en-IN') + ' km' : ''}</p>` : '';
+    return h + `<h3 class="h">Service &amp; expenses</h3><div class="card"><div class="nxkv"><div><small>Total spent</small><b>${money(tot)}</b></div><div><small>Entries</small><b>${L.length}</b></div><div><small>Odometer</small><b>${od ? Number(od.k).toLocaleString('en-IN') + ' km' : '-'}</b></div></div>${nxs}${L.slice(0, 6).map(x => `<button class="nxlr" onclick="NXP.vlE('${vid}','${esc(x.id)}')"><div class="ri">${I(x.t == 'Fuel' ? 'drop' : x.t == 'Insurance' ? 'shield' : 'tool', 18)}</div><div class="rb"><b>${esc(x.t)}${x.n ? ' · ' + esc(x.n) : ''}</b><small>${fd(x.d)}${x.k ? ' · ' + Number(x.k).toLocaleString('en-IN') + ' km' : ''}</small></div><strong>${money(x.a)}</strong></button>`).join('') || '<p class="t2" style="margin:0 0 8px">No entries yet. Track fuel, service and repair costs.</p>'}<div class="vact"><button class="btn sm" onclick="NXP.vlE('${vid}')">${I('plus', 16)} Add entry</button><button class="btn sm sec" onclick="NXP.nextSvc('${vid}')">${I('cal', 16)} Next service</button></div><p class="vmeta">Saved on this device only.</p></div>`
+  };
+  async function vlEdit(vid, id) {
+    const all = getVL(), L = all[vid] || [], x = L.find(i => i.id == id);
+    if (x) {
+      const k = await sheet(esc(x.t) + ' · ' + money(x.a), [{ k: 'e', i: 'edit', t: 'Edit entry' }, { k: 'd', i: 'trash', t: 'Delete entry', cls: 'rd' }]);
+      if (k == 'd') { all[vid] = L.filter(i => i.id != id); lsSet('nxvl', all); rerender(); return toast('Entry deleted', 'inf') }
+      if (k != 'e') return
+    }
+    const e = x || {}, o = await modal({
+      title: x ? 'Edit entry' : 'Add entry', icon: 'car', sticky: 1, ok: 'Save', html: `<span class="lb">Type</span><select id="nl_t">${VT.map(t => `<option ${e.t == t ? 'selected' : ''}>${t}</option>`).join('')}</select>
+      <div class="two"><div><span class="lb">Date</span><input id="nl_d" type="date" value="${esc(e.d || ymd(new Date()))}"></div><div><span class="lb">Amount (₹)</span><input id="nl_a" type="number" inputmode="decimal" min="0" placeholder="0" value="${e.a ?? ''}"></div></div>
+      <span class="lb">Odometer (km, optional)</span><input id="nl_k" type="number" inputmode="numeric" min="0" value="${e.k ?? ''}">
+      <span class="lb">Note (optional)</span><input id="nl_n" value="${esc(e.n)}" placeholder="Workshop, litres, parts…">`,
+      pre: el => { if (!$('#nl_d').value) return fail(el, 'Pick a date'); return { t: $('#nl_t').value, d: $('#nl_d').value, a: +$('#nl_a').value || 0, k: $('#nl_k').value, n: $('#nl_n').value.trim() } }
+    });
+    if (!o) return; const a2 = getVL(), L2 = a2[vid] || [];
+    if (x) Object.assign(L2.find(i => i.id == id), o); else L2.push({ id: uid(), ...o });
+    a2[vid] = L2; lsSet('nxvl', a2); rerender(); toast(x ? 'Entry updated' : 'Entry added')
+  }
+  async function nextSvc(vid) {
+    const n = getVN(), e = n[vid] || {}, o = await modal({
+      title: 'Next service', icon: 'cal', sticky: 1, ok: 'Save', html: `<span class="lb">Due date</span><input id="ns_d" type="date" value="${esc(e.d || '')}"><span class="lb">Due at odometer (km, optional)</span><input id="ns_k" type="number" inputmode="numeric" value="${e.k ?? ''}">`,
+      pre: () => ({ d: $('#ns_d').value, k: $('#ns_k').value })
+    });
+    if (!o) return; n[vid] = o; lsSet('nxvn', n); rerender(); toast('Saved')
+  }
+
+  /* ---------- SEARCH PALETTE ---------- */
+  const ACTS = [['doc', 'Add document', 'file', 'new add'], ['veh', 'Add vehicle', 'car', 'new add'], ['cal', 'Calendar view', 'cal', 'calendar month'], ['ins', 'Insights', 'chart', 'stats health'], ['tools', 'Tools', 'wrench', 'utilities'], ['ice', 'Emergency card', 'sos', 'blood contact'], ['pw', 'Password generator', 'lock', 'password random'], ['notes', 'Notes', 'note', 'memo'], ['ap', 'Appearance & themes', 'palette', 'theme colour dark style font'], ['emi', 'EMI calculator', 'calc', 'loan'], ['dates', 'Date calculator', 'cal', 'age days between'], ['hl', 'Home screen layout', 'layout', 'sections'], ['bk', 'Backup settings', 'download', 'export import'], ['help', 'Help & shortcuts', 'info', 'tips keys']];
+  const getNotes = () => lsGet('nxnotes', []);
+  function buildIndex() {
+    const L = [];
+    [['home', 'Home', 'home'], ['docs', 'Documents', 'folder'], ['veh', 'Vehicles', 'car'], ['vault', 'Vault', 'key'], ['me', 'Profile', 'user']].forEach(a => L.push({ k: 'go:' + a[0], i: a[2], t: 'Go to ' + a[1], s: 'Page', x: a[1] + ' page go open' }));
+    ACTS.forEach(a => L.push({ k: 'act:' + a[0], i: a[2], t: a[1], s: 'Action', x: a[1] + ' ' + a[3] }));
+    S.docs.forEach(d => L.push({ k: 'doc:' + d.id, i: d.kind == 'vehicle' ? 'car' : 'file', t: d.title, s: [d.number, vNum(d) || d.holder, st(d.expiry)[1]].filter(Boolean).join(' · '), x: [d.title, d.number, d.notes, d.holder, vNum(d)].join(' ') }));
+    S.vs.forEach(v => L.push({ k: 'veh:' + v.id, i: 'car', t: v.number, s: v.model || 'Vehicle', x: [v.number, v.model, v.owner].join(' ') }));
+    getNotes().forEach(n => L.push({ k: 'note:' + n.id, i: 'note', t: n.t || 'Untitled note', s: 'Note', x: n.t + ' ' + n.b }));
+    try { if (V.key) V.items.filter(x => x.kind != 'folder').forEach(x => L.push({ k: 'vlt:' + x.id, i: 'key', t: x.title, s: 'Vault · ' + (x.user || ''), x: [x.title, x.user, x.url, x.cat].join(' ') })) } catch (e) { }
+    return L
+  }
+  async function palette() {
+    const IDX = buildIndex();
+    const r = await modal({
+      title: 'Search', icon: 'search', ok: null, cancel: null, html: `<div class="srch" style="margin-bottom:10px">${I('search', 18)}<input id="nxq" placeholder="Documents, vehicles, notes, actions…" autocomplete="off" autocapitalize="off"></div><div class="sl" id="nxr"></div>`,
+      onOpen: (el, close) => {
+        const q = $('#nxq'), out = $('#nxr');
+        const R = () => {
+          const t = q.value.toLowerCase().split(/\s+/).filter(Boolean);
+          let L = t.length ? IDX.filter(x => t.every(w => (x.t + ' ' + x.x).toLowerCase().includes(w))) : [...IDX.filter(x => x.k.startsWith('act:')).slice(0, 5), ...IDX.filter(x => x.k.startsWith('doc:')).slice(0, 5)];
+          out.innerHTML = L.slice(0, 40).map(x => `<button class="si" data-pk="${esc(x.k)}">${I(x.i, 22)}<span><b>${esc(x.t)}</b><small>${esc(x.s)}</small></span></button>`).join('') || empty('Nothing found', 'search')
+        };
+        q.addEventListener('input', R); R();
+        q.addEventListener('keydown', e => { if (e.key == 'Enter') { const f = out.querySelector('[data-pk]'); f && close(f.dataset.pk) } });
+        out.addEventListener('click', e => { const b = e.target.closest('[data-pk]'); b && close(b.dataset.pk) })
+      }
+    });
+    if (!r) return; const i = r.indexOf(':'), t = r.slice(0, i), id = r.slice(i + 1);
+    if (t == 'go') go(id); else if (t == 'act') open(id); else if (t == 'doc') view(id); else if (t == 'veh') go('veh', id); else if (t == 'note') noteEdit(id); else if (t == 'vlt') vView(id)
+  }
+  addEventListener('keydown', e => {
+    const t = e.target, typing = t && (/^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName) || t.isContentEditable), ready = S.user && $('#shell.on') && !MS.length && !$('#vw.on') && !$('#lk.on');
+    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() == 'k') { e.preventDefault(); if (ready) palette(); return }
+    if (typing || !ready || e.ctrlKey || e.metaKey || e.altKey) return;
+    if (e.key == '/') { e.preventDefault(); palette() } else if (e.key == 'n') docForm(); else if (e.key == 't') open('tools'); else if (e.key == '?') help(); else if (/^[1-5]$/.test(e.key)) go(['home', 'docs', 'veh', 'vault', 'me'][+e.key - 1])
+  });
+
+  /* ---------- CALENDAR ---------- */
+  function calendar() {
+    let cur = new Date(); cur = new Date(cur.getFullYear(), cur.getMonth(), 1); let sel = ymd(new Date());
+    modal({
+      title: 'Expiry calendar', icon: 'cal', wide: 1, ok: null, cancel: null, noFocus: 1, html: '<div id="nxcal"></div>',
+      onOpen: (el, close) => {
+        const box = el.querySelector('#nxcal');
+        const R = () => {
+          const y = cur.getFullYear(), m = cur.getMonth(), first = new Date(y, m, 1).getDay(), dim = new Date(y, m + 1, 0).getDate(), by = {}, td = ymd(new Date());
+          S.docs.forEach(d => { if (d.expiry) (by[d.expiry] = by[d.expiry] || []).push(d) });
+          let c = ['S', 'M', 'T', 'W', 'T', 'F', 'S'].map(x => `<div class="dow">${x}</div>`).join('') + '<span></span>'.repeat(first);
+          for (let d = 1; d <= dim; d++) { const k = y + '-' + p2(m + 1) + '-' + p2(d), L = by[k] || []; c += `<button type="button" data-d="${k}" class="${k == td ? 'today' : ''} ${k == sel ? 'sel' : ''}">${d}<span class="dts">${L.slice(0, 3).map(x => `<i class="${st(x.expiry)[0] || 'ok'}"></i>`).join('')}</span></button>` }
+          const day = by[sel] || [], inM = S.docs.filter(d => d.expiry && d.expiry.startsWith(y + '-' + p2(m + 1))).length;
+          box.innerHTML = `<div class="nxcl-h"><button type="button" class="ib" data-n="-1" aria-label="Previous month">${I('left', 18)}</button><b>${cur.toLocaleDateString('en-IN', { month: 'long', year: 'numeric' })}</b><button type="button" class="ib" data-n="1" aria-label="Next month">${I('right', 18)}</button></div><div class="nxcal">${c}</div>
+          <div class="nxcl-h" style="margin-top:14px"><b style="text-align:left;font-size:15px">${fd(sel)}</b><button type="button" class="btn sm sec" data-today>Today</button></div>
+          <div class="sl">${day.map(d => `<button type="button" class="si" data-id="${esc(d.id)}">${I(d.kind == 'vehicle' ? 'car' : 'file', 22)}<span><b>${esc(d.title)}</b><small>${esc([d.number, vNum(d) || d.holder].filter(Boolean).join(' · '))} · ${st(d.expiry)[1]}</small></span></button>`).join('') || `<p class="t2" style="padding:4px 2px 10px">Nothing expires on this day.</p>`}</div><p class="vmeta">${inM} document${inM == 1 ? '' : 's'} expire in this month.</p>`
+        };
+        R();
+        box.addEventListener('click', e => {
+          const b = e.target.closest('button'); if (!b) return;
+          if (b.dataset.d) { sel = b.dataset.d; R() }
+          else if (b.dataset.n) { cur = new Date(cur.getFullYear(), cur.getMonth() + +b.dataset.n, 1); R() }
+          else if (b.dataset.today !== undefined) { cur = new Date(); cur = new Date(cur.getFullYear(), cur.getMonth(), 1); sel = ymd(new Date()); R() }
+          else if (b.dataset.id) { close(null); view(b.dataset.id) }
+        })
+      }
+    })
+  }
+
+  /* ---------- INSIGHTS ---------- */
+  function insights() {
+    const h = stats(), D = h.D, c = h.c;
+    if (!h.n) return alertBox('Add a few documents first to see insights.', 'No data yet');
+    const by = {}; D.forEach(d => by[d.title] = (by[d.title] || 0) + 1);
+    const top = Object.entries(by).sort((a, b) => b[1] - a[1]).slice(0, 6), mx = top[0][1], t0 = today();
+    const months = []; for (let i = 0; i < 12; i++) { const m = new Date(t0.getFullYear(), t0.getMonth() + i, 1); months.push({ l: m.toLocaleDateString('en-IN', { month: 'short' }), n: D.filter(d => { if (!d.expiry) return false; const x = pd(d.expiry); return x.getFullYear() == m.getFullYear() && x.getMonth() == m.getMonth() }).length }) }
+    const mm = Math.max(1, ...months.map(x => x.n));
+    const a1 = c.er / h.n * 100, a2 = a1 + c.wn / h.n * 100, a3 = a2 + c.ok / h.n * 100;
+    const att = D.filter(bad).sort((a, b) => st(a.expiry)[2] - st(b.expiry)[2]).slice(0, 5);
+    const files = D.reduce((a, d) => a + d.files.length, 0), starred = D.filter(d => d.fav).length;
+    modal({
+      title: 'Insights', icon: 'chart', wide: 1, ok: null, cancel: null, noFocus: 1, html: `
+      <div class="nxin"><div class="nxdn" style="background:conic-gradient(var(--er) 0 ${a1}%,var(--wn) ${a1}% ${a2}%,var(--ok) ${a2}% ${a3}%,var(--bd) ${a3}% 100%)"><div><b>${h.score}%</b><small>healthy</small></div></div>
+      <div class="nxlg"><span><i style="background:var(--ok)"></i>Valid<em>${c.ok}</em></span><span><i style="background:var(--wn)"></i>Expiring soon<em>${c.wn}</em></span><span><i style="background:var(--er)"></i>Expired<em>${c.er}</em></span><span><i style="background:var(--bd)"></i>No expiry<em>${c['']}</em></span></div></div>
+      <div class="nxkv" style="margin-top:14px"><div><small>Documents</small><b>${h.n}</b></div><div><small>Files</small><b>${files}</b></div><div><small>Starred</small><b>${starred}</b></div></div>
+      <span class="nxsub">Expiring in the next 12 months</span><div class="nxcols">${months.map(x => `<div>${x.n ? `<b>${x.n}</b>` : ''}<i style="height:${x.n ? Math.max(8, x.n / mm * 70) : 3}px;${x.n ? '' : 'opacity:.25'}"></i>${x.l}</div>`).join('')}</div>
+      <span class="nxsub">Most common documents</span>${top.map(([k, n]) => `<div class="nxbr"><span>${esc(k)}</span><div><i style="width:${n / mx * 100}%"></i></div><em>${n}</em></div>`).join('')}
+      ${att.length ? `<span class="nxsub">Needs attention</span><div class="sl">${att.map(d => `<button class="si" data-id="${esc(d.id)}">${I(d.kind == 'vehicle' ? 'car' : 'file', 22)}<span><b>${esc(d.title)}</b><small>${st(d.expiry)[1]}</small></span></button>`).join('')}</div>` : ''}`,
+      onOpen: (el, close) => el.addEventListener('click', e => { const b = e.target.closest('[data-id]'); if (b) { close(null); view(b.dataset.id) } })
+    })
+  }
+
+  /* ---------- TOOLS HUB ---------- */
+  const TOOLS = [['cal', 'Calendar view', 'cal', 'Renewals by date'], ['ins', 'Insights', 'chart', 'Health and stats'], ['ice', 'Emergency card', 'sos', 'Blood group, contact'], ['pw', 'Password generator', 'lock', 'Strong and passphrase'], ['notes', 'Notes', 'note', 'Private notes'], ['emi', 'EMI calculator', 'calc', 'Loan planner'], ['dates', 'Date calculator', 'cal', 'Age, days, add'], ['ap', 'Appearance', 'palette', 'Themes and style'], ['hl', 'Home layout', 'layout', 'Choose sections'], ['bk', 'Backup', 'download', 'Export settings'], ['search', 'Quick search', 'search', 'Find anything'], ['help', 'Help', 'info', 'Tips and keys']];
+  async function tools() {
+    const k = await modal({ title: 'Tools', icon: 'wrench', wide: 1, ok: null, cancel: null, noFocus: 1, html: `<div class="nxtg">${TOOLS.map(t => `<button class="nxtt" data-tl="${t[0]}"><span class="ti2">${I(t[2], 20)}</span><b>${t[1]}</b><small>${t[3]}</small></button>`).join('')}</div>`, onOpen: (el, close) => el.addEventListener('click', e => { const b = e.target.closest('[data-tl]'); b && close(b.dataset.tl) }) });
+    if (k) open(k)
+  }
+
+  /* ---------- EMERGENCY CARD ---------- */
+  function ice() {
+    const u = S.user, ph = (/(\+?\d[\d\s-]{6,}\d)/.exec(u.emergency || '') || [])[1];
+    const L = [['Emergency contact', u.emergency], ['My phone', u.phone], ['Address', u.address], ['Date of birth', u.dob ? fd(u.dob) : '']].filter(x => x[1]);
+    const txt = ['EMERGENCY CARD', u.name, u.blood ? 'Blood group: ' + u.blood : '', ...L.map(x => x[0] + ': ' + x[1])].filter(Boolean).join('\n');
+    modal({
+      title: 'Emergency card', icon: 'sos', tone: 'er', ok: null, cancel: null, noFocus: 1, html: `<div class="nxice"><small>EMERGENCY CARD</small><h2>${esc(u.name)}</h2><div class="bg">${esc(u.blood || '—')}</div><small>BLOOD GROUP</small><dl>${L.map(x => `<div><dt>${x[0]}</dt><dd>${esc(x[1])}</dd></div>`).join('')}</dl></div>
+      ${L.length < 2 || !u.blood ? '<p class="vmeta wn">Add your blood group, address and emergency contact in your profile so this card is useful.</p>' : ''}
+      <div class="vact">${ph ? `<button class="btn sm" data-ia="call">${I('phone', 16)} Call contact</button>` : ''}<button class="btn sm sec" data-ia="copy">${I('copy', 16)} Copy</button><button class="btn sm sec" data-ia="share">${I('share', 16)} Share</button><button class="btn sm sec" data-ia="edit">${I('edit', 16)} Edit</button></div>`,
+      onOpen: (el, close) => el.addEventListener('click', async e => {
+        const b = e.target.closest('[data-ia]'); if (!b) return; const a = b.dataset.ia;
+        if (a == 'call') { const x = document.createElement('a'); x.href = 'tel:' + ph.replace(/[^\d+]/g, ''); document.body.appendChild(x); x.click(); x.remove() }
+        else if (a == 'copy') vCopyTxt(txt, 'Details')
+        else if (a == 'share') { try { if (navigator.share) await navigator.share({ title: 'Emergency card', text: txt }); else vCopyTxt(txt, 'Details') } catch (er) { } }
+        else if (a == 'edit') { close(null); prof() }
+      })
+    })
+  }
+
+  /* ---------- PASSWORD GENERATOR ---------- */
+  const WORDS = 'maple river cloud tiger orbit lemon pixel amber coral delta ember frost grove harbor iris jungle kite lunar mango noble olive pearl quartz raven solar tulip umber velvet willow xenon yacht zephyr anchor breeze candle dragon eagle falcon garden hazel island jasmine koala lotus meadow nectar oasis panda quill rocket saffron thunder unity violet walnut yonder zenith acorn bamboo cactus dune echo fjord glacier honey'.split(' ');
+  const rnd = n => { const m = Math.floor(4294967296 / n) * n; let x; do { x = crypto.getRandomValues(new Uint32Array(1))[0] } while (x >= m); return x % n };
+  const pick = s => s[rnd(s.length)];
+  function pwgen() {
+    const c = { mode: 'pw', len: 16, u: 1, l: 1, d: 1, s: 1, amb: 1, wn: 4, cap: 1, num: 1 };
+    const gen = () => {
+      if (c.mode == 'ph') { const w = Array.from({ length: c.wn }, () => { const x = pick(WORDS); return c.cap ? x[0].toUpperCase() + x.slice(1) : x }); return w.join('-') + (c.num ? '-' + (10 + rnd(90)) : '') }
+      const amb = /[Il1O0o]/g, set = [c.l && 'abcdefghijkmnpqrstuvwxyz', c.u && 'ABCDEFGHJKLMNPQRSTUVWXYZ', c.d && '23456789', c.s && '!@#$%^&*-_+=?'].filter(Boolean).map(x => c.amb ? x : x.replace('k', 'kl').replace('J', 'JIO').replace('2', '2101'));
+      if (!set.length) return ''; const all = set.join(''), o = set.map(pick);
+      while (o.length < c.len) o.push(pick(all)); o.length = Math.max(c.len, set.length);
+      for (let i = o.length - 1; i > 0; i--) { const j = rnd(i + 1);[o[i], o[j]] = [o[j], o[i]] }
+      return o.join('')
+    };
+    const T = (k, t) => `<button type="button" data-tg="${k}" class="${c[k] ? 'on' : ''}">${t}</button>`;
+    modal({
+      title: 'Password generator', icon: 'lock', wide: 1, ok: null, cancel: null, noFocus: 1, html: '<div id="nxg"></div>',
+      onOpen: el => {
+        const box = el.querySelector('#nxg'); let cur = '';
+        const out = () => { cur = gen(); const m = vStr(cur); $('#nxo').textContent = cur || 'Select at least one option'; const b = $('#nxm'); b.style.width = m[0] + '%'; b.style.background = m[2]; $('#nxml').textContent = cur ? m[1] + ' · ' + (c.mode == 'ph' ? c.wn + ' words' : cur.length + ' characters') : '' };
+        const R = () => {
+          box.innerHTML = `<div class="nxs"><button type="button" data-md="pw" class="${c.mode == 'pw' ? 'on' : ''}">Password</button><button type="button" data-md="ph" class="${c.mode == 'ph' ? 'on' : ''}">Passphrase</button></div><div class="nxpw" id="nxo"></div><div class="vmeter"><i id="nxm"></i></div><span class="vml" id="nxml"></span>
+          ${c.mode == 'pw' ? `<div class="nxrg"><span class="lb" style="margin:0">Length</span><input type="range" id="nxrl" min="8" max="64" value="${c.len}"><b id="nxln">${c.len}</b></div><div class="nxs">${T('l', 'abc')}${T('u', 'ABC')}${T('d', '123')}${T('s', '#$%')}${T('amb', 'Avoid look-alikes')}</div>` : `<div class="nxrg"><span class="lb" style="margin:0">Words</span><input type="range" id="nxrw" min="3" max="8" value="${c.wn}"><b id="nxwn">${c.wn}</b></div><div class="nxs">${T('cap', 'Capitalise')}${T('num', 'Add number')}</div>`}
+          <div class="vact"><button type="button" class="btn sm" data-ga="gen">${I('refresh', 16)} Generate</button><button type="button" class="btn sm sec" data-ga="copy">${I('copy', 16)} Copy</button></div>`;
+          out()
+        };
+        R();
+        el.addEventListener('click', e => {
+          const b = e.target.closest('button'); if (!b) return;
+          if (b.dataset.md) { c.mode = b.dataset.md; R() } else if (b.dataset.tg) { c[b.dataset.tg] = c[b.dataset.tg] ? 0 : 1; R() }
+          else if (b.dataset.ga == 'gen') out(); else if (b.dataset.ga == 'copy') cur && vCopyTxt(cur, 'Password')
+        });
+        el.addEventListener('input', e => {
+          if (e.target.id == 'nxrl') { c.len = +e.target.value; $('#nxln').textContent = c.len; out() }
+          if (e.target.id == 'nxrw') { c.wn = +e.target.value; $('#nxwn').textContent = c.wn; out() }
+        })
+      }
+    })
+  }
+
+  /* ---------- NOTES ---------- */
+  const NC = ['#f59e0b', '#ec4899', '#3b82f6', '#22c55e', '#8b5cf6', '#f97316', '#64748b'];
+  const setNotes = a => lsSet('nxnotes', a);
+  async function notes() {
+    for (; ;) {
+      const r = await modal({
+        title: 'Notes', icon: 'note', wide: 1, ok: 'New note', cancel: 'Close', noFocus: 1, html: `<div class="srch" style="margin-bottom:12px">${I('search', 18)}<input id="nn_q" placeholder="Search notes" style="margin:0" autocomplete="off"></div><div id="nn_l"></div><p class="vmeta">Notes are saved on this device only.</p>`,
+        onOpen: (el, close) => {
+          const R = () => {
+            const q = $('#nn_q').value.toLowerCase(), L = getNotes().filter(n => (n.t + ' ' + n.b).toLowerCase().includes(q)).sort((a, b) => (b.p ? 1 : 0) - (a.p ? 1 : 0) || b.u - a.u);
+            $('#nn_l').innerHTML = L.map(n => `<button class="nxnote" data-nid="${esc(n.id)}" style="--nc:${esc(n.c || NC[0])}"><b>${n.p ? I('pin', 14) : ''}${esc(n.t || 'Untitled')}</b>${n.b ? `<p>${esc(n.b)}</p>` : ''}<small>${new Date(n.u).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}</small></button>`).join('') || empty(q ? 'No matching notes' : 'No notes yet. Tap New note', 'note')
+          };
+          R(); $('#nn_q').addEventListener('input', R); $('#nn_l').addEventListener('click', e => { const b = e.target.closest('[data-nid]'); b && close('e:' + b.dataset.nid) })
+        }
+      });
+      if (r === true) await noteEdit(''); else if (typeof r == 'string') await noteEdit(r.slice(2)); else break
+    }
+  }
+  async function noteEdit(id) {
+    const all = getNotes(), n = all.find(x => x.id == id) || {}; let col = n.c || NC[0], pin = !!n.p;
+    const o = await modal({
+      title: id ? 'Edit note' : 'New note', icon: 'note', wide: 1, sticky: 1, ok: 'Save', html: `<span class="lb">Title</span><input id="ne_t" value="${esc(n.t)}" placeholder="Title" maxlength="80" autocomplete="off"><span class="lb">Note</span><textarea id="ne_b" rows="8" style="resize:vertical" placeholder="Write anything…">${esc(n.b)}</textarea>
+      <span class="lb">Colour</span><div class="nxswg" id="ne_c">${NC.map(c => `<button type="button" data-nc="${c}" style="background:${c}" class="${c == col ? 'on' : ''}" aria-label="${c}"></button>`).join('')}</div>
+      <div class="row" style="border:0;padding:4px 0"><div class="rb"><b>Pin to top</b></div><label class="sw"><input type="checkbox" id="ne_p" ${pin ? 'checked' : ''}><span></span></label></div>${id ? `<button type="button" class="btn sec sm" id="ne_d" style="color:var(--er);margin-top:6px">${I('trash', 16)} Delete note</button>` : ''}`,
+      onOpen: (el, close) => el.addEventListener('click', e => {
+        const b = e.target.closest('button'); if (!b) return;
+        if (b.dataset.nc) { col = b.dataset.nc; el.querySelectorAll('#ne_c button').forEach(x => x.classList.toggle('on', x.dataset.nc == col)) }
+        else if (b.id == 'ne_d') close('del')
+      }),
+      pre: el => { const t = $('#ne_t').value.trim(), b = $('#ne_b').value.trim(); if (!t && !b) return fail(el, 'Write something first'); return { t, b, c: col, p: $('#ne_p').checked } }
+    });
+    if (!o) return; const a = getNotes();
+    if (o === 'del') { if (await confirmBox({ title: 'Delete note?', text: 'This cannot be undone.', ok: 'Delete', danger: 1, icon: 'trash' })) { setNotes(a.filter(x => x.id != id)); toast('Note deleted', 'inf') } return }
+    if (id) Object.assign(a.find(x => x.id == id), o, { u: Date.now() }); else a.push({ id: uid(), ...o, u: Date.now() });
+    setNotes(a); toast('Note saved')
+  }
+
+  /* ---------- EMI CALCULATOR ---------- */
+  function emi() {
+    modal({
+      title: 'EMI calculator', icon: 'calc', wide: 1, ok: null, cancel: null, noFocus: 1, html: `<span class="lb">Loan amount (₹)</span><input id="em_a" type="number" inputmode="decimal" value="500000"><div class="two"><div><span class="lb">Interest (% per year)</span><input id="em_r" type="number" inputmode="decimal" step="0.1" value="9"></div><div><span class="lb">Tenure</span><div class="two" style="gap:6px"><input id="em_t" type="number" inputmode="numeric" value="5"><select id="em_u"><option value="y">Years</option><option value="m">Months</option></select></div></div></div><div id="em_o"></div>`,
+      onOpen: el => {
+        const R = () => {
+          const P0 = +$('#em_a').value || 0, r = (+$('#em_r').value || 0) / 1200, n = Math.round((+$('#em_t').value || 0) * ($('#em_u').value == 'y' ? 12 : 1)), o = $('#em_o');
+          if (P0 <= 0 || n <= 0) { o.innerHTML = '<p class="t2">Enter amount and tenure.</p>'; return }
+          const e = r ? P0 * r * Math.pow(1 + r, n) / (Math.pow(1 + r, n) - 1) : P0 / n, tot = e * n, int = tot - P0;
+          o.innerHTML = `<div class="nxbig"><small>Monthly EMI</small><b>${money(e)}</b></div><div class="nxsplit"><i style="width:${P0 / tot * 100}%;background:var(--ac)"></i><i style="flex:1;background:var(--wn)"></i></div><div class="nxkv"><div><small>Principal</small><b>${money(P0)}</b></div><div><small>Total interest</small><b>${money(int)}</b></div><div><small>Total payable</small><b>${money(tot)}</b></div></div><p class="vmeta">${n} monthly payments. The blue part of the bar is principal, the orange part is interest.</p>`
+        };
+        el.addEventListener('input', R); el.addEventListener('change', R); R()
+      }
+    })
+  }
+
+  /* ---------- DATE CALCULATOR ---------- */
+  function ymdDiff(a, b) {
+    if (a > b) [a, b] = [b, a]; let y = b.getFullYear() - a.getFullYear(), m = b.getMonth() - a.getMonth(), d = b.getDate() - a.getDate();
+    if (d < 0) { m--; d += new Date(b.getFullYear(), b.getMonth(), 0).getDate() } if (m < 0) { y--; m += 12 } return [y, m, d]
+  }
+  function dates() {
+    let tab = 'bt';
+    modal({
+      title: 'Date calculator', icon: 'cal', wide: 1, ok: null, cancel: null, noFocus: 1, html: '<div id="dc_b"></div>',
+      onOpen: el => {
+        const box = el.querySelector('#dc_b'), td = ymd(new Date());
+        const R = () => {
+          const T = [['bt', 'Between dates'], ['ad', 'Add / subtract'], ['ag', 'Age']];
+          box.innerHTML = `<div class="nxs">${T.map(t => `<button type="button" data-tb="${t[0]}" class="${tab == t[0] ? 'on' : ''}">${t[1]}</button>`).join('')}</div>` + (tab == 'bt' ? `<div class="two"><div><span class="lb">From</span><input id="dc_1" type="date" value="${td}"></div><div><span class="lb">To</span><input id="dc_2" type="date"></div></div>` : tab == 'ad' ? `<div class="two"><div><span class="lb">Start date</span><input id="dc_1" type="date" value="${td}"></div><div><span class="lb">Days (+ or -)</span><input id="dc_2" type="number" inputmode="numeric" value="90"></div></div>` : `<span class="lb">Date of birth</span><input id="dc_1" type="date" max="${td}" value="${esc(S.user.dob || '')}">`) + '<div id="dc_o"></div>'; U()
+        };
+        const U = () => {
+          const o = $('#dc_o'), a = $('#dc_1').value, b = $('#dc_2') && $('#dc_2').value; let h = '';
+          if (tab == 'bt' && a && b) { const A = pd(a), B = pd(b), n = Math.round(Math.abs(B - A) / 864e5), [y, m, d] = ymdDiff(A, B); h = `<div class="nxbig"><small>Difference</small><b>${n.toLocaleString('en-IN')} days</b></div><p class="vmeta">${y} years, ${m} months, ${d} days · ${(n / 7).toFixed(1)} weeks</p>` }
+          else if (tab == 'ad' && a && b !== '') { const A = pd(a); A.setDate(A.getDate() + (+b || 0)); h = `<div class="nxbig"><small>Result</small><b>${fmtD(A)}</b></div><p class="vmeta">${A.toLocaleDateString('en-IN', { weekday: 'long' })}</p>` }
+          else if (tab == 'ag' && a) { const A = pd(a), [y, m, d] = ymdDiff(A, today()); let nb = new Date(today().getFullYear(), A.getMonth(), A.getDate()); if (nb < today()) nb.setFullYear(nb.getFullYear() + 1); h = `<div class="nxbig"><small>Age</small><b>${y} years</b></div><p class="vmeta">${y} years, ${m} months, ${d} days<br>Next birthday in ${Math.round((nb - today()) / 864e5)} days (${nb.toLocaleDateString('en-IN', { weekday: 'long' })})</p>` }
+          o.innerHTML = h
+        };
+        R(); box.addEventListener('click', e => { const b = e.target.closest('[data-tb]'); if (b) { tab = b.dataset.tb; R() } }); box.addEventListener('input', U); box.addEventListener('change', U)
+      }
+    })
+  }
+
+  /* ---------- HOME LAYOUT ---------- */
+  async function homeLayout() {
+    const R = [['att', 'Needs attention', 'Expired and soon-to-expire'], ['tiles', 'Summary tiles', 'Counts for documents, vehicles'], ['qa', 'Quick actions', 'Add, search, export shortcuts'], ['ins', 'Document health card', 'Score and next expiry'], ['pin', 'Pinned documents', 'Your starred documents'], ['next', 'Next 90 days', 'Upcoming expiries'], ['recent', 'Recent documents', 'Latest five added']];
+    await modal({
+      title: 'Home screen layout', icon: 'layout', ok: 'Done', cancel: null, noFocus: 1, html: R.map(r => `<div class="row"><div class="rb"><b>${r[1]}</b><small>${r[2]}</small></div><label class="sw"><input type="checkbox" data-hs="${r[0]}" ${NX.hs[r[0]] ? 'checked' : ''}><span></span></label></div>`).join(''),
+      onOpen: el => el.addEventListener('change', e => { const k = e.target.dataset.hs; if (k) { NX.hs[k] = e.target.checked ? 1 : 0; save(); rerender() } })
+    }); rerender()
+  }
+
+  /* ---------- BACKUP, HELP ---------- */
+  async function backup() {
+    const k = await sheet('Backup & restore', [{ k: 'ex', i: 'download', t: 'Export preferences & local data', s: 'Appearance, notes, vehicle log' }, { k: 'im', i: 'upload', t: 'Import from a file', s: 'Restore a previous export' }, { k: 'rs', i: 'refresh', t: 'Reset appearance', s: 'Back to the default look', cls: 'rd' }]);
+    if (k == 'ex') { dl2('nexus-plus-backup-' + ymd(new Date()) + '.json', JSON.stringify({ app: 'nexus-plus', v: 1, prefs: NX, notes: getNotes(), vlog: getVL(), vnext: getVN() }, null, 2), 'application/json'); toast('Backup exported') }
+    if (k == 'im') {
+      const f = document.createElement('input'); f.type = 'file'; f.accept = 'application/json,.json';
+      f.onchange = async () => {
+        try {
+          const j = JSON.parse(await f.files[0].text()); if (j.app != 'nexus-plus') throw 0;
+          if (j.prefs) { NX = { ...DEF, ...j.prefs }; NX.hs = { ...DEF.hs, ...(j.prefs.hs || {}) }; save() }
+          if (Array.isArray(j.notes)) setNotes(j.notes); if (j.vlog) lsSet('nxvl', j.vlog); if (j.vnext) lsSet('nxvn', j.vnext);
+          applyAll(); rerender(); toast('Backup restored')
+        } catch (e) { alertBox('This is not a valid Nexus backup file.', 'Could not import') }
+      }; f.click()
+    }
+    if (k == 'rs' && await confirmBox({ title: 'Reset appearance?', text: 'Theme, colours and style options return to default. Your documents are not touched.', ok: 'Reset', icon: 'refresh' })) {
+      ['th', 'ac', 'gs', 'ff', 'fs', 'rd', 'dn', 'cs', 'bg', 'nl', 'w', 'mo'].forEach(x => NX[x] = DEF[x]); save(); applyAll(); rerender(); toast('Appearance reset', 'inf')
+    }
+  }
+  function help() {
+    const K = [['Ctrl / ⌘ + K  or  /', 'Search everything'], ['N', 'Add a document'], ['T', 'Open tools'], ['1 – 5', 'Switch between the tabs'], ['?', 'This help']];
+    modal({
+      title: 'Help & shortcuts', icon: 'info', ok: 'Got it', cancel: null, noFocus: 1, html: `<span class="nxsub" style="margin-top:2px">Keyboard shortcuts</span>${K.map(k => `<div class="row" style="padding:9px 0"><div class="rb"><b>${k[1]}</b></div><span class="bd">${k[0]}</span></div>`).join('')}
+      <span class="nxsub">Tips</span><p class="mt" style="line-height:1.7">• Pull down on any page to sync.<br>• Star a document to pin it on Home.<br>• In Documents, use Select to star, delete or export many at once.<br>• Group documents by type, person or expiry month.<br>• Mask numbers hides document numbers on cards.<br>• Add your blood group and emergency contact for the Emergency card.</p>`
+    })
+  }
+
+  /* ---------- public API used by onclick handlers ---------- */
+  function open(k) {
+    ({ doc: () => docForm(), veh: () => vehForm(), cal: calendar, ins: insights, tools, ice, pw: pwgen, notes, ap: appearance, emi, dates, hl: homeLayout, bk: backup, help, search: palette })[k]?.()
+  }
+  window.NXP = {
+    open, vlE: vlEdit, nextSvc,
+    tg: (k, v) => { NX[k] = v ? 1 : 0; save(); rerender() },
+    vw: v => { NX.vw = v; save(); const d = $('#dl'); if (d) d.className = 'nxv-' + v; document.querySelectorAll('.nxs.ico [data-vw]').forEach(b => b.classList.toggle('on', b.dataset.vw == v)) },
+    grp: v => { NX.grp = v; save(); dl() },
+    sel: () => { SEL = SEL ? null : new Set(); bulkBar(); decorate(); document.querySelectorAll('.nxtb .btn').forEach(b => b.classList.toggle('on', !!SEL)) }
+  };
+
+  /* ---------- go ---------- */
+  applyAll();
+  try { matchMedia('(prefers-color-scheme:dark)').addEventListener('change', () => { if (NX.th === 'auto') applyAll() }) } catch (e) { }
+})();
+
   </script>
 </body>
 
