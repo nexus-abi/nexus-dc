@@ -19,6 +19,13 @@ jobs:
       url: ${{ steps.d.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
+      - name: Stamp app version (commit id)
+        run: |
+          V=$(git rev-parse --short=8 HEAD)
+          MSG=$(git log -1 --pretty=%s | head -c 140)
+          sed -i "s/__APP_VERSION__/$V/" www/index.html
+          jq -n --arg v "$V" --arg m "$MSG" --arg t "$(date -u +%FT%TZ)" '{v:$v,msg:$m,time:$t}' > www/version.json
+          cat www/version.json
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
