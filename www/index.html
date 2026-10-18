@@ -2496,6 +2496,77 @@
     .pre i::before { content: ""; position: absolute; left: 8px; top: 8px; width: 16px; height: 16px; border-radius: 50%; background: var(--pc) }
     .pre i::after { background: var(--pc); opacity: .5 }
     .seg.c2 { grid-template-columns: repeat(2, 1fr) }
+    /* ---- 6-tab dock with centred + ---- */
+    .tabs { justify-content: space-between; gap: 0; padding: 5px 8px }
+    .tabs button { min-width: 42px; padding: 0 9px }
+    .tabs button.on { padding: 0 12px }
+    .tabs button.on span { display: none }
+    @media(min-width:470px) { .tabs button.on span { display: block } }
+    [data-lb="1"] .tabs button { flex-direction: column; gap: 1px; height: 50px; min-width: 44px; padding: 0 5px }
+    [data-lb="1"] .tabs button span, [data-lb="1"] .tabs button.on span { display: block; font-size: 10px; font-weight: 650 }
+    [data-lb="1"] .tabs button.on { padding: 0 7px; border-radius: 18px }
+    [data-lb="1"] .tabs .plus { height: 48px }
+    [data-lb="1"] .tabs .plus span { display: none }
+    [data-dock=light] .tabs { background: var(--sf); border-color: var(--bd); box-shadow: 0 18px 40px -16px #2a22143a, 0 2px 8px #2a221414 }
+    [data-dock=light] .tabs button { color: var(--t2) }
+    [data-dock=light] .tabs button.on { color: #fff }
+    [data-dock=light] .tabs .plus { background: var(--tx); color: var(--bg); border-color: var(--bg) }
+    [data-dock=accent] .tabs { background: var(--ac); border-color: #ffffff30 }
+    [data-dock=accent] .tabs button { color: #ffffffb8 }
+    [data-dock=accent] .tabs button.on { background: #ffffff30; color: #fff }
+    [data-dock=flat] .tabs { left: 0; right: 0; bottom: 0; max-width: none; border-radius: 0; border-width: 1px 0 0; box-shadow: none; padding: 6px 10px calc(6px + var(--sab)); background: var(--sf); border-color: var(--bd) }
+    [data-dock=flat] .tabs button { color: var(--t2) }
+    [data-dock=flat] .tabs button.on { background: color-mix(in srgb, var(--ac) 16%, transparent); color: var(--ac) }
+    [data-dock=flat] .tabs .plus { background: var(--ac); color: #fff; margin: -18px 0 -6px }
+    [data-stripe="0"] .dc::before { display: none }
+    [data-anim="0"] *, [data-anim="0"] *::before, [data-anim="0"] *::after { animation: none !important; transition: none !important }
+    /* ---- vault recovery, codes ---- */
+    .reck { display: block; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 20px; font-weight: 700; letter-spacing: .06em; text-align: center; padding: 18px 10px; border-radius: var(--ri); background: color-mix(in srgb, var(--ac) 9%, var(--sf)); border: 1.5px dashed var(--ac); user-select: all; word-break: break-all }
+    .ulinks { display: flex; justify-content: space-between; gap: 12px; margin-top: 12px }
+    .ulinks button, .lnk { font-size: 13.5px; font-weight: 650; color: var(--ac) }
+    .hintbox { margin-top: 10px; padding: 12px 14px; border-radius: var(--ri); background: color-mix(in srgb, var(--wn) 12%, transparent); font-size: 14px; font-weight: 600 }
+    .nag { display: flex; align-items: center; gap: 12px; width: 100%; text-align: left; padding: 14px; margin-bottom: 12px; border-radius: var(--rc); background: color-mix(in srgb, var(--wn) 12%, var(--sf)); border: 1px solid color-mix(in srgb, var(--wn) 35%, transparent); color: var(--wn) }
+    .nag span { flex: 1; color: var(--tx) }
+    .nag b, .nag small { display: block }
+    .nag small { color: var(--t2); font-size: 12.5px }
+    .totp { margin: 4px 0 8px; padding: 12px 14px; border-radius: var(--ri); background: color-mix(in srgb, var(--ac) 8%, var(--sf)) }
+    .tc { display: flex; align-items: center; gap: 14px }
+    .tc > span { flex: 1; font-family: ui-monospace, Menlo, monospace; font-size: 28px; font-weight: 700; letter-spacing: .12em }
+    .tr { width: 38px; height: 38px; border-radius: 50%; display: grid; place-items: center; background: conic-gradient(var(--ac) calc(var(--p) * 1%), color-mix(in srgb, var(--tx) 12%, transparent) 0) }
+    .tr i { width: 29px; height: 29px; border-radius: 50%; background: var(--sf); display: grid; place-items: center; font-style: normal; font-size: 12px; font-weight: 700 }
+    .tcr { padding: 10px 0; border-bottom: 1px solid var(--bd) }
+    .tcr:last-child { border: 0 }
+    .tcr .rb small { display: block; color: var(--t2) }
+    .tcb .totp { margin: 6px 0 0 }
+    .tcb .tc > span { font-size: 24px }
+    /* ---- bulk select ---- */
+    .pick { flex: none; width: 24px; height: 24px; border-radius: 50%; border: 2px solid color-mix(in srgb, var(--tx) 30%, transparent); display: grid; place-items: center; color: #fff; background: transparent }
+    .dc.picked { box-shadow: 0 0 0 2px var(--ac) }
+    .dc.picked .pick, .idc.picked .pick { background: var(--ac); border-color: var(--ac) }
+    .idc .pick { position: absolute; top: 12px; left: 12px; z-index: 3; border-color: #fff; background: #0004 }
+    .idc.picked { box-shadow: 0 0 0 3px var(--ac) }
+    .idc .pick + .t { padding-left: 32px }
+    .bulk { position: fixed; left: 12px; right: 12px; bottom: calc(84px + var(--sab)); z-index: 19; max-width: 480px; margin: 0 auto; display: flex; align-items: center; gap: 4px; padding: 8px 8px 8px 16px; border-radius: var(--rb); background: var(--tx); color: var(--bg); box-shadow: var(--sh2) }
+    .bulk b { flex: 1; font-size: 14px }
+    .bulk button { height: 38px; min-width: 38px; padding: 0 12px; border-radius: var(--rb); color: inherit; font-weight: 650; font-size: 13.5px; display: grid; place-items: center }
+    .bulk button.on { background: var(--ac); color: #fff }
+
+    .tgrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px }
+    @media(min-width:700px) { .tgrid { grid-template-columns: repeat(3, minmax(0, 1fr)) } }
+    .tt { display: flex; flex-direction: column; align-items: flex-start; gap: 3px; padding: 14px; border-radius: var(--rc); background: var(--sf); border: 1px solid var(--bd); text-align: left; min-height: 112px; transition: transform .12s }
+    .tt:active { transform: scale(.97) }
+    .tt .ti2 { width: 42px; height: 42px; border-radius: var(--rs); display: grid; place-items: center; background: color-mix(in srgb, var(--ac) 12%, var(--sf)); color: var(--ac) }
+    .tt b { font-family: var(--fd); font-size: 16.5px; font-weight: 600; margin-top: 10px; line-height: 1.15 }
+    .tt small { font-size: 12.5px; color: var(--t2); line-height: 1.3 }
+    .res { margin-top: 12px; padding: 14px 16px; border-radius: var(--ri); background: color-mix(in srgb, var(--ac) 9%, var(--sf)); font-size: 15px; min-height: 20px }
+    .res:empty { display: none }
+    .res b { font-family: var(--fd); font-size: 22px; font-weight: 600 }
+    .res small { display: block; color: var(--t2); margin-top: 2px; font-size: 13px }
+    .hr { border: 0; border-top: 1px solid var(--bd); margin: 16px 0 }
+    .emc { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 8px }
+    .emc b { font-family: var(--fd); font-size: 24px; font-weight: 600 }
+    .emc .bg { font-weight: 750; font-size: 18px; padding: 6px 14px; border-radius: var(--rb); background: var(--er); color: #fff }
+    .hs .vav { min-width: 54px; width: auto; padding: 0 8px; font-size: 12px }
     @media(min-width:900px) { .tabs { display: none } }
     .brand { background: color-mix(in srgb, var(--ac) 9%, var(--bg)) }
     .wallet { scroll-padding-left: 16px }
@@ -2668,8 +2739,8 @@
     function logout(q) { if (!q && S.token) api('logout').catch(() => { }); S.token = ''; localStorage.removeItem('tk'); localStorage.removeItem('nxc'); localStorage.removeItem('nxpin'); localStorage.removeItem('nxv'); try { V.key = null; V.items = []; V.raw = []; V.meta = null; V.ok = 0; V.err = ''; V.q = ''; V.cat = 'all'; V.fv = 0; V.fid = '' } catch (e) { } S.user = null; const lk = $('#lk'); lk && lk.classList.remove('on'); authView('login') }
 
     /* ---------- SHELL & NAV ---------- */
-    const HL = { cal: 'home', ins: 'home' };
-    const N = [['home', 'Home', 'home'], ['docs', 'Documents', 'folder'], ['veh', 'Vehicles', 'car'], ['vault', 'Vault', 'key'], ['me', 'Profile', 'user']];
+    const HL = { cal: 'tools', ins: 'tools' };
+    const N = [['home', 'Home', 'home'], ['docs', 'Documents', 'folder'], ['tools', 'Tools', 'sparkle'], ['veh', 'Vehicles', 'car'], ['vault', 'Vault', 'key'], ['me', 'Profile', 'user']];
     const nb = n => `<button data-n="${n[0]}" aria-label="${n[1]}" onclick="go('${n[0]}')">${I(n[2], 22)}<span>${n[1]}</span></button>`;
     const av = (u, c = '') => u.photo ? `<img class="av ${c}" src="${esc(u.photo)}" alt="" onerror="this.style.visibility='hidden'">` : `<div class="av ${c}">${esc((u.name || '?')[0].toUpperCase())}</div>`;
     const skel = () => '<div class="sk" style="height:120px;margin-bottom:14px"></div><div class="stats">' + '<div class="sk" style="height:80px"></div>'.repeat(4) + '</div>' + '<div class="sk" style="height:78px;margin-bottom:10px"></div>'.repeat(3);
@@ -2677,7 +2748,7 @@
       const u = S.user, wm = '<b>Nexus<em>Docs</em></b>';
       $('#side').innerHTML = `<div style="display:flex;gap:12px;align-items:center"><img class="lgi" src="${LOGO}" width="40" height="40" alt=""><b>Nexus<br>Docs</b></div><nav>${N.map(nb).join('')}</nav><button class="btn full add" onclick="addNew()">${I('plus', 18)} Add new</button><button class="btn full sec sm" onclick="refresh()">${I('refresh', 16)} Sync now</button><button class="me" onclick="go('me')">${av(u)}<div><b>${esc(u.name)}</b><small>${esc(u.email)}</small></div></button>`;
       $('#top').innerHTML = `<img class="lgi" src="${LOGO}" width="30" height="30" alt="">${wm}<span class="off ${S.off ? 'on' : ''}">Offline</span><button class="ib" onclick="refresh()" aria-label="Sync">${I('refresh', 18)}</button><button onclick="go('me')" aria-label="Profile">${av(u, 'sm')}</button>`;
-      $('#tabs').innerHTML = nb(N[0]) + nb(N[1]) + `<button class="plus" onclick="addNew()" aria-label="Add new">${I('plus', 24)}</button>` + nb(N[2]) + nb(N[3]) + nb(N[4]);
+      $('#tabs').innerHTML = N.slice(0, 3).map(nb).join('') + `<button class="plus" onclick="addNew()" aria-label="Add new">${I('plus', 24)}</button>` + N.slice(3).map(nb).join('');
       document.querySelectorAll('[data-n]').forEach(b => b.classList.toggle('on', b.dataset.n == (HL[S.tab] || S.tab)))
     }
     /* The Google Sheet can return dates as 2026-10-12, 2026-10-12T18:30:00.000Z, 12/10/2026, a serial number etc.
@@ -2709,10 +2780,10 @@
       else if (!await busy(sync)) return;
       S.day = ymd(new Date()); chrome(); go(S.tab, S.vid); hideSplash(); if (Q == 'doc') { Q = ''; docForm() }
     }
-    function go(t, v, keep) { S.tab = t; S.vid = v || null; document.querySelectorAll('[data-n]').forEach(b => b.classList.toggle('on', b.dataset.n == (HL[t] || t))); const m = $('#main'); m.innerHTML = ({ home: pHome, docs: pDocs, veh: pVeh, vault: pVault, me: pMe, cal: pCal, ins: pIns })[t](); if (!keep) { m.style.animation = 'none'; m.offsetHeight; m.style.animation = ''; scrollTo(0, 0) } }
+    function go(t, v, keep) { if (t != 'docs' && S.selm) { S.selm = 0; S.sel.clear() } S.tab = t; S.vid = v || null; document.querySelectorAll('[data-n]').forEach(b => b.classList.toggle('on', b.dataset.n == (HL[t] || t))); const m = $('#main'); m.innerHTML = ({ home: pHome, docs: pDocs, veh: pVeh, vault: pVault, me: pMe, cal: pCal, ins: pIns, tools: pTools })[t](); if (!keep) { m.style.animation = 'none'; m.offsetHeight; m.style.animation = ''; scrollTo(0, 0) } }
 
     /* ---------- HELPERS ---------- */
-    const fd = x => { x = nd(x); if (!x) return ''; const [y, m, d] = x.split('-').map(Number); return new Date(y, m - 1, d).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }) };
+    let fd = x => { x = nd(x); if (!x) return ''; const [y, m, d] = x.split('-').map(Number); return new Date(y, m - 1, d).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }) };
     function st(x) {
       x = nd(x); if (!x) return ['', 'No expiry date', 9e9];
       const [y, m, dd] = x.split('-').map(Number), t = new Date(), d = Math.round((new Date(y, m - 1, dd) - new Date(t.getFullYear(), t.getMonth(), t.getDate())) / 864e5);
@@ -2721,11 +2792,13 @@
     const bad = d => ['er', 'wn'].includes(st(d.expiry)[0]);
     function card(d) {
       const s = st(d.expiry), v = d.kind == 'vehicle' && S.vs.find(x => x.id == d.vehicleId), sub = [mk(d.number || 'No number'), v && v.number, d.holder].filter(Boolean).map(esc).join(' · ');
-      return `<div class="dc" data-s="${s[0]}" onclick="view('${d.id}')"><div class="ic ${s[0]}">${ico(d.kind, d.title)}</div><div class="in"><b>${esc(d.title)}</b><small>${sub}</small><span class="bd ${s[0]}">${s[1]}</span></div><div class="rt"><button class="star ${d.fav ? 'on' : ''}" onclick="event.stopPropagation();fav('${d.id}')" aria-label="Star document">${I('star', 17)}</button><button class="ib" onclick="event.stopPropagation();dmenu('${d.id}')" aria-label="Options">${I('more', 18)}</button></div></div>`
+      const pk = S.selm && S.sel.has(d.id);
+      return `<div class="dc ${S.selm ? 'selm' : ''} ${pk ? 'picked' : ''}" data-s="${s[0]}" onclick="${S.selm ? `selT('${d.id}')` : `view('${d.id}')`}">${S.selm ? `<span class="pick">${pk ? I('check', 16) : ''}</span>` : ''}<div class="ic ${s[0]}">${ico(d.kind, d.title)}</div><div class="in"><b>${esc(d.title)}</b><small>${sub}</small><span class="bd ${s[0]}">${s[1]}</span></div>${S.selm ? '' : `<div class="rt"><button class="star ${d.fav ? 'on' : ''}" onclick="event.stopPropagation();fav('${d.id}')" aria-label="Star document">${I('star', 17)}</button><button class="ib" onclick="event.stopPropagation();dmenu('${d.id}')" aria-label="Options">${I('more', 18)}</button></div>`}</div>`
     }
     function idc(d) {
       const s = st(d.expiry), v = d.kind == 'vehicle' && S.vs.find(x => x.id == d.vehicleId), who = v ? v.number : (d.holder || 'Me');
-      return `<div class="idc k-${s[0] || 'n'}" onclick="view('${d.id}')" role="button" tabindex="0"><div class="t"><span class="ty">${d.kind == 'vehicle' ? 'VEHICLE' : 'PERSONAL'}</span><span class="ic2">${ico(d.kind, d.title)}</span></div><b>${esc(d.title)}</b><div class="no">${esc(d.number ? mk(d.number) : '•••• •••• ••••')}</div><div class="ft"><span>${esc(who)}</span><em>${s[0] ? s[1].replace('Valid till ', 'Till ') : 'No expiry'}</em></div></div>`
+      const pk = S.selm && S.sel.has(d.id);
+      return `<div class="idc k-${s[0] || 'n'} ${pk ? 'picked' : ''}" onclick="${S.selm ? `selT('${d.id}')` : `view('${d.id}')`}" role="button" tabindex="0">${S.selm ? `<span class="pick">${pk ? I('check', 16) : ''}</span>` : ''}<div class="t"><span class="ty">${d.kind == 'vehicle' ? 'VEHICLE' : 'PERSONAL'}</span><span class="ic2">${ico(d.kind, d.title)}</span></div><b>${esc(d.title)}</b><div class="no">${esc(d.number ? mk(d.number) : '•••• •••• ••••')}</div><div class="ft"><span>${esc(who)}</span><em>${s[0] ? s[1].replace('Valid till ', 'Till ') : 'No expiry'}</em></div></div>`
     }
     /* a document can have a Front and a Back side; they count as ONE document */
     const lbOf = x => x.lb || ((/^\[(Front|Back)\]/.exec(x.f ? '' : (x.n || '')) || [])[1]) || '';
@@ -2749,7 +2822,7 @@
       const date = new Date().toLocaleDateString('en-IN', { weekday: 'long', day: 'numeric', month: 'long' });
       let out = banner() + `<div class="gh"><small>${date}</small><h2>${greet()},<br><i>${esc(u.name.split(' ')[0])}</i></h2></div>`;
       if (H.tiles) out += `<div class="ledger"><div class="lring" style="--p:${pc}"><i><b>${D.length ? pc + '%' : '–'}</b><small>healthy</small></i></div><div class="lrows">${[['ok', 'Valid', okn, 'ok'], ['wn', 'Expiring soon', wn, 'wn'], ['er', 'Expired', ex, 'er']].map(x => `<button class="lr" onclick="S.st='${x[0]}';S.f='all';S.fv=0;go('docs')"><i style="background:var(--${x[3]})"></i><span>${x[1]}</span><b>${x[2]}</b></button>`).join('')}</div><div class="lfoot"><button onclick="S.st='all';go('docs')">${I('file', 20)}<span><b>${D.length}</b>Document${D.length == 1 ? '' : 's'}</span></button><button onclick="go('veh')">${I('car', 20)}<span><b>${S.vs.length}</b>Vehicle${S.vs.length == 1 ? '' : 's'}</span></button></div></div>`;
-      if (H.qa) out += `<div class="qa"><button onclick="docForm()">${I('file', 24)}<span>Add document</span></button><button onclick="vehForm()">${I('car', 24)}<span>Add vehicle</span></button><button onclick="go('cal')">${I('cal', 24)}<span>Calendar</span></button><button onclick="go('ins')">${I('chart', 24)}<span>Insights</span></button><button onclick="S.fv=1;S.f='all';S.st='all';go('docs')">${I('star', 24)}<span>Starred</span></button><button onclick="S.q='';go('docs');setTimeout(()=>{const i=document.querySelector('.srch input');i&&i.focus()},80)">${I('search', 24)}<span>Search</span></button><button onclick="vGenTool()">${I('dice', 24)}<span>Generator</span></button><button onclick="exportICS()">${I('download', 24)}<span>Calendar file</span></button></div>`;
+      if (H.qa) out += `<div class="qa">${qaHtml()}</div>`;
       if (H.att) out += sec('Needs attention', take(att), 1, "S.st='all';S.so='exp';go('docs')");
       if (H.pin) out += sec('Starred', take(pn), 1);
       if (H.soon) out += sec('Next 90 days', take(sn), 0);
@@ -2761,16 +2834,17 @@
     function dlist() {
       const q = S.q.toLowerCase();
       let a = S.docs.filter(d => (S.f == 'all' || d.kind == S.f) && (!S.fv || d.fav) && (S.hf == 'all' || d.holder == S.hf) && (S.st == 'all' || st(d.expiry)[0] == S.st) && (d.title + ' ' + d.number + ' ' + d.notes + ' ' + (d.holder || '')).toLowerCase().includes(q));
-      if (S.so == 'exp') a.sort((x, y) => st(x.expiry)[2] - st(y.expiry)[2]); else if (S.so == 'new') a.reverse(); else a.sort((x, y) => x.title.localeCompare(y.title));
+      if (S.so == 'exp') a.sort((x, y) => st(x.expiry)[2] - st(y.expiry)[2]); else if (S.so == 'new') a.reverse(); else if (S.so == 'holder') a.sort((x, y) => (x.holder || '~').localeCompare(y.holder || '~') || x.title.localeCompare(y.title)); else a.sort((x, y) => x.title.localeCompare(y.title));
+      S.vis = a.map(d => d.id);
       return a.length ? (UP.view == 'cards' ? `<div class="wgrid">${a.map(idc).join('')}</div>` : a.map(card).join('')) : empty('No documents found', 'search')
     }
     const dl = () => { $('#dl').innerHTML = dlist() };
     function pDocs() {
       const c = k => k == 'all' ? S.docs.length : S.docs.filter(d => d.kind == k).length, o = (v, t, c) => `<option value="${v}" ${c == v ? 'selected' : ''}>${t}</option>`;
-      return `<div class="ph"><h2>Documents</h2><button class="btn sm" onclick="docForm()">${I('plus', 16)} Add</button></div>
+      return `<div class="ph"><h2>Documents</h2><div style="display:flex;gap:8px"><button class="btn sm sec" onclick="selMode(${S.selm ? 0 : 1})">${I('select', 16)} ${S.selm ? 'Cancel' : 'Select'}</button>${S.selm ? '' : `<button class="btn sm" onclick="docForm()">${I('plus', 16)} Add</button>`}</div></div>
   <div class="srch" style="margin-bottom:12px">${I('search', 18)}<input style="margin:0" placeholder="Search by name, number or notes" value="${esc(S.q)}" oninput="S.q=this.value;dl()"></div>
   <div class="chips">${[['all', 'All'], ['person', 'Personal'], ['vehicle', 'Vehicle']].map(x => `<button class="chip ${S.f == x[0] ? 'on' : ''}" onclick="S.f='${x[0]}';go('docs',null,1)">${x[1]} (${c(x[0])})</button>`).join('')}<button class="chip ${S.fv ? 'on' : ''}" onclick="S.fv=S.fv?0:1;go('docs',null,1)">${I('star', 14)} Starred (${S.docs.filter(d => d.fav).length})</button><button class="chip" onclick="UP.view=UP.view=='cards'?'list':'cards';pfSave();go('docs',null,1)" aria-label="Switch layout">${I(UP.view == 'cards' ? 'table' : 'card', 14)} ${UP.view == 'cards' ? 'List' : 'Cards'}</button></div>${hchips()}
-  <div class="two"><select onchange="S.st=this.value;dl()">${o('all', 'All status', S.st) + o('ok', 'Valid', S.st) + o('wn', 'Expiring soon', S.st) + o('er', 'Expired', S.st)}</select><select onchange="S.so=this.value;dl()">${o('exp', 'Sort: Expiry', S.so) + o('new', 'Sort: Newest', S.so) + o('az', 'Sort: A to Z', S.so)}</select></div><div id="dl">${dlist()}</div>`
+  <div class="two"><select onchange="S.st=this.value;dl()">${o('all', 'All status', S.st) + o('ok', 'Valid', S.st) + o('wn', 'Expiring soon', S.st) + o('er', 'Expired', S.st)}</select><select onchange="S.so=this.value;dl()">${o('exp', 'Sort: Expiry', S.so) + o('new', 'Sort: Newest', S.so) + o('az', 'Sort: A to Z', S.so) + o('holder', 'Sort: Holder', S.so)}</select></div><div id="dl">${dlist()}</div>${bulkBar()}`
     }
     function pVeh() {
       if (S.vid) return pVD();
@@ -2796,12 +2870,12 @@
   <div class="stats"><div class="st"><b>${S.docs.length}</b><small>Documents</small></div><div class="st"><b>${S.docs.filter(d => d.fav).length}</b><small>Starred</small></div><div class="st"><b>${S.vs.length}</b><small>Vehicles</small></div><div class="st ${att ? 'wn' : ''}"><b>${att}</b><small>Need attention</small></div></div>
   ${pc < 100 ? `<div class="card" style="margin-bottom:14px"><div style="display:flex;justify-content:space-between"><b>Complete your profile</b><b style="color:var(--ac)">${pc}%</b></div><div class="pg2"><i style="width:${pc}%"></i></div><small>Add your ${miss.slice(0, 3).join(', ')}${miss.length > 3 ? ' and more' : ''} to finish.</small></div>` : ''}
   <h3 class="h">Personal information</h3><div class="card grp">${R('user', 'Full name', u.name) + R('mail', 'Email', u.email) + R('phone', 'Phone', u.phone) + R('cal', 'Date of birth', u.dob ? fd(u.dob) : '') + R('drop', 'Blood group', u.blood) + R('pin', 'Address', u.address) + R('phone', 'Emergency contact', u.emergency)}</div>
-  <h3 class="h">Appearance</h3><div class="card grp">${A('palette', 'Theme and colours', prefSummary(), 'appearance()')}${A('sliders', 'Home screen', 'Choose which sections to show', 'homeOpts()')}${A('eye2', 'Privacy', UP.mask ? 'Document numbers hidden' : 'Numbers, vault lock, clipboard', 'privOpts()')}</div>
-  <h3 class="h">Tools</h3><div class="card grp">${A('cal', 'Expiry calendar', 'See every renewal by date', "go('cal')")}${A('chart', 'Insights', 'Charts about your documents', "go('ins')")}${A('dice', 'Password generator', 'Strong random passwords', 'vGenTool()')}${A('health', 'Password health', 'Weak, reused and old logins', 'vHealthGo()')}</div>
+  <h3 class="h">Appearance</h3><div class="card grp">${A('palette', 'Theme and colours', prefSummary(), 'appearance()')}${A('sliders', 'General settings', 'Date format, sorting, week start', 'generalOpts()')}${A('sliders', 'Home screen', 'Choose which sections to show', 'homeOpts()')}${A('eye2', 'Privacy', UP.mask ? 'Document numbers hidden' : 'Numbers, vault lock, clipboard', 'privOpts()')}</div>
+  <h3 class="h">Tools</h3><div class="card grp">${A('sparkle', 'All tools', 'Planner, checklist, notes, backup and more', "go('tools')")}${A('cal', 'Expiry calendar', 'See every renewal by date', "go('cal')")}${A('chart', 'Insights', 'Charts about your documents', "go('ins')")}${A('dice', 'Password generator', 'Strong random passwords', 'vGenTool()')}${A('health', 'Password health', 'Weak, reused and old logins', 'vHealthGo()')}</div>
   <h3 class="h">Preferences</h3><div class="card grp">${standalone() ? '' : A('download', 'Install app', 'Add Nexus Docs to your home screen', 'installApp()')}
     <div class="row"><div class="ri">${I('bell', 20)}</div><div class="rb"><b>Email reminders</b><small>Sent by email every morning at 8 AM</small></div><label class="sw"><input type="checkbox" ${u.remind ? 'checked' : ''} onchange="tgRem(this)"><span></span></label></div>${notifRow()}${A('bell', 'Reminder timing', rdTxt(), 'remDays()')}<div class="row"><div class="ri">${I('lock', 20)}</div><div class="rb"><b>App lock</b><small>Ask for a 4-digit PIN when the app opens</small></div><label class="sw"><input type="checkbox" ${localStorage.nxpin ? 'checked' : ''} onchange="tgLock(this)"><span></span></label></div></div>
   <h3 class="h">Security &amp; data</h3><div class="card grp">${A('lock', 'Change password', 'Update your account password', 'chPw()') + A('devices', 'Logout from all devices', 'End every active session', 'logAll()') + A('download', 'Export my data', 'Download all your details as a file', 'exportData()') + A('table', 'Export documents (CSV)', 'Open in Excel or Google Sheets', 'exportCSV()') + A('cal', 'Add expiry dates to calendar', 'Download an .ics file for any calendar app', 'exportICS()')}</div>
-  <h3 class="h">Account</h3><div class="card grp">${A('logout', 'Logout', 'Sign out from this device', 'logout()') + A('trash', 'Delete account', 'Permanently remove all your data', 'delAcc()', 'rd')}</div><p class="t2" style="text-align:center;font-size:12.5px;margin:18px 0 4px">Nexus Docs · UI version 5.0</p>`}
+  <h3 class="h">Account</h3><div class="card grp">${A('logout', 'Logout', 'Sign out from this device', 'logout()') + A('trash', 'Delete account', 'Permanently remove all your data', 'delAcc()', 'rd')}</div><p class="t2" style="text-align:center;font-size:12.5px;margin:18px 0 4px">Nexus Docs · UI version 6.0</p>`}
 
     /* ---------- PROFILE ACTIONS ---------- */
     const sq = f => new Promise((r, j) => { const i = new Image(); i.onload = () => { const m = Math.min(i.width, i.height), c = document.createElement('canvas'); c.width = c.height = 480; c.getContext('2d').drawImage(i, (i.width - m) / 2, (i.height - m) / 2, m, m, 0, 0, 480, 480); URL.revokeObjectURL(i.src); r(c.toDataURL('image/jpeg', .88).split(',')[1]) }; i.onerror = () => j(Error('Could not read this image')); i.src = URL.createObjectURL(f) });
@@ -3032,10 +3106,11 @@
       dl2(one ? 'expiry-' + String(one.title).replace(/\W+/g, '-').toLowerCase() + '.ics' : 'nexus-expiry-dates.ics', icsOf(L), 'text/calendar'); toast('Calendar file downloaded')
     }
     function exportCSV() {
-      if (!S.docs.length) return toast('No documents to export', 'inf');
+      const SRC = S.selm && S.sel.size ? S.docs.filter(d => S.sel.has(d.id)) : S.docs;
+      if (!SRC.length) return toast('No documents to export', 'inf');
       const q = x => { let t = String(x ?? ''); if (/^[=+\-@]/.test(t)) t = "'" + t; return '"' + t.replace(/"/g, '""') + '"' },
         R = [['Type', 'Document', 'Number', 'Holder / Vehicle', 'Issue date', 'Expiry date', 'Status', 'Starred', 'Notes', 'Files']];
-      S.docs.forEach(d => { const v = d.kind == 'vehicle' && S.vs.find(x => x.id == d.vehicleId); R.push([d.kind == 'vehicle' ? 'Vehicle' : 'Personal', d.title, d.number, v ? v.number : (d.holder || ''), d.issue, d.expiry, st(d.expiry)[1], d.fav ? 'Yes' : '', d.notes, d.files.length]) });
+      SRC.forEach(d => { const v = d.kind == 'vehicle' && S.vs.find(x => x.id == d.vehicleId); R.push([d.kind == 'vehicle' ? 'Vehicle' : 'Personal', d.title, d.number, v ? v.number : (d.holder || ''), d.issue, d.expiry, st(d.expiry)[1], d.fav ? 'Yes' : '', d.notes, d.files.length]) });
       dl2('nexus-documents-' + new Date().toISOString().slice(0, 10) + '.csv', '﻿' + R.map(r => r.map(q).join(',')).join('\r\n'), 'text/csv'); toast('CSV exported')
     }
     async function shareDoc(d) {
@@ -3259,34 +3334,6 @@
     });
 
     /* ---- setup / unlock ---- */
-    async function vSetup() {
-      const o = await modal({
-        title: 'Create master password', icon: 'key', sticky: 1, ok: 'Create vault', html: `
-    <p class="mt" style="margin-bottom:12px">This one password opens your vault. It is <b>never stored or sent anywhere</b>, so it <b>cannot be recovered</b> if you forget it.</p>
-    <span class="lb">Master password</span>${vPw('vm_a', 'At least 8 characters', 'new-password')}
-    <span class="lb">Confirm master password</span>${vPw('vm_b', 'Type it again', 'new-password')}`,
-        pre: el => { const a = $('#vm_a').value; if (a.length < 8) return fail(el, 'Master password must be at least 8 characters'); if (a != $('#vm_b').value) return fail(el, 'Passwords do not match'); return a }
-      });
-      if (!o) return;
-      const ok = await busy(async () => {
-        const salt = vRand(16), k = await vDerive(o, salt), meta = { v: 1, salt: v2s(salt), chk: await vSeal(k, { ok: 1 }) };
-        await api('vaultMeta', { meta: JSON.stringify(meta) }); V.meta = meta; V.key = k; V.ks = meta.salt; V.raw = []; V.items = []; vCache()
-      }, 'Creating vault…');
-      if (ok) { vTouch(); go('vault', null, 1); toast('Vault created') }
-    }
-    async function vUnlock() {
-      const o = await modal({
-        title: 'Unlock vault', icon: 'lock', sticky: 1, ok: 'Unlock', html: `<span class="lb">Master password</span>${vPw('vm_a', 'Your master password', 'off')}`,
-        pre: el => $('#vm_a').value || fail(el, 'Enter your master password')
-      });
-      if (!o) return;
-      const ok = await busy(async () => {
-        const k = await vDerive(o, s2v(V.meta.salt));
-        try { await vOpen(k, V.meta.chk) } catch (e) { throw Error('Wrong master password') }
-        V.key = k; V.ks = V.meta.salt; await vDecryptAll()
-      }, 'Unlocking…');
-      if (ok) { vTouch(); go('vault', null, 1) }
-    }
     const vPw = (id, ph, ac) => `<div class="fld">${I('lock', 18)}<input id="${id}" type="password" placeholder="${ph}" autocomplete="${ac}" autocapitalize="off" spellcheck="false"><button type="button" class="eye" onclick="const x=$('#${id}');x.type=x.type=='password'?'text':'password'" aria-label="Show password">${I('eye', 18)}</button></div>`;
     function addNew() {
       if (S.tab != 'vault') return docForm();
@@ -3301,7 +3348,7 @@
     function vList() {
       const q = V.q.toLowerCase().trim(), flt = q || V.cat != 'all' || V.fv, all = vLogins();
       const a = all.filter(x => (V.fid ? x.fid == V.fid : (flt || !vFol(x))) && (V.cat == 'all' || x.cat == V.cat) && (!V.fv || x.fav) && (!q || [x.title, x.user, x.url, x.cat, x.notes, (vFol(x) || {}).title, ...(x.extra || []).map(e => e.k + ' ' + (e.s ? '' : e.v))].join(' ').toLowerCase().includes(q)));
-      a.sort((x, y) => (y.fav ? 1 : 0) - (x.fav ? 1 : 0) || x.title.localeCompare(y.title));
+      a.sort((x, y) => (y.fav ? 1 : 0) - (x.fav ? 1 : 0) || (UP.vsort == 'new' ? String(y.created || '').localeCompare(String(x.created || '')) : UP.vsort == 'old' ? String(x.pwAt || x.created || '').localeCompare(String(y.pwAt || y.created || '')) : 0) || x.title.localeCompare(y.title));
       return a.map(vCard).join('') || empty(V.fid ? (q ? 'No matching accounts' : 'No accounts in this folder yet. Tap Add account') : all.length ? (flt ? 'No matching logins' : 'Every login is inside a folder') : 'No logins saved yet. Tap Add to save your first one', q || (all.length && !V.fid) ? 'search' : 'key')
     }
     const vFolderTile = f => { const n = vIn(f).length; return `<button class="ftile" style="--c:${vCol(f.title)}" onclick="V.fid='${f.id}';V.q='';V.cat='all';V.fv=0;go('vault',null,1)"><span class="vav">${esc((f.title || '?').trim()[0].toUpperCase())}</span><b>${esc(f.title)}</b><small>${n ? n + ' account' + (n > 1 ? 's' : '') : 'Empty'}</small></button>` };
@@ -3314,13 +3361,13 @@
         return hd + (V.err ? `<div class="card" style="text-align:center">${I('alert', 32)}<h3 style="margin:10px 0 6px">Could not load the vault</h3><p class="t2" style="margin:0 0 14px">${esc(V.err)}</p><button class="btn" onclick="V.err='';go('vault',null,1)">Try again</button></div>` : '<div class="sk" style="height:90px;margin-bottom:10px"></div>'.repeat(4))
       }
       if (!V.meta) return hd + `<div class="card vlock"><div class="big">${I('key', 34)}</div><h3>Your private password vault</h3><p>Save logins for every site and app in one place.</p><ul><li>Group many accounts in a folder, like Instagram</li><li>Encrypted on this phone before it is saved</li><li>Only your master password can open it</li><li>Works offline with your last synced data</li></ul><button class="btn full" onclick="vSetup()">Create vault</button></div>`;
-      if (!V.key) return hd + `<div class="card vlock"><div class="big">${I('lock', 34)}</div><h3>Vault is locked</h3><p>${V.raw.length ? 'Your saved logins are inside. ' : ''}Enter your master password to open it.</p><button class="btn full" onclick="vUnlock()">${I('key', 18)} Unlock vault</button></div>`;
+      if (!V.key) return hd + `<div class="card vlock"><div class="big">${I('lock', 34)}</div><h3>Vault is locked</h3><p>${V.raw.length ? 'Your saved logins are inside. ' : ''}Enter your master password to open it.</p><button class="btn full" onclick="vUnlock()">${I('key', 18)} Unlock vault</button><button class="lnk" style="display:block;margin:14px auto 0" onclick="vForgot()">Forgot master password?</button></div>`;
       vTouch();
       const foot = `<p class="t2" style="text-align:center;font-size:12px;margin-top:16px">${I('lock', 12)} End-to-end encrypted · auto-locks after ${UP.vlock} minute${UP.vlock > 1 ? 's' : ''}</p>`;
       if (F0) { const n = vIn(F0).length; return `<button class="bk" onclick="V.fid='';V.q='';go('vault',null,1)">${I('left', 18)} All folders</button>` + hd + `<p class="t2" style="margin:-8px 0 14px">${n ? n + ' account' + (n > 1 ? 's' : '') : 'No accounts yet'}</p><button class="btn full" style="margin-bottom:14px" onclick="vForm('',V.fid)">${I('plus', 18)} Add account</button>` + vSearchBox() + `<div id="vl">${vList()}</div>` + foot }
       const L = vLogins(), cnt = c => c == 'all' ? L.length : L.filter(x => x.cat == c).length, cs = VCAT.map(x => x[0]).filter(c => cnt(c)), FS = vFolders(), q = V.q.trim();
       if (V.cat != 'all' && !cs.includes(V.cat)) V.cat = 'all';
-      return hd + vSearchBox() + `<div id="vf" style="${q ? 'display:none' : ''}"><h3 class="h" style="margin-top:6px">Folders</h3><div class="fgrid">${FS.map(vFolderTile).join('')}<button class="ftile new" onclick="vFolderForm()">${I('plus', 22)}<b>New folder</b><small>Group many accounts</small></button></div><h3 class="h">Logins</h3></div>
+      return hd + vNag() + vSearchBox() + `<div id="vf" style="${q ? 'display:none' : ''}"><h3 class="h" style="margin-top:6px">Folders</h3><div class="fgrid">${FS.map(vFolderTile).join('')}<button class="ftile new" onclick="vFolderForm()">${I('plus', 22)}<b>New folder</b><small>Group many accounts</small></button></div><h3 class="h">Logins</h3></div>
   ${L.length ? `<div class="chips"><button class="chip ${V.cat == 'all' && !V.fv ? 'on' : ''}" onclick="V.cat='all';V.fv=0;go('vault',null,1)">All (${cnt('all')})</button><button class="chip ${V.fv ? 'on' : ''}" onclick="V.fv=V.fv?0:1;go('vault',null,1)">${I('star', 14)} Starred</button>${cs.map(c => `<button class="chip ${V.cat == c ? 'on' : ''}" data-c2="${c}" onclick="V.cat=this.dataset.c2;V.fv=0;go('vault',null,1)">${c} (${cnt(c)})</button>`).join('')}</div>` : ''}
   <div id="vl">${vList()}</div>` + foot
     }
@@ -3390,12 +3437,12 @@
       if (x.notes) F.push({ i: 'note', l: 'Notes', v: x.notes });
       await modal({
         title: esc(x.title), icon: vci(x.cat), wide: 1, ok: null, cancel: null, noFocus: 1, html: `
-    <div style="margin:2px 0 6px"><span class="vtag">${esc(x.cat)}</span></div>${F.map(vRow).join('')}
+    <div style="margin:2px 0 6px"><span class="vtag">${esc(x.cat)}</span></div>${F.map(vRow).join('')}${x.totp ? '<div class="totp" id="vt"></div>' : ''}
     ${vUrl(x.url) ? `<button class="btn full" style="margin-top:14px" data-act="open">${I('ext', 18)} Open website</button>` : ''}
     <div class="vact"><button class="btn sec sm" data-act="edit">${I('edit', 16)} Edit</button><button class="btn sec sm" data-act="fav">${I('star', 16)} ${x.fav ? 'Unstar' : 'Star'}</button>${(x.hist || []).length ? `<button class="btn sec sm" data-act="hist">${I('history', 16)} History</button>` : ''}<button class="btn sec sm" data-act="del" style="color:var(--er)" aria-label="Delete">${I('trash', 16)}</button></div>
     <p class="vmeta ${old ? 'wn' : ''}">${x.pass ? `Password changed ${days < 1 ? 'today' : days + ' day' + (days > 1 ? 's' : '') + ' ago'}${old ? '. Consider updating it.' : '.'}<br>` : ''}Last edited ${fd(x.updated || x.created)}</p>`,
         onOpen: (el, close) => {
-          vBind(el, F);
+          vBind(el, F); if (x.totp) totpBind(el.querySelector('#vt'), x.totp);
           el.addEventListener('click', async e => {
             const a = e.target.closest('[data-act]'); if (!a) return; const k = a.dataset.act;
             if (k == 'open') vOpenUrl(id);
@@ -3426,6 +3473,7 @@
     <span class="lb">Password</span><div class="fld">${I('lock', 18)}<input id="vx_p" type="password" value="${esc(x.pass)}" autocomplete="new-password" autocapitalize="off" spellcheck="false"><button type="button" class="eye" onclick="const q=$('#vx_p');q.type=q.type=='password'?'text':'password'" aria-label="Show password">${I('eye', 18)}</button></div>
     <div class="vmeter"><i id="vx_m"></i></div><span class="vml" id="vx_ml"></span>
     <div class="vgen"><button type="button" class="btn sec sm" id="vx_gen">${I('refresh', 16)} Generate strong password</button></div>
+    <span class="lb">2FA secret key (optional)</span><input id="vx_2" placeholder="Setup key from the website's 2FA page" value="${esc(x.totp)}" autocomplete="off" autocapitalize="characters" spellcheck="false">
     <span class="lb">Notes (optional)</span><textarea id="vx_n" rows="2" style="resize:none" placeholder="Anything else to remember">${esc(x.notes)}</textarea>
     <span class="lb">Related details</span><div id="vx_f"></div>
     <button type="button" class="btn sec sm" id="vx_add">${I('plus', 16)} Add field</button>
@@ -3449,7 +3497,8 @@
           if (!t) return fail(el, 'Enter a title (site or app name)');
           if (l && !vUrl(l)) return fail(el, 'Enter a valid website link, like example.com');
           if (!u && !p) return fail(el, 'Add a username or a password');
-          return { title: t, fid: $('#vx_fo').value, cat: $('#vx_c').value, url: l ? vUrl(l) : '', user: u, pass: p, notes: $('#vx_n').value.trim(), extra: EX.filter(e => (e.k || '').trim() || (e.v || '').trim()).map(e => ({ k: (e.k || '').trim(), v: e.v || '', s: !!e.s })) }
+          const tk = ($('#vx_2').value || '').replace(/[\s-]+/g, '').toUpperCase(); if (tk && !/^[A-Z2-7]{8,}=*$/.test(tk)) return fail(el, 'The 2FA key should be letters A-Z and numbers 2-7');
+          return { title: t, fid: $('#vx_fo').value, cat: $('#vx_c').value, url: l ? vUrl(l) : '', user: u, pass: p, totp: ($('#vx_2').value || '').replace(/[\s-]+/g, '').toUpperCase(), notes: $('#vx_n').value.trim(), extra: EX.filter(e => (e.k || '').trim() || (e.v || '').trim()).map(e => ({ k: (e.k || '').trim(), v: e.v || '', s: !!e.s })) }
         }
       });
       if (!o) return;
@@ -3473,24 +3522,8 @@
 
     /* ---- vault menu: lock, change master password, export, reset ---- */
     async function vMenu() {
-      const k = await sheet('Vault options', [{ k: 'nf', i: 'folder', t: 'New folder', s: 'Group many accounts, like Instagram' }, { k: 'hl', i: 'health', t: 'Password health', s: 'Weak, reused and old passwords' }, { k: 'gn', i: 'dice', t: 'Password generator' }, { k: 'vs', i: 'sliders', t: 'Vault settings', s: 'Auto-lock and clipboard' }, { k: 'lock', i: 'lock', t: 'Lock vault now' }, { k: 'pw', i: 'key', t: 'Change master password', s: 'Re-encrypts every login' }, { k: 'csv', i: 'download', t: 'Export as CSV', s: 'Not encrypted. Keep the file safe' }, { k: 'rs', i: 'trash', t: 'Reset vault', s: 'Deletes all saved logins', cls: 'rd' }]);
-      if (k == 'hl') vHealth(); if (k == 'gn') vGenTool(); if (k == 'vs') vOpts(); if (k == 'nf') vFolderForm(); if (k == 'lock') vLock(); if (k == 'pw') vChange(); if (k == 'csv') vExport(); if (k == 'rs') vReset()
-    }
-    async function vChange() {
-      const o = await modal({
-        title: 'Change master password', icon: 'key', sticky: 1, ok: 'Change', html: `<span class="lb">Current master password</span>${vPw('vm_a', 'Current', 'off')}<span class="lb">New master password</span>${vPw('vm_b', 'At least 8 characters', 'new-password')}<span class="lb">Confirm new password</span>${vPw('vm_c', 'Type it again', 'new-password')}`,
-        pre: el => { if (!$('#vm_a').value) return fail(el, 'Enter your current master password'); if ($('#vm_b').value.length < 8) return fail(el, 'New password must be at least 8 characters'); if ($('#vm_b').value != $('#vm_c').value) return fail(el, 'Passwords do not match'); return { a: $('#vm_a').value, b: $('#vm_b').value } }
-      });
-      if (!o) return;
-      const ok = await busy(async () => {
-        const k0 = await vDerive(o.a, s2v(V.meta.salt)); try { await vOpen(k0, V.meta.chk) } catch (e) { throw Error('Current master password is wrong') }
-        const d = await api('vaultGet'); V.raw = d.items || []; await vDecryptAll();
-        const salt = vRand(16), k = await vDerive(o.b, salt), meta = { v: 1, salt: v2s(salt), chk: await vSeal(k, { ok: 1 }) }, items = [];
-        for (const it of V.items) { const { id, ...r } = it; items.push({ id, data: await vSeal(k, r) }) }
-        await api('vaultBulk', { meta: JSON.stringify(meta), items });
-        V.meta = meta; V.key = k; V.ks = meta.salt; V.raw = items; vCache()
-      }, 'Re-encrypting…');
-      if (ok) toast('Master password changed')
+      const k = await sheet('Vault options', [{ k: 'nf', i: 'folder', t: 'New folder', s: 'Group many accounts, like Instagram' }, { k: 'au', i: 'qr', t: 'Authenticator codes', s: 'Live 2FA codes for your logins' }, { k: 'hl', i: 'health', t: 'Password health', s: 'Weak, reused and old passwords' }, { k: 'im', i: 'upload', t: 'Import from CSV', s: 'Chrome, Bitwarden and more' }, { k: 'rk', i: 'shield2', t: V.meta && V.meta.rec ? 'New recovery key' : 'Create recovery key', s: 'Opens the vault if you forget the password' }, { k: 'ht', i: 'hint', t: 'Master password hint' }, { k: 'gn', i: 'dice', t: 'Password generator' }, { k: 'vs', i: 'sliders', t: 'Vault settings', s: 'Auto-lock and clipboard' }, { k: 'lock', i: 'lock', t: 'Lock vault now' }, { k: 'pw', i: 'key', t: 'Change master password', s: 'Re-encrypts every login' }, { k: 'csv', i: 'download', t: 'Export as CSV', s: 'Not encrypted. Keep the file safe' }, { k: 'rs', i: 'trash', t: 'Reset vault', s: 'Deletes all saved logins', cls: 'rd' }]);
+      if (k == 'au') vAuth(); if (k == 'im') vImport(); if (k == 'rk') vRecSetup(); if (k == 'ht') vHint(); if (k == 'hl') vHealth(); if (k == 'gn') vGenTool(); if (k == 'vs') vOpts(); if (k == 'nf') vFolderForm(); if (k == 'lock') vLock(); if (k == 'pw') vChange(); if (k == 'csv') vExport(); if (k == 'rs') vReset()
     }
     function vExport() {
       confirmBox({ title: 'Export passwords?', text: 'The CSV file is <b>not encrypted</b>. Anyone who opens it can read every password. Delete it after use.', ok: 'Export', icon: 'download' }).then(y => {
@@ -3594,7 +3627,7 @@
     const pfSave = () => { try { localStorage.nxp = JSON.stringify(UP) } catch (e) { } };
     function applyPrefs() {
       const r = document.documentElement, sys = matchMedia('(prefers-color-scheme:dark)').matches, dark = UP.mode == 'dark' || UP.mode == 'black' || (UP.mode == 'auto' && sys);
-      r.dataset.t = dark ? 'dark' : 'light'; r.dataset.b = UP.mode == 'black' ? '1' : ''; r.dataset.pal = PAL[UP.pal] ? UP.pal : 'paper'; r.dataset.r = UP.rad; r.dataset.d = UP.den; r.dataset.card = UP.card; r.dataset.f = UP.font;
+      r.dataset.t = dark ? 'dark' : 'light'; r.dataset.b = UP.mode == 'black' ? '1' : ''; r.dataset.pal = PAL[UP.pal] ? UP.pal : 'paper'; r.dataset.dock = UP.dock; r.dataset.lb = UP.lb ? '1' : ''; r.dataset.stripe = UP.stripe ? '1' : '0'; r.dataset.anim = UP.anim ? '1' : '0'; r.dataset.r = UP.rad; r.dataset.d = UP.den; r.dataset.card = UP.card; r.dataset.f = UP.font;
       r.style.setProperty('--zm', UP.zm);
       const tc = $('#tc'); if (tc) tc.content = dark ? (UP.mode == 'black' ? '#000000' : '#0b0f15') : '#0b1220';
       barTheme()
@@ -3640,6 +3673,10 @@
     <h4>Document cards</h4>${seg('card', [['tint', 'Tinted by status'], ['plain', 'Plain white']])}
     <h4>Font</h4>${seg('font', [['modern', 'Serif'], ['clean', 'Clean'], ['system', 'System'], ['classic', 'Classic'], ['mono', 'Mono']], 'c3')}
     <h4>Documents shown as</h4>${seg('view', [['list', 'List'], ['cards', 'ID cards']], 'c2')}
+    <h4>Bottom bar style</h4>${seg('dock', [['dark', 'Dark'], ['light', 'Light'], ['accent', 'Accent'], ['flat', 'Flat']], 'c4')}
+    <h4>Bottom bar labels</h4>${seg('lb', [[0, 'Active only'], [1, 'Show all']], 'c2')}
+    <h4>Status stripe on documents</h4>${seg('stripe', [[1, 'On'], [0, 'Off']], 'c2')}
+    <h4>Animations</h4>${seg('anim', [[1, 'On'], [0, 'Off']], 'c2')}
     <h4>Open the app on</h4>${seg('start', [['home', 'Home'], ['docs', 'Documents'], ['vault', 'Vault']], 'c3')}</div>`;
       await modal({
         title: 'Appearance', icon: 'palette', wide: 1, ok: null, cancel: null, noFocus: 1, html: '<div id="ap">' + html() + '</div>',
@@ -3648,7 +3685,7 @@
           const bindCol = () => { const c = box.querySelector('#ap_c'); if (c) c.onchange = c.oninput = () => { localStorage.acc = c.value; localStorage.ac = 'custom'; customAc(); applyAc(); chrome(); go(S.tab, S.vid, 1); clearTimeout(c._t); c._t = setTimeout(re, 400) } }; bindCol();
           box.addEventListener('click', e => {
             const b = e.target.closest('button'); if (!b) return;
-            if (b.dataset.ap) { const [k, v] = b.dataset.ap.split(':'); UP[k] = k == 'zm' ? +v : v; upd() }
+            if (b.dataset.ap) { const [k, v] = b.dataset.ap.split(':'); UP[k] = ['zm', 'lb', 'stripe', 'anim'].includes(k) ? +v : v; upd() }
             else if (b.dataset.ac) { localStorage.ac = b.dataset.ac; applyAc(); chrome(); go(S.tab, S.vid, 1); re() }
             else if (b.dataset.pre) { const p = PRESETS[+b.dataset.pre]; Object.assign(UP, p[1]); localStorage.ac = p[2]; applyAc(); upd() }
           })
@@ -3659,7 +3696,7 @@
     async function homeOpts() {
       const L = [['tiles', 'Summary tiles', 'Attention, documents, vehicles'], ['qa', 'Quick actions', 'Shortcut pills under the tiles'], ['att', 'Needs attention', 'Expired and expiring in 30 days'], ['pin', 'Starred documents', 'Your pinned documents'], ['soon', 'Next 90 days', 'Documents expiring later'], ['seen', 'Recently opened', 'The last documents you viewed'], ['recent', 'Recently added', 'Newest documents']];
       const html = () => L.map(x => `<div class="tgl"><div class="rb"><b>${x[1]}</b><small>${x[2]}</small></div><label class="sw"><input type="checkbox" data-hs="${x[0]}" ${UP.hs[x[0]] ? 'checked' : ''}><span></span></label></div>`).join('');
-      await modal({ title: 'Home screen', icon: 'sliders', ok: 'Done', cancel: null, noFocus: 1, html: html(), onOpen: el => el.addEventListener('change', e => { const k = e.target.dataset.hs; if (k) { UP.hs[k] = e.target.checked ? 1 : 0; pfSave() } }) });
+      await modal({ title: 'Home screen', icon: 'sliders', ok: 'Done', cancel: null, noFocus: 1, html: html() + `<button class="btn sec full" style="margin-top:14px" onclick="document.querySelector('.ov [data-o]').click();setTimeout(qaOpts,260)">${I('sliders', 16)} Customize shortcuts</button>`, onOpen: el => el.addEventListener('change', e => { const k = e.target.dataset.hs; if (k) { UP.hs[k] = e.target.checked ? 1 : 0; pfSave() } }) });
       if (S.tab == 'home') go('home', null, 1)
     }
     async function privOpts() {
@@ -3686,7 +3723,7 @@
     function calToday() { const n = new Date(); S.cm = { y: n.getFullYear(), m: n.getMonth() }; S.cd = isoD(n.getFullYear(), n.getMonth(), n.getDate()); go('cal', null, 1) }
     function pCal() {
       const n = new Date(), td = isoD(n.getFullYear(), n.getMonth(), n.getDate()); if (!S.cm) S.cm = { y: n.getFullYear(), m: n.getMonth() };
-      const { y, m } = S.cm, off = (new Date(y, m, 1).getDay() + 6) % 7, dim = new Date(y, m + 1, 0).getDate(), pd = new Date(y, m, 0).getDate(), by = {};
+      const { y, m } = S.cm, off = UP.ws == 'sun' ? new Date(y, m, 1).getDay() : (new Date(y, m, 1).getDay() + 6) % 7, dim = new Date(y, m + 1, 0).getDate(), pd = new Date(y, m, 0).getDate(), by = {};
       S.docs.forEach(d => { const x = nd(d.expiry); if (x) (by[x] = by[x] || []).push(d) });
       const sel = S.cd || (S.cm.y == n.getFullYear() && S.cm.m == n.getMonth() ? td : isoD(y, m, 1));
       let cells = ''; for (let i = 0; i < 42; i++) {
@@ -3700,7 +3737,7 @@
       const mdocs = S.docs.filter(d => { const x = nd(d.expiry); return x && x.slice(0, 7) == isoD(y, m, 1).slice(0, 7) }).sort((a, b) => nd(a.expiry).localeCompare(nd(b.expiry)));
       return `<button class="bk" onclick="go('home')">${I('left', 18)} Home</button><div class="ph"><h2>Calendar</h2><button class="btn sm sec" onclick="calToday()">Today</button></div>
   <div class="cal"><div class="calh"><button class="ib" onclick="calGo(-1)" aria-label="Previous month">${I('left', 18)}</button><b>${mon}</b><button class="ib" onclick="calGo(1)" aria-label="Next month"><span style="display:block;transform:rotate(180deg)">${I('left', 18)}</span></button></div>
-  <div class="calg">${['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map(w => `<div class="wd">${w}</div>`).join('')}${cells}</div>
+  <div class="calg">${(UP.ws == 'sun' ? ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'] : ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']).map(w => `<div class="wd">${w}</div>`).join('')}${cells}</div>
   <div class="cleg"><span><i style="background:var(--er)"></i>Expired</span><span><i style="background:var(--wn)"></i>Within 30 days</span><span><i style="background:var(--ok)"></i>Valid</span></div></div>
   <h3 class="h">${fd(sel)}</h3>${day.map(card).join('') || empty('No documents expire on this day', 'cal')}
   <h3 class="h">Expiring in ${new Date(y, m, 1).toLocaleDateString('en-IN', { month: 'long' })}</h3>${mdocs.map(card).join('') || empty('Nothing expires this month', 'check')}`
@@ -3764,13 +3801,322 @@
     }
     async function vOpts() {
       const html = () => `<div class="apx"><h4>Auto-lock after</h4><div class="seg c4">${[1, 3, 5, 15].map(m => `<button data-v="vlock:${m}" class="${UP.vlock == m ? 'on' : ''}">${m} min</button>`).join('')}</div>
-    <h4>Clear copied passwords from clipboard</h4><div class="seg c3">${[[0, 'Never'], [30, '30 sec'], [60, '60 sec']].map(m => `<button data-v="clip:${m[0]}" class="${UP.clip == m[0] ? 'on' : ''}">${m[1]}</button>`).join('')}</div></div>`;
-      await modal({ title: 'Vault settings', icon: 'sliders', ok: 'Done', cancel: null, noFocus: 1, html: '<div id="vo">' + html() + '</div>', onOpen: el => { const box = el.querySelector('#vo'); box.addEventListener('click', e => { const b = e.target.closest('[data-v]'); if (!b) return; const [k, v] = b.dataset.v.split(':'); UP[k] = +v; pfSave(); box.innerHTML = html(); vTouch() }) } })
+    <h4>Clear copied passwords from clipboard</h4><div class="seg c3">${[[0, 'Never'], [30, '30 sec'], [60, '60 sec']].map(m => `<button data-v="clip:${m[0]}" class="${UP.clip == m[0] ? 'on' : ''}">${m[1]}</button>`).join('')}</div>
+    <h4>Sort logins</h4><div class="seg c3">${[['az', 'A to Z'], ['new', 'Newest'], ['old', 'Oldest password']].map(m => `<button data-vs="${m[0]}" class="${UP.vsort == m[0] ? 'on' : ''}">${m[1]}</button>`).join('')}</div></div>
+    <div class="tgl" style="margin-top:12px"><div class="rb"><b>Lock when I leave the app</b><small>Lock the vault when the app goes to the background</small></div><label class="sw"><input type="checkbox" data-bg ${UP.vbg ? 'checked' : ''}><span></span></label></div>`;
+      await modal({ title: 'Vault settings', icon: 'sliders', ok: 'Done', cancel: null, noFocus: 1, html: '<div id="vo">' + html() + '</div>', onOpen: el => { const box = el.querySelector('#vo'); box.addEventListener('change', e => { if (e.target.dataset.bg !== undefined) { UP.vbg = e.target.checked ? 1 : 0; pfSave() } }); box.addEventListener('click', e => { const b = e.target.closest('[data-v],[data-vs]'); if (!b) return; if (b.dataset.vs) UP.vsort = b.dataset.vs; else { const [k, v] = b.dataset.v.split(':'); UP[k] = +v } pfSave(); box.innerHTML = html(); vTouch() }) } });
+      if (S.tab == 'vault') go('vault', null, 1)
     }
 
     function vHealthGo() { if (V.key) vHealth(); else { toast('Unlock the vault first', 'inf'); go('vault') } }
     customAc();
 
+    /* =====================================================================
+       v5.1 TOOLS HUB and extra options
+       ===================================================================== */
+    Object.assign(P, {
+      users: '<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.6-3.6 3.4-5.5 6.5-5.5s5.9 1.9 6.5 5.5M16 4.8a3.5 3.5 0 0 1 0 6.4M18 14.8c2 .6 3.2 2.3 3.5 5.2"/>',
+      checklist: '<path d="M4 6l1.5 1.5L8 5M4 12l1.5 1.5L8 11M4 18l1.5 1.5L8 17M11 6.5h9M11 12.5h9M11 18.5h9"/>',
+      calc: '<rect x="4" y="2.5" width="16" height="19" rx="3"/><path d="M8 7h8M8 12h.01M12 12h.01M16 12h.01M8 16h.01M12 16h.01M16 16h.01"/>',
+      sos: '<path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M12 8.5v4M12 15.5h.01"/>',
+      copy2: '<rect x="8" y="8" width="12" height="12" rx="2.5"/><path d="M16 8V6.5A2.5 2.5 0 0 0 13.5 4h-7A2.5 2.5 0 0 0 4 6.5v7A2.5 2.5 0 0 0 6.5 16H8"/>',
+      stick: '<path d="M5 4h14v11l-5 5H5z"/><path d="M14 20v-5h5M8 9h8M8 13h4"/>',
+      save: '<path d="M5 4h11l3 3v13H5z"/><path d="M8 4v5h7V4M8 20v-6h8v6"/>',
+      broom: '<path d="M14 3l7 7M13 8l-9 9 3 4 4 0 8-9M6 14l4 4"/>',
+      about: '<circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 7.5h.01"/>',
+      split: '<path d="M16 3h5v5M4 20L21 3M21 16v5h-5M15 15l6 6M4 4l5 5"/>',
+      clock2: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+      sparkle: '<path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8zM19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8z"/>'
+    });
+    Object.assign(UP_DEF, { df: 'short', ws: 'mon', ds: 'exp' });
+    ['df', 'ws', 'ds'].forEach(k => { if (UP[k] == null) UP[k] = UP_DEF[k] });
+    const DFS = { short: { day: 'numeric', month: 'short', year: 'numeric' }, long: { day: 'numeric', month: 'long', year: 'numeric' }, num: { day: '2-digit', month: '2-digit', year: 'numeric' } };
+    fd = x => { x = nd(x); if (!x) return ''; const [y, m, d] = x.split('-').map(Number); if (UP.df == 'iso') return x; return new Date(y, m - 1, d).toLocaleDateString('en-IN', DFS[UP.df] || DFS.short) };
+    S.so = UP.ds || 'exp';
+
+    const tile = (ic, t, s, fn, tone = '') => `<button class="tt ${tone}" onclick="${fn}"><span class="ti2">${I(ic, 22)}</span><b>${t}</b><small>${s}</small></button>`;
+    function pTools() {
+      const D = S.docs, bad2 = D.filter(bad).length;
+      return `<button class="bk" onclick="go('home')">${I('left', 18)} Home</button><div class="ph"><h2>Tools</h2></div>
+  <p class="t2" style="margin:-4px 0 6px">Everything extra in one place.</p>
+  <h3 class="h" style="margin-top:14px">Plan</h3><div class="tgrid">${tile('cal', 'Calendar', 'Expiry dates by day', "go('cal')") + tile('chart', 'Insights', 'Charts and totals', "go('ins')") + tile('clock2', 'Renewal planner', bad2 ? bad2 + ' need action' : 'Everything upcoming', 'renewPlan()') + tile('calc', 'Expiry calculator', 'Issue date to expiry', 'expCalc()') + tile('checklist', 'Document checklist', 'What you may be missing', 'missingDocs()') + tile('split', 'Duplicate finder', 'Same number or name', 'dupFinder()')}</div>
+  <h3 class="h">Quick access</h3><div class="tgrid">${tile('copy2', 'Number book', 'Copy any number fast', 'numBook()') + tile('sos', 'Emergency card', 'Blood group and contacts', 'emCard()') + tile('share', 'Share summary', 'Send expiring list', 'shareSum()') + tile('stick', 'Quick notes', 'Private scratchpad', 'quickNotes()') + tile('sliders', 'Home shortcuts', 'Choose your quick buttons', 'qaOpts()')}</div>
+  <h3 class="h">Vault</h3><div class="tgrid">${tile('dice', 'Password generator', 'Strong random passwords', 'vGenTool()') + tile('qr', 'Authenticator codes', 'Live 2FA codes', 'vAuthGo()') + tile('health', 'Password health', 'Weak, reused, old', 'vHealthGo()') + tile('key', 'Open vault', 'Folders and logins', "go('vault')") + tile('shield2', 'Recovery key', 'If you forget the password', 'vRecGo()')}</div>
+  <h3 class="h">Backup and export</h3><div class="tgrid">${tile('table', 'Export CSV', 'Open in Excel or Sheets', 'exportCSV()') + tile('download', 'Export all data', 'Full backup file', 'exportData()') + tile('cal', 'Calendar file', 'Add expiries to any calendar', 'exportICS()') + tile('save', 'Backup settings', 'Save or restore your theme', 'prefBackup()')}</div>
+  <h3 class="h">App</h3><div class="tgrid">${tile('sliders', 'General settings', 'Date format, sorting, week start', 'generalOpts()') + tile('palette', 'Appearance', 'Themes and colours', 'appearance()') + tile('broom', 'Refresh app', 'Clear cache, get latest UI', 'clearApp()') + tile('about', 'About', 'Version and tips', 'aboutApp()')}</div>`
+    }
+
+    const mdl = (t, ic, html, o = {}) => modal({ title: t, icon: ic, ok: o.ok || 'Done', cancel: null, noFocus: 1, wide: o.wide, html, onOpen: o.onOpen });
+    const ago = d => { const n = st(d.expiry)[2]; return n == 9e9 ? 'No expiry' : n < 0 ? Math.abs(n) + 'd late' : n == 0 ? 'Today' : n + 'd' };
+    async function renewPlan() {
+      const L = S.docs.filter(d => nd(d.expiry)).sort((a, b) => st(a.expiry)[2] - st(b.expiry)[2]).slice(0, 14);
+      const row = d => { const s = st(d.expiry), by = new Date(new Date(nd(d.expiry)).getTime() - 7 * 864e5), late = s[2] < 0; return `<button class="hs" data-id="${d.id}"><span class="vav" style="background:var(--${s[0]})">${esc(ago(d))}</span><div><b>${esc(d.title)}</b><small>${late ? 'Renew now' : 'Start renewal by ' + fd(ymd(by))}</small></div>${I('right', 18)}</button>` };
+      await mdl('Renewal planner', 'clock2', L.length ? `<p class="t2" style="margin-bottom:6px">Soonest first. Start about a week before the expiry date.</p>` + L.map(row).join('') : '<p class="mt">No documents have an expiry date yet.</p>', { wide: 1, onOpen: (el, c) => el.addEventListener('click', e => { const b = e.target.closest('.hs'); if (b) { c(null); setTimeout(() => view(b.dataset.id), 250) } }) })
+    }
+    async function expCalc() {
+      const t = ymd(new Date());
+      const html = `<div class="two"><div><span class="lb">Issue date</span><input id="ec_a" type="date" value="${t}"></div><div><span class="lb">Valid for</span><div class="two" style="gap:6px"><input id="ec_y" type="number" min="0" max="99" value="1" placeholder="Years"><input id="ec_m" type="number" min="0" max="11" value="0" placeholder="Months"></div></div></div>
+    <div class="res" id="ec_r"></div><hr class="hr"><b style="font-size:15px">Days between two dates</b><div class="two" style="margin-top:8px"><div><span class="lb">From</span><input id="ec_f" type="date" value="${t}"></div><div><span class="lb">To</span><input id="ec_t" type="date"></div></div><div class="res" id="ec_d"></div>`;
+      await mdl('Expiry calculator', 'calc', html, {
+        onOpen: el => {
+          const g = i => el.querySelector('#' + i), run = () => {
+            const a = g('ec_a').value, y = +g('ec_y').value || 0, m = +g('ec_m').value || 0;
+            if (a) { const d = new Date(a + 'T00:00:00'); d.setFullYear(d.getFullYear() + y); d.setMonth(d.getMonth() + m); d.setDate(d.getDate() - 1); g('ec_r').innerHTML = `Expires on <b>${fd(ymd(d))}</b><small>${st(ymd(d))[1]}</small>` } else g('ec_r').textContent = '';
+            const f = g('ec_f').value, to = g('ec_t').value; g('ec_d').innerHTML = f && to ? (() => { const n = Math.round((new Date(to) - new Date(f)) / 864e5); return `<b>${Math.abs(n)}</b> day${Math.abs(n) == 1 ? '' : 's'} ${n < 0 ? 'before' : 'after'}<small>about ${(Math.abs(n) / 30.44).toFixed(1)} months</small>` })() : ''
+          }; el.addEventListener('input', run); run()
+        }
+      })
+    }
+    const SUG = { person: ['Aadhaar', 'PAN', 'Passport', 'Driving', 'Voter', 'Health Insurance', 'Life Insurance', 'Birth Certificate', 'Ration', 'Bank Passbook'], vehicle: ['RC', 'Insurance', 'PUC', 'Fitness', 'Road Tax', 'Permit'] };
+    async function missingDocs() {
+      const has = (k, w, vid) => S.docs.some(d => d.kind == k && (!vid || d.vehicleId == vid) && (d.title + ' ' + (d.number || '')).toLowerCase().includes(w.toLowerCase()));
+      const row = (ok, t) => `<div class="tgl"><span class="vav" style="width:34px;height:34px;border-radius:50%;background:${ok ? 'var(--ok)' : 'color-mix(in srgb,var(--tx) 22%,transparent)'}">${ok ? I('check', 16) : ''}</span><div class="rb"><b>${esc(t)}</b></div><small class="t2">${ok ? 'Added' : 'Missing'}</small></div>`;
+      const p = SUG.person.map(w => row(has('person', w), w)).join(''), v = S.vs.map(x => `<div class="hsec" style="margin-top:12px">${esc(x.number)}</div>` + SUG.vehicle.map(w => row(has('vehicle', w, x.id), w)).join('')).join('');
+      const miss = SUG.person.filter(w => !has('person', w)).length + S.vs.reduce((a, x) => a + SUG.vehicle.filter(w => !has('vehicle', w, x.id)).length, 0);
+      const r = await modal({ title: 'Document checklist', icon: 'checklist', wide: 1, ok: miss ? 'Add document' : 'Done', cancel: miss ? 'Close' : null, noFocus: 1, html: `<p class="t2" style="margin-bottom:6px">${miss ? miss + ' common documents are not added yet.' : 'You have every common document.'}</p><div class="hsec">Personal</div>${p}${v}` });
+      if (r && miss) docForm()
+    }
+    async function dupFinder() {
+      const g = {}; S.docs.forEach(d => { const k = (d.number || '').replace(/\s+/g, '').toLowerCase() || ('t:' + d.title.toLowerCase() + '|' + (d.vehicleId || d.holder || '')); (g[k] = g[k] || []).push(d) });
+      const dups = Object.values(g).filter(a => a.length > 1);
+      await mdl('Duplicate finder', 'split', dups.length ? `<p class="t2" style="margin-bottom:6px">These look like the same document added more than once.</p>` + dups.map(a => a.map(card).join('') + '<hr class="hr">').join('') : '<p class="mt">No duplicates found. Your list is clean.</p>', { wide: 1 })
+    }
+    async function numBook() {
+      const L = S.docs.filter(d => d.number).sort((a, b) => a.title.localeCompare(b.title));
+      await mdl('Number book', 'copy2', L.length ? `<div class="srch" style="margin-bottom:8px">${I('search', 18)}<input id="nb_q" style="margin:0" placeholder="Search"></div><div id="nb_l">${L.map(d => `<div class="vrow" data-t="${esc((d.title + ' ' + d.number).toLowerCase())}"><div class="rb"><small>${esc(d.title)}${d.holder ? ' · ' + esc(d.holder) : ''}</small><b class="mono">${esc(d.number)}</b></div><button class="vib" data-n="${esc(d.number)}" aria-label="Copy number">${I('copy', 18)}</button></div>`).join('')}</div>` : '<p class="mt">No document numbers saved yet.</p>', {
+        wide: 1, onOpen: el => { el.addEventListener('click', e => { const b = e.target.closest('[data-n]'); if (b) vCopyTxt(b.dataset.n, 'Number') }); const q = el.querySelector('#nb_q'); q && q.addEventListener('input', () => el.querySelectorAll('#nb_l .vrow').forEach(r => r.style.display = r.dataset.t.includes(q.value.toLowerCase()) ? '' : 'none')) }
+      })
+    }
+    function emText() { const u = S.user; return ['EMERGENCY CARD', u.name, u.blood && 'Blood group: ' + u.blood, u.phone && 'Phone: ' + u.phone, u.emergency && 'Emergency contact: ' + u.emergency, u.address && 'Address: ' + u.address].filter(Boolean).join('\n') }
+    async function emCard() {
+      const u = S.user, r = (l, v) => v ? `<div class="vrow"><div class="rb"><small>${l}</small><b>${esc(v)}</b></div></div>` : '';
+      const ok = u.blood || u.emergency;
+      const x = await modal({ title: 'Emergency card', icon: 'sos', tone: 'er', ok: ok ? 'Share' : 'Edit profile', cancel: 'Close', noFocus: 1, html: ok ? `<div class="emc"><b>${esc(u.name)}</b>${u.blood ? `<span class="bg">${esc(u.blood)}</span>` : ''}</div>${r('Phone', u.phone)}${r('Emergency contact', u.emergency)}${r('Address', u.address)}` : '<p class="mt">Add your blood group and an emergency contact in your profile. They show here for quick access.</p>' });
+      if (!x) return; if (!ok) return prof(); shareTxt(emText(), 'Emergency card')
+    }
+    async function shareTxt(t, title) { try { if (navigator.share) { await navigator.share({ title, text: t }); return } } catch (e) { if (e.name == 'AbortError') return } vCopyTxt(t, 'Text') }
+    function shareSum() {
+      const A = S.docs.filter(bad).sort((a, b) => st(a.expiry)[2] - st(b.expiry)[2]);
+      if (!A.length) return toast('Nothing expiring soon', 'inf');
+      shareTxt('Documents needing attention\n' + A.map(d => '• ' + d.title + (d.number ? ' (' + mk(d.number) + ')' : '') + ': ' + st(d.expiry)[1]).join('\n'), 'Nexus Docs')
+    }
+    async function quickNotes() {
+      let t = ''; try { t = localStorage.nxn || '' } catch (e) { }
+      await mdl('Quick notes', 'stick', `<textarea id="qn" rows="9" placeholder="Jot anything. Saved only on this device." style="width:100%;resize:vertical">${esc(t)}</textarea><p class="t2" style="font-size:12.5px;margin-top:6px">Stays on this phone. Not synced and not encrypted. Do not store passwords here.</p>`, { onOpen: el => el.querySelector('#qn').addEventListener('input', e => { try { localStorage.nxn = e.target.value } catch (x) { } }) })
+    }
+    async function prefBackup() {
+      const k = await sheet('Backup settings', [{ k: 'ex', i: 'download', t: 'Save settings file', s: 'Theme, colours and options' }, { k: 'im', i: 'upload', t: 'Restore from file' }, { k: 'rs', i: 'refresh', t: 'Reset to defaults', s: 'Back to the Paper theme', cls: 'rd' }]);
+      if (k == 'ex') { dl2('nexus-settings.json', JSON.stringify({ ...UP, ac: localStorage.ac || 'blue', acc: localStorage.acc || '' }, null, 1), 'application/json'); toast('Settings saved') }
+      if (k == 'im') { const f = document.createElement('input'); f.type = 'file'; f.accept = '.json,application/json'; f.onchange = async () => { try { const o = JSON.parse(await f.files[0].text()); const { ac, acc, ...r } = o; Object.assign(UP, r); if (ac && AC[ac]) localStorage.ac = ac; if (acc) localStorage.acc = acc; customAc(); pfSave(); applyAc(); applyPrefs(); draw(); toast('Settings restored') } catch (e) { toast('That file is not a settings backup', 'er') } }; f.click() }
+      if (k == 'rs' && await confirmBox({ title: 'Reset appearance?', text: 'Theme, colours and options go back to default.', ok: 'Reset', icon: 'refresh' })) { Object.assign(UP, UP_DEF, { hs: { ...UP_DEF.hs } }); localStorage.ac = 'blue'; pfSave(); applyAc(); applyPrefs(); draw(); toast('Appearance reset') }
+    }
+    async function clearApp() {
+      if (!await confirmBox({ title: 'Refresh the app?', text: 'This clears the saved app files so the newest design loads. Your documents and login stay safe.', ok: 'Refresh', icon: 'refresh' })) return;
+      try { const r = await navigator.serviceWorker.getRegistrations(); await Promise.all(r.map(x => x.unregister())); const c = await caches.keys(); await Promise.all(c.map(x => caches.delete(x))) } catch (e) { }
+      location.reload()
+    }
+    async function aboutApp() {
+      await mdl('About Nexus Docs', 'about', `<div class="emc"><b>Nexus Docs</b><span class="bg">6.0</span></div><p class="t2" style="margin:10px 0">All your personal and vehicle documents in one secure place, with an end-to-end encrypted password vault.</p><div class="tgl"><div class="rb"><b>Documents</b></div><span>${S.docs.length}</span></div><div class="tgl"><div class="rb"><b>Vehicles</b></div><span>${S.vs.length}</span></div><div class="tgl"><div class="rb"><b>Files stored</b></div><span>${S.docs.reduce((a, d) => a + d.files.length, 0)}</span></div><div class="tgl"><div class="rb"><b>Offline mode</b></div><span>${S.off ? 'Offline now' : 'Online'}</span></div><h4 style="margin:14px 0 6px;font-size:14px">Tips</h4><p class="t2" style="font-size:13.5px;line-height:1.6">Long-press nothing is needed: tap the + button for a new document. Star a document to pin it on Home. Use Appearance for themes. The vault locks itself when you are idle.</p>`)
+    }
+    async function generalOpts() {
+      const seg = (k, a, c = '') => `<div class="seg ${c}">${a.map(x => `<button data-g="${k}:${x[0]}" class="${UP[k] == x[0] ? 'on' : ''}">${x[1]}</button>`).join('')}</div>`;
+      const html = () => `<div class="apx"><h4>Date format</h4>${seg('df', [['short', '18 Oct 2026'], ['long', '18 October 2026'], ['num', '18/10/2026'], ['iso', '2026-10-18']], 'c2')}<h4>Sort documents by default</h4>${seg('ds', [['exp', 'Expiry'], ['new', 'Newest'], ['az', 'A to Z'], ['holder', 'Holder']], 'c4')}<h4>Calendar week starts on</h4>${seg('ws', [['mon', 'Monday'], ['sun', 'Sunday']], 'c2')}</div>`;
+      await modal({ title: 'General settings', icon: 'sliders', ok: 'Done', cancel: null, noFocus: 1, html: '<div id="gs">' + html() + '</div>', onOpen: el => { const box = el.querySelector('#gs'); box.addEventListener('click', e => { const b = e.target.closest('[data-g]'); if (!b) return; const [k, v] = b.dataset.g.split(':'); UP[k] = v; if (k == 'ds') S.so = v; pfSave(); box.innerHTML = html() }) } });
+      go(S.tab, S.vid, 1)
+    }
+    Object.assign(VCAT, {});
+    ['Wi-Fi', 'Cards', 'Travel', 'Gaming', 'Finance', 'Health', 'Utilities'].forEach((c, i) => VCAT.splice(VCAT.length - 1, 0, [c, ['wifi', 'card', 'plane', 'game', 'coin', 'health', 'bolt'][i]]));
+    ['Card number', 'CVV', 'Wi-Fi password', 'Recovery email', 'Licence key', 'Account number'].forEach(n => VPRE.push([n, /CVV|password|Card/.test(n) ? 1 : 0]));
+    /* =====================================================================
+       v5.2: vault recovery, authenticator codes, import, shortcuts, bulk select
+       ===================================================================== */
+    Object.assign(P, { shield2: '<path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/>', qr: '<rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><path d="M14 14h3v3h-3zM20 14v.01M14 20h.01M17 20h4v-3"/>', hint: '<path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.7.6 1 1.3 1 2.1h5c0-.8.3-1.5 1-2.1A6 6 0 0 0 12 3z"/>', select: '<rect x="3" y="3" width="18" height="18" rx="5"/><path d="M8 12l3 3 5-6"/>', sort: '<path d="M7 4v16M3 16l4 4 4-4M17 20V4M13 8l4-4 4 4"/>' });
+    Object.assign(UP_DEF, { qa: ['add', 'veh', 'cal', 'ins', 'star', 'search', 'gen', 'tools'], dock: 'dark', lb: 0, stripe: 1, anim: 1, vsort: 'az', vbg: 0 });
+    ['qa', 'dock', 'lb', 'stripe', 'anim', 'vsort', 'vbg'].forEach(k => { if (UP[k] == null) UP[k] = UP_DEF[k] });
+    S.sel = new Set(); S.selm = 0; S.vis = [];
+
+    /* ---------- recovery key, hint ---------- */
+    const RA = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+    const recGen = () => Array.from({ length: 5 }, () => Array.from({ length: 5 }, () => vPick(RA)).join('')).join('-');
+    const recNorm = s => String(s || '').toUpperCase().replace(/[^A-Z0-9]/g, '');
+    async function recWrap(pw) { const key = recGen(), rs = vRand(16); return { key, rs: v2s(rs), rec: await vSeal(await vDerive(recNorm(key), rs), { pw }) } }
+    async function recShow(key) {
+      const txt = 'NEXUS DOCS VAULT RECOVERY KEY\n\n' + key + '\n\nKeep this somewhere safe, away from your phone. Anyone with this key and your account can open the vault.';
+      await modal({
+        title: 'Save your recovery key', icon: 'shield2', sticky: 1, ok: 'Continue', cancel: null, noFocus: 1,
+        html: `<p class="mt" style="margin-bottom:12px">If you forget your master password, this key opens the vault. It is shown <b>only once</b>. Write it on paper or save it in a safe place.</p><output class="reck">${key}</output>
+    <div class="vact" style="margin:10px 0 14px"><button class="btn sec sm" data-r="c">${I('copy', 16)} Copy</button><button class="btn sec sm" data-r="d">${I('download', 16)} Save file</button><button class="btn sec sm" data-r="s">${I('share', 16)} Share</button></div>
+    <label class="ck" style="display:block"><input type="checkbox" id="rk_ok"><span>I have saved my recovery key</span></label>`,
+        onOpen: el => el.addEventListener('click', e => { const b = e.target.closest('[data-r]'); if (!b) return; const k = b.dataset.r; if (k == 'c') vCopyTxt(key, 'Recovery key'); if (k == 'd') { dl2('nexus-vault-recovery-key.txt', txt, 'text/plain'); toast('Saved') } if (k == 's') shareTxt(txt, 'Recovery key') }),
+        pre: el => $('#rk_ok').checked ? true : fail(el, 'Tick the box after you have saved the key')
+      })
+    }
+    async function vSetup() {
+      const o = await modal({
+        title: 'Create master password', icon: 'key', sticky: 1, ok: 'Create vault', html: `
+    <p class="mt" style="margin-bottom:12px">This one password opens your vault. It is <b>never stored or sent anywhere</b>. If you forget it, only the <b>recovery key</b> you get in the next step can open the vault.</p>
+    <span class="lb">Master password</span>${vPw('vm_a', 'At least 8 characters', 'new-password')}
+    <span class="lb">Confirm master password</span>${vPw('vm_b', 'Type it again', 'new-password')}
+    <span class="lb">Hint (optional)</span><input id="vm_h" maxlength="60" placeholder="A clue only you understand" autocomplete="off"><small class="t2" style="font-size:12px">Do not write the password itself. The hint is not encrypted.</small>`,
+        pre: el => { const a = $('#vm_a').value; if (a.length < 8) return fail(el, 'Master password must be at least 8 characters'); if (a != $('#vm_b').value) return fail(el, 'Passwords do not match'); const h = $('#vm_h').value.trim(); if (h && h.toLowerCase().includes(a.toLowerCase())) return fail(el, 'The hint must not contain the password'); return { a, h } }
+      });
+      if (!o) return; let rk = '';
+      const ok = await busy(async () => {
+        const salt = vRand(16), k = await vDerive(o.a, salt), w = await recWrap(o.a), meta = { v: 1, salt: v2s(salt), chk: await vSeal(k, { ok: 1 }), rs: w.rs, rec: w.rec }; if (o.h) meta.hint = o.h; rk = w.key;
+        await api('vaultMeta', { meta: JSON.stringify(meta) }); V.meta = meta; V.key = k; V.ks = meta.salt; V.raw = []; V.items = []; vCache()
+      }, 'Creating vault…');
+      if (ok) { vTouch(); go('vault', null, 1); toast('Vault created'); await recShow(rk) }
+    }
+    async function vUnlock() {
+      const o = await modal({
+        title: 'Unlock vault', icon: 'lock', sticky: 1, ok: 'Unlock', html: `<span class="lb">Master password</span>${vPw('vm_a', 'Your master password', 'off')}<div class="hintbox" id="vu_h" style="display:none"></div><div class="ulinks">${V.meta.hint ? '<button type="button" data-u="hint">Show hint</button>' : ''}<button type="button" data-u="forgot">Forgot master password?</button></div>`,
+        pre: el => $('#vm_a').value || fail(el, 'Enter your master password'),
+        onOpen: (el, c) => el.addEventListener('click', e => { const b = e.target.closest('[data-u]'); if (!b) return; if (b.dataset.u == 'hint') { const h = el.querySelector('#vu_h'); h.style.display = 'block'; h.textContent = 'Hint: ' + V.meta.hint; b.remove() } else c('forgot') })
+      });
+      if (!o) return; if (o === 'forgot') return vForgot();
+      const ok = await busy(async () => {
+        const k = await vDerive(o, s2v(V.meta.salt));
+        try { await vOpen(k, V.meta.chk) } catch (e) { throw Error('Wrong master password') }
+        V.key = k; V.ks = V.meta.salt; await vDecryptAll()
+      }, 'Unlocking…');
+      if (ok) { vTouch(); go('vault', null, 1) }
+    }
+    async function vForgot() {
+      const m = V.meta, it = [];
+      if (m.rec) it.push({ k: 'rec', i: 'key', t: 'Use my recovery key', s: 'The 25-character key you saved' });
+      if (m.hint) it.push({ k: 'hint', i: 'hint', t: 'Show my hint' });
+      it.push({ k: 'why', i: 'info', t: 'Why can it not be reset by email?', s: 'The vault is locked on this phone' });
+      it.push({ k: 'rs', i: 'trash', t: 'Erase vault and start again', s: 'Deletes every saved login', cls: 'rd' });
+      const k = await sheet('Forgot master password', it);
+      if (k == 'rec') return vRecover();
+      if (k == 'hint') { await mdl('Your hint', 'hint', `<div class="hintbox" style="display:block;font-size:16px">${esc(m.hint)}</div>`); return vForgot() }
+      if (k == 'why') { await mdl('No reset by email', 'info', `<p class="mt">Your vault is encrypted with your master password before it leaves your phone. Nexus and the server only store scrambled data, so nobody, including us, can open it or reset it for you. That is what keeps it safe.</p><p class="mt" style="margin-top:10px">${m.rec ? 'Use your recovery key to get back in.' : 'This vault has no recovery key, so the only choice is to erase it and start again. After that, create a recovery key from the vault menu.'}</p>`); return vForgot() }
+      if (k == 'rs') vReset()
+    }
+    async function vRecover() {
+      const o = await modal({ title: 'Use recovery key', icon: 'key', sticky: 1, ok: 'Recover', html: `<p class="mt" style="margin-bottom:10px">Type the recovery key you saved when you created the vault.</p><input id="vr_k" placeholder="XXXXX-XXXXX-XXXXX-XXXXX-XXXXX" autocapitalize="characters" autocomplete="off" spellcheck="false" style="font-family:ui-monospace,Menlo,monospace;letter-spacing:1px">`, pre: el => recNorm($('#vr_k').value).length >= 25 ? recNorm($('#vr_k').value) : fail(el, 'Enter the full 25-character key') });
+      if (!o) return; let pw = '';
+      const ok = await busy(async () => {
+        try { pw = (await vOpen(await vDerive(o, s2v(V.meta.rs)), V.meta.rec)).pw } catch (e) { throw Error('That recovery key is not correct') }
+        const k = await vDerive(pw, s2v(V.meta.salt)); try { await vOpen(k, V.meta.chk) } catch (e) { throw Error('This key is outdated because the master password was changed later') }
+        V.key = k; V.ks = V.meta.salt; await vDecryptAll()
+      }, 'Checking key…');
+      if (!ok) return; vTouch(); go('vault', null, 1); toast('Vault unlocked');
+      if (await confirmBox({ title: 'Set a new master password?', text: 'You are in. Choose a new master password you can remember. You will also get a fresh recovery key.', ok: 'Change now', cancel: 'Later', icon: 'key' })) vChange(pw)
+    }
+    async function vChange(cur) {
+      const o = await modal({
+        title: 'Change master password', icon: 'key', sticky: 1, ok: 'Change', html: (cur ? '' : `<span class="lb">Current master password</span>${vPw('vm_a', 'Current', 'off')}`) + `<span class="lb">New master password</span>${vPw('vm_b', 'At least 8 characters', 'new-password')}<span class="lb">Confirm new password</span>${vPw('vm_c', 'Type it again', 'new-password')}`,
+        pre: el => { if (!cur && !$('#vm_a').value) return fail(el, 'Enter your current master password'); if ($('#vm_b').value.length < 8) return fail(el, 'New password must be at least 8 characters'); if ($('#vm_b').value != $('#vm_c').value) return fail(el, 'Passwords do not match'); return { a: cur || $('#vm_a').value, b: $('#vm_b').value } }
+      });
+      if (!o) return; let rk = '';
+      const ok = await busy(async () => {
+        const k0 = await vDerive(o.a, s2v(V.meta.salt)); try { await vOpen(k0, V.meta.chk) } catch (e) { throw Error('Current master password is wrong') }
+        const d = await api('vaultGet'); V.raw = d.items || []; await vDecryptAll();
+        const salt = vRand(16), k = await vDerive(o.b, salt), meta = { v: 1, salt: v2s(salt), chk: await vSeal(k, { ok: 1 }) }, items = [];
+        if (V.meta.hint) meta.hint = V.meta.hint;
+        if (V.meta.rec || cur) { const w = await recWrap(o.b); meta.rs = w.rs; meta.rec = w.rec; rk = w.key }
+        for (const it of V.items) { const { id, ...r } = it; items.push({ id, data: await vSeal(k, r) }) }
+        await api('vaultBulk', { meta: JSON.stringify(meta), items });
+        V.meta = meta; V.key = k; V.ks = meta.salt; V.raw = items; vCache()
+      }, 'Re-encrypting…');
+      if (ok) { toast('Master password changed'); if (rk) await recShow(rk) }
+    }
+    async function vRecSetup() {
+      const had = !!V.meta.rec;
+      const o = await modal({ title: had ? 'New recovery key' : 'Create recovery key', icon: 'shield2', sticky: 1, ok: 'Create key', html: `<p class="mt" style="margin-bottom:10px">${had ? 'This replaces your old recovery key. The old one stops working.' : 'A recovery key opens your vault if you forget the master password. You will see it once. Keep it safe, away from this phone.'}</p><span class="lb">Master password (to confirm)</span>${vPw('vm_a', 'Your master password', 'off')}`, pre: el => $('#vm_a').value || fail(el, 'Enter your master password') });
+      if (!o) return; let rk = '';
+      const ok = await busy(async () => {
+        const k = await vDerive(o, s2v(V.meta.salt)); try { await vOpen(k, V.meta.chk) } catch (e) { throw Error('Wrong master password') }
+        const w = await recWrap(o), meta = { ...V.meta, rs: w.rs, rec: w.rec }; rk = w.key; await api('vaultMeta', { meta: JSON.stringify(meta) }); V.meta = meta; vCache()
+      }, 'Creating key…');
+      if (ok) { go('vault', null, 1); await recShow(rk) }
+    }
+    async function vHint() {
+      const o = await modal({ title: 'Master password hint', icon: 'hint', sticky: 1, ok: 'Save', html: `<p class="mt" style="margin-bottom:10px">Shown on the unlock screen. It is <b>not encrypted</b>, so never write the password in it.</p><input id="vh" maxlength="60" placeholder="A clue only you understand" value="${esc(V.meta.hint || '')}" autocomplete="off">`, pre: () => ({ h: $('#vh').value.trim() }) });
+      if (!o) return;
+      if (await busy(async () => { const meta = { ...V.meta }; if (o.h) meta.hint = o.h; else delete meta.hint; await api('vaultMeta', { meta: JSON.stringify(meta) }); V.meta = meta; vCache() }, 'Saving…')) toast(o.h ? 'Hint saved' : 'Hint removed')
+    }
+    const vNag = () => V.meta && !V.meta.rec ? `<button class="nag" onclick="vRecSetup()">${I('shield2', 22)}<span><b>Set up a recovery key</b><small>Without it, a forgotten master password cannot be recovered</small></span>${I('right', 18)}</button>` : '';
+
+    /* ---------- authenticator codes (TOTP) ---------- */
+    const b32 = s => { const A = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567'; let b = 0, v = 0; const o = []; for (const c of String(s).replace(/[\s=]+/g, '').toUpperCase()) { const i = A.indexOf(c); if (i < 0) continue; v = ((v << 5) | i) & 0xfff; b += 5; if (b >= 8) { o.push((v >>> (b - 8)) & 255); b -= 8 } } return new Uint8Array(o) };
+    async function totp(sec, t = Date.now()) {
+      const k = await crypto.subtle.importKey('raw', b32(sec), { name: 'HMAC', hash: 'SHA-1' }, false, ['sign']); let c = Math.floor(t / 3e4); const m = new Uint8Array(8); for (let i = 7; i >= 0; i--) { m[i] = c & 255; c = Math.floor(c / 256) }
+      const h = new Uint8Array(await crypto.subtle.sign('HMAC', k, m)), o = h[19] & 15, n = (((h[o] & 127) << 24) | (h[o + 1] << 16) | (h[o + 2] << 8) | h[o + 3]) % 1e6; return String(n).padStart(6, '0')
+    }
+    function totpBind(box, sec) {
+      let last = '', cur = '';
+      const tick = async () => {
+        if (!document.body.contains(box)) return clearInterval(box._t);
+        const s = Math.floor(Date.now() / 1e3) % 30, left = 30 - s;
+        try { if (!cur || s == 0 || !last) { cur = await totp(sec); last = 1 } } catch (e) { box.innerHTML = '<small class="t2">Invalid 2FA key</small>'; return clearInterval(box._t) }
+        box.innerHTML = `<div class="tc"><span>${cur.slice(0, 3)} ${cur.slice(3)}</span><div class="tr" style="--p:${left / 30 * 100}"><i>${left}</i></div><button class="vib" aria-label="Copy code">${I('copy', 18)}</button></div>`;
+        box.querySelector('button').onclick = () => vCopyTxt(cur, 'Code'); if (s == 0) last = ''
+      };
+      tick(); box._t = setInterval(tick, 1000)
+    }
+    async function vAuth() {
+      const L = vLogins().filter(x => x.totp);
+      await mdl('Authenticator codes', 'qr', L.length ? L.map(x => `<div class="tcr"><div class="rb"><small>${esc(x.title)}</small><b>${esc(x.user || '')}</b></div><div class="tcb" data-s="${esc(x.totp)}"></div></div>`).join('') : '<p class="mt">No logins have a 2FA key yet. Open a login, tap Edit and paste the setup key from the website into "2FA secret key". Codes then appear here.</p>', { wide: 1, onOpen: el => el.querySelectorAll('.tcb').forEach(b => totpBind(b, b.dataset.s)) })
+    }
+
+    /* ---------- import logins from CSV ---------- */
+    function csvParse(t) {
+      const R = []; let r = [], f = '', q = 0; t = t.replace(/^﻿/, '');
+      for (let i = 0; i < t.length; i++) { const c = t[i]; if (q) { if (c == '"') { if (t[i + 1] == '"') { f += '"'; i++ } else q = 0 } else f += c } else if (c == '"') q = 1; else if (c == ',') { r.push(f); f = '' } else if (c == '\n' || c == '\r') { if (c == '\r' && t[i + 1] == '\n') i++; r.push(f); f = ''; if (r.some(x => x)) R.push(r); r = [] } else f += c }
+      r.push(f); if (r.some(x => x)) R.push(r); return R
+    }
+    async function vImport() {
+      const f = document.createElement('input'); f.type = 'file'; f.accept = '.csv,text/csv';
+      f.onchange = async () => {
+        const x = f.files[0]; if (!x) return; if (x.size > 2e6) return toast('File is too large', 'er');
+        const R = csvParse(await x.text()); if (R.length < 2) return toast('No rows found in that file', 'er');
+        const H = R[0].map(h => h.trim().toLowerCase()), ix = (...n) => H.findIndex(h => n.includes(h)), c = { f: ix('folder', 'grouping'), t: ix('name', 'title'), u: ix('url', 'login_uri', 'website', 'web site'), n: ix('username', 'login_username', 'user', 'login'), p: ix('password', 'login_password'), o: ix('note', 'notes', 'extra'), k: ix('category', 'type') };
+        if (c.t < 0 || c.p < 0) return toast('Could not find Name and Password columns', 'er');
+        const rows = R.slice(1).filter(r => (r[c.t] || r[c.p])), have = new Set(vLogins().map(i => (i.title + '|' + i.user).toLowerCase()));
+        const fresh = rows.filter(r => !have.has(((r[c.t] || '') + '|' + (c.n >= 0 ? r[c.n] || '' : '')).toLowerCase())).slice(0, 300);
+        if (!fresh.length) return toast('Everything in that file is already in your vault', 'inf');
+        if (!await confirmBox({ title: 'Import ' + fresh.length + ' login' + (fresh.length > 1 ? 's' : '') + '?', text: (rows.length - fresh.length ? (rows.length - fresh.length) + ' duplicate(s) will be skipped. ' : '') + 'They are encrypted on this phone before saving. Delete the CSV file afterwards.', ok: 'Import', icon: 'upload' })) return;
+        const ok = await busy(async () => {
+          const now = new Date().toISOString(), fol = {}; vFolders().forEach(z => fol[z.title.toLowerCase()] = z.id);
+          for (const r of fresh) {
+            let fid = ''; const fn = c.f >= 0 ? (r[c.f] || '').trim() : ''; if (fn) { if (!fol[fn.toLowerCase()]) fol[fn.toLowerCase()] = await vPut({ id: '', kind: 'folder', title: fn.slice(0, 40), created: now, updated: now }); fid = fol[fn.toLowerCase()] }
+            const cat = c.k >= 0 && VCAT.some(z => z[0] == r[c.k]) ? r[c.k] : 'Other';
+            await vPut({ id: '', title: (r[c.t] || 'Untitled').slice(0, 80), fid, cat, url: c.u >= 0 ? vUrl(r[c.u]) : '', user: c.n >= 0 ? r[c.n] || '' : '', pass: r[c.p] || '', notes: c.o >= 0 ? r[c.o] || '' : '', extra: [], fav: false, hist: [], created: now, updated: now, pwAt: now })
+          }
+        }, 'Importing…');
+        if (ok) { go('vault', null, 1); toast(fresh.length + ' logins imported') }
+      }; f.click()
+    }
+
+    /* ---------- home shortcuts ---------- */
+    const QA = { add: ['file', 'Add document', 'docForm()'], veh: ['car', 'Add vehicle', 'vehForm()'], cal: ['cal', 'Calendar', "go('cal')"], ins: ['chart', 'Insights', "go('ins')"], star: ['star', 'Starred', "S.fv=1;S.f='all';S.st='all';go('docs')"], search: ['search', 'Search', "S.q='';go('docs');setTimeout(()=>{const i=document.querySelector('.srch input');i&&i.focus()},80)"], gen: ['dice', 'Generator', 'vGenTool()'], tools: ['sparkle', 'All tools', "go('tools')"], plan: ['clock2', 'Renewals', 'renewPlan()'], num: ['copy2', 'Numbers', 'numBook()'], em: ['sos', 'Emergency', 'emCard()'], csv: ['table', 'Export CSV', 'exportCSV()'], ics: ['download', 'Calendar file', 'exportICS()'], vault: ['key', 'Vault', "go('vault')"], auth: ['qr', 'Codes', 'vAuthGo()'], health: ['health', 'Pw health', 'vHealthGo()'], note: ['stick', 'Notes', 'quickNotes()'], share: ['share', 'Share list', 'shareSum()'], calc: ['calc', 'Calculator', 'expCalc()'], check: ['checklist', 'Checklist', 'missingDocs()'], app: ['palette', 'Appearance', 'appearance()'], me: ['user', 'Profile', "go('me')"] };
+    const qaHtml = () => UP.qa.filter(k => QA[k]).map(k => `<button onclick="${QA[k][2]}">${I(QA[k][0], 24)}<span>${QA[k][1]}</span></button>`).join('');
+    function vRecGo() { if (V.key) vRecSetup(); else { toast('Unlock the vault first', 'inf'); go('vault') } }
+    function vAuthGo() { if (V.key) vAuth(); else { toast('Unlock the vault first', 'inf'); go('vault') } }
+    async function qaOpts() {
+      const html = () => `<p class="t2" style="margin-bottom:8px">Choose the shortcuts on Home. They show in the order you switch them on.</p>` + Object.keys(QA).map(k => `<div class="tgl"><span class="ti2" style="width:36px;height:36px;border-radius:12px;display:grid;place-items:center;background:color-mix(in srgb,var(--ac) 12%,var(--sf));color:var(--ac)">${I(QA[k][0], 18)}</span><div class="rb"><b>${QA[k][1]}</b></div><label class="sw"><input type="checkbox" data-q="${k}" ${UP.qa.includes(k) ? 'checked' : ''}><span></span></label></div>`).join('');
+      await modal({ title: 'Home shortcuts', icon: 'sliders', ok: 'Done', cancel: null, noFocus: 1, html: '<div id="qo">' + html() + '</div><button class="btn sec full" id="qo_r" style="margin-top:14px">Reset to default</button>', onOpen: el => { const box = el.querySelector('#qo'); box.addEventListener('change', e => { const k = e.target.dataset.q; if (!k) return; if (e.target.checked) { if (UP.qa.length >= 16) { e.target.checked = false; return toast('Up to 16 shortcuts', 'inf') } UP.qa.push(k) } else UP.qa = UP.qa.filter(z => z != k); pfSave() }); el.querySelector('#qo_r').onclick = () => { UP.qa = UP_DEF.qa.slice(); pfSave(); box.innerHTML = html(); toast('Shortcuts reset', 'inf') } } });
+      if (S.tab == 'home') go('home', null, 1)
+    }
+
+    /* ---------- bulk select ---------- */
+    function selT(id) { S.sel.has(id) ? S.sel.delete(id) : S.sel.add(id); go('docs', null, 1) }
+    function selMode(on) { S.selm = on ? 1 : 0; S.sel.clear(); go('docs', null, 1) }
+    function selAll() { const all = S.vis.every(i => S.sel.has(i)); S.vis.forEach(i => all ? S.sel.delete(i) : S.sel.add(i)); go('docs', null, 1) }
+    const selDocs = () => S.docs.filter(d => S.sel.has(d.id));
+    async function bulkStar() {
+      const L = selDocs(); if (!L.length) return; const v = !L.every(d => d.fav);
+      if (await busy(async () => { for (const d of L) if (!!d.fav != v) await api('toggleFav', { id: d.id, fav: v }); await sync() }, 'Updating…')) { toast(v ? 'Starred ' + L.length : 'Stars removed'); S.sel.clear(); draw() }
+    }
+    async function bulkDel() {
+      const L = selDocs(); if (!L.length) return;
+      if (!await confirmBox({ title: 'Delete ' + L.length + ' document' + (L.length > 1 ? 's' : '') + '?', text: 'All their files will be removed permanently.', ok: 'Delete', danger: 1, icon: 'trash' })) return;
+      if (await busy(async () => { for (const d of L) await api('deleteDoc', { id: d.id }); await sync() }, 'Deleting…')) { toast(L.length + ' deleted'); S.sel.clear(); S.selm = 0; draw() }
+    }
+    function bulkBar() { return S.selm ? `<div class="bulk"><b>${S.sel.size} selected</b><button onclick="selAll()">All</button><button onclick="bulkStar()" aria-label="Star">${I('star', 18)}</button><button onclick="exportCSV()" aria-label="Export">${I('table', 18)}</button><button onclick="bulkDel()" aria-label="Delete" style="color:#ff7b8a">${I('trash', 18)}</button><button onclick="selMode(0)" class="on">Done</button></div>` : '' }
+    document.addEventListener('visibilitychange', () => { if (UP.vbg && document.hidden && V.key) vLock(1) });
     /* ---------- INIT ---------- */
     applyPrefs();
     setTimeout(hideSplash, 7000);
