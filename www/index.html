@@ -2841,7 +2841,7 @@
         try { await sync() } catch (e) { if (!S.token) return; hideSplash(); $('#main').innerHTML = `<div class="card" style="text-align:center">${I('alert', 32)}<h3 style="margin:10px 0 6px">Could not load your data</h3><p class="t2" style="margin-bottom:16px">${esc(e.message)}</p><button class="btn" onclick="load('sk')">Try again</button></div>`; return }
       }
       else if (!await busy(sync)) return;
-      S.day = ymd(new Date()); chrome(); go(S.tab, S.vid); hideSplash(); if (Q == 'doc') { Q = ''; docForm() }
+      S.day = ymd(new Date()); chrome(); go(S.tab, S.vid); hideSplash(); if (Q == 'doc') { Q = ''; docForm() }; setTimeout(checkUpdate, 2500)
     }
     function go(t, v, keep) { if (t != 'docs' && S.selm) { S.selm = 0; S.sel.clear() } S.tab = t; S.vid = v || null; document.querySelectorAll('[data-n]').forEach(b => b.classList.toggle('on', b.dataset.n == (HL[t] || t))); const m = $('#main'); m.innerHTML = ({ home: pHome, docs: pDocs, veh: pVeh, vault: pVault, me: pMe, cal: pCal, ins: pIns, tools: pTools })[t](); if (!keep) { m.style.animation = 'none'; m.offsetHeight; m.style.animation = ''; scrollTo(0, 0) } }
 
@@ -2935,10 +2935,10 @@
   <h3 class="h">Personal information</h3><div class="card grp">${R('user', 'Full name', u.name) + R('mail', 'Email', u.email) + R('phone', 'Phone', u.phone) + R('cal', 'Date of birth', u.dob ? fd(u.dob) : '') + R('drop', 'Blood group', u.blood) + R('pin', 'Address', u.address) + R('phone', 'Emergency contact', u.emergency)}</div>
   <h3 class="h">Appearance</h3><div class="card grp">${A('palette', 'Theme and colours', prefSummary(), 'appearance()')}${A('sliders', 'General settings', 'Date format, sorting, week start', 'generalOpts()')}${A('sliders', 'Home screen', 'Choose which sections to show', 'homeOpts()')}${A('eye2', 'Privacy', UP.mask ? 'Document numbers hidden' : 'Numbers, vault lock, clipboard', 'privOpts()')}</div>
   <h3 class="h">Tools</h3><div class="card grp">${A('sparkle', 'All tools', 'Planner, checklist, notes, backup and more', "go('tools')")}${A('cal', 'Expiry calendar', 'See every renewal by date', "go('cal')")}${A('chart', 'Insights', 'Charts about your documents', "go('ins')")}${A('dice', 'Password generator', 'Strong random passwords', 'vGenTool()')}${A('health', 'Password health', 'Weak, reused and old logins', 'vHealthGo()')}</div>
-  <h3 class="h">Preferences</h3><div class="card grp">${standalone() ? '' : A('download', 'Install app', 'Add Nexus Docs to your home screen', 'installApp()')}
+  <h3 class="h">Preferences</h3><div class="card grp">${A('refresh', 'Check for updates', 'Version ' + verTxt(), 'checkUpdate(1)')}${standalone() ? '' : A('download', 'Install app', 'Add Nexus Docs to your home screen', 'installApp()')}
     <div class="row"><div class="ri">${I('bell', 20)}</div><div class="rb"><b>Email reminders</b><small>Sent by email every morning at 8 AM</small></div><label class="sw"><input type="checkbox" ${u.remind ? 'checked' : ''} onchange="tgRem(this)"><span></span></label></div>${notifRow()}${A('bell', 'Reminder timing', rdTxt(), 'remDays()')}<div class="row"><div class="ri">${I('lock', 20)}</div><div class="rb"><b>App lock</b><small>Ask for a 4-digit PIN when the app opens</small></div><label class="sw"><input type="checkbox" ${localStorage.nxpin ? 'checked' : ''} onchange="tgLock(this)"><span></span></label></div></div>
   <h3 class="h">Security &amp; data</h3><div class="card grp">${A('lock', 'Change password', 'Update your account password', 'chPw()') + A('devices', 'Logout from all devices', 'End every active session', 'logAll()') + A('download', 'Export my data', 'Download all your details as a file', 'exportData()') + A('table', 'Export documents (CSV)', 'Open in Excel or Google Sheets', 'exportCSV()') + A('cal', 'Add expiry dates to calendar', 'Download an .ics file for any calendar app', 'exportICS()')}</div>
-  <h3 class="h">Account</h3><div class="card grp">${A('logout', 'Logout', 'Sign out from this device', 'logout()') + A('trash', 'Delete account', 'Permanently remove all your data', 'delAcc()', 'rd')}</div><p class="t2" style="text-align:center;font-size:12.5px;margin:18px 0 4px">Nexus Docs · UI version 6.0.1</p>`}
+  <h3 class="h">Account</h3><div class="card grp">${A('logout', 'Logout', 'Sign out from this device', 'logout()') + A('trash', 'Delete account', 'Permanently remove all your data', 'delAcc()', 'rd')}</div><p class="t2" style="text-align:center;font-size:12.5px;margin:18px 0 4px">Nexus Docs · UI version 6.0.1 · build ${verTxt()}</p>`}
 
     /* ---------- PROFILE ACTIONS ---------- */
     const sq = f => new Promise((r, j) => { const i = new Image(); i.onload = () => { const m = Math.min(i.width, i.height), c = document.createElement('canvas'); c.width = c.height = 480; c.getContext('2d').drawImage(i, (i.width - m) / 2, (i.height - m) / 2, m, m, 0, 0, 480, 480); URL.revokeObjectURL(i.src); r(c.toDataURL('image/jpeg', .88).split(',')[1]) }; i.onerror = () => j(Error('Could not read this image')); i.src = URL.createObjectURL(f) });
@@ -4254,6 +4254,47 @@ function fitText() {
   addEventListener('resize', run);
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(run);
 })();
+    /* ---------- app update check ----------
+       Every deploy stamps the git commit id into APP_VER (see .github/workflows/pages.yml) and writes the same id to version.json.
+       If version.json differs from APP_VER, a newer version is live. "Later" is remembered per version, so the popup returns only for the next commit. */
+    const APP_VER = '__APP_VERSION__';
+    const VER_OK = /^[0-9a-f]{6,}$/i.test(APP_VER);
+    const verTxt = () => VER_OK ? APP_VER.slice(0, 7) : 'dev';
+    let UBUSY = 0, ULAST = 0;
+    async function applyUpdate() {
+      loader('Updating…');
+      try {
+        const r = await fetch(location.pathname, { cache: 'reload' }); if (!r.ok) throw 0; /* refresh the browser's saved copy of the page */
+        try { const rg = await navigator.serviceWorker.getRegistrations(); await Promise.all(rg.map(x => x.unregister())); const c = await caches.keys(); await Promise.all(c.map(x => caches.delete(x))) } catch (e) { }
+        location.reload()
+      } catch (e) {
+        unload(); try { localStorage.removeItem('nxskip') } catch (x) { }
+        alertBox('Could not download the update. Check your internet and try again.', 'Update failed')
+      }
+    }
+    async function checkUpdate(manual) {
+      if (UBUSY) return;
+      if (!VER_OK) { if (manual === 1) toast('Development build. Updates are checked on the live app only', 'inf'); return }
+      if (manual !== 1 && (!S.user || !navigator.onLine || $('#lk.on') || MS.length || $('#vw.on') || Date.now() - ULAST < 6e5)) return;
+      UBUSY = 1;
+      try {
+        const r = await fetch('version.json?_=' + Date.now(), { cache: 'no-store' }); if (!r.ok) throw 0;
+        const j = await r.json(), v = String(j.v || ''); ULAST = Date.now(); if (!v) throw 0;
+        if (v === APP_VER) { if (manual === 1) toast('You are on the latest version'); return }
+        let skip = ''; try { skip = localStorage.nxskip || '' } catch (e) { }
+        if (manual !== 1 && skip === v) return;
+        const o = await modal({
+          title: 'New update available', icon: 'download', sticky: 1, ok: 'Update now', cancel: 'Later', noFocus: 1,
+          html: `<p class="mt">A newer version of Nexus Docs is ready.</p>${j.msg ? `<div class="res" style="display:block"><small style="margin:0 0 2px">What's new</small>${esc(j.msg)}</div>` : ''}<p class="t2" style="font-size:12.5px;margin-top:10px">Version ${esc(verTxt())} &rarr; ${esc(v.slice(0, 7))}</p>`
+        });
+        try { localStorage.nxskip = v } catch (e) { } /* Later or Update: do not ask again for this version */
+        if (o) await applyUpdate()
+      } catch (e) { if (manual === 1) toast('Could not check for updates', 'er') }
+      finally { UBUSY = 0 }
+    }
+    document.addEventListener('visibilitychange', () => { if (!document.hidden) setTimeout(checkUpdate, 1500) });
+    setInterval(checkUpdate, 9e5);
+
     /* ---------- INIT ---------- */
     applyPrefs();
     setTimeout(hideSplash, 7000);
