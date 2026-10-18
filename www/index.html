@@ -2569,6 +2569,11 @@
     .hs .vav { min-width: 54px; width: auto; padding: 0 8px; font-size: 12px }
     @media(min-width:900px) { .tabs { display: none } }
     .brand { background: color-mix(in srgb, var(--ac) 9%, var(--bg)) }
+    html, body { max-width: 100%; overflow-x: hidden }
+    main, .gh, .ph, .ph h2, .pfi, .pfi h2, .in, .rb { min-width: 0 }
+    .gh h2 { font-size: clamp(26px, 9.5vw, 40px); overflow-wrap: anywhere; word-break: break-word; hyphens: auto }
+    .ph h2, .pfi h2, .in b, .idc b, .tt b, .emc b, .hero h2, .side b { overflow-wrap: anywhere; word-break: break-word }
+    .tb b { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0 }
     .wallet { scroll-padding-left: 16px }
     .wgrid .idc { aspect-ratio: auto; min-height: 168px }
     .wgrid .idc b { margin-top: 16px }
@@ -2875,7 +2880,7 @@
   <h3 class="h">Preferences</h3><div class="card grp">${standalone() ? '' : A('download', 'Install app', 'Add Nexus Docs to your home screen', 'installApp()')}
     <div class="row"><div class="ri">${I('bell', 20)}</div><div class="rb"><b>Email reminders</b><small>Sent by email every morning at 8 AM</small></div><label class="sw"><input type="checkbox" ${u.remind ? 'checked' : ''} onchange="tgRem(this)"><span></span></label></div>${notifRow()}${A('bell', 'Reminder timing', rdTxt(), 'remDays()')}<div class="row"><div class="ri">${I('lock', 20)}</div><div class="rb"><b>App lock</b><small>Ask for a 4-digit PIN when the app opens</small></div><label class="sw"><input type="checkbox" ${localStorage.nxpin ? 'checked' : ''} onchange="tgLock(this)"><span></span></label></div></div>
   <h3 class="h">Security &amp; data</h3><div class="card grp">${A('lock', 'Change password', 'Update your account password', 'chPw()') + A('devices', 'Logout from all devices', 'End every active session', 'logAll()') + A('download', 'Export my data', 'Download all your details as a file', 'exportData()') + A('table', 'Export documents (CSV)', 'Open in Excel or Google Sheets', 'exportCSV()') + A('cal', 'Add expiry dates to calendar', 'Download an .ics file for any calendar app', 'exportICS()')}</div>
-  <h3 class="h">Account</h3><div class="card grp">${A('logout', 'Logout', 'Sign out from this device', 'logout()') + A('trash', 'Delete account', 'Permanently remove all your data', 'delAcc()', 'rd')}</div><p class="t2" style="text-align:center;font-size:12.5px;margin:18px 0 4px">Nexus Docs · UI version 6.0</p>`}
+  <h3 class="h">Account</h3><div class="card grp">${A('logout', 'Logout', 'Sign out from this device', 'logout()') + A('trash', 'Delete account', 'Permanently remove all your data', 'delAcc()', 'rd')}</div><p class="t2" style="text-align:center;font-size:12.5px;margin:18px 0 4px">Nexus Docs · UI version 6.0.1</p>`}
 
     /* ---------- PROFILE ACTIONS ---------- */
     const sq = f => new Promise((r, j) => { const i = new Image(); i.onload = () => { const m = Math.min(i.width, i.height), c = document.createElement('canvas'); c.width = c.height = 480; c.getContext('2d').drawImage(i, (i.width - m) / 2, (i.height - m) / 2, m, m, 0, 0, 480, 480); URL.revokeObjectURL(i.src); r(c.toDataURL('image/jpeg', .88).split(',')[1]) }; i.onerror = () => j(Error('Could not read this image')); i.src = URL.createObjectURL(f) });
