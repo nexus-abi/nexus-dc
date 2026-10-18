@@ -2934,7 +2934,7 @@
   ${pc < 100 ? `<div class="card" style="margin-bottom:14px"><div style="display:flex;justify-content:space-between"><b>Complete your profile</b><b style="color:var(--ac)">${pc}%</b></div><div class="pg2"><i style="width:${pc}%"></i></div><small>Add your ${miss.slice(0, 3).join(', ')}${miss.length > 3 ? ' and more' : ''} to finish.</small></div>` : ''}
   <h3 class="h">Personal information</h3><div class="card grp">${R('user', 'Full name', u.name) + R('mail', 'Email', u.email) + R('phone', 'Phone', u.phone) + R('cal', 'Date of birth', u.dob ? fd(u.dob) : '') + R('drop', 'Blood group', u.blood) + R('pin', 'Address', u.address) + R('phone', 'Emergency contact', u.emergency)}</div>
   <h3 class="h">Appearance</h3><div class="card grp">${A('palette', 'Theme and colours', prefSummary(), 'appearance()')}${A('sliders', 'General settings', 'Date format, sorting, week start', 'generalOpts()')}${A('sliders', 'Home screen', 'Choose which sections to show', 'homeOpts()')}${A('eye2', 'Privacy', UP.mask ? 'Document numbers hidden' : 'Numbers, vault lock, clipboard', 'privOpts()')}</div>
-  <h3 class="h">Tools</h3><div class="card grp">${A('sparkle', 'All tools', 'Planner, checklist, notes, backup and more', "go('tools')")}${A('cal', 'Expiry calendar', 'See every renewal by date', "go('cal')")}${A('chart', 'Insights', 'Charts about your documents', "go('ins')")}${A('dice', 'Password generator', 'Strong random passwords', 'vGenTool()')}${A('health', 'Password health', 'Weak, reused and old logins', 'vHealthGo()')}${A('code', 'Developer', 'About the developer and contact', 'devInfo()')}</div>
+  <h3 class="h">Tools</h3><div class="card grp">${A('sparkle', 'All tools', 'Planner, checklist, notes, backup and more', "go('tools')")}${A('cal', 'Expiry calendar', 'See every renewal by date', "go('cal')")}${A('chart', 'Insights', 'Charts about your documents', "go('ins')")}${A('dice', 'Password generator', 'Strong random passwords', 'vGenTool()')}${A('health', 'Password health', 'Weak, reused and old logins', 'vHealthGo()')}</div>
   <h3 class="h">Preferences</h3><div class="card grp">${A('refresh', 'Check for updates', 'Version ' + verTxt(), 'checkUpdate(1)')}${standalone() ? '' : A('download', 'Install app', 'Add Nexus Docs to your home screen', 'installApp()')}
     <div class="row"><div class="ri">${I('bell', 20)}</div><div class="rb"><b>Email reminders</b><small>Sent by email every morning at 8 AM</small></div><label class="sw"><input type="checkbox" ${u.remind ? 'checked' : ''} onchange="tgRem(this)"><span></span></label></div>${notifRow()}${A('bell', 'Reminder timing', rdTxt(), 'remDays()')}<div class="row"><div class="ri">${I('lock', 20)}</div><div class="rb"><b>App lock</b><small>Ask for a 4-digit PIN when the app opens</small></div><label class="sw"><input type="checkbox" ${localStorage.nxpin ? 'checked' : ''} onchange="tgLock(this)"><span></span></label></div></div>
   <h3 class="h">Security &amp; data</h3><div class="card grp">${A('lock', 'Change password', 'Update your account password', 'chPw()') + A('devices', 'Logout from all devices', 'End every active session', 'logAll()') + A('download', 'Export my data', 'Download all your details as a file', 'exportData()') + A('table', 'Export documents (CSV)', 'Open in Excel or Google Sheets', 'exportCSV()') + A('cal', 'Add expiry dates to calendar', 'Download an .ics file for any calendar app', 'exportICS()')}</div>
@@ -3964,7 +3964,7 @@
   <h3 class="h">Quick access</h3><div class="tgrid">${tile('copy2', 'Number book', 'Copy any number fast', 'numBook()') + tile('sos', 'Emergency card', 'Blood group and contacts', 'emCard()') + tile('share', 'Share summary', 'Send expiring list', 'shareSum()') + tile('stick', 'Quick notes', 'Private scratchpad', 'quickNotes()') + tile('sliders', 'Home shortcuts', 'Choose your quick buttons', 'qaOpts()')}</div>
   <h3 class="h">Vault</h3><div class="tgrid">${tile('dice', 'Password generator', 'Strong random passwords', 'vGenTool()') + tile('qr', 'Authenticator codes', 'Live 2FA codes', 'vAuthGo()') + tile('health', 'Password health', 'Weak, reused, old', 'vHealthGo()') + tile('key', 'Open vault', 'Folders and logins', "go('vault')") + tile('shield2', 'Recovery key', 'If you forget the password', 'vRecGo()')}</div>
   <h3 class="h">Backup and export</h3><div class="tgrid">${tile('table', 'Export CSV', 'Open in Excel or Sheets', 'exportCSV()') + tile('download', 'Export all data', 'Full backup file', 'exportData()') + tile('cal', 'Calendar file', 'Add expiries to any calendar', 'exportICS()') + tile('save', 'Backup settings', 'Save or restore your theme', 'prefBackup()')}</div>
-  <h3 class="h">App</h3><div class="tgrid">${tile('sliders', 'General settings', 'Date format, sorting, week start', 'generalOpts()') + tile('palette', 'Appearance', 'Themes and colours', 'appearance()') + tile('refresh', 'App update', 'Version ' + verTxt() + ' · check now', 'checkUpdate(1)') + tile('broom', 'Clear cache', 'Reload the latest UI', 'clearApp()') + tile('about', 'About', 'Version and tips', 'aboutApp()') + tile('code', 'Developer', 'Contact and app info', 'devInfo()')}</div>`
+  <h3 class="h">App</h3><div class="tgrid">${tile('sliders', 'General settings', 'Date format, sorting, week start', 'generalOpts()') + tile('palette', 'Appearance', 'Themes and colours', 'appearance()') + tile('broom', 'New updates', 'Clear cache, get latest UI', 'clearApp()') + tile('about', 'About', 'Version and tips', 'aboutApp()')}</div>`
     }
 
     const mdl = (t, ic, html, o = {}) => modal({ title: t, icon: ic, ok: o.ok || 'Done', cancel: null, noFocus: 1, wide: o.wide, html, onOpen: o.onOpen });
@@ -4254,89 +4254,46 @@ function fitText() {
   addEventListener('resize', run);
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(run);
 })();
-    /* ---------- DEVELOPER DETAILS ---------- */
-    const DEV = {
-      name: "ABISHEK",
-      role: "Developer & Designer",
-      about: "I built Nexus Docs to keep every important document safe and never miss a renewal.",
-      location: "TAMIL NADU , TIRUNELVELI",
-      email: "abishek14off@gmail.com",
-      phone: "",
-      website: "https://abishek-babi.netlify.app/",
-      github: "",
-      linkedin: "",
-      instagram: "abishek_babi"
-    };
-    Object.assign(P, { code: '<path d="M8 7l-5 5 5 5M16 7l5 5-5 5M14 4l-4 16"/>' });
-    const devUrl = (k, v) => {
-      v = String(v || '').trim(); if (!v) return '';
-      if (k == 'email') return 'mailto:' + v;
-      if (k == 'phone') return 'tel:' + v.replace(/[^\d+]/g, '');
-      if (/^https?:\/\//i.test(v)) return v;
-      const b = { github: 'https://github.com/', linkedin: 'https://www.linkedin.com/in/', instagram: 'https://instagram.com/' }[k];
-      return b ? b + v.replace(/^@/, '') : 'https://' + v
-    };
-
-    /* ---------- APP UPDATE CHECK ---------- */
+    /* ---------- app update check ----------
+       Every deploy stamps the git commit id into APP_VER (see .github/workflows/pages.yml) and writes the same id to version.json.
+       If version.json differs from APP_VER, a newer version is live. "Later" is remembered per version, so the popup returns only for the next commit. */
     const APP_VER = '__APP_VERSION__';
     const VER_OK = /^[0-9a-f]{6,}$/i.test(APP_VER);
     const verTxt = () => VER_OK ? APP_VER.slice(0, 7) : 'dev';
-    let UBUSY = 0, ULAST = 0, UL = null;
-
-    async function latestVer() {
-      const r = await fetch('version.json?_=' + Date.now(), { cache: 'no-store' }); if (!r.ok) throw 0;
-      const j = await r.json(); if (!j || !j.v) throw 0; return j
-    }
-    async function applyUpdate(v) {
+    let UBUSY = 0, ULAST = 0;
+    async function applyUpdate() {
       loader('Updating…');
       try {
+        const r = await fetch(location.pathname, { cache: 'reload' }); if (!r.ok) throw 0; /* refresh the browser's saved copy of the page */
         try { const rg = await navigator.serviceWorker.getRegistrations(); await Promise.all(rg.map(x => x.unregister())); const c = await caches.keys(); await Promise.all(c.map(x => caches.delete(x))) } catch (e) { }
-        try { localStorage.nxwant = v } catch (e) { }
-        location.replace(location.pathname + '?u=' + encodeURIComponent(String(v).slice(0, 12)) + '&t=' + Date.now())
-      } catch (e) { unload(); alertBox('Could not download the update. Check your internet and try again.', 'Update failed') }
+        location.reload()
+      } catch (e) {
+        unload(); try { localStorage.removeItem('nxskip') } catch (x) { }
+        alertBox('Could not download the update. Check your internet and try again.', 'Update failed')
+      }
     }
     async function checkUpdate(manual) {
       if (UBUSY) return;
-      if (!VER_OK) { if (manual === 1) toast('This copy has no version stamp. Updates work only on the deployed site', 'inf'); return }
+      if (!VER_OK) { if (manual === 1) toast('Development build. Updates are checked on the live app only', 'inf'); return }
       if (manual !== 1 && (!S.user || !navigator.onLine || $('#lk.on') || MS.length || $('#vw.on') || Date.now() - ULAST < 6e5)) return;
-      UBUSY = 1; if (manual === 1) loader('Checking for updates…');
+      UBUSY = 1;
       try {
-        const j = await latestVer(), v = String(j.v); ULAST = Date.now(); UL = j; if (manual === 1) unload();
-        if (v === APP_VER) { if (manual === 1) toast('You are on the latest version (' + verTxt() + ')'); return }
+        const r = await fetch('version.json?_=' + Date.now(), { cache: 'no-store' }); if (!r.ok) throw 0;
+        const j = await r.json(), v = String(j.v || ''); ULAST = Date.now(); if (!v) throw 0;
+        if (v === APP_VER) { if (manual === 1) toast('You are on the latest version'); return }
         let skip = ''; try { skip = localStorage.nxskip || '' } catch (e) { }
         if (manual !== 1 && skip === v) return;
         const o = await modal({
           title: 'New update available', icon: 'download', sticky: 1, ok: 'Update now', cancel: 'Later', noFocus: 1,
           html: `<p class="mt">A newer version of Nexus Docs is ready.</p>${j.msg ? `<div class="res" style="display:block"><small style="margin:0 0 2px">What's new</small>${esc(j.msg)}</div>` : ''}<p class="t2" style="font-size:12.5px;margin-top:10px">Version ${esc(verTxt())} &rarr; ${esc(v.slice(0, 7))}</p>`
         });
-        if (o) await applyUpdate(v); else { try { localStorage.nxskip = v } catch (e) { } }
-      } catch (e) { unload(); if (manual === 1) toast('Could not check for updates', 'er') }
+        try { localStorage.nxskip = v } catch (e) { } /* Later or Update: do not ask again for this version */
+        if (o) await applyUpdate()
+      } catch (e) { if (manual === 1) toast('Could not check for updates', 'er') }
       finally { UBUSY = 0 }
     }
     document.addEventListener('visibilitychange', () => { if (!document.hidden) setTimeout(checkUpdate, 1500) });
     setInterval(checkUpdate, 9e5);
-
-    /* ---------- DEVELOPER PAGE ---------- */
-    async function devInfo() {
-      if (!UL && VER_OK && navigator.onLine) { try { UL = await latestVer() } catch (e) { } }
-      const L = [['email', 'mail', 'Email', DEV.email], ['phone', 'phone', 'Phone', DEV.phone], ['website', 'globe', 'Website', DEV.website], ['github', 'code', 'GitHub', DEV.github], ['linkedin', 'users', 'LinkedIn', DEV.linkedin], ['instagram', 'camera', 'Instagram', DEV.instagram]].filter(x => x[3]);
-      const row = x => `<div class="vrow"><div class="ri">${I(x[1], 20)}</div><div class="rb"><small>${x[2]}</small><b>${esc(x[3])}</b></div><a class="vib" href="${esc(devUrl(x[0], x[3]))}" target="_blank" rel="noopener noreferrer" aria-label="Open ${x[2]}">${I('ext', 18)}</a><button class="vib" data-cp="${esc(x[3])}" aria-label="Copy ${x[2]}">${I('copy', 18)}</button></div>`;
-      const kv = (k, v) => `<div class="tgl"><div class="rb"><b>${k}</b></div><span class="t2">${esc(v)}</span></div>`;
-      const fb = DEV.email ? `mailto:${DEV.email}?subject=${encodeURIComponent('Nexus Docs feedback (' + verTxt() + ')')}` : '';
-      await mdl('Developer', 'code', `
-    <div style="text-align:center;margin:4px 0 14px"><div class="av xl" style="margin:0 auto 10px">${esc((DEV.name || '?')[0].toUpperCase())}</div><h3 style="font-size:22px">${esc(DEV.name)}</h3><p class="t2">${esc(DEV.role)}</p>${DEV.location ? `<small class="t2">${I('pin', 12)} ${esc(DEV.location)}</small>` : ''}</div>
-    ${DEV.about ? `<p class="mt" style="margin-bottom:8px">${esc(DEV.about)}</p>` : ''}
-    ${L.map(row).join('')}
-    <h4 style="margin:16px 0 4px;font-size:14px">App</h4>
-    ${kv('Installed version', verTxt()) + kv('Latest version', UL ? String(UL.v).slice(0, 7) : 'Not checked') + (UL && UL.time ? kv('Last deployed', new Date(UL.time).toLocaleString('en-IN', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' })) : '')}
-    <div class="vact"><button class="btn sec sm" data-a="upd">${I('refresh', 16)} Check for updates</button>${fb ? `<a class="btn sm" href="${esc(fb)}">${I('mail', 16)} Send feedback</a>` : ''}</div>
-    <p class="t2" style="text-align:center;font-size:12.5px;margin-top:14px">Made with ${I('heart', 12)} by ${esc(DEV.name)}</p>`, {
-        wide: 1, onOpen: (el, close) => el.addEventListener('click', e => {
-          const c = e.target.closest('[data-cp]'); if (c) return vCopyTxt(c.dataset.cp, 'Detail');
-          if (e.target.closest('[data-a=upd]')) { close(null); setTimeout(() => checkUpdate(1), 250) }
-        })
-      })
-    }
 
     /* ---------- INIT ---------- */
     applyPrefs();
@@ -4346,7 +4303,6 @@ function fitText() {
     if (Q == 'expiring' || Q == 'veh') { S.tab = Q == 'veh' ? 'veh' : 'docs'; Q = '' }
     if (!Q && ['docs', 'vault'].includes(UP.start)) S.tab = UP.start;
     try { history.replaceState(null, '', location.pathname) } catch (e) { }
-    try { const w = localStorage.nxwant; if (w) { localStorage.removeItem('nxwant'); localStorage.removeItem('nxskip'); if (VER_OK) setTimeout(() => toast(w === APP_VER ? 'Updated to ' + verTxt() : 'Update is still deploying. Try again in a minute', w === APP_VER ? 'ok' : 'inf'), 3000) } } catch (e) { }
     S.token ? load('sk') : authView('login');
     if (S.token && localStorage.nxpin) lockNow();
   </script>
