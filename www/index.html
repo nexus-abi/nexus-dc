@@ -17,7 +17,7 @@
   <meta name="description"
     content="Keep all personal and vehicle documents in one secure place, with expiry reminders.">
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Figtree:wght@400..800&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..700&family=Figtree:wght@400..800&display=swap">
   <style>
     :root {
       --bg: #f4f6fb;
@@ -1986,8 +1986,8 @@
     .vpre button { padding: 6px 11px; border-radius: 16px; border: 1.5px dashed var(--bd); font-size: 12.5px; font-weight: 600; color: var(--t2) }
 
     /* =====================================================================
-       v5 "WALLET" DESIGN: soft tinted canvas, big rounded tiles, pill nav,
-       display type for numbers and titles. Accent colour drives the whole UI.
+       v6 DESIGN LAYER: tinted canvas, big rounded tiles, stacked nav, display type.
+       Everything is driven by variables so the Appearance screen can restyle the app.
        ===================================================================== */
     :root {
       --bg: color-mix(in srgb, var(--ac) 5%, #f4f5f9);
@@ -2000,8 +2000,11 @@
       --wn: #d97706;
       --er: #e0364a;
       --fd: "Bricolage Grotesque", "Figtree", Inter, system-ui, sans-serif;
+      --fb: Figtree, Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
       --sh: 0 1px 2px #10142010, 0 12px 28px -16px #1014203a;
       --sh2: 0 24px 56px -20px #10142066, 0 4px 12px #1014201a;
+      --rc: 26px; --rt: 28px; --rb: 999px; --ri: 16px; --rm: 30px; --rs: 14px; --rq: 19px;
+      --zm: 1;
       color-scheme: light
     }
 
@@ -2017,41 +2020,53 @@
       color-scheme: dark
     }
 
-    body { font-family: Figtree, Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; font-size: 15.5px; line-height: 1.45; -webkit-font-smoothing: antialiased }
+    [data-t=dark][data-b="1"] { --bg: #000; --sf: #0c0d11; --bd: #1b1d25; --hd: #000 }
+    [data-r=soft] { --rc: 18px; --rt: 20px; --rb: 14px; --ri: 12px; --rm: 22px; --rs: 11px; --rq: 14px }
+    [data-r=sharp] { --rc: 8px; --rt: 10px; --rb: 8px; --ri: 8px; --rm: 12px; --rs: 8px; --rq: 10px }
+    [data-f=system] { --fd: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; --fb: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif }
+    [data-f=classic] { --fd: Georgia, "Iowan Old Style", "Palatino Linotype", "Times New Roman", serif }
+
+    body { font-family: var(--fb); font-size: 15.5px; line-height: 1.45; -webkit-font-smoothing: antialiased }
+    main { zoom: var(--zm) }
     h1, h2, h3 { font-family: var(--fd); letter-spacing: -.03em; font-weight: 700 }
     b { font-weight: 650 }
     :focus-visible { outline: 2px solid var(--ac); outline-offset: 2px; border-radius: 10px }
     input:focus-visible, select:focus-visible, textarea:focus-visible { outline: 0 }
 
     /* ---- controls ---- */
-    .card { border: 0; border-radius: 26px; padding: 20px; box-shadow: var(--sh) }
-    input, select, textarea { background: color-mix(in srgb, var(--tx) 5%, var(--sf)); border: 1.5px solid transparent; border-radius: 16px; padding: 14px 16px }
+    .card { border: 0; border-radius: var(--rc); padding: 20px; box-shadow: var(--sh) }
+    input, select, textarea { background: color-mix(in srgb, var(--tx) 5%, var(--sf)); border: 1.5px solid transparent; border-radius: var(--ri); padding: 14px 16px }
     input:hover, select:hover, textarea:hover { background: color-mix(in srgb, var(--tx) 7%, var(--sf)) }
     input:focus, select:focus, textarea:focus { background: var(--sf); border-color: var(--ac); box-shadow: 0 0 0 4px color-mix(in srgb, var(--ac) 16%, transparent) }
+    input[type=file] { padding: 9px 10px; font-size: 14px; color: var(--t2) }
+    input[type=file]::file-selector-button { margin-right: 12px; border: 0; border-radius: var(--rb); padding: 9px 16px; background: var(--ac); color: #fff; font: inherit; font-size: 14px; font-weight: 650; cursor: pointer }
+    input[type=range] { padding: 0; height: 28px; background: none; border: 0; accent-color: var(--ac) }
+    input[type=color] { padding: 4px; height: 48px; cursor: pointer }
     .lb { font-size: 13px; font-weight: 650; color: var(--t2); margin-bottom: 6px }
-    .btn { border-radius: 999px; background: var(--ac); padding: 14px 24px; font-weight: 650; letter-spacing: -.005em; box-shadow: 0 14px 24px -14px color-mix(in srgb, var(--ac) 90%, #000) }
+    .btn { border-radius: var(--rb); background: var(--ac); padding: 14px 24px; font-weight: 650; letter-spacing: -.005em; box-shadow: 0 14px 24px -14px color-mix(in srgb, var(--ac) 90%, #000) }
     .btn:hover { filter: brightness(1.07) }
-    .btn.sm { padding: 9px 17px; border-radius: 999px }
+    .btn.sm { padding: 9px 17px }
     .btn.sec { background: color-mix(in srgb, var(--tx) 7%, transparent); color: var(--tx); border: 0; box-shadow: none }
     .btn.sec:hover { filter: none; background: color-mix(in srgb, var(--tx) 11%, transparent) }
     .btn.dg { background: var(--er); box-shadow: 0 14px 24px -14px var(--er) }
-    .ib { border-radius: 50%; background: color-mix(in srgb, var(--tx) 7%, transparent); border: 0; width: 36px; height: 36px }
-    .star { border-radius: 50%; background: color-mix(in srgb, var(--tx) 7%, transparent); width: 36px; height: 36px }
+    .ib, .star { border-radius: 50%; background: color-mix(in srgb, var(--tx) 7%, transparent); border: 0; width: 36px; height: 36px }
     .chips { gap: 8px; margin-bottom: 14px }
-    .chip { border: 0; border-radius: 999px; background: var(--sf); box-shadow: var(--sh); padding: 9px 17px; font-weight: 650; font-size: 14px }
-    .chip { display: inline-flex; align-items: center; gap: 6px }
+    .chip { display: inline-flex; align-items: center; gap: 6px; border: 0; border-radius: var(--rb); background: var(--sf); box-shadow: var(--sh); padding: 9px 17px; font-weight: 650; font-size: 14px }
     .chip.on { background: var(--tx); color: var(--bg) }
-    .seg { background: color-mix(in srgb, var(--tx) 7%, transparent); border-radius: 999px }
-    .seg button { border-radius: 999px }
+    .seg { background: color-mix(in srgb, var(--tx) 7%, transparent); border-radius: var(--rb) }
+    .seg.c3 { grid-template-columns: repeat(3, 1fr) }
+    .seg.c4 { grid-template-columns: repeat(4, 1fr) }
+    .seg button { border-radius: var(--rb); font-size: 14px }
     .seg .on { background: var(--sf); color: var(--tx); box-shadow: var(--sh) }
-    .bd { border-radius: 999px; padding: 4px 11px; font-weight: 650; font-size: 12.5px; display: inline-flex; align-items: center }
+    .bd { border-radius: var(--rb); padding: 4px 11px; font-weight: 650; font-size: 12.5px; display: inline-flex; align-items: center }
     .bd.er::before, .bd.wn::before, .bd.ok::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; margin-right: 6px }
     .er { background: color-mix(in srgb, var(--er) 13%, transparent) }
     .wn { background: color-mix(in srgb, var(--wn) 15%, transparent) }
     .ok { background: color-mix(in srgb, var(--ok) 13%, transparent) }
-    .vb, .vtag { border-radius: 999px }
-    .empty { border: 2px dashed var(--bd); border-radius: 26px; background: transparent }
+    .vb, .vtag { border-radius: var(--rb) }
+    .empty { border: 2px dashed var(--bd); border-radius: var(--rc); background: transparent }
     .bk { font-weight: 650 }
+    .two { gap: 12px }
 
     /* ---- sign in / splash / pin lock ---- */
     #sp, #lk { background: radial-gradient(120% 70% at 50% 0%, color-mix(in srgb, var(--ac) 60%, #0b0e1a), #0b0e1a 70%) }
@@ -2064,37 +2079,40 @@
     @media(min-width:900px) { .brand h1 { font-size: 64px } .brand { padding: 72px } }
 
     /* ---- top cap: stays dark so the Android status icons stay readable ---- */
-    .tb { background: var(--hd); border-radius: 0 0 26px 26px; box-shadow: none; padding-bottom: 14px }
+    .tb { background: var(--hd); border-radius: 0 0 var(--rc) var(--rc); box-shadow: none; padding-bottom: 14px }
     .tb b { font-family: var(--fd); font-size: 19px; letter-spacing: -.035em; font-weight: 700 }
     .tb .ib { background: #ffffff1a; color: #fff }
 
-    /* ---- bottom navigation: active item expands into a pill ---- */
-    .tabs { left: 0; right: 0; bottom: 0; max-width: none; margin: 0; gap: 2px; border: 0; border-radius: 28px 28px 0 0; background: var(--sf); box-shadow: 0 -14px 34px -16px #10142030; padding: 10px 12px calc(10px + var(--sab)) }
-    .tabs button { flex-direction: row; gap: 8px; padding: 11px 14px; border-radius: 999px; font-size: 14px; font-weight: 650; color: var(--t2); transition: background .2s, color .2s }
-    .tabs button span { display: none }
-    .tabs button.on { background: color-mix(in srgb, var(--ac) 14%, transparent); color: var(--ac) }
-    .tabs button.on span { display: inline }
-    .tabs .plus { width: 54px; height: 54px; padding: 0; border-radius: 50%; background: var(--tx); color: var(--bg); margin-top: -30px; border: 5px solid var(--bg); box-shadow: var(--sh2) }
+    /* ---- bottom navigation: five equal slots, active slot gets a pill, + floats on the right ---- */
+    .tabs { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0; left: 0; right: 0; bottom: 0; max-width: none; margin: 0; border: 0; border-radius: var(--rc) var(--rc) 0 0; background: var(--sf); box-shadow: 0 -14px 34px -16px #10142030; padding: 8px 8px calc(8px + var(--sab)) }
+    .tabs button { position: relative; flex-direction: column; justify-content: flex-start; align-items: center; gap: 3px; padding: 8px 0 6px; font-size: 11px; font-weight: 650; color: var(--t2); border-radius: var(--rs); transition: color .2s }
+    .tabs button span { display: block; font-size: 11px; font-weight: 650; letter-spacing: .005em }
+    .tabs button .i { position: relative; z-index: 1 }
+    .tabs button::before { content: ""; position: absolute; top: 4px; left: 50%; width: 56px; height: 32px; margin-left: -28px; border-radius: var(--rb); background: color-mix(in srgb, var(--ac) 15%, transparent); opacity: 0; transform: scaleX(.4); transition: opacity .2s, transform .25s }
+    .tabs button.on { color: var(--ac) }
+    .tabs button.on::before { opacity: 1; transform: none }
+    .tabs .plus { position: absolute; right: 16px; top: -74px; width: 58px; height: 58px; padding: 0; border-radius: var(--rq); background: var(--ac); color: #fff; margin: 0; border: 0; justify-content: center; box-shadow: 0 18px 30px -12px color-mix(in srgb, var(--ac) 90%, #000), 0 2px 6px #10142030 }
+    .tabs .plus::before { display: none }
 
     /* ---- desktop sidebar ---- */
     .side { background: var(--sf); border-right: 0; box-shadow: 1px 0 0 var(--bd) }
-    .side nav button { border-radius: 999px; font-weight: 650; font-size: 15px }
+    .side nav button { border-radius: var(--rb); font-weight: 650; font-size: 15px }
     .side nav button.on { background: color-mix(in srgb, var(--ac) 13%, transparent); color: var(--ac) }
-    .side nav button.on span { display: inline }
-    .side .me { color: var(--tx); font-size: 14px; font-weight: 600; background: var(--bg); border: 0; border-radius: 20px }
+    .side nav button::before { display: none }
+    .side .me { color: var(--tx); font-size: 14px; font-weight: 600; background: var(--bg); border: 0; border-radius: var(--rc) }
     .side .me small { color: var(--t2); font-weight: 500 }
 
     /* ---- page titles ---- */
-    .ph h2 { font-size: 36px; letter-spacing: -.05em; font-weight: 750 }
+    .ph { gap: 12px }
+    .ph h2 { font-size: 36px; letter-spacing: -.05em; font-weight: 750; min-width: 0; overflow-wrap: anywhere }
     .h { font-family: var(--fd); font-size: 19px; font-weight: 650; letter-spacing: -.03em; color: var(--tx); text-transform: none; margin: 28px 0 12px }
 
     /* ---- home: greeting + bento tiles ---- */
     .gh { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin: 6px 0 20px }
     .gh small { font-size: 15px; color: var(--t2); font-weight: 500 }
     .gh h2 { font-size: 38px; line-height: 1; letter-spacing: -.055em; font-weight: 750; margin-top: 4px }
-    .gh .av { width: 56px; height: 56px; font-size: 22px; border: 0; box-shadow: 0 0 0 4px var(--sf) }
     .bento { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 18px }
-    .bt { position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: flex-end; gap: 2px; min-height: 124px; padding: 16px 18px; border-radius: 28px; background: var(--sf); box-shadow: var(--sh); text-align: left }
+    .bt { position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: flex-end; gap: 2px; min-height: 124px; padding: 16px 18px; border-radius: var(--rt); background: var(--sf); box-shadow: var(--sh); text-align: left }
     .bt b { font-family: var(--fd); font-size: 46px; line-height: .95; letter-spacing: -.06em; font-weight: 750 }
     .bt small { font-size: 13.5px; font-weight: 650; color: var(--t2) }
     .bt .ti { position: absolute; top: 14px; right: 14px; width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; background: color-mix(in srgb, var(--sf) 70%, transparent) }
@@ -2118,89 +2136,107 @@
     /* quick actions: one scrolling row of pills */
     .qa { display: flex; gap: 8px; overflow-x: auto; margin: 0 -16px 6px; padding: 4px 16px 10px; scrollbar-width: none }
     .qa::-webkit-scrollbar { display: none }
-    .qa button { flex: none; flex-direction: row; gap: 8px; padding: 11px 17px; border: 0; border-radius: 999px; background: var(--sf); box-shadow: 0 1px 2px #10142018; color: var(--ac); transition: transform .1s }
+    .qa button { flex: none; flex-direction: row; gap: 8px; padding: 11px 17px; border: 0; border-radius: var(--rb); background: var(--sf); box-shadow: 0 1px 2px #10142018; color: var(--ac); transition: transform .1s }
     .qa button .i { width: 18px; height: 18px }
     .qa span { font-size: 14px; font-weight: 650; color: var(--tx); white-space: nowrap }
     @media(min-width:900px) { .qa { margin: 0 0 6px; padding: 4px 0 10px; flex-wrap: wrap } }
+    /* vehicle page actions: three equal buttons */
+    .hero.vh + .qa { display: grid; grid-template-columns: repeat(3, 1fr); overflow: visible; margin: 12px 0 4px; padding: 0 }
+    .hero.vh + .qa button { flex-direction: column; justify-content: center; gap: 6px; padding: 14px 4px; border-radius: var(--rc) }
+    .hero.vh + .qa .i { width: 22px; height: 22px }
+    .hero.vh + .qa span { font-size: 13px }
 
     /* summary tiles on the profile page */
     .stats { gap: 10px }
-    .st { border: 0; border-radius: 22px; padding: 16px 8px 14px; box-shadow: var(--sh); background: var(--sf) }
+    .st { border: 0; border-radius: var(--rq); padding: 16px 6px 14px; box-shadow: var(--sh); background: var(--sf); display: flex; flex-direction: column; align-items: center; justify-content: flex-start; gap: 4px }
     .st b { font-family: var(--fd); font-size: 32px; letter-spacing: -.06em; font-weight: 750; line-height: 1 }
-    .st small { font-size: 12.5px; font-weight: 600; margin-top: 4px; display: block }
+    .st small { font-size: 12.5px; font-weight: 600; margin: 0; display: block; line-height: 1.2; min-height: 2.4em }
     .st.wn, .st.er, .st.ok { background: var(--sf) }
 
     /* ---- document and vehicle cards: tinted by status ---- */
-    .dc, .vc { border: 0; border-radius: 26px; padding: 14px 16px 14px 14px; gap: 14px; box-shadow: var(--sh); transition: transform .15s, box-shadow .15s }
+    .dc, .vc { border: 0; border-radius: var(--rc); padding: 14px 16px 14px 14px; gap: 14px; box-shadow: var(--sh); transition: transform .15s, box-shadow .15s }
     .dc:hover, .vc:hover { transform: translateY(-1px); box-shadow: var(--sh2) }
     .dc[data-s=er] { background: color-mix(in srgb, var(--er) 8%, var(--sf)) }
     .dc[data-s=wn] { background: color-mix(in srgb, var(--wn) 9%, var(--sf)) }
-    .ic, .vp { width: 54px; height: 54px; border-radius: 19px; background: color-mix(in srgb, var(--ac) 14%, var(--sf)) }
+    [data-card=plain] .dc[data-s] { background: var(--sf) }
+    .ic, .vp { width: 54px; height: 54px; border-radius: var(--rq); background: color-mix(in srgb, var(--ac) 14%, var(--sf)) }
     .ic.er { background: color-mix(in srgb, var(--er) 16%, var(--sf)) }
     .ic.wn { background: color-mix(in srgb, var(--wn) 18%, var(--sf)) }
     .ic.ok { background: color-mix(in srgb, var(--ok) 15%, var(--sf)) }
-    .vp { width: 62px; height: 62px; border-radius: 20px }
+    .vp { width: 62px; height: 62px }
     .in b { font-family: var(--fd); font-size: 17px; letter-spacing: -.025em; font-weight: 650 }
     .in small { font-size: 13.5px; margin: 3px 0 7px }
     .rt { font-size: 12px; font-weight: 600 }
+    [data-d=compact] .dc, [data-d=compact] .vc { padding: 9px 12px 9px 10px; gap: 11px; margin-bottom: 7px }
+    [data-d=compact] .ic, [data-d=compact] .vp { width: 44px; height: 44px }
+    [data-d=compact] .in small { margin: 1px 0 4px }
+    [data-d=compact] .bt { min-height: 100px; padding: 13px 15px }
+    [data-d=compact] .bt.big { min-height: 140px }
+    [data-d=compact] .h { margin: 20px 0 8px }
+    [data-d=compact] .card { padding: 15px }
+    [data-d=compact] .row { padding: 9px 0 }
 
-    /* hero (vehicle details) and profile cover */
-    .hero { border-radius: 28px; box-shadow: 0 26px 40px -26px color-mix(in srgb, var(--ac) 85%, #000) }
+    /* hero (vehicle details) and profile */
+    .hero { border-radius: var(--rt); box-shadow: 0 26px 40px -26px color-mix(in srgb, var(--ac) 85%, #000) }
     .hero h2 { font-size: 30px; letter-spacing: -.05em }
     .hero .btn { background: #fff; color: #10131c; box-shadow: none }
-    .cover { border-radius: 26px 26px 0 0 }
-    .pfc { border-radius: 26px; padding: 0 }
+    .cover { border-radius: var(--rc) var(--rc) 0 0 }
+    .pfc, .card.pfc { border-radius: var(--rc); padding: 0 }
+    .pfh { flex-direction: column; align-items: center; text-align: center; gap: 12px; padding: 0 20px 22px; margin-top: -58px }
+    .pfi { padding-top: 0; min-width: 0; width: 100% }
+    .pfi h2 { justify-content: center; font-size: 24px }
+    .pfi small { margin-top: 2px }
+    .avw { margin: 0 auto }
     .pg2 { height: 8px }
 
     /* settings rows */
     .grp { padding: 4px 18px }
     .row { padding: 14px 0 }
-    .ri { border-radius: 14px; background: color-mix(in srgb, var(--ac) 12%, var(--sf)) }
+    .ri { border-radius: var(--rs); background: color-mix(in srgb, var(--ac) 12%, var(--sf)) }
     .row.rd .ri { background: color-mix(in srgb, var(--er) 14%, var(--sf)) }
     .sw span { background: color-mix(in srgb, var(--tx) 18%, var(--bg)) }
+    .sw input:checked + span { background: var(--ac) }
 
     /* upload */
-    .drop, .slot { border-radius: 20px; border-width: 1.5px }
+    .drop, .slot { border-radius: var(--rq); border-width: 1.5px }
     .slot.has { border-color: var(--bd) }
-    .sl-b button { border-radius: 999px }
-    .fi { border-radius: 14px }
-    .ck span { border: 0; border-radius: 14px; background: color-mix(in srgb, var(--tx) 6%, var(--sf)) }
+    .sl-b button { border-radius: var(--rb) }
+    .fi { border-radius: var(--rs) }
+    .ck span { border: 0; border-radius: var(--rs); background: color-mix(in srgb, var(--tx) 6%, var(--sf)) }
+    .pv { align-items: center }
 
     /* ---- sheets, dialogs, toast ---- */
     .ov { background: #070a14a8; -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px) }
-    .md { border-radius: 30px; box-shadow: var(--sh2) }
+    .md { border-radius: var(--rm); box-shadow: var(--sh2) }
     .mh h3 { font-size: 21px; letter-spacing: -.04em }
-    .mi { border-radius: 16px; background: color-mix(in srgb, var(--ac) 13%, var(--sf)) }
+    .mi { border-radius: var(--rs); background: color-mix(in srgb, var(--ac) 13%, var(--sf)) }
     .mi.er { background: color-mix(in srgb, var(--er) 14%, var(--sf)) }
     .mi.wn { background: color-mix(in srgb, var(--wn) 16%, var(--sf)) }
     .mx { border-radius: 50%; background: color-mix(in srgb, var(--tx) 7%, transparent) }
-    .me { border-radius: 14px; background: color-mix(in srgb, var(--er) 11%, transparent) }
-    .si { border-radius: 18px }
-    .to { border-radius: 999px; padding: 12px 20px; box-shadow: var(--sh2) }
-    .lc { border-radius: 26px; box-shadow: var(--sh2) }
+    .me { border-radius: var(--rs); background: color-mix(in srgb, var(--er) 11%, transparent) }
+    .si { border-radius: var(--rq) }
+    #ts { top: calc(var(--sat) + 78px); z-index: 500 }
+    .to { border-radius: var(--rb); padding: 12px 20px; border: 1px solid color-mix(in srgb, var(--bg) 22%, transparent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--ac) 28%, transparent), var(--sh2) }
+    .lc { border-radius: var(--rc); box-shadow: var(--sh2) }
+    @media(min-width:900px) { #ts { top: 22px } }
     @media(max-width:600px) {
-      .md, .md.wide { border-radius: 30px 30px 0 0 }
+      .md, .md.wide { border-radius: var(--rm) var(--rm) 0 0 }
       .md::before { content: ""; flex: none; width: 42px; height: 5px; border-radius: 5px; background: color-mix(in srgb, var(--tx) 16%, transparent); margin: 10px auto 0 }
     }
 
     /* ---- vault ---- */
-    .vlock .big { border-radius: 30px; background: linear-gradient(150deg, var(--ac), color-mix(in srgb, var(--ac) 62%, #070a18)) }
-    .vav { border-radius: 18px }
+    .vlock .big { border-radius: var(--rt); background: linear-gradient(150deg, var(--ac), color-mix(in srgb, var(--ac) 62%, #070a18)) }
+    .vav { border-radius: var(--rq) }
     .vib { border-radius: 50%; border: 0; background: color-mix(in srgb, var(--tx) 7%, transparent) }
-    .ban { border: 0; border-radius: 22px; box-shadow: var(--sh), 0 0 0 1.5px color-mix(in srgb, var(--ac) 50%, transparent) }
+    .ban { border: 0; border-radius: var(--rq); box-shadow: var(--sh), 0 0 0 1.5px color-mix(in srgb, var(--ac) 50%, transparent) }
     .pad button { background: #ffffff1c; border: 0 }
-    #vw nav button, #vw nav a { border-radius: 999px }
-
-    /* toasts sit BELOW the top cap so they are never hidden behind it */
-    #ts { top: calc(var(--sat) + 78px); z-index: 500 }
-    .to { border: 1px solid color-mix(in srgb, var(--bg) 22%, transparent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--ac) 28%, transparent), var(--sh2) }
-    @media(min-width:900px) { #ts { top: 22px } }
-
-    /* vault folders */
+    .vmeta { font-size: 12.5px; margin: 16px 0 0 }
+    .vmeta.wn { background: color-mix(in srgb, var(--wn) 12%, transparent); padding: 10px 12px; border-radius: var(--rs) }
+    #vw nav button, #vw nav a { border-radius: var(--rb) }
     .fgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 4px }
-    .ftile { position: relative; display: flex; flex-direction: column; justify-content: flex-end; gap: 2px; min-height: 128px; padding: 16px; border-radius: 28px; text-align: left; background: color-mix(in srgb, var(--c) 13%, var(--sf)); box-shadow: var(--sh); overflow: hidden; transition: transform .12s }
+    .ftile { position: relative; display: flex; flex-direction: column; justify-content: flex-end; gap: 2px; min-height: 128px; padding: 16px; border-radius: var(--rt); text-align: left; background: color-mix(in srgb, var(--c) 13%, var(--sf)); box-shadow: var(--sh); overflow: hidden; transition: transform .12s }
     .ftile:active { transform: scale(.97) }
-    .ftile .vav { position: absolute; top: 14px; left: 14px; width: 42px; height: 42px; border-radius: 15px; background: var(--c); font-family: var(--fd) }
+    .ftile .vav { position: absolute; top: 14px; left: 14px; width: 42px; height: 42px; border-radius: var(--rs); background: var(--c); font-family: var(--fd) }
     .ftile b { font-family: var(--fd); font-size: 18px; letter-spacing: -.03em; font-weight: 700; overflow-wrap: anywhere }
     .ftile small { font-size: 13px; font-weight: 600; color: var(--t2) }
     .ftile.new { background: transparent; border: 2px dashed var(--bd); box-shadow: none; color: var(--ac); align-items: flex-start; justify-content: center; gap: 4px }
@@ -2208,317 +2244,266 @@
     .vtag.vf { background: color-mix(in srgb, var(--tx) 7%, transparent); color: var(--t2) }
     .vtag.vf .i { display: inline; vertical-align: -1px }
 
+    /* ---- appearance picker ---- */
+    .apx h4 { margin: 18px 0 8px; font-size: 13px; font-weight: 650; color: var(--t2); font-family: var(--fb); letter-spacing: 0 }
+    .apx h4:first-child { margin-top: 4px }
+    .sws { gap: 10px; margin: 2px 0 6px }
+    .sws button { width: 44px; height: 44px }
+    .sws button.cust { background: conic-gradient(#e11d48, #f59e0b, #16a34a, #0ea5e9, #9333ea, #e11d48) !important; position: relative; overflow: hidden }
+    .sws button.cust input { position: absolute; inset: 0; opacity: 0; width: 100%; height: 100%; padding: 0; margin: 0; cursor: pointer }
+    .presets { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px }
+    .pre { display: flex; flex-direction: column; gap: 8px; padding: 8px; border-radius: var(--rq); background: color-mix(in srgb, var(--tx) 5%, var(--sf)); text-align: left; font-size: 12.5px; font-weight: 650 }
+    .pre i { display: block; height: 38px; border-radius: var(--rs); background: var(--pc); position: relative; overflow: hidden }
+    .pre i::after { content: ""; position: absolute; left: 8px; right: 30%; bottom: 8px; height: 6px; border-radius: 4px; background: var(--pf, #fff); opacity: .85 }
+    .pre.on { box-shadow: 0 0 0 2px var(--ac) }
+    .tgl { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--bd) }
+    .tgl:last-child { border: 0 }
+    .tgl .rb { flex: 1 }
+
+    /* ---- calendar ---- */
+    .cal { background: var(--sf); border-radius: var(--rc); padding: 14px; box-shadow: var(--sh) }
+    .calh { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px }
+    .calh b { font-family: var(--fd); font-size: 21px; letter-spacing: -.04em; font-weight: 700 }
+    .calh .ib .i { transform: none }
+    .calg { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; text-align: center }
+    .calg .wd { font-size: 12px; font-weight: 650; color: var(--t2); padding: 4px 0 6px }
+    .cd { aspect-ratio: 1; border-radius: var(--rs); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; font-size: 14px; font-weight: 600; position: relative; min-width: 0 }
+    .cd.out { opacity: .3 }
+    .cd.today { box-shadow: inset 0 0 0 2px var(--ac) }
+    .cd.sel { background: var(--ac); color: #fff }
+    .cd .dots { display: flex; gap: 2px; height: 5px }
+    .cd .dots i { width: 5px; height: 5px; border-radius: 50%; background: var(--t2) }
+    .cd .dots i.k-er { background: var(--er) }
+    .cd .dots i.k-wn { background: var(--wn) }
+    .cd .dots i.k-ok { background: var(--ok) }
+    .cd.sel .dots i { background: #fff }
+    .cleg { display: flex; gap: 14px; flex-wrap: wrap; margin: 12px 2px 0; font-size: 12.5px; color: var(--t2); font-weight: 600 }
+    .cleg span { display: inline-flex; align-items: center; gap: 6px }
+    .cleg i { width: 8px; height: 8px; border-radius: 50% }
+
+    /* ---- insights ---- */
+    .inx { display: grid; grid-template-columns: 1fr; gap: 12px }
+    @media(min-width:700px) { .inx { grid-template-columns: 1fr 1fr } .inx .wide { grid-column: 1/-1 } }
+    .inx .card h3 { font-size: 17px; margin-bottom: 14px }
+    .dn { display: flex; align-items: center; gap: 18px }
+    .dn svg { flex: none; width: 128px; height: 128px; transform: rotate(-90deg) }
+    .dn .ctr { position: relative; width: 128px; height: 128px; flex: none; display: grid; place-items: center }
+    .dn .ctr b { position: absolute; font-family: var(--fd); font-size: 32px; letter-spacing: -.05em }
+    .lg2 { display: flex; flex-direction: column; gap: 9px; font-size: 14px; font-weight: 600; flex: 1; min-width: 0 }
+    .lg2 span { display: flex; align-items: center; gap: 8px }
+    .lg2 i { width: 10px; height: 10px; border-radius: 3px; flex: none }
+    .lg2 em { margin-left: auto; font-style: normal; color: var(--t2) }
+    .bars { display: flex; align-items: flex-end; gap: 6px; height: 120px }
+    .bars div { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 5px; height: 100%; font-size: 11px; font-weight: 650; color: var(--t2); min-width: 0 }
+    .bars i { display: block; width: 100%; border-radius: 6px 6px 3px 3px; background: color-mix(in srgb, var(--ac) 55%, var(--sf)); min-height: 4px }
+    .bars div.cur i { background: var(--ac) }
+    .bars div.od i { background: var(--er) }
+    .bars em { font-style: normal; color: var(--tx); font-size: 12px }
+    .hb { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; font-size: 14px; font-weight: 600 }
+    .hb span { width: 38%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap }
+    .hb u { flex: 1; height: 10px; border-radius: 6px; background: color-mix(in srgb, var(--tx) 8%, transparent); text-decoration: none; overflow: hidden }
+    .hb u i { display: block; height: 100%; border-radius: 6px; background: var(--ac) }
+    .hb em { font-style: normal; color: var(--t2); width: 22px; text-align: right }
+    .ring { width: 104px; height: 104px; border-radius: 50%; display: grid; place-items: center; background: conic-gradient(var(--c) calc(var(--p) * 1%), color-mix(in srgb, var(--tx) 10%, transparent) 0); flex: none }
+    .ring i { width: 78px; height: 78px; border-radius: 50%; background: var(--sf); display: grid; place-items: center; font-style: normal; font-family: var(--fd); font-size: 28px; font-weight: 750; letter-spacing: -.05em }
+    .hl { display: flex; align-items: center; gap: 18px; margin-bottom: 8px }
+    .hl p { color: var(--t2); font-size: 14px; line-height: 1.5 }
+    .hs { display: flex; align-items: center; gap: 12px; width: 100%; text-align: left; padding: 10px 0; border-bottom: 1px solid var(--bd) }
+    .hs .vav { width: 40px; height: 40px; font-size: 16px; border-radius: var(--rs) }
+    .hs div { flex: 1; min-width: 0 }
+    .hs b, .hs small { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap }
+    .hsec { font-size: 13px; font-weight: 650; margin: 16px 0 2px; display: flex; align-items: center; gap: 8px }
+    .hsec em { font-style: normal; background: color-mix(in srgb, var(--er) 14%, transparent); color: var(--er); border-radius: var(--rb); padding: 1px 9px; font-size: 12px }
+    .gen { display: flex; align-items: center; gap: 8px; margin-bottom: 8px }
+    .gen output { flex: 1; min-width: 0; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 17px; letter-spacing: .3px; word-break: break-all; padding: 14px 16px; border-radius: var(--ri); background: color-mix(in srgb, var(--tx) 5%, var(--sf)); line-height: 1.35 }
+    .gl { display: flex; justify-content: space-between; align-items: baseline }
+    .gl b { font-family: var(--fd); font-size: 18px }
+
     @media(prefers-reduced-motion:reduce) { *, *:before, *:after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important } }
-  
-    /* ===== NEXUS PLUS ===== */
-/* =========================================================================
-   NEXUS PLUS  ·  alignment fixes + theme / style options + new components
-   Add this file AFTER the main <style> block in index.html
-   ========================================================================= */
 
-html { --fz: 15.5px; --chev: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%238a93a8' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") }
-body { font-family: var(--fb, Figtree, Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif); font-size: var(--fz) }
+    /* =====================================================================
+       v7 "WALLET" REDESIGN: paper palettes, serif display type, floating dock,
+       ID-card documents, ledger summary, icon quick actions.
+       ===================================================================== */
+    :root {
+      --bg: #f3efe7; --sf: #fffdf9; --tx: #1b1812; --t2: #7a7365; --bd: #e7e0d2; --hd: #0d0c0a; --dk: #15130f;
+      --ok: #1f9d63; --wn: #d98a0b; --er: #d8283f;
+      --fd: "Fraunces", "Iowan Old Style", Georgia, "Times New Roman", serif;
+      --fb: Figtree, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      --sh: 0 1px 2px #2a22140a; --sh2: 0 28px 60px -22px #2a221466, 0 4px 14px #2a22141a;
+      --rc: 22px; --rt: 26px; --rb: 999px; --ri: 14px; --rm: 28px; --rs: 12px; --rq: 18px
+    }
+    [data-t=dark] { --bg: #0f0e0c; --sf: #1a1814; --tx: #f4efe6; --t2: #a39b8b; --bd: #2a2721; --hd: #0a0908; --dk: #26231d; --sh: 0 1px 0 #ffffff07 inset; --sh2: 0 28px 60px -20px #000e, 0 4px 14px #0009 }
+    /* surface palettes: light then dark */
+    [data-pal=snow] { --bg: #f4f5f8; --sf: #ffffff; --tx: #101828; --t2: #667085; --bd: #e4e7ec; --hd: #0b1020; --dk: #111827 }
+    [data-pal=mist] { --bg: #e8eff6; --sf: #f8fbfe; --tx: #0f1b2a; --t2: #5d6f84; --bd: #d4dfea; --hd: #0a1522; --dk: #11202f }
+    [data-pal=sage] { --bg: #eaefe3; --sf: #f9fbf6; --tx: #151b11; --t2: #66705c; --bd: #d8e0cd; --hd: #0b140c; --dk: #142016 }
+    [data-pal=blush] { --bg: #f8ebe7; --sf: #fffaf8; --tx: #231416; --t2: #85696a; --bd: #ecd8d1; --hd: #1a0c0e; --dk: #2a1517 }
+    [data-pal=lilac] { --bg: #efeaf7; --sf: #fcfaff; --tx: #1a1426; --t2: #71688a; --bd: #ddd5ee; --hd: #120d1d; --dk: #1d1630 }
+    [data-pal=butter] { --bg: #f6eed2; --sf: #fffcf0; --tx: #201b08; --t2: #7a6e43; --bd: #e8dcae; --hd: #17130a; --dk: #231e0d }
+    [data-t=dark][data-pal=snow] { --bg: #0b0c0f; --sf: #15171c; --tx: #f2f4f8; --t2: #8d94a3; --bd: #23262e; --hd: #07080b; --dk: #20232b }
+    [data-t=dark][data-pal=mist] { --bg: #0a1017; --sf: #121b25; --tx: #eaf1f8; --t2: #8196ad; --bd: #1f2d3b; --hd: #060b10; --dk: #1b2a39 }
+    [data-t=dark][data-pal=sage] { --bg: #0a100b; --sf: #131b14; --tx: #ecf3e8; --t2: #8a9b86; --bd: #212c22; --hd: #060a07; --dk: #1d2a1f }
+    [data-t=dark][data-pal=blush] { --bg: #140c0d; --sf: #1f1415; --tx: #f8ecea; --t2: #b18f8f; --bd: #33201f; --hd: #0d0707; --dk: #301d1e }
+    [data-t=dark][data-pal=lilac] { --bg: #0e0b14; --sf: #17131f; --tx: #f1ecfa; --t2: #9a90b4; --bd: #272035; --hd: #09070e; --dk: #231c33 }
+    [data-t=dark][data-pal=butter] { --bg: #12100a; --sf: #1c1a10; --tx: #f6f1dc; --t2: #a79d74; --bd: #2e2a18; --hd: #0b0a06; --dk: #2a2614 }
+    [data-t=dark][data-b="1"][data-pal] { --bg: #000; --sf: #0c0c0c; --bd: #1c1c1c; --hd: #000; --dk: #151515 }
+    [data-r=soft] { --rc: 16px; --rt: 20px; --ri: 11px; --rm: 22px; --rs: 10px; --rq: 14px }
+    [data-r=sharp] { --rc: 6px; --rt: 8px; --rb: 6px; --ri: 6px; --rm: 10px; --rs: 5px; --rq: 7px }
+    [data-f=clean] { --fd: Figtree, system-ui, sans-serif }
+    [data-f=system] { --fd: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; --fb: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif }
+    [data-f=classic] { --fd: Georgia, "Iowan Old Style", "Times New Roman", serif; --fb: Georgia, "Iowan Old Style", serif }
+    [data-f=mono] { --fd: ui-monospace, "SF Mono", Menlo, Consolas, monospace; --fb: ui-monospace, "SF Mono", Menlo, Consolas, monospace }
+    body { background: var(--bg); color: var(--tx); font-size: 15.5px }
+    body::before { content: ""; position: fixed; top: 0; left: 0; right: 0; height: var(--sat); background: var(--hd); z-index: 300; pointer-events: none }
+    h1, h2, h3, .ph h2, .h, .in b { font-weight: 600; letter-spacing: -.02em }
+    [data-f=mono] h1, [data-f=mono] h2, [data-f=mono] h3 { letter-spacing: -.04em }
 
-/* ---------------------------------------------------------------------
-   1. ALIGNMENT FIXES
-   --------------------------------------------------------------------- */
+    /* ---- top bar: light and quiet, status strip stays dark ---- */
+    .tb { background: var(--bg); color: var(--tx); border-radius: 0; box-shadow: none; padding: calc(10px + var(--sat)) 18px 10px }
+    .tb .lgi { width: 30px; height: 30px; border-radius: 9px }
+    .tb b { font-family: var(--fd); font-size: 22px; font-weight: 600; letter-spacing: -.03em }
+    .tb b em { font-style: italic; font-weight: 500; color: var(--ac); margin-left: 3px }
+    .tb .ib { background: color-mix(in srgb, var(--tx) 8%, transparent); color: var(--tx) }
+    .tb .off { background: var(--er); color: #fff; border-radius: var(--rb); font-size: 11px; padding: 3px 9px }
+    #ts { top: calc(var(--sat) + 66px) }
 
-/* top bar */
-.tb { gap: 8px }
-.tb b { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap }
-.tb .ib, .tb .av, .tb .lgi, .tb .off { flex: none }
+    /* ---- floating dock: dark pill, active item expands with its label ---- */
+    .tabs { display: flex; justify-content: space-between; align-items: center; gap: 2px; left: 10px; right: 10px; bottom: calc(12px + var(--sab)); max-width: 480px; margin: 0 auto; padding: 5px 6px; border: 1px solid #ffffff12; border-radius: var(--rb); background: var(--dk); box-shadow: 0 22px 44px -14px #000a, 0 2px 8px #0005 }
+    .tabs button { flex-direction: row; flex: none; justify-content: center; align-items: center; gap: 7px; height: 44px; min-width: 40px; padding: 0 9px; border-radius: var(--rb); color: #ffffff94; transition: background .2s, color .2s }
+    .tabs button span { display: none; font-size: 13px; font-weight: 650; letter-spacing: 0; color: inherit }
+    .tabs button::before { display: none }
+    .tabs button.on { background: var(--ac); color: #fff; padding: 0 14px }
+    .tabs button.on span { display: block }
+    .tabs .plus { position: static; width: 48px; height: 48px; min-width: 48px; padding: 0; margin: -10px 0; border-radius: 50%; background: #f6f1e6; color: #15130f; border: 4px solid var(--bg); box-shadow: 0 10px 20px -8px #0008 }
+    .tabs .plus.on { background: #f6f1e6; color: #15130f }
+    @media(max-width:389px) { .tabs button.on span { display: none } .tabs button.on { padding: 0 13px } }
+    @media(min-width:900px) { #ts { top: 22px } }
 
-/* bottom bar: items share the width equally, active one grows, never overflows */
-.tabs { gap: 2px; padding-left: max(8px, env(safe-area-inset-left, 0px)); padding-right: max(8px, env(safe-area-inset-right, 0px)) }
-.tabs button { flex: 1 1 0; min-width: 0; justify-content: center; padding: 11px 0; gap: 6px; overflow: hidden; white-space: nowrap }
-.tabs button.on { flex: 2.1 1 0; padding: 11px 6px }
-.tabs button .i { flex: none }
-.tabs .plus { flex: none; width: 54px; height: 54px; padding: 0; margin: -30px 4px 0; overflow: visible }
+    /* ---- desktop side bar ---- */
+    .side { background: var(--sf); box-shadow: 1px 0 0 var(--bd) }
+    .side b { font-family: var(--fd); font-size: 18px; line-height: 1.1; font-weight: 600 }
+    .side nav button.on { background: var(--tx); color: var(--bg) }
+    .side .me { background: color-mix(in srgb, var(--tx) 5%, transparent) }
 
-/* page headers */
-.ph { gap: 12px }
-.ph h2 { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: clamp(26px, 8vw, 36px) }
-.ph > div, .ph > .btn { flex: none }
+    /* ---- titles ---- */
+    .ph h2 { font-size: 40px; line-height: 1.02; font-weight: 600; letter-spacing: -.035em }
+    .h { font-size: 22px; font-weight: 600; margin: 30px 0 12px; letter-spacing: -.025em }
+    .sh { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin: 30px 0 12px }
+    .sh .h { margin: 0 }
+    .lnk { font-size: 13.5px; font-weight: 650; color: var(--ac); padding: 4px 2px }
 
-/* inputs: same height everywhere, dates and selects no longer look different */
-input:not([type=checkbox]):not([type=file]):not([type=range]):not([type=color]), select { min-height: 50px }
-input[type=date], input[type=time], input[type=month] { display: block; -webkit-appearance: none; appearance: none; text-align: left; line-height: 1.2 }
-input[type=date]::-webkit-date-and-time-value { text-align: left; min-height: 1.2em }
-select, select:hover, select:focus { -webkit-appearance: none; appearance: none; padding-right: 40px; background-image: var(--chev); background-repeat: no-repeat; background-position: right 15px center; background-size: 16px }
-input[type=range] { padding: 0; min-height: 30px; accent-color: var(--ac); background: none }
-input[type=color] { padding: 2px; cursor: pointer }
-.srch .i { top: 50%; transform: translateY(-50%) }
-.two { align-items: start }
+    /* ---- home ---- */
+    .gh { display: block; margin: 8px 0 18px }
+    .gh small { display: block; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; font-weight: 700; color: var(--t2) }
+    .gh h2 { font-size: 40px; line-height: 1.04; letter-spacing: -.04em; font-weight: 600; margin-top: 8px }
+    .gh h2 i { font-style: italic; color: var(--ac); font-weight: 500 }
+    .ledger { display: grid; grid-template-columns: auto 1fr; gap: 6px 22px; align-items: center; padding: 20px; border-radius: var(--rt); background: var(--sf); border: 1px solid var(--bd); box-shadow: var(--sh) }
+    .lring { width: 116px; height: 116px; border-radius: 50%; display: grid; place-items: center; background: conic-gradient(var(--ok) calc(var(--p) * 1%), color-mix(in srgb, var(--tx) 9%, transparent) 0) }
+    .lring i { width: 88px; height: 88px; border-radius: 50%; background: var(--sf); display: flex; flex-direction: column; align-items: center; justify-content: center; font-style: normal }
+    .lring b { font-family: var(--fd); font-size: 30px; line-height: 1; font-weight: 600; letter-spacing: -.04em }
+    .lring small { font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase; font-weight: 700; color: var(--t2); margin-top: 3px }
+    .lrows { display: flex; flex-direction: column; min-width: 0 }
+    .lr { display: flex; align-items: center; gap: 10px; padding: 9px 0; width: 100%; text-align: left; border-bottom: 1px dashed var(--bd) }
+    .lr:last-child { border: 0 }
+    .lr i { width: 9px; height: 9px; border-radius: 50%; flex: none }
+    .lr span { flex: 1; font-weight: 600; font-size: 14.5px; min-width: 0 }
+    .lr b { font-family: var(--fd); font-size: 21px; font-weight: 600 }
+    .lfoot { grid-column: 1/-1; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 12px; padding-top: 14px; border-top: 1px solid var(--bd) }
+    .lfoot button { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: var(--ri); background: color-mix(in srgb, var(--tx) 5%, transparent); text-align: left; font-size: 13px; color: var(--t2); font-weight: 600 }
+    .lfoot button b { display: block; font-family: var(--fd); font-size: 19px; color: var(--tx); font-weight: 600; line-height: 1.1 }
+    .lfoot .i { color: var(--ac); flex: none }
+    .qa { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px 6px; overflow: visible; margin: 22px 0 0; padding: 0 }
+    .qa button { flex-direction: column; justify-content: flex-start; align-items: center; gap: 8px; padding: 0; background: none; box-shadow: none; border-radius: 0; color: var(--tx) }
+    .qa button .i { width: 56px; height: 56px; padding: 16px; border-radius: 20px; background: var(--sf); border: 1px solid var(--bd); color: var(--ac); transition: transform .12s, background .2s }
+    .qa button:active .i { transform: scale(.93); background: color-mix(in srgb, var(--ac) 12%, var(--sf)) }
+    .qa span { font-size: 12px; font-weight: 650; color: var(--t2); text-align: center; line-height: 1.2 }
+    @media(min-width:900px) { .qa { grid-template-columns: repeat(8, 1fr); margin: 22px 0 0; flex-wrap: unset } }
+    .hero.vh + .qa { grid-template-columns: repeat(3, 1fr); margin: 14px 0 0; padding: 0 }
+    .hero.vh + .qa button { padding: 0; border-radius: 0; flex-direction: column }
+    .hero.vh + .qa .i { width: 56px; height: 56px }
+    .hero.vh + .qa span { font-size: 12px }
 
-/* cards: text column takes the free space, right column never squeezes it */
-.dc, .vc { position: relative; gap: 12px }
-.dc .in, .vc .in { flex: 1 1 auto; min-width: 0 }
-.in b { overflow: hidden; text-overflow: ellipsis; white-space: nowrap }
-.dc .rt { flex: none; white-space: nowrap; justify-content: center }
-.dc .rt > span { display: flex; gap: 6px; align-items: center }
-.vqa { flex: none }
-@media(max-width:390px) {
-  .dc .rt { font-size: 0 }
-  .dc .rt .star, .dc .rt .ib { width: 32px; height: 32px }
-  .ic, .vp { width: 46px; height: 46px; border-radius: 16px }
-}
+    /* ---- wallet: documents as ID cards ---- */
+    .wallet { display: flex; gap: 12px; overflow-x: auto; margin: 0 -16px; padding: 4px 16px 16px; scroll-snap-type: x mandatory; scrollbar-width: none }
+    .wallet::-webkit-scrollbar { display: none }
+    .wgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px }
+    @media(min-width:700px) { .wgrid { grid-template-columns: repeat(3, 1fr) } }
+    .idc { --g1: color-mix(in srgb, var(--ac) 90%, #000); --g2: color-mix(in srgb, var(--ac) 48%, #08080c); position: relative; overflow: hidden; display: flex; flex-direction: column; text-align: left; flex: none; scroll-snap-align: start; width: min(300px, 80vw); aspect-ratio: 1.586; padding: 18px; border-radius: 24px; color: #fff; cursor: pointer; background: linear-gradient(135deg, var(--g1), var(--g2)); box-shadow: 0 24px 38px -22px var(--g2), inset 0 1px 0 #ffffff30; transition: transform .15s }
+    .idc:active { transform: scale(.98) }
+    .idc.k-er { --g1: #de2c44; --g2: #6e0c22 }
+    .idc.k-wn { --g1: #e9990f; --g2: #8f3e05 }
+    .idc.k-n { --g1: #596271; --g2: #1c2230 }
+    .idc::before { content: ""; position: absolute; inset: 0; background: repeating-radial-gradient(circle at 115% -10%, #ffffff0d 0 2px, transparent 2px 14px); pointer-events: none }
+    .idc::after { content: ""; position: absolute; right: -40px; bottom: -70px; width: 190px; height: 190px; border-radius: 50%; background: radial-gradient(circle, #ffffff22, transparent 68%); pointer-events: none }
+    .idc > * { position: relative; z-index: 1 }
+    .idc .t { display: flex; align-items: center; justify-content: space-between }
+    .idc .ty { font-size: 10.5px; letter-spacing: .16em; font-weight: 750; opacity: .8 }
+    .idc .ic2 { width: 34px; height: 34px; border-radius: 12px; display: grid; place-items: center; background: #ffffff24 }
+    .idc b { font-family: var(--fd); font-size: 23px; line-height: 1.1; font-weight: 600; letter-spacing: -.02em; margin-top: auto; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden }
+    .idc .no { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 13.5px; letter-spacing: .08em; opacity: .85; margin-top: 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis }
+    .idc .ft { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: 12px; font-size: 12px; font-weight: 600 }
+    .idc .ft span { opacity: .85; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap }
+    .idc .ft em { font-style: normal; flex: none; padding: 4px 10px; border-radius: var(--rb); background: #ffffff26; font-weight: 700; font-size: 11.5px; -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px) }
+    .wgrid .idc { width: auto; aspect-ratio: 1.12; padding: 14px }
+    .wgrid .idc b { font-size: 18px }
+    .wgrid .idc .no { font-size: 12px }
+    .wgrid .idc .ft { flex-direction: column; align-items: flex-start; gap: 6px }
 
-/* summary tiles: always one tidy row (was 3 + 1 on small phones) */
-.stats { grid-template-columns: repeat(4, minmax(0, 1fr)) }
-.st { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 86px }
-.st small { font-size: 11.5px; line-height: 1.2; text-align: center }
-@media(max-width:340px) { .stats { grid-template-columns: repeat(2, minmax(0, 1fr)) } }
+    /* ---- document rows ---- */
+    .dc, .vc { position: relative; overflow: hidden; background: var(--sf); border: 1px solid var(--bd); box-shadow: none; border-radius: var(--rc); padding: 12px 12px 12px 14px; gap: 13px; margin-bottom: 10px }
+    .dc:hover, .vc:hover { transform: none; box-shadow: var(--sh2) }
+    .dc::before { content: ""; position: absolute; left: 0; top: 16px; bottom: 16px; width: 4px; border-radius: 0 4px 4px 0; background: var(--sc, transparent) }
+    .dc[data-s=er] { --sc: var(--er); background: color-mix(in srgb, var(--er) 5%, var(--sf)) }
+    .dc[data-s=wn] { --sc: var(--wn); background: color-mix(in srgb, var(--wn) 6%, var(--sf)) }
+    .dc[data-s=ok] { --sc: color-mix(in srgb, var(--ok) 55%, transparent) }
+    [data-card=plain] .dc[data-s] { background: var(--sf) }
+    .ic, .vp { width: 50px; height: 50px; border-radius: var(--rq); flex: none }
+    .vp { width: 60px; height: 60px }
+    .in b { font-family: var(--fd); font-size: 18px; font-weight: 600; line-height: 1.2 }
+    .in small { font-size: 13px; margin: 3px 0 7px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; display: block }
+    .in .pgx { font-size: 12px; color: var(--t2); font-weight: 600; margin-left: 8px }
+    .rt { display: flex; flex-direction: row; align-items: center; gap: 6px; font-size: 12px }
+    .dc .rt, .dc .star, .dc .ib { flex: none }
+    .bd { padding: 3px 10px }
+    [data-d=compact] .dc, [data-d=compact] .vc { padding: 8px 10px 8px 12px; margin-bottom: 7px }
+    [data-d=compact] .in small { margin: 1px 0 4px }
+    [data-d=compact] .idc { padding: 14px }
+    [data-d=compact] .ledger { padding: 15px }
+    .chip { background: var(--sf); border: 1px solid var(--bd); box-shadow: none }
+    .chip.on { background: var(--tx); color: var(--bg); border-color: var(--tx) }
+    .srch input { background: var(--sf); border: 1px solid var(--bd) }
+    .srch input:focus { border-color: var(--ac) }
+    .card { border: 1px solid var(--bd); box-shadow: none }
+    .st { border: 1px solid var(--bd); box-shadow: none }
+    .st b { font-weight: 600 }
+    .btn { box-shadow: none }
+    .vlock .big { border-radius: var(--rt) }
+    .ftile { border: 1px solid var(--bd); box-shadow: none }
+    .ftile b { font-weight: 600 }
+    .empty { background: transparent }
+    .md { border: 1px solid var(--bd) }
+    .mh h3 { font-weight: 600 }
 
-/* profile header: avatar left, name next to it, button below / right */
-.cover { height: 132px }
-.pfh { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: start; gap: 10px 16px; padding: 0 20px 20px; margin-top: -52px }
-.pfh .avw { align-self: start }
-.pfh .pfi { min-width: 0; padding-top: 0; margin-top: 58px }
-.pfh > .btn { grid-column: 1 / -1; justify-self: stretch }
-.pfi h2 { font-size: 22px; line-height: 1.15 }
-.pfi small { overflow-wrap: anywhere }
-@media(min-width:620px) {
-  .pfh { grid-template-columns: auto minmax(0, 1fr) auto }
-  .pfh > .btn { grid-column: auto; justify-self: end; margin-top: 58px }
-}
-
-/* settings rows, hero, chips, vault actions */
-.row .rb small { overflow-wrap: anywhere }
-.hero > div { min-width: 0 }
-.hero h2, .hero p, .hero small { overflow-wrap: anywhere }
-.chips, .qa { scrollbar-width: none }
-.chips::-webkit-scrollbar { display: none }
-.chip { flex: none }
-.vact { flex-wrap: wrap }
-.vact .btn { flex: 1 1 calc(50% - 8px) }
-.mf { gap: 10px }
-.mf .btn { min-width: 0 }
-.md .mb { overscroll-behavior: contain }
-#dl { margin-top: 4px }
-
-/* ---------------------------------------------------------------------
-   2. TYPOGRAPHY / STYLE OPTIONS  (set from Profile > Appearance)
-   --------------------------------------------------------------------- */
-html[data-fs=s] { --fz: 14px }
-html[data-fs=m] { --fz: 15.5px }
-html[data-fs=l] { --fz: 17px }
-html[data-fs=xl] { --fz: 18.5px }
-html[data-fs=s] .in small, html[data-fs=s] .rb small { font-size: 12px }
-html[data-fs=l] .in small, html[data-fs=l] .rb small { font-size: 14.5px }
-html[data-fs=xl] .in small, html[data-fs=xl] .rb small { font-size: 15.5px }
-
-html[data-ff=system] { --fb: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; --fd: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif }
-html[data-ff=serif] { --fb: "Iowan Old Style", "Palatino Linotype", Georgia, serif; --fd: "Iowan Old Style", "Palatino Linotype", Georgia, serif }
-html[data-ff=mono] { --fb: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; --fd: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace }
-html[data-ff=display] { --fb: "Bricolage Grotesque", Figtree, system-ui, sans-serif; --fd: "Bricolage Grotesque", Figtree, system-ui, sans-serif }
-html[data-ff=mono] h1, html[data-ff=mono] h2 { letter-spacing: -.02em }
-
-/* corners */
-html[data-rd=sharp] :is(.card, .dc, .vc, .bt, .st, .ftile, .hero, .pfc, .ban, .empty, .slot, .drop, .nxhc, .nxnote, .nxtt, .nxice, .nxpw) { border-radius: 10px }
-html[data-rd=sharp] .md { border-radius: 14px }
-html[data-rd=sharp] :is(input, select, textarea) { border-radius: 10px }
-html[data-rd=sharp] :is(.btn, .chip, .bd, .seg, .seg button, .to, .nxs, .nxs button, .vtag, .vb, .tabs button:not(.plus)) { border-radius: 10px }
-html[data-rd=sharp] :is(.ic, .vp, .ri, .mi, .vav) { border-radius: 9px }
-html[data-rd=round] :is(.card, .dc, .vc, .bt, .st, .ftile, .hero, .pfc, .nxhc, .nxnote, .nxtt) { border-radius: 34px }
-html[data-rd=round] :is(input, select, textarea) { border-radius: 24px }
-
-/* density */
-html[data-dn=compact] main { padding-top: 10px }
-html[data-dn=compact] :is(.dc, .vc) { padding: 9px 12px; margin-bottom: 7px; gap: 11px }
-html[data-dn=compact] :is(.ic, .vp) { width: 42px; height: 42px; border-radius: 14px }
-html[data-dn=compact] .in small { margin: 1px 0 4px }
-html[data-dn=compact] .bt { min-height: 100px }
-html[data-dn=compact] .bt.big { min-height: 138px }
-html[data-dn=compact] .bt.big b { font-size: 64px }
-html[data-dn=compact] .h { margin: 20px 0 8px }
-html[data-dn=compact] .card { padding: 15px }
-html[data-dn=roomy] :is(.dc, .vc) { padding: 18px 18px 18px 16px; margin-bottom: 14px }
-html[data-dn=roomy] .h { margin: 34px 0 14px }
-html[data-dn=roomy] .card { padding: 24px }
-html[data-dn=roomy] .bt { min-height: 140px }
-
-/* card style */
-html[data-cs=outline] :is(.dc, .vc, .card, .bt:not(.big), .st, .ftile:not(.new), .nxhc, .nxtt) { box-shadow: none; border: 1.5px solid var(--bd) }
-html[data-cs=outline] .dc[data-s=er] { border-color: color-mix(in srgb, var(--er) 50%, var(--bd)) }
-html[data-cs=outline] .dc[data-s=wn] { border-color: color-mix(in srgb, var(--wn) 50%, var(--bd)) }
-html[data-cs=flat] :is(.dc, .vc, .card, .bt, .st, .ftile, .nxhc, .nxtt) { box-shadow: none }
-html[data-cs=flat] :is(.dc, .vc):hover { box-shadow: none; transform: none }
-html[data-cs=glass] :is(.dc, .vc, .card, .bt:not(.big), .st, .ftile:not(.new), .nxhc, .nxtt) { background: color-mix(in srgb, var(--sf) 58%, transparent); -webkit-backdrop-filter: blur(16px) saturate(1.4); backdrop-filter: blur(16px) saturate(1.4); border: 1px solid color-mix(in srgb, var(--tx) 10%, transparent); box-shadow: none }
-html[data-cs=glass] .dc[data-s=er] { background: color-mix(in srgb, var(--er) 16%, transparent) }
-html[data-cs=glass] .dc[data-s=wn] { background: color-mix(in srgb, var(--wn) 16%, transparent) }
-html[data-cs=glass] .tabs { background: color-mix(in srgb, var(--sf) 70%, transparent); -webkit-backdrop-filter: blur(18px); backdrop-filter: blur(18px) }
-
-/* wallpapers */
-html[data-bg=dots] body { background-image: radial-gradient(color-mix(in srgb, var(--tx) 15%, transparent) 1.2px, transparent 1.5px); background-size: 20px 20px }
-html[data-bg=grid] body { background-image: linear-gradient(color-mix(in srgb, var(--tx) 7%, transparent) 1px, transparent 1px), linear-gradient(90deg, color-mix(in srgb, var(--tx) 7%, transparent) 1px, transparent 1px); background-size: 28px 28px }
-html[data-bg=mesh] body { background-attachment: fixed; background-image: radial-gradient(60% 40% at 8% 0%, color-mix(in srgb, var(--ac) 28%, transparent), transparent 70%), radial-gradient(55% 40% at 100% 18%, color-mix(in srgb, #ec4899 20%, transparent), transparent 70%), radial-gradient(60% 45% at 0% 100%, color-mix(in srgb, #14b8a6 20%, transparent), transparent 70%) }
-html[data-bg=aurora] body { background-attachment: fixed; background-image: linear-gradient(160deg, color-mix(in srgb, var(--ac) 22%, transparent), transparent 40%), linear-gradient(20deg, color-mix(in srgb, #a855f7 18%, transparent), transparent 45%) }
-html[data-bg=stripes] body { background-image: repeating-linear-gradient(45deg, color-mix(in srgb, var(--tx) 5%, transparent) 0 2px, transparent 2px 16px) }
-
-/* bottom bar labels */
-html[data-nl=all] .tabs button:not(.plus) { flex-direction: column; gap: 3px; font-size: 10.5px; padding: 7px 0 }
-html[data-nl=all] .tabs button span { display: inline }
-html[data-nl=all] .tabs button.on { flex: 1 1 0; background: transparent }
-html[data-nl=icon] .tabs button span, html[data-nl=icon] .tabs button.on span { display: none }
-html[data-nl=icon] .tabs button.on { flex: 1 1 0 }
-
-/* desktop page width */
-html[data-w=narrow] main { max-width: 600px }
-html[data-w=wide] main { max-width: 1120px }
-
-/* animations off */
-html[data-mo=off] *, html[data-mo=off] *::before, html[data-mo=off] *::after { animation: none !important; transition: none !important }
-
-/* ---------------------------------------------------------------------
-   3. NEW COMPONENTS
-   --------------------------------------------------------------------- */
-.nxs { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 14px }
-.nxs button { padding: 8px 14px; border-radius: 999px; font-weight: 650; font-size: 13.5px; background: color-mix(in srgb, var(--tx) 7%, transparent); color: var(--t2) }
-.nxs button.on { background: var(--ac); color: #fff }
-.nxs.ico { flex-wrap: nowrap }
-.nxs.ico button { width: 40px; height: 36px; padding: 0; display: grid; place-items: center }
-
-.nxtb { display: flex; gap: 8px; align-items: center; margin: 0 0 12px }
-.nxtb .nxs { margin: 0; flex: none; gap: 2px; padding: 3px; border-radius: 999px; background: color-mix(in srgb, var(--tx) 7%, transparent) }
-.nxtb .nxs button { background: none; color: var(--t2) }
-.nxtb .nxs button.on { background: var(--sf); color: var(--ac); box-shadow: var(--sh) }
-.nxtb select { flex: 1; min-width: 0; margin: 0; min-height: 44px; padding-top: 9px; padding-bottom: 9px }
-.nxtb .btn { flex: none }
-.btn.sec.on { background: var(--ac); color: #fff }
-
-/* docs views */
-#dl.nxv-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 10px }
-#dl.nxv-grid .dc { margin: 0 }
-#dl.nxv-cmp .dc { padding: 8px 12px; margin-bottom: 6px; border-radius: 16px }
-#dl.nxv-cmp .in small, #dl.nxv-cmp .nxvb { display: none }
-#dl.nxv-cmp .ic { width: 38px; height: 38px; border-radius: 13px }
-.nxgh { grid-column: 1 / -1; display: flex; justify-content: space-between; align-items: baseline; margin: 16px 2px 8px; font-family: var(--fd); font-weight: 650; font-size: 15px; letter-spacing: -.02em }
-.nxgh small { font-family: var(--fb); font-weight: 600 }
-.nxgh:first-child { margin-top: 4px }
-
-/* validity bar on cards */
-.nxvb { height: 5px; border-radius: 5px; background: color-mix(in srgb, var(--tx) 9%, transparent); overflow: hidden; margin-top: 8px }
-.nxvb i { display: block; height: 100%; border-radius: 5px; background: var(--ok) }
-.nxvb.wn i { background: var(--wn) }
-.nxvb.er i { background: var(--er) }
-
-/* select mode */
-.dc.nxsel { outline: 2.5px solid var(--ac); outline-offset: -2px }
-.dc.nxsel::after { content: "\2713"; position: absolute; top: 8px; left: 8px; width: 22px; height: 22px; border-radius: 50%; background: var(--ac); color: #fff; font-size: 13px; font-weight: 800; display: grid; place-items: center }
-.nxselmode .dc { cursor: copy }
-#nxbulk { position: fixed; z-index: 30; left: 12px; right: 12px; bottom: calc(86px + var(--sab)); display: flex; align-items: center; gap: 6px; padding: 8px 8px 8px 16px; border-radius: 999px; background: var(--tx); color: var(--bg); box-shadow: var(--sh2) }
-#nxbulk b { flex: 1; font-size: 14px; white-space: nowrap }
-#nxbulk button { height: 38px; min-width: 38px; padding: 0 12px; border-radius: 999px; background: color-mix(in srgb, var(--bg) 18%, transparent); color: var(--bg); font-weight: 650; font-size: 13.5px; display: inline-flex; align-items: center; justify-content: center; gap: 5px }
-#nxbulk button.dg { background: var(--er); color: #fff }
-#nxbulk button:disabled { opacity: .4 }
-@media(min-width:900px) { #nxbulk { left: calc(50% - 220px + 125px); right: auto; width: 440px; bottom: 24px } }
-
-/* home: health card */
-.nxhc { display: flex; align-items: center; gap: 14px; padding: 14px 16px; margin: 4px 0 6px; border-radius: 26px; background: var(--sf); box-shadow: var(--sh); cursor: pointer }
-.nxhc .in { flex: 1; min-width: 0 }
-.nxring { --p: 0; --c: var(--ok); position: relative; flex: none; width: 62px; height: 62px; border-radius: 50%; display: grid; place-items: center; background: conic-gradient(var(--c) calc(var(--p) * 1%), color-mix(in srgb, var(--tx) 10%, transparent) 0) }
-.nxring::before { content: ""; position: absolute; inset: 7px; border-radius: 50%; background: var(--sf) }
-.nxring b { position: relative; font-family: var(--fd); font-size: 14.5px; font-weight: 750 }
-.nxqa { margin-top: -2px }
-
-/* appearance */
-.nxthg { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin: 0 0 14px }
-.nxth { display: flex; flex-direction: column; gap: 7px; padding: 8px; border-radius: 18px; background: color-mix(in srgb, var(--tx) 5%, transparent); text-align: left; box-shadow: 0 0 0 2px transparent; transition: box-shadow .15s }
-.nxth.on { box-shadow: 0 0 0 2.5px var(--ac) }
-.nxth .pv { position: relative; display: block; height: 58px; border-radius: 12px; background: var(--b); overflow: hidden; box-shadow: inset 0 0 0 1px #8884 }
-.nxth .pv i { position: absolute; left: 8px; right: 8px; height: 12px; border-radius: 6px; background: var(--s) }
-.nxth .pv i:nth-child(1) { top: 9px }
-.nxth .pv i:nth-child(2) { top: 26px; right: 30px }
-.nxth .pv u { position: absolute; right: 9px; bottom: 9px; width: 16px; height: 16px; border-radius: 50%; background: var(--a) }
-.nxth b { font-size: 12.5px; font-weight: 650; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis }
-.nxswg { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin: 0 0 14px }
-.nxswg button, .nxcc { width: 36px; height: 36px; border-radius: 50%; border: 0; display: grid; place-items: center; color: #fff; box-shadow: 0 0 0 2px var(--bd) }
-.nxswg button.on { box-shadow: 0 0 0 3px var(--tx) }
-.nxswg .auto { width: auto; padding: 0 14px; border-radius: 999px; background: color-mix(in srgb, var(--tx) 8%, transparent); color: var(--tx); font-weight: 650; font-size: 13px }
-.nxcc { position: relative; overflow: hidden; background: conic-gradient(#f43f5e, #f59e0b, #22c55e, #06b6d4, #6366f1, #d946ef, #f43f5e); cursor: pointer }
-.nxcc input { position: absolute; inset: -8px; width: 60px; height: 60px; opacity: 0; cursor: pointer; margin: 0; padding: 0 }
-
-/* calendar */
-.nxcl-h { display: flex; align-items: center; gap: 8px; margin-bottom: 10px }
-.nxcl-h b { flex: 1; text-align: center; font-family: var(--fd); font-size: 17px }
-.nxcal { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 4px; text-align: center }
-.nxcal .dow { font-size: 11px; font-weight: 700; color: var(--t2); padding: 4px 0 }
-.nxcal button { aspect-ratio: 1; border-radius: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; font-weight: 600; font-size: 14px; background: color-mix(in srgb, var(--tx) 4%, transparent) }
-.nxcal button.today { box-shadow: inset 0 0 0 2px var(--ac) }
-.nxcal button.sel { background: var(--ac); color: #fff }
-.nxcal .dts { display: flex; gap: 2px; height: 5px }
-.nxcal .dts i { width: 5px; height: 5px; border-radius: 50%; background: var(--ok) }
-.nxcal .dts i.er { background: var(--er) }
-.nxcal .dts i.wn { background: var(--wn) }
-.nxcal button.sel .dts i { box-shadow: 0 0 0 1.5px #fff }
-
-/* insights */
-.nxin { display: flex; align-items: center; gap: 18px; margin-bottom: 8px }
-.nxdn { flex: none; position: relative; width: 120px; height: 120px; border-radius: 50%; display: grid; place-items: center }
-.nxdn::before { content: ""; position: absolute; inset: 15px; border-radius: 50%; background: var(--sf) }
-.nxdn div { position: relative; text-align: center; line-height: 1 }
-.nxdn b { display: block; font-family: var(--fd); font-size: 28px; font-weight: 750; letter-spacing: -.05em }
-.nxdn small { font-size: 11px }
-.nxlg { display: flex; flex-direction: column; gap: 7px; font-size: 14px; font-weight: 600; min-width: 0 }
-.nxlg span { display: flex; align-items: center; gap: 8px }
-.nxlg i { width: 10px; height: 10px; border-radius: 50%; flex: none }
-.nxlg em { margin-left: auto; font-style: normal; color: var(--t2) }
-.nxbr { display: grid; grid-template-columns: 96px 1fr 26px; gap: 10px; align-items: center; font-size: 13px; font-weight: 600; margin: 7px 0 }
-.nxbr span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap }
-.nxbr div { height: 9px; border-radius: 9px; background: color-mix(in srgb, var(--tx) 8%, transparent); overflow: hidden }
-.nxbr div i { display: block; height: 100%; border-radius: 9px; background: var(--g) }
-.nxbr em { font-style: normal; color: var(--t2); text-align: right }
-.nxcols { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 5px; align-items: end; height: 110px; margin: 6px 0 0 }
-.nxcols div { display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 4px; height: 100%; font-size: 10px; color: var(--t2); font-weight: 600 }
-.nxcols i { display: block; width: 100%; min-height: 3px; border-radius: 6px 6px 3px 3px; background: var(--ac) }
-.nxcols b { font-size: 11px; color: var(--tx) }
-.nxsub { font-family: var(--fd); font-size: 15px; font-weight: 650; margin: 18px 0 6px; display: block }
-.nxkv { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin-bottom: 12px }
-.nxkv div { padding: 10px 12px; border-radius: 16px; background: color-mix(in srgb, var(--tx) 5%, transparent); min-width: 0 }
-.nxkv small { display: block; font-size: 11.5px; font-weight: 600 }
-.nxkv b { font-family: var(--fd); font-size: 17px; overflow-wrap: anywhere }
-
-/* tools hub */
-.nxtg { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding-bottom: 8px }
-.nxtt { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; padding: 14px; border-radius: 22px; background: color-mix(in srgb, var(--tx) 5%, var(--sf)); text-align: left; min-width: 0; transition: transform .12s }
-.nxtt:active { transform: scale(.97) }
-.nxtt .ti2 { width: 38px; height: 38px; border-radius: 13px; display: grid; place-items: center; margin-bottom: 6px; background: color-mix(in srgb, var(--ac) 14%, transparent); color: var(--ac) }
-.nxtt b { font-family: var(--fd); font-size: 15.5px; letter-spacing: -.02em }
-.nxtt small { font-size: 12.5px; line-height: 1.3 }
-
-/* emergency card */
-.nxice { border-radius: 26px; padding: 20px; color: #fff; background: linear-gradient(150deg, #7f1d1d, #dc2626 70%, #f87171); box-shadow: 0 22px 36px -22px #dc2626 }
-.nxice small { color: #ffffffc8; font-weight: 700; letter-spacing: .08em; font-size: 11.5px }
-.nxice h2 { font-size: 26px; margin: 4px 0 12px; overflow-wrap: anywhere }
-.nxice .bg { font-family: var(--fd); font-size: 60px; font-weight: 800; letter-spacing: -.05em; line-height: 1 }
-.nxice dl { margin: 16px 0 0; display: grid; gap: 10px }
-.nxice dt { font-size: 11.5px; opacity: .78; font-weight: 700; letter-spacing: .04em; text-transform: uppercase }
-.nxice dd { margin: 2px 0 0; font-weight: 650; overflow-wrap: anywhere }
-
-/* generators / calculators */
-.nxpw { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 19px; font-weight: 600; letter-spacing: .3px; word-break: break-all; padding: 16px; border-radius: 18px; background: color-mix(in srgb, var(--tx) 6%, var(--sf)); margin-bottom: 10px; line-height: 1.4 }
-.nxrg { display: flex; align-items: center; gap: 12px; margin: 0 0 12px }
-.nxrg input { margin: 0; flex: 1 }
-.nxrg b { min-width: 30px; text-align: right; font-family: var(--fd) }
-.nxbig { text-align: center; padding: 16px 10px; border-radius: 20px; margin: 4px 0 12px; background: color-mix(in srgb, var(--ac) 12%, var(--sf)) }
-.nxbig small { display: block; font-weight: 600 }
-.nxbig b { font-family: var(--fd); font-size: 34px; letter-spacing: -.05em; color: var(--ac) }
-.nxsplit { height: 12px; border-radius: 12px; overflow: hidden; display: flex; background: var(--bd); margin: 6px 0 8px }
-.nxsplit i { display: block; height: 100% }
-
-/* notes */
-.nxnote { --nc: #fde68a; display: block; width: 100%; text-align: left; padding: 12px 14px; margin-bottom: 10px; border-radius: 20px; background: color-mix(in srgb, var(--nc) 22%, var(--sf)); border-left: 5px solid var(--nc) }
-.nxnote b { display: flex; align-items: center; gap: 6px; font-family: var(--fd); font-size: 16px }
-.nxnote p { margin-top: 4px; font-size: 14px; color: var(--t2); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; white-space: pre-wrap }
-.nxnote small { display: block; margin-top: 6px; font-size: 11.5px }
-
-/* vehicle log */
-.nxlr { display: flex; align-items: center; gap: 12px; width: 100%; padding: 11px 0; border-bottom: 1px solid var(--bd); text-align: left }
-.nxlr:last-of-type { border-bottom: 0 }
-.nxlr .ri { width: 36px; height: 36px }
-.nxlr .rb { flex: 1; min-width: 0 }
-.nxlr strong { font-family: var(--fd); font-weight: 650; white-space: nowrap }
-.nxqe { font-size: 12.5px; font-weight: 650; color: var(--t2); align-self: center }
+    /* ---- appearance: surfaces, themes, switches ---- */
+    .pals { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px }
+    .pal { display: flex; flex-direction: column; gap: 6px; padding: 6px 6px 8px; border-radius: var(--rq); font-size: 11.5px; font-weight: 650; color: var(--t2); text-align: center; background: color-mix(in srgb, var(--tx) 4%, transparent) }
+    .pal i { display: block; height: 36px; border-radius: var(--rs); background: linear-gradient(135deg, var(--a) 0 50%, var(--b) 50%); border: 1px solid #00000014 }
+    [data-t=dark] .pal i { background: linear-gradient(135deg, var(--c) 0 50%, var(--d) 50%); border-color: #ffffff1a }
+    .pal.on { box-shadow: 0 0 0 2px var(--ac); color: var(--tx) }
+    .presets { grid-template-columns: repeat(3, 1fr) }
+    .pre i { background: var(--pb); border: 1px solid #00000014 }
+    .pre i::before { content: ""; position: absolute; left: 8px; top: 8px; width: 16px; height: 16px; border-radius: 50%; background: var(--pc) }
+    .pre i::after { background: var(--pc); opacity: .5 }
+    .seg.c2 { grid-template-columns: repeat(2, 1fr) }
+    @media(min-width:900px) { .tabs { display: none } }
+    .brand { background: color-mix(in srgb, var(--ac) 9%, var(--bg)) }
+    .wallet { scroll-padding-left: 16px }
+    .wgrid .idc { aspect-ratio: auto; min-height: 168px }
+    .wgrid .idc b { margin-top: 16px }
+    .cd .dots i { display: block }
+    .inx { grid-template-columns: minmax(0, 1fr) }
+    @media(min-width:700px) { .inx { grid-template-columns: repeat(2, minmax(0, 1fr)) } }
 
   </style>
 </head>
@@ -2683,16 +2668,17 @@ html[data-mo=off] *, html[data-mo=off] *::before, html[data-mo=off] *::after { a
     function logout(q) { if (!q && S.token) api('logout').catch(() => { }); S.token = ''; localStorage.removeItem('tk'); localStorage.removeItem('nxc'); localStorage.removeItem('nxpin'); localStorage.removeItem('nxv'); try { V.key = null; V.items = []; V.raw = []; V.meta = null; V.ok = 0; V.err = ''; V.q = ''; V.cat = 'all'; V.fv = 0; V.fid = '' } catch (e) { } S.user = null; const lk = $('#lk'); lk && lk.classList.remove('on'); authView('login') }
 
     /* ---------- SHELL & NAV ---------- */
+    const HL = { cal: 'home', ins: 'home' };
     const N = [['home', 'Home', 'home'], ['docs', 'Documents', 'folder'], ['veh', 'Vehicles', 'car'], ['vault', 'Vault', 'key'], ['me', 'Profile', 'user']];
     const nb = n => `<button data-n="${n[0]}" aria-label="${n[1]}" onclick="go('${n[0]}')">${I(n[2], 22)}<span>${n[1]}</span></button>`;
     const av = (u, c = '') => u.photo ? `<img class="av ${c}" src="${esc(u.photo)}" alt="" onerror="this.style.visibility='hidden'">` : `<div class="av ${c}">${esc((u.name || '?')[0].toUpperCase())}</div>`;
     const skel = () => '<div class="sk" style="height:120px;margin-bottom:14px"></div><div class="stats">' + '<div class="sk" style="height:80px"></div>'.repeat(4) + '</div>' + '<div class="sk" style="height:78px;margin-bottom:10px"></div>'.repeat(3);
     function chrome() {
-      const u = S.user;
-      $('#side').innerHTML = `<div style="display:flex;gap:12px;align-items:center"><img class="lgi" src="${LOGO}" width="40" height="40" alt=""><b>Nexus<br>Document Hub</b></div><nav>${N.map(nb).join('')}</nav><button class="btn full add" onclick="docForm()">${I('plus', 18)} Add document</button><button class="btn full sec sm" onclick="refresh()">${I('refresh', 16)} Sync now</button><button class="me" onclick="go('me')">${av(u)}<div><b>${esc(u.name)}</b><small>${esc(u.email)}</small></div></button>`;
-      $('#top').innerHTML = `<img class="lgi" src="${LOGO}" width="34" height="34" alt=""><b>Nexus Document Hub</b><span class="off ${S.off ? 'on' : ''}">Offline</span><button class="ib" onclick="refresh()" aria-label="Sync">${I('refresh', 18)}</button><button onclick="go('me')" aria-label="Profile">${av(u, 'sm')}</button>`;
-      $('#tabs').innerHTML = nb(N[0]) + nb(N[1]) + `<button class="plus" onclick="addNew()" aria-label="Add new">${I('plus', 26)}</button>` + nb(N[2]) + nb(N[3]) + nb(N[4]);
-      document.querySelectorAll('[data-n]').forEach(b => b.classList.toggle('on', b.dataset.n == S.tab))
+      const u = S.user, wm = '<b>Nexus<em>Docs</em></b>';
+      $('#side').innerHTML = `<div style="display:flex;gap:12px;align-items:center"><img class="lgi" src="${LOGO}" width="40" height="40" alt=""><b>Nexus<br>Docs</b></div><nav>${N.map(nb).join('')}</nav><button class="btn full add" onclick="addNew()">${I('plus', 18)} Add new</button><button class="btn full sec sm" onclick="refresh()">${I('refresh', 16)} Sync now</button><button class="me" onclick="go('me')">${av(u)}<div><b>${esc(u.name)}</b><small>${esc(u.email)}</small></div></button>`;
+      $('#top').innerHTML = `<img class="lgi" src="${LOGO}" width="30" height="30" alt="">${wm}<span class="off ${S.off ? 'on' : ''}">Offline</span><button class="ib" onclick="refresh()" aria-label="Sync">${I('refresh', 18)}</button><button onclick="go('me')" aria-label="Profile">${av(u, 'sm')}</button>`;
+      $('#tabs').innerHTML = nb(N[0]) + nb(N[1]) + `<button class="plus" onclick="addNew()" aria-label="Add new">${I('plus', 24)}</button>` + nb(N[2]) + nb(N[3]) + nb(N[4]);
+      document.querySelectorAll('[data-n]').forEach(b => b.classList.toggle('on', b.dataset.n == (HL[S.tab] || S.tab)))
     }
     /* The Google Sheet can return dates as 2026-10-12, 2026-10-12T18:30:00.000Z, 12/10/2026, a serial number etc.
        Everything is converted to a plain YYYY-MM-DD (local) so expiry maths is always right. */
@@ -2723,7 +2709,7 @@ html[data-mo=off] *, html[data-mo=off] *::before, html[data-mo=off] *::after { a
       else if (!await busy(sync)) return;
       S.day = ymd(new Date()); chrome(); go(S.tab, S.vid); hideSplash(); if (Q == 'doc') { Q = ''; docForm() }
     }
-    function go(t, v, keep) { S.tab = t; S.vid = v || null; document.querySelectorAll('[data-n]').forEach(b => b.classList.toggle('on', b.dataset.n == t)); const m = $('#main'); m.innerHTML = ({ home: pHome, docs: pDocs, veh: pVeh, vault: pVault, me: pMe })[t](); if (!keep) { m.style.animation = 'none'; m.offsetHeight; m.style.animation = ''; scrollTo(0, 0) } }
+    function go(t, v, keep) { S.tab = t; S.vid = v || null; document.querySelectorAll('[data-n]').forEach(b => b.classList.toggle('on', b.dataset.n == (HL[t] || t))); const m = $('#main'); m.innerHTML = ({ home: pHome, docs: pDocs, veh: pVeh, vault: pVault, me: pMe, cal: pCal, ins: pIns })[t](); if (!keep) { m.style.animation = 'none'; m.offsetHeight; m.style.animation = ''; scrollTo(0, 0) } }
 
     /* ---------- HELPERS ---------- */
     const fd = x => { x = nd(x); if (!x) return ''; const [y, m, d] = x.split('-').map(Number); return new Date(y, m - 1, d).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }) };
@@ -2734,8 +2720,12 @@ html[data-mo=off] *, html[data-mo=off] *::before, html[data-mo=off] *::after { a
     }
     const bad = d => ['er', 'wn'].includes(st(d.expiry)[0]);
     function card(d) {
-      const s = st(d.expiry), v = d.kind == 'vehicle' && S.vs.find(x => x.id == d.vehicleId), n = d.files.length;
-      return `<div class="dc" data-s="${s[0]}" onclick="view('${d.id}')"><div class="ic ${s[0]}">${ico(d.kind, d.title)}</div><div class="in"><b>${esc(d.title)}</b><small>${esc(d.number || 'No number')}${v ? ' · ' + esc(v.number) : ''}${d.holder ? ' · ' + esc(d.holder) : ''}</small><span class="bd ${s[0]}">${s[1]}</span></div><div class="rt">${pgTxt(d.files)}<span style="display:flex;gap:6px"><button class="star ${d.fav ? 'on' : ''}" onclick="event.stopPropagation();fav('${d.id}')" aria-label="Star document">${I('star', 17)}</button><button class="ib" onclick="event.stopPropagation();dmenu('${d.id}')" aria-label="Options">${I('more', 18)}</button></span></div></div>`
+      const s = st(d.expiry), v = d.kind == 'vehicle' && S.vs.find(x => x.id == d.vehicleId), sub = [mk(d.number || 'No number'), v && v.number, d.holder].filter(Boolean).map(esc).join(' · ');
+      return `<div class="dc" data-s="${s[0]}" onclick="view('${d.id}')"><div class="ic ${s[0]}">${ico(d.kind, d.title)}</div><div class="in"><b>${esc(d.title)}</b><small>${sub}</small><span class="bd ${s[0]}">${s[1]}</span></div><div class="rt"><button class="star ${d.fav ? 'on' : ''}" onclick="event.stopPropagation();fav('${d.id}')" aria-label="Star document">${I('star', 17)}</button><button class="ib" onclick="event.stopPropagation();dmenu('${d.id}')" aria-label="Options">${I('more', 18)}</button></div></div>`
+    }
+    function idc(d) {
+      const s = st(d.expiry), v = d.kind == 'vehicle' && S.vs.find(x => x.id == d.vehicleId), who = v ? v.number : (d.holder || 'Me');
+      return `<div class="idc k-${s[0] || 'n'}" onclick="view('${d.id}')" role="button" tabindex="0"><div class="t"><span class="ty">${d.kind == 'vehicle' ? 'VEHICLE' : 'PERSONAL'}</span><span class="ic2">${ico(d.kind, d.title)}</span></div><b>${esc(d.title)}</b><div class="no">${esc(d.number ? mk(d.number) : '•••• •••• ••••')}</div><div class="ft"><span>${esc(who)}</span><em>${s[0] ? s[1].replace('Valid till ', 'Till ') : 'No expiry'}</em></div></div>`
     }
     /* a document can have a Front and a Back side; they count as ONE document */
     const lbOf = x => x.lb || ((/^\[(Front|Back)\]/.exec(x.f ? '' : (x.n || '')) || [])[1]) || '';
@@ -2750,35 +2740,45 @@ html[data-mo=off] *, html[data-mo=off] *::before, html[data-mo=off] *::after { a
 
     /* ---------- PAGES ---------- */
     function pHome() {
-      const D = S.docs, att = D.filter(bad).sort((a, b) => st(a.expiry)[2] - st(b.expiry)[2]), ex = D.filter(d => st(d.expiry)[0] == 'er').length, u = S.user, pn = D.filter(d => d.fav), sn = D.filter(d => { const n = st(d.expiry)[2]; return n > 30 && n <= 90 }).sort((a, b) => st(a.expiry)[2] - st(b.expiry)[2]);
-      const n0 = att[0], big = att.length ? `<div class="bt big" onclick="S.st='all';go('docs')"><small>Needs attention</small><b>${att.length}</b><p>${esc(n0.title)} · ${st(n0.expiry)[1]}</p></div>` : `<div class="bt big good" onclick="go('docs')"><small>All good</small><b>${D.length}</b><p>${D.length ? 'documents, all up to date' : 'No documents yet. Tap + to add one'}</p></div>`;
-      return `${banner()}<div class="gh"><div><small>${greet()}</small><h2>${esc(u.name.split(' ')[0])}</h2></div></div>
-  <div class="bento">${big}${[['Documents', D.length, 'ta', 'file', "S.st='all';go('docs')"], ['Vehicles', S.vs.length, 'tb2', 'car', "go('veh')"], ['Expiring soon', att.length - ex, 'tw', 'bell', "S.st='wn';go('docs')"], ['Expired', ex, 'te', 'alert', "S.st='er';go('docs')"]].map(x => `<button class="bt ${x[2]}" onclick="${x[4]}"><span class="ti">${I(x[3], 18)}</span><b>${x[1]}</b><small>${x[0]}</small></button>`).join('')}</div>
-  <div class="qa"><button onclick="docForm()">${I('file', 24)}<span>Add document</span></button><button onclick="vehForm()">${I('car', 24)}<span>Add vehicle</span></button><button onclick="go('docs')">${I('search', 24)}<span>Search</span></button><button onclick="S.fv=1;S.f='all';go('docs')">${I('star', 24)}<span>Starred</span></button><button onclick="exportICS()">${I('cal', 24)}<span>Calendar</span></button><button onclick="exportCSV()">${I('table', 24)}<span>Export CSV</span></button></div>
-  ${att.length ? '<h3 class="h">Needs attention</h3>' + att.map(card).join('') : ''}
-  ${pn.length ? '<h3 class="h">Pinned</h3>' + pn.map(card).join('') : ''}${sn.length ? '<h3 class="h">Next 90 days</h3>' + sn.map(card).join('') : ''}<h3 class="h">Recent documents</h3>${D.slice(-5).reverse().map(card).join('') || empty('No documents yet. Tap + to add one', 'file')}`
+      const D = S.docs, H = UP.hs, att = D.filter(bad).sort((a, b) => st(a.expiry)[2] - st(b.expiry)[2]), ex = D.filter(d => st(d.expiry)[0] == 'er').length, wn = att.length - ex, u = S.user;
+      const okn = D.filter(d => st(d.expiry)[0] != 'er' && st(d.expiry)[0] != 'wn').length, pc = D.length ? Math.round(okn / D.length * 100) : 0, shown = new Set();
+      const take = a => a.filter(d => !shown.has(d.id)).map(d => (shown.add(d.id), d));
+      const sec = (t, a, wallet, more) => a.length ? `<div class="sh"><h3 class="h">${t}</h3>${more ? `<button class="lnk" onclick="${more}">See all</button>` : ''}</div>` + (wallet ? `<div class="wallet">${a.map(idc).join('')}</div>` : a.map(card).join('')) : '';
+      const pn = D.filter(d => d.fav), sn = D.filter(d => { const n = st(d.expiry)[2]; return n > 30 && n <= 90 }).sort((a, b) => st(a.expiry)[2] - st(b.expiry)[2]);
+      const sees = seenIds().map(id => D.find(d => d.id == id)).filter(Boolean);
+      const date = new Date().toLocaleDateString('en-IN', { weekday: 'long', day: 'numeric', month: 'long' });
+      let out = banner() + `<div class="gh"><small>${date}</small><h2>${greet()},<br><i>${esc(u.name.split(' ')[0])}</i></h2></div>`;
+      if (H.tiles) out += `<div class="ledger"><div class="lring" style="--p:${pc}"><i><b>${D.length ? pc + '%' : '–'}</b><small>healthy</small></i></div><div class="lrows">${[['ok', 'Valid', okn, 'ok'], ['wn', 'Expiring soon', wn, 'wn'], ['er', 'Expired', ex, 'er']].map(x => `<button class="lr" onclick="S.st='${x[0]}';S.f='all';S.fv=0;go('docs')"><i style="background:var(--${x[3]})"></i><span>${x[1]}</span><b>${x[2]}</b></button>`).join('')}</div><div class="lfoot"><button onclick="S.st='all';go('docs')">${I('file', 20)}<span><b>${D.length}</b>Document${D.length == 1 ? '' : 's'}</span></button><button onclick="go('veh')">${I('car', 20)}<span><b>${S.vs.length}</b>Vehicle${S.vs.length == 1 ? '' : 's'}</span></button></div></div>`;
+      if (H.qa) out += `<div class="qa"><button onclick="docForm()">${I('file', 24)}<span>Add document</span></button><button onclick="vehForm()">${I('car', 24)}<span>Add vehicle</span></button><button onclick="go('cal')">${I('cal', 24)}<span>Calendar</span></button><button onclick="go('ins')">${I('chart', 24)}<span>Insights</span></button><button onclick="S.fv=1;S.f='all';S.st='all';go('docs')">${I('star', 24)}<span>Starred</span></button><button onclick="S.q='';go('docs');setTimeout(()=>{const i=document.querySelector('.srch input');i&&i.focus()},80)">${I('search', 24)}<span>Search</span></button><button onclick="vGenTool()">${I('dice', 24)}<span>Generator</span></button><button onclick="exportICS()">${I('download', 24)}<span>Calendar file</span></button></div>`;
+      if (H.att) out += sec('Needs attention', take(att), 1, "S.st='all';S.so='exp';go('docs')");
+      if (H.pin) out += sec('Starred', take(pn), 1);
+      if (H.soon) out += sec('Next 90 days', take(sn), 0);
+      if (H.seen) out += sec('Recently opened', take(sees).slice(0, 4), 0);
+      if (H.recent) out += sec('Recently added', take(D.slice().reverse()).slice(0, 5), 0);
+      if (!D.length) out += `<div style="margin-top:22px">${empty('No documents yet. Tap + to add one', 'file')}</div>`;
+      return out
     }
     function dlist() {
       const q = S.q.toLowerCase();
       let a = S.docs.filter(d => (S.f == 'all' || d.kind == S.f) && (!S.fv || d.fav) && (S.hf == 'all' || d.holder == S.hf) && (S.st == 'all' || st(d.expiry)[0] == S.st) && (d.title + ' ' + d.number + ' ' + d.notes + ' ' + (d.holder || '')).toLowerCase().includes(q));
       if (S.so == 'exp') a.sort((x, y) => st(x.expiry)[2] - st(y.expiry)[2]); else if (S.so == 'new') a.reverse(); else a.sort((x, y) => x.title.localeCompare(y.title));
-      return a.map(card).join('') || empty('No documents found', 'search')
+      return a.length ? (UP.view == 'cards' ? `<div class="wgrid">${a.map(idc).join('')}</div>` : a.map(card).join('')) : empty('No documents found', 'search')
     }
     const dl = () => { $('#dl').innerHTML = dlist() };
     function pDocs() {
       const c = k => k == 'all' ? S.docs.length : S.docs.filter(d => d.kind == k).length, o = (v, t, c) => `<option value="${v}" ${c == v ? 'selected' : ''}>${t}</option>`;
       return `<div class="ph"><h2>Documents</h2><button class="btn sm" onclick="docForm()">${I('plus', 16)} Add</button></div>
   <div class="srch" style="margin-bottom:12px">${I('search', 18)}<input style="margin:0" placeholder="Search by name, number or notes" value="${esc(S.q)}" oninput="S.q=this.value;dl()"></div>
-  <div class="chips">${[['all', 'All'], ['person', 'Personal'], ['vehicle', 'Vehicle']].map(x => `<button class="chip ${S.f == x[0] ? 'on' : ''}" onclick="S.f='${x[0]}';go('docs',null,1)">${x[1]} (${c(x[0])})</button>`).join('')}<button class="chip ${S.fv ? 'on' : ''}" onclick="S.fv=S.fv?0:1;go('docs',null,1)">${I('star', 14)} Starred (${S.docs.filter(d => d.fav).length})</button></div>${hchips()}
+  <div class="chips">${[['all', 'All'], ['person', 'Personal'], ['vehicle', 'Vehicle']].map(x => `<button class="chip ${S.f == x[0] ? 'on' : ''}" onclick="S.f='${x[0]}';go('docs',null,1)">${x[1]} (${c(x[0])})</button>`).join('')}<button class="chip ${S.fv ? 'on' : ''}" onclick="S.fv=S.fv?0:1;go('docs',null,1)">${I('star', 14)} Starred (${S.docs.filter(d => d.fav).length})</button><button class="chip" onclick="UP.view=UP.view=='cards'?'list':'cards';pfSave();go('docs',null,1)" aria-label="Switch layout">${I(UP.view == 'cards' ? 'table' : 'card', 14)} ${UP.view == 'cards' ? 'List' : 'Cards'}</button></div>${hchips()}
   <div class="two"><select onchange="S.st=this.value;dl()">${o('all', 'All status', S.st) + o('ok', 'Valid', S.st) + o('wn', 'Expiring soon', S.st) + o('er', 'Expired', S.st)}</select><select onchange="S.so=this.value;dl()">${o('exp', 'Sort: Expiry', S.so) + o('new', 'Sort: Newest', S.so) + o('az', 'Sort: A to Z', S.so)}</select></div><div id="dl">${dlist()}</div>`
     }
     function pVeh() {
       if (S.vid) return pVD();
-      return `<div class="ph"><h2>Vehicles</h2><button class="btn sm" onclick="vehForm()">${I('plus', 16)} Add</button></div>` + (S.vs.map(v => { const n = S.docs.filter(d => d.vehicleId == v.id), b = n.filter(bad).length; return `<div class="vc" onclick="go('veh','${v.id}')">${vph(v)}<div class="in"><b>${esc(v.number)}</b><small>${esc(v.model || 'Vehicle')} · ${esc(v.owner)}</small><span class="bd ${b ? 'wn' : 'ok'}">${n.length} docs${b ? ' · ' + b + ' need attention' : ''}</span></div><span class="ch">${I('right', 22)}</span></div>` }).join('') || empty('No vehicles added yet', 'car'))
+      return `<div class="ph"><h2>Vehicles</h2><button class="btn sm" onclick="vehForm()">${I('plus', 16)} Add</button></div>` + (S.vs.map(v => { const n = S.docs.filter(d => d.vehicleId == v.id), b = n.filter(bad).length; return `<div class="vc" onclick="go('veh','${v.id}')">${vph(v)}<div class="in"><b>${esc(v.number)}</b><small>${[v.model || 'Vehicle', v.owner].filter(Boolean).map(esc).join(' · ')}</small><span class="bd ${b ? 'wn' : 'ok'}">${n.length} document${n.length == 1 ? '' : 's'}${b ? ' · ' + b + ' need attention' : ''}</span></div><span class="ch">${I('right', 22)}</span></div>` }).join('') || empty('No vehicles added yet', 'car'))
     }
     function pVD() {
       const v = S.vs.find(x => x.id == S.vid); if (!v) { S.vid = null; return pVeh() }
-      return `<button class="bk" onclick="go('veh')">${I('left', 18)} All vehicles</button><div class="hero vh">${v.photo ? `<img src="${esc(v.photo)}" onclick="openV('${esc(v.number)}',[{src:this.src,img:1,dl:this.src}])" alt="">` : ''}<div style="position:relative;z-index:1"><h2>${esc(v.number)}</h2><p>${esc(v.model || '')}</p><small>${esc(v.owner)} · ${esc(v.phone)}</small></div></div>
+      return `<button class="bk" onclick="go('veh')">${I('left', 18)} All vehicles</button><div class="hero vh">${v.photo ? `<img src="${esc(v.photo)}" onclick="openV('${esc(v.number)}',[{src:this.src,img:1,dl:this.src}])" alt="">` : ''}<div style="position:relative;z-index:1"><h2>${esc(v.number)}</h2><p>${esc(v.model || '')}</p><small>${[v.owner, v.phone].filter(Boolean).map(esc).join(' · ')}</small></div></div>
   <div class="qa"><button onclick="docForm(0,'${v.id}')">${I('file', 24)}<span>Add document</span></button><button onclick="vehForm('${v.id}')">${I('edit', 24)}<span>Edit</span></button><button onclick="delVeh('${v.id}')" style="color:var(--er)">${I('trash', 24)}<span>Delete</span></button></div>
   <h3 class="h">Documents</h3>${S.docs.filter(d => d.vehicleId == v.id).map(card).join('') || empty('No documents for this vehicle', 'file')}`
     }
@@ -2791,18 +2791,17 @@ html[data-mo=off] *, html[data-mo=off] *::before, html[data-mo=off] *::after { a
       const since = u.created ? new Date(u.created).toLocaleDateString('en-IN', { month: 'long', year: 'numeric' }) : '';
       const R = (i, l, v) => `<div class="row"><div class="ri">${I(i, 20)}</div><div class="rb"><small>${l}</small><b>${v ? esc(v) : '<i>Not added</i>'}</b></div></div>`;
       const A = (i, t, s, fn, c = '') => `<button class="row ${c}" onclick="${fn}"><div class="ri">${I(i, 20)}</div><div class="rb"><b>${t}</b><small>${s}</small></div>${c ? '' : `<span class="ch">${I('right', 18)}</span>`}</button>`;
-      const dark = document.documentElement.dataset.t == 'dark';
       return `<div class="card pfc"><div class="cover"></div><div class="pfh"><button class="avw" onclick="photoMenu()" aria-label="Change profile photo">${av(u, 'xl')}<span class="cam">${I('camera', 16)}</span></button>
     <div class="pfi"><h2>${esc(u.name)} <span class="vb">${I('check', 12)} Verified</span></h2><small>${esc(u.email)}</small>${since ? `<small>Member since ${since}</small>` : ''}</div><button class="btn sm sec" onclick="prof()">${I('edit', 16)} Edit profile</button></div></div>
   <div class="stats"><div class="st"><b>${S.docs.length}</b><small>Documents</small></div><div class="st"><b>${S.docs.filter(d => d.fav).length}</b><small>Starred</small></div><div class="st"><b>${S.vs.length}</b><small>Vehicles</small></div><div class="st ${att ? 'wn' : ''}"><b>${att}</b><small>Need attention</small></div></div>
   ${pc < 100 ? `<div class="card" style="margin-bottom:14px"><div style="display:flex;justify-content:space-between"><b>Complete your profile</b><b style="color:var(--ac)">${pc}%</b></div><div class="pg2"><i style="width:${pc}%"></i></div><small>Add your ${miss.slice(0, 3).join(', ')}${miss.length > 3 ? ' and more' : ''} to finish.</small></div>` : ''}
   <h3 class="h">Personal information</h3><div class="card grp">${R('user', 'Full name', u.name) + R('mail', 'Email', u.email) + R('phone', 'Phone', u.phone) + R('cal', 'Date of birth', u.dob ? fd(u.dob) : '') + R('drop', 'Blood group', u.blood) + R('pin', 'Address', u.address) + R('phone', 'Emergency contact', u.emergency)}</div>
+  <h3 class="h">Appearance</h3><div class="card grp">${A('palette', 'Theme and colours', prefSummary(), 'appearance()')}${A('sliders', 'Home screen', 'Choose which sections to show', 'homeOpts()')}${A('eye2', 'Privacy', UP.mask ? 'Document numbers hidden' : 'Numbers, vault lock, clipboard', 'privOpts()')}</div>
+  <h3 class="h">Tools</h3><div class="card grp">${A('cal', 'Expiry calendar', 'See every renewal by date', "go('cal')")}${A('chart', 'Insights', 'Charts about your documents', "go('ins')")}${A('dice', 'Password generator', 'Strong random passwords', 'vGenTool()')}${A('health', 'Password health', 'Weak, reused and old logins', 'vHealthGo()')}</div>
   <h3 class="h">Preferences</h3><div class="card grp">${standalone() ? '' : A('download', 'Install app', 'Add Nexus Docs to your home screen', 'installApp()')}
-    <div class="row"><div class="ri">${I('bell', 20)}</div><div class="rb"><b>Email reminders</b><small>Sent by email every morning at 8 AM</small></div><label class="sw"><input type="checkbox" ${u.remind ? 'checked' : ''} onchange="tgRem(this)"><span></span></label></div>
-    <div class="row"><div class="ri">${I(dark ? 'moon' : 'sun', 20)}</div><div class="rb"><b>Dark mode</b><small>Easier on the eyes at night</small></div><label class="sw"><input type="checkbox" ${dark ? 'checked' : ''} onchange="theme();go('me',null,1)"><span></span></label></div>${notifRow()}${A('bell', 'Reminder timing', rdTxt(), 'remDays()')}${A('palette', 'Accent colour', AC[curAc()][0], 'accentPick()')}<div class="row"><div class="ri">${I('lock', 20)}</div><div class="rb"><b>App lock</b><small>Ask for a 4-digit PIN when the app opens</small></div><label class="sw"><input type="checkbox" ${localStorage.nxpin ? 'checked' : ''} onchange="tgLock(this)"><span></span></label></div></div>
+    <div class="row"><div class="ri">${I('bell', 20)}</div><div class="rb"><b>Email reminders</b><small>Sent by email every morning at 8 AM</small></div><label class="sw"><input type="checkbox" ${u.remind ? 'checked' : ''} onchange="tgRem(this)"><span></span></label></div>${notifRow()}${A('bell', 'Reminder timing', rdTxt(), 'remDays()')}<div class="row"><div class="ri">${I('lock', 20)}</div><div class="rb"><b>App lock</b><small>Ask for a 4-digit PIN when the app opens</small></div><label class="sw"><input type="checkbox" ${localStorage.nxpin ? 'checked' : ''} onchange="tgLock(this)"><span></span></label></div></div>
   <h3 class="h">Security &amp; data</h3><div class="card grp">${A('lock', 'Change password', 'Update your account password', 'chPw()') + A('devices', 'Logout from all devices', 'End every active session', 'logAll()') + A('download', 'Export my data', 'Download all your details as a file', 'exportData()') + A('table', 'Export documents (CSV)', 'Open in Excel or Google Sheets', 'exportCSV()') + A('cal', 'Add expiry dates to calendar', 'Download an .ics file for any calendar app', 'exportICS()')}</div>
-  <h3 class="h">Account</h3><div class="card grp">${A('logout', 'Logout', 'Sign out from this device', 'logout()') + A('trash', 'Delete account', 'Permanently remove all your data', 'delAcc()', 'rd')}</div><p class="t2" style="text-align:center;font-size:12.5px;margin:18px 0 4px">Nexus Docs · UI version 4.3</p>
-  <p class="t2" style="text-align:center;margin-top:20px;font-size:12px">Nexus Document Hub · v3.2</p>`}
+  <h3 class="h">Account</h3><div class="card grp">${A('logout', 'Logout', 'Sign out from this device', 'logout()') + A('trash', 'Delete account', 'Permanently remove all your data', 'delAcc()', 'rd')}</div><p class="t2" style="text-align:center;font-size:12.5px;margin:18px 0 4px">Nexus Docs · UI version 5.0</p>`}
 
     /* ---------- PROFILE ACTIONS ---------- */
     const sq = f => new Promise((r, j) => { const i = new Image(); i.onload = () => { const m = Math.min(i.width, i.height), c = document.createElement('canvas'); c.width = c.height = 480; c.getContext('2d').drawImage(i, (i.width - m) / 2, (i.height - m) / 2, m, m, 0, 0, 480, 480); URL.revokeObjectURL(i.src); r(c.toDataURL('image/jpeg', .88).split(',')[1]) }; i.onerror = () => j(Error('Could not read this image')); i.src = URL.createObjectURL(f) });
@@ -2979,7 +2978,7 @@ html[data-mo=off] *, html[data-mo=off] *::before, html[data-mo=off] *::after { a
     const zc = $('#zc'), di = () => $('#di'), tf = () => { if (di()) di().style.transform = `translate(${tx}px,${ty}px) scale(${sc})` }, dist = e => Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY), rz = () => { sc = 1; tx = ty = 0; tf() };
     $('#vb').innerHTML = I('left', 18) + ' Back'; $('#vd').innerHTML = I('download', 16) + ' Download'; $('#vsh').innerHTML = I('share', 16) + ' Share'; $('#pp').innerHTML = I('left', 22); $('#pn').innerHTML = I('right', 22);
     const pgOf = f => { const lb = lbOf(f), img = /^image/.test(f.t || ''); return { lb, img, id: f.id, f, src: img ? `https://lh3.googleusercontent.com/d/${f.id}` : `https://drive.google.com/file/d/${f.id}/preview`, dl: `https://drive.google.com/uc?export=download&id=${f.id}` } };
-    function view(id) { const d = S.docs.find(x => x.id == id); openV(d.title, d.files.map(pgOf)) }
+    function view(id) { const d = S.docs.find(x => x.id == id); seenAdd(id); openV(d.title, d.files.map(pgOf)) }
     function openV(t, P) { VP = P; vi = 0; $('#vt').textContent = t; $('#vw').classList.add('on'); history.pushState({ v: 1 }, ''); rend() }
     function rend() {
       const p = VP[vi]; zc.innerHTML = p.img ? `<img id="di" src="${esc(p.src)}" alt="">` : `<iframe src="${esc(p.src)}"></iframe>`; rz();
@@ -3248,7 +3247,7 @@ html[data-mo=off] *, html[data-mo=off] *::before, html[data-mo=off] *::after { a
       } catch (e) { V.err = e.message || 'Could not load the vault' }
       V.ld = 0; if (S.tab == 'vault' && !$('.ov')) go('vault', null, 1)
     }
-    function vTouch() { clearTimeout(V.t); if (V.key) V.t = setTimeout(() => { if ($('.ov')) return vTouch(); vLock(1) }, 18e4) }
+    function vTouch() { clearTimeout(V.t); if (V.key) V.t = setTimeout(() => { if ($('.ov')) return vTouch(); vLock(1) }, UP.vlock * 6e4) }
     function vLock(q) {
       V.key = null; V.items = []; V.fid = ''; clearTimeout(V.t);
       if (S.tab == 'vault' && $('#shell.on')) go('vault', null, 1); if (!q) toast('Vault locked', 'inf')
@@ -3317,7 +3316,7 @@ html[data-mo=off] *, html[data-mo=off] *::before, html[data-mo=off] *::after { a
       if (!V.meta) return hd + `<div class="card vlock"><div class="big">${I('key', 34)}</div><h3>Your private password vault</h3><p>Save logins for every site and app in one place.</p><ul><li>Group many accounts in a folder, like Instagram</li><li>Encrypted on this phone before it is saved</li><li>Only your master password can open it</li><li>Works offline with your last synced data</li></ul><button class="btn full" onclick="vSetup()">Create vault</button></div>`;
       if (!V.key) return hd + `<div class="card vlock"><div class="big">${I('lock', 34)}</div><h3>Vault is locked</h3><p>${V.raw.length ? 'Your saved logins are inside. ' : ''}Enter your master password to open it.</p><button class="btn full" onclick="vUnlock()">${I('key', 18)} Unlock vault</button></div>`;
       vTouch();
-      const foot = `<p class="t2" style="text-align:center;font-size:12px;margin-top:16px">${I('lock', 12)} End-to-end encrypted · auto-locks after 3 minutes</p>`;
+      const foot = `<p class="t2" style="text-align:center;font-size:12px;margin-top:16px">${I('lock', 12)} End-to-end encrypted · auto-locks after ${UP.vlock} minute${UP.vlock > 1 ? 's' : ''}</p>`;
       if (F0) { const n = vIn(F0).length; return `<button class="bk" onclick="V.fid='';V.q='';go('vault',null,1)">${I('left', 18)} All folders</button>` + hd + `<p class="t2" style="margin:-8px 0 14px">${n ? n + ' account' + (n > 1 ? 's' : '') : 'No accounts yet'}</p><button class="btn full" style="margin-bottom:14px" onclick="vForm('',V.fid)">${I('plus', 18)} Add account</button>` + vSearchBox() + `<div id="vl">${vList()}</div>` + foot }
       const L = vLogins(), cnt = c => c == 'all' ? L.length : L.filter(x => x.cat == c).length, cs = VCAT.map(x => x[0]).filter(c => cnt(c)), FS = vFolders(), q = V.q.trim();
       if (V.cat != 'all' && !cs.includes(V.cat)) V.cat = 'all';
@@ -3364,7 +3363,7 @@ html[data-mo=off] *, html[data-mo=off] *::before, html[data-mo=off] *::after { a
     async function vCopyTxt(t, label) {
       try { await navigator.clipboard.writeText(t) }
       catch (e) { const a = document.createElement('textarea'); a.value = t; a.style.cssText = 'position:fixed;opacity:0'; document.body.appendChild(a); a.select(); let ok = 0; try { ok = document.execCommand('copy') } catch (x) { } a.remove(); if (!ok) return toast('Could not copy', 'er') }
-      toast(label + ' copied')
+      toast(label + ' copied'); if (UP.clip && /pass|pin|code|answer/i.test(label)) { clearTimeout(vCopyTxt.t); vCopyTxt.t = setTimeout(() => { try { navigator.clipboard.writeText(' ') } catch (e) { } }, UP.clip * 1e3) }
     }
     const vCopy = id => { const x = V.items.find(i => i.id == id); x && vCopyTxt(x.pass, 'Password') };
     function vOpenUrl(id) {
@@ -3474,8 +3473,8 @@ html[data-mo=off] *, html[data-mo=off] *::before, html[data-mo=off] *::after { a
 
     /* ---- vault menu: lock, change master password, export, reset ---- */
     async function vMenu() {
-      const k = await sheet('Vault options', [{ k: 'nf', i: 'folder', t: 'New folder', s: 'Group many accounts, like Instagram' }, { k: 'lock', i: 'lock', t: 'Lock vault now' }, { k: 'pw', i: 'key', t: 'Change master password', s: 'Re-encrypts every login' }, { k: 'csv', i: 'download', t: 'Export as CSV', s: 'Not encrypted. Keep the file safe' }, { k: 'rs', i: 'trash', t: 'Reset vault', s: 'Deletes all saved logins', cls: 'rd' }]);
-      if (k == 'nf') vFolderForm(); if (k == 'lock') vLock(); if (k == 'pw') vChange(); if (k == 'csv') vExport(); if (k == 'rs') vReset()
+      const k = await sheet('Vault options', [{ k: 'nf', i: 'folder', t: 'New folder', s: 'Group many accounts, like Instagram' }, { k: 'hl', i: 'health', t: 'Password health', s: 'Weak, reused and old passwords' }, { k: 'gn', i: 'dice', t: 'Password generator' }, { k: 'vs', i: 'sliders', t: 'Vault settings', s: 'Auto-lock and clipboard' }, { k: 'lock', i: 'lock', t: 'Lock vault now' }, { k: 'pw', i: 'key', t: 'Change master password', s: 'Re-encrypts every login' }, { k: 'csv', i: 'download', t: 'Export as CSV', s: 'Not encrypted. Keep the file safe' }, { k: 'rs', i: 'trash', t: 'Reset vault', s: 'Deletes all saved logins', cls: 'rd' }]);
+      if (k == 'hl') vHealth(); if (k == 'gn') vGenTool(); if (k == 'vs') vOpts(); if (k == 'nf') vFolderForm(); if (k == 'lock') vLock(); if (k == 'pw') vChange(); if (k == 'csv') vExport(); if (k == 'rs') vReset()
     }
     async function vChange() {
       const o = await modal({
@@ -3565,614 +3564,223 @@ html[data-mo=off] *, html[data-mo=off] *::before, html[data-mo=off] *::after { a
       sendFiles({ title: $('#vt').textContent, files: VP.map(x => x.f).filter(Boolean) }, [p.f], 'share')
     }
 
+    /* =====================================================================
+       v5 FEATURES: appearance, home options, calendar, insights, vault tools
+       ===================================================================== */
+    Object.assign(P, {
+      chart: '<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>',
+      sliders: '<path d="M4 6h9M17 6h3M4 12h3M11 12h9M4 18h11M19 18h1"/><circle cx="15" cy="6" r="2"/><circle cx="9" cy="12" r="2"/><circle cx="17" cy="18" r="2"/>',
+      card: '<rect x="2" y="5" width="20" height="14" rx="3"/><path d="M2 10h20M6 15h4"/>',
+      wifi: '<path d="M2 9a15 15 0 0 1 20 0M5 13a10 10 0 0 1 14 0M8.5 16.5a5 5 0 0 1 7 0"/><circle cx="12" cy="20" r=".8"/>',
+      heart: '<path d="M20.8 5.6a5.5 5.5 0 0 0-7.8 0L12 6.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1.1L12 22l7.8-7.5 1-1.1a5.5 5.5 0 0 0 0-7.8z"/>',
+      plane: '<path d="M17.8 19.2L16 11l3.5-3.5a2.1 2.1 0 0 0-3-3L13 8 4.8 6.2 3.4 7.6 10 11l-3 3-3-.5L3 15l4 1 1 4 1.5-.9-.5-3 3-3 3.4 6.6z"/>',
+      bolt: '<path d="M13 2L4 14h7l-1 8 9-12h-7z"/>',
+      game: '<rect x="2" y="7" width="20" height="11" rx="5"/><path d="M7 10v5M4.5 12.5h5M16 11h.01M18.5 14h.01"/>',
+      coin: '<circle cx="12" cy="12" r="9"/><path d="M9 8h5a2 2 0 0 1 0 4H9m0 0h6a2 2 0 0 1 0 4H9M9 7v10"/>',
+      health: '<path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M12 9v6M9 12h6"/>',
+      dice: '<rect x="3" y="3" width="18" height="18" rx="4"/><path d="M8 8h.01M16 8h.01M8 16h.01M16 16h.01M12 12h.01"/>',
+      eye2: '<path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',
+      left: P.left || '<path d="M15 18l-6-6 6-6"/>'
+    });
+
+    /* ---------- preferences ---------- */
+    const UP_DEF = { mode: 'auto', pal: 'paper', view: 'list', rad: 'round', den: 'cozy', zm: 1, card: 'tint', font: 'modern', mask: 0, start: 'home', vlock: 3, clip: 30, hs: { tiles: 1, qa: 1, att: 1, pin: 1, soon: 1, seen: 1, recent: 1 } };
+    const UP = (() => {
+      let o = {}; try { o = JSON.parse(localStorage.nxp || '{}') } catch (e) { }
+      const p = { ...UP_DEF, ...o, hs: { ...UP_DEF.hs, ...(o.hs || {}) } };
+      if (!o.mode && (localStorage.th == 'dark' || localStorage.th == 'light')) p.mode = localStorage.th;
+      return p
+    })();
+    const pfSave = () => { try { localStorage.nxp = JSON.stringify(UP) } catch (e) { } };
+    function applyPrefs() {
+      const r = document.documentElement, sys = matchMedia('(prefers-color-scheme:dark)').matches, dark = UP.mode == 'dark' || UP.mode == 'black' || (UP.mode == 'auto' && sys);
+      r.dataset.t = dark ? 'dark' : 'light'; r.dataset.b = UP.mode == 'black' ? '1' : ''; r.dataset.pal = PAL[UP.pal] ? UP.pal : 'paper'; r.dataset.r = UP.rad; r.dataset.d = UP.den; r.dataset.card = UP.card; r.dataset.f = UP.font;
+      r.style.setProperty('--zm', UP.zm);
+      const tc = $('#tc'); if (tc) tc.content = dark ? (UP.mode == 'black' ? '#000000' : '#0b0f15') : '#0b1220';
+      barTheme()
+    }
+    try { matchMedia('(prefers-color-scheme:dark)').addEventListener('change', () => { if (UP.mode == 'auto') { applyPrefs(); if (S.user && !$('.ov')) draw() } }) } catch (e) { }
+    const MODES = [['auto', 'Auto'], ['light', 'Light'], ['dark', 'Dark'], ['black', 'Black']];
+    const hexRGB = h => { h = String(h).replace('#', ''); if (h.length == 3) h = [...h].map(c => c + c).join(''); return [0, 2, 4].map(i => parseInt(h.slice(i, i + 2), 16) || 0) };
+    const rgbHex = a => '#' + a.map(v => Math.max(0, Math.min(255, Math.round(v))).toString(16).padStart(2, '0')).join('');
+    const hexMix = (a, b, t) => { const x = hexRGB(a), y = hexRGB(b); return rgbHex(x.map((v, i) => v + (y[i] - v) * t)) };
+    function customAc() { const h = /^#[0-9a-f]{6}$/i.test(localStorage.acc || '') ? localStorage.acc : '#3b5bfd'; AC.custom = ['Custom', h, hexMix(h, '#000000', .18), hexMix(h, '#ffffff', .22), hexMix(h, '#000000', .86)] }
+    Object.assign(AC, {
+      rose: ['Rose', '#e11d48', '#be123c', '#f43f5e', '#2a0a12'], indigo: ['Indigo', '#4f46e5', '#4338ca', '#7c3aed', '#14123a'], amber: ['Amber', '#d97706', '#b45309', '#f59e0b', '#2b1a05'],
+      lime: ['Lime', '#65a30d', '#4d7c0f', '#16a34a', '#12220a'], cyan: ['Cyan', '#0ea5e9', '#0284c7', '#06b6d4', '#06222d'], pink: ['Pink', '#db2777', '#be185d', '#a855f7', '#2d0a1c'],
+      graphite: ['Graphite', '#475569', '#334155', '#64748b', '#0b1220'], gold: ['Gold', '#b8860b', '#946a07', '#d4a017', '#241a02'], mint: ['Mint', '#10b981', '#059669', '#14b8a6', '#04221a'],
+      crimson: ['Crimson', '#dc2626', '#b91c1c', '#f97316', '#2a0808'], navy: ['Navy', '#1d4ed8', '#1e40af', '#3b82f6', '#0a1330'], plum: ['Plum', '#9333ea', '#7e22ce', '#d946ef', '#220a33']
+    });
+    const PAL = { paper: ['Paper', '#f3efe7', '#fffdf9', '#0f0e0c', '#1a1814'], snow: ['Snow', '#f4f5f8', '#ffffff', '#0b0c0f', '#15171c'], mist: ['Mist', '#e8eff6', '#f8fbfe', '#0a1017', '#121b25'], sage: ['Sage', '#eaefe3', '#f9fbf6', '#0a100b', '#131b14'], blush: ['Blush', '#f8ebe7', '#fffaf8', '#140c0d', '#1f1415'], lilac: ['Lilac', '#efeaf7', '#fcfaff', '#0e0b14', '#17131f'], butter: ['Butter', '#f6eed2', '#fffcf0', '#12100a', '#1c1a10'] };
+    const PRESETS = [
+      ['Paper', { mode: 'auto', pal: 'paper', rad: 'round', card: 'tint', den: 'cozy', font: 'modern' }, 'indigo'],
+      ['Snow', { mode: 'light', pal: 'snow', rad: 'round', card: 'plain', den: 'cozy', font: 'clean' }, 'blue'],
+      ['Midnight', { mode: 'dark', pal: 'snow', rad: 'round', card: 'plain', den: 'cozy', font: 'clean' }, 'indigo'],
+      ['Amoled', { mode: 'black', pal: 'snow', rad: 'round', card: 'plain', den: 'cozy', font: 'modern' }, 'cyan'],
+      ['Forest', { mode: 'dark', pal: 'sage', rad: 'soft', card: 'tint', den: 'cozy', font: 'modern' }, 'green'],
+      ['Sakura', { mode: 'light', pal: 'blush', rad: 'round', card: 'tint', den: 'cozy', font: 'modern' }, 'rose'],
+      ['Lavender', { mode: 'light', pal: 'lilac', rad: 'round', card: 'tint', den: 'cozy', font: 'modern' }, 'purple'],
+      ['Ocean', { mode: 'light', pal: 'mist', rad: 'soft', card: 'tint', den: 'cozy', font: 'clean' }, 'teal'],
+      ['Honey', { mode: 'light', pal: 'butter', rad: 'round', card: 'tint', den: 'cozy', font: 'classic' }, 'amber'],
+      ['Espresso', { mode: 'dark', pal: 'paper', rad: 'soft', card: 'tint', den: 'cozy', font: 'classic' }, 'gold'],
+      ['Terminal', { mode: 'black', pal: 'snow', rad: 'sharp', card: 'plain', den: 'compact', font: 'mono' }, 'lime'],
+      ['Wine', { mode: 'dark', pal: 'blush', rad: 'round', card: 'tint', den: 'cozy', font: 'modern' }, 'crimson']
+    ];
+    const prefSummary = () => (MODES.find(m => m[0] == UP.mode) || MODES[0])[1] + ' · ' + AC[curAc()][0];
+    async function appearance() {
+      const seg = (k, arr, cls = '') => `<div class="seg ${cls}">${arr.map(a => `<button data-ap="${k}:${a[0]}" class="${String(UP[k]) == String(a[0]) ? 'on' : ''}">${a[1]}</button>`).join('')}</div>`;
+      const html = () => `<div class="apx">
+    <h4>Quick themes</h4><div class="presets">${PRESETS.map((p, i) => { const q = PAL[p[1].pal], d = p[1].mode == 'dark' || p[1].mode == 'black'; return `<button class="pre" data-pre="${i}" style="--pc:${AC[p[2]][1]};--pb:${p[1].mode == 'black' ? '#000' : d ? q[3] : q[1]};--pf:#fff"><i></i>${p[0]}</button>` }).join('')}</div>
+    <h4>Surface colour</h4><div class="pals">${Object.keys(PAL).map(k => `<button class="pal ${UP.pal == k ? 'on' : ''}" data-ap="pal:${k}" style="--a:${PAL[k][1]};--b:${PAL[k][2]};--c:${PAL[k][3]};--d:${PAL[k][4]}"><i></i>${PAL[k][0]}</button>`).join('')}</div>
+    <h4>Mode</h4>${seg('mode', MODES, 'c4')}
+    <h4>Accent colour</h4><div class="sws">${Object.keys(AC).filter(k => k != 'custom').map(x => `<button style="background:${AC[x][1]}" class="${curAc() == x ? 'on' : ''}" data-ac="${x}" aria-label="${AC[x][0]}">${curAc() == x ? I('check', 18) : ''}</button>`).join('')}<button class="cust ${curAc() == 'custom' ? 'on' : ''}" aria-label="Custom colour">${curAc() == 'custom' ? '<span style="position:relative;z-index:1;display:grid;place-items:center;width:100%;height:100%;background:' + AC.custom[1] + '">' + I('check', 18) + '</span>' : ''}<input type="color" id="ap_c" value="${AC.custom[1]}" aria-label="Pick any colour"></button></div>
+    <h4>Corners</h4>${seg('rad', [['sharp', 'Sharp'], ['soft', 'Soft'], ['round', 'Round']], 'c3')}
+    <h4>Text and content size</h4>${seg('zm', [[.92, 'Small'], [1, 'Normal'], [1.1, 'Large'], [1.2, 'Larger']], 'c4')}
+    <h4>Spacing</h4>${seg('den', [['cozy', 'Comfortable'], ['compact', 'Compact']])}
+    <h4>Document cards</h4>${seg('card', [['tint', 'Tinted by status'], ['plain', 'Plain white']])}
+    <h4>Font</h4>${seg('font', [['modern', 'Serif'], ['clean', 'Clean'], ['system', 'System'], ['classic', 'Classic'], ['mono', 'Mono']], 'c3')}
+    <h4>Documents shown as</h4>${seg('view', [['list', 'List'], ['cards', 'ID cards']], 'c2')}
+    <h4>Open the app on</h4>${seg('start', [['home', 'Home'], ['docs', 'Documents'], ['vault', 'Vault']], 'c3')}</div>`;
+      await modal({
+        title: 'Appearance', icon: 'palette', wide: 1, ok: null, cancel: null, noFocus: 1, html: '<div id="ap">' + html() + '</div>',
+        onOpen: el => {
+          const box = el.querySelector('#ap'), re = () => { const y = el.querySelector('.mb').scrollTop; box.innerHTML = html(); el.querySelector('.mb').scrollTop = y; bindCol() }, upd = () => { pfSave(); applyPrefs(); chrome(); const s = S.tab; if (!['vault'].includes(s)) go(s, S.vid, 1); re() };
+          const bindCol = () => { const c = box.querySelector('#ap_c'); if (c) c.onchange = c.oninput = () => { localStorage.acc = c.value; localStorage.ac = 'custom'; customAc(); applyAc(); chrome(); go(S.tab, S.vid, 1); clearTimeout(c._t); c._t = setTimeout(re, 400) } }; bindCol();
+          box.addEventListener('click', e => {
+            const b = e.target.closest('button'); if (!b) return;
+            if (b.dataset.ap) { const [k, v] = b.dataset.ap.split(':'); UP[k] = k == 'zm' ? +v : v; upd() }
+            else if (b.dataset.ac) { localStorage.ac = b.dataset.ac; applyAc(); chrome(); go(S.tab, S.vid, 1); re() }
+            else if (b.dataset.pre) { const p = PRESETS[+b.dataset.pre]; Object.assign(UP, p[1]); localStorage.ac = p[2]; applyAc(); upd() }
+          })
+        }
+      });
+      if (S.tab == 'me') go('me', null, 1)
+    }
+    async function homeOpts() {
+      const L = [['tiles', 'Summary tiles', 'Attention, documents, vehicles'], ['qa', 'Quick actions', 'Shortcut pills under the tiles'], ['att', 'Needs attention', 'Expired and expiring in 30 days'], ['pin', 'Starred documents', 'Your pinned documents'], ['soon', 'Next 90 days', 'Documents expiring later'], ['seen', 'Recently opened', 'The last documents you viewed'], ['recent', 'Recently added', 'Newest documents']];
+      const html = () => L.map(x => `<div class="tgl"><div class="rb"><b>${x[1]}</b><small>${x[2]}</small></div><label class="sw"><input type="checkbox" data-hs="${x[0]}" ${UP.hs[x[0]] ? 'checked' : ''}><span></span></label></div>`).join('');
+      await modal({ title: 'Home screen', icon: 'sliders', ok: 'Done', cancel: null, noFocus: 1, html: html(), onOpen: el => el.addEventListener('change', e => { const k = e.target.dataset.hs; if (k) { UP.hs[k] = e.target.checked ? 1 : 0; pfSave() } }) });
+      if (S.tab == 'home') go('home', null, 1)
+    }
+    async function privOpts() {
+      const html = () => `<div class="tgl"><div class="rb"><b>Hide document numbers</b><small>Show only the last 4 digits in lists. Copy still gives the full number</small></div><label class="sw"><input type="checkbox" data-k="mask" ${UP.mask ? 'checked' : ''}><span></span></label></div>
+    <div class="apx"><h4>Vault auto-lock</h4><div class="seg c4">${[1, 3, 5, 15].map(m => `<button data-v="vlock:${m}" class="${UP.vlock == m ? 'on' : ''}">${m} min</button>`).join('')}</div>
+    <h4>Clear copied passwords from clipboard</h4><div class="seg c3">${[[0, 'Never'], [30, '30 sec'], [60, '60 sec']].map(m => `<button data-v="clip:${m[0]}" class="${UP.clip == m[0] ? 'on' : ''}">${m[1]}</button>`).join('')}</div></div>`;
+      await modal({
+        title: 'Privacy', icon: 'shield', ok: 'Done', cancel: null, noFocus: 1, html: '<div id="pv2">' + html() + '</div>', onOpen: el => {
+          const box = el.querySelector('#pv2');
+          box.addEventListener('change', e => { if (e.target.dataset.k == 'mask') { UP.mask = e.target.checked ? 1 : 0; pfSave() } });
+          box.addEventListener('click', e => { const b = e.target.closest('[data-v]'); if (!b) return; const [k, v] = b.dataset.v.split(':'); UP[k] = +v; pfSave(); box.innerHTML = html(); vTouch() })
+        }
+      });
+      if (['home', 'docs', 'veh'].includes(S.tab)) go(S.tab, S.vid, 1)
+    }
+    const mk = n => UP.mask ? '•••• ' + String(n).replace(/\s+/g, '').slice(-4) : n;
+    const seenIds = () => { try { return JSON.parse(localStorage.nxr || '[]') } catch (e) { return [] } };
+    const seenAdd = id => { try { localStorage.nxr = JSON.stringify([id, ...seenIds().filter(x => x != id)].slice(0, 8)) } catch (e) { } };
+
+    /* ---------- calendar ---------- */
+    const isoD = (y, m, d) => y + '-' + String(m + 1).padStart(2, '0') + '-' + String(d).padStart(2, '0');
+    function calGo(n) { const c = S.cm; let m = c.m + n, y = c.y; if (m < 0) { m = 11; y-- } if (m > 11) { m = 0; y++ } S.cm = { y, m }; S.cd = ''; go('cal', null, 1) }
+    function calPick(d) { S.cd = d; go('cal', null, 1) }
+    function calToday() { const n = new Date(); S.cm = { y: n.getFullYear(), m: n.getMonth() }; S.cd = isoD(n.getFullYear(), n.getMonth(), n.getDate()); go('cal', null, 1) }
+    function pCal() {
+      const n = new Date(), td = isoD(n.getFullYear(), n.getMonth(), n.getDate()); if (!S.cm) S.cm = { y: n.getFullYear(), m: n.getMonth() };
+      const { y, m } = S.cm, off = (new Date(y, m, 1).getDay() + 6) % 7, dim = new Date(y, m + 1, 0).getDate(), pd = new Date(y, m, 0).getDate(), by = {};
+      S.docs.forEach(d => { const x = nd(d.expiry); if (x) (by[x] = by[x] || []).push(d) });
+      const sel = S.cd || (S.cm.y == n.getFullYear() && S.cm.m == n.getMonth() ? td : isoD(y, m, 1));
+      let cells = ''; for (let i = 0; i < 42; i++) {
+        let d = i - off + 1, mm = m, yy = y, out = 0; if (d < 1) { d = pd + d; mm = m - 1; out = 1 } else if (d > dim) { d -= dim; mm = m + 1; out = 1 }
+        if (mm < 0) { mm = 11; yy = y - 1 } if (mm > 11) { mm = 0; yy = y + 1 }
+        if (i >= 35 && out) break;
+        const k = isoD(yy, mm, d), L = by[k] || [];
+        cells += `<button class="cd ${out ? 'out' : ''} ${k == td ? 'today' : ''} ${k == sel ? 'sel' : ''}" onclick="calPick('${k}')" aria-label="${k}">${d}<span class="dots">${L.slice(0, 3).map(x => `<i class="k-${st(x.expiry)[0]}"></i>`).join('')}</span></button>`
+      }
+      const mon = new Date(y, m, 1).toLocaleDateString('en-IN', { month: 'long', year: 'numeric' }), day = by[sel] || [];
+      const mdocs = S.docs.filter(d => { const x = nd(d.expiry); return x && x.slice(0, 7) == isoD(y, m, 1).slice(0, 7) }).sort((a, b) => nd(a.expiry).localeCompare(nd(b.expiry)));
+      return `<button class="bk" onclick="go('home')">${I('left', 18)} Home</button><div class="ph"><h2>Calendar</h2><button class="btn sm sec" onclick="calToday()">Today</button></div>
+  <div class="cal"><div class="calh"><button class="ib" onclick="calGo(-1)" aria-label="Previous month">${I('left', 18)}</button><b>${mon}</b><button class="ib" onclick="calGo(1)" aria-label="Next month"><span style="display:block;transform:rotate(180deg)">${I('left', 18)}</span></button></div>
+  <div class="calg">${['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map(w => `<div class="wd">${w}</div>`).join('')}${cells}</div>
+  <div class="cleg"><span><i style="background:var(--er)"></i>Expired</span><span><i style="background:var(--wn)"></i>Within 30 days</span><span><i style="background:var(--ok)"></i>Valid</span></div></div>
+  <h3 class="h">${fd(sel)}</h3>${day.map(card).join('') || empty('No documents expire on this day', 'cal')}
+  <h3 class="h">Expiring in ${new Date(y, m, 1).toLocaleDateString('en-IN', { month: 'long' })}</h3>${mdocs.map(card).join('') || empty('Nothing expires this month', 'check')}`
+    }
+
+    /* ---------- insights ---------- */
+    function pIns() {
+      const D = S.docs, c = { ok: 0, wn: 0, er: 0, none: 0 }; D.forEach(d => { if (!nd(d.expiry)) c.none++; else c[st(d.expiry)[0]]++ });
+      const seg = [['ok', 'Valid', 'var(--ok)'], ['wn', 'Expiring in 30 days', 'var(--wn)'], ['er', 'Expired', 'var(--er)'], ['none', 'No expiry date', 'color-mix(in srgb,var(--tx) 25%,transparent)']], R = 52, C = 2 * Math.PI * R;
+      let acc = 0; const arcs = D.length ? seg.map(s => { const f = c[s[0]] / D.length, a = `<circle cx="64" cy="64" r="${R}" fill="none" stroke="${s[2]}" stroke-width="16" stroke-dasharray="${Math.max(0, f * C - (f && f < 1 ? 3 : 0))} ${C}" stroke-dashoffset="${-acc * C}"/>`; acc += f; return f ? a : '' }).join('') : `<circle cx="64" cy="64" r="${R}" fill="none" stroke="var(--bd)" stroke-width="16"/>`;
+      const now = new Date(), months = [], od = D.filter(d => st(d.expiry)[0] == 'er').length;
+      for (let i = 0; i < 12; i++) { const dt = new Date(now.getFullYear(), now.getMonth() + i, 1), k = isoD(dt.getFullYear(), dt.getMonth(), 1).slice(0, 7); months.push([dt.toLocaleDateString('en-IN', { month: 'short' }), D.filter(d => { const x = nd(d.expiry); return x && x.slice(0, 7) == k }).length, i == 0]) }
+      const mx = Math.max(1, od, ...months.map(m => m[1])), bar = (l, n, cls) => `<div class="${cls || ''}"><em>${n || ''}</em><i style="height:${Math.max(4, n / mx * 78)}px"></i>${l}</div>`;
+      const grp = {}; D.forEach(d => { const k = d.kind == 'vehicle' ? ((S.vs.find(v => v.id == d.vehicleId) || {}).number || 'Vehicle') : (d.holder || 'Me'); grp[k] = (grp[k] || 0) + 1 });
+      const G = Object.entries(grp).sort((a, b) => b[1] - a[1]).slice(0, 6), gm = Math.max(1, ...G.map(x => x[1]));
+      const files = D.reduce((a, d) => a + d.files.length, 0), next = D.filter(d => nd(d.expiry) && st(d.expiry)[2] >= 0).sort((a, b) => st(a.expiry)[2] - st(b.expiry)[2]).slice(0, 3);
+      return `<button class="bk" onclick="go('home')">${I('left', 18)} Home</button><div class="ph"><h2>Insights</h2></div>
+  <div class="inx"><div class="card"><h3>Document status</h3><div class="dn"><div class="ctr"><svg viewBox="0 0 128 128">${arcs}</svg><b>${D.length}</b></div><div class="lg2">${seg.map(s => `<span><i style="background:${s[2]}"></i>${s[1]}<em>${c[s[0]]}</em></span>`).join('')}</div></div></div>
+  <div class="card"><h3>Whose documents</h3>${G.map(x => `<div class="hb"><span>${esc(x[0])}</span><u><i style="width:${x[1] / gm * 100}%"></i></u><em>${x[1]}</em></div>`).join('') || '<p class="t2">Nothing to show yet.</p>'}</div>
+  <div class="card wide"><h3>Expiries in the next 12 months</h3><div class="bars">${od ? bar('Late', od, 'od') : ''}${months.map(m => bar(m[0], m[1], m[2] ? 'cur' : '')).join('')}</div></div>
+  <div class="card"><h3>Renew next</h3>${next.map(card).join('') || '<p class="t2">No upcoming expiry dates.</p>'}</div>
+  <div class="card"><h3>Your library</h3><div class="hb"><span>Documents</span><u><i style="width:100%"></i></u><em>${D.length}</em></div><div class="hb"><span>Files stored</span><u><i style="width:100%"></i></u><em>${files}</em></div><div class="hb"><span>Vehicles</span><u><i style="width:100%"></i></u><em>${S.vs.length}</em></div><div class="hb"><span>Starred</span><u><i style="width:${D.length ? D.filter(d => d.fav).length / D.length * 100 : 0}%"></i></u><em>${D.filter(d => d.fav).length}</em></div></div></div>`
+    }
+
+    /* ---------- vault tools: health check, generator, settings ---------- */
+    function vHealthData() {
+      const L = vLogins(), map = {}; L.forEach(x => { if (x.pass) (map[x.pass] = map[x.pass] || []).push(x) });
+      const days = x => (Date.now() - new Date(x.pwAt || x.updated || x.created || Date.now())) / 864e5;
+      const weak = L.filter(x => x.pass && vStr(x.pass)[0] <= 48), reused = L.filter(x => x.pass && map[x.pass].length > 1), old = L.filter(x => x.pass && days(x) > 180), nopw = L.filter(x => !x.pass);
+      const bad = new Set([...weak, ...reused, ...old].map(x => x.id)), score = L.length ? Math.round(100 * (1 - bad.size / L.length)) : 100;
+      return { L, weak, reused, old, nopw, score }
+    }
+    async function vHealth() {
+      const h = vHealthData(), col = h.score >= 80 ? 'var(--ok)' : h.score >= 50 ? 'var(--wn)' : 'var(--er)';
+      const sec = (t, a, tip) => a.length ? `<div class="hsec">${t}<em>${a.length}</em></div><p class="t2" style="font-size:12.5px;margin-bottom:4px">${tip}</p>` + a.map(x => `<button class="hs" data-id="${x.id}"><span class="vav" style="background:${vCol(x.title)}">${esc((x.title || '?')[0].toUpperCase())}</span><div><b>${esc(x.title)}</b><small>${esc(x.user || 'No username')}</small></div>${I('right', 18)}</button>`).join('') : '';
+      const body = h.L.length ? `<div class="hl"><div class="ring" style="--p:${h.score};--c:${col}"><i>${h.score}</i></div><p>${h.score >= 80 ? 'Your vault is in good shape.' : h.score >= 50 ? 'A few logins need attention.' : 'Many logins are risky. Update the ones below.'}<br>${h.L.length} login${h.L.length > 1 ? 's' : ''} checked on this phone.</p></div>` + sec('Weak passwords', h.weak, 'Short or simple. Use the generator for a strong one.') + sec('Reused passwords', h.reused, 'The same password is used for more than one login.') + sec('Old passwords', h.old, 'Not changed for over 6 months.') + sec('No password saved', h.nopw, 'Only a username is stored.') + (h.score == 100 ? '<p class="t2" style="text-align:center;margin-top:10px">No problems found.</p>' : '') : '<p class="mt">Add some logins first. Then this check shows weak, reused and old passwords.</p>';
+      await modal({ title: 'Password health', icon: 'health', wide: 1, ok: null, cancel: null, noFocus: 1, html: body, onOpen: (el, close) => el.addEventListener('click', e => { const b = e.target.closest('.hs'); if (b) { close(null); vView(b.dataset.id) } }) })
+    }
+    const GO = { len: 18, up: 1, lo: 1, di: 1, sy: 1, am: 1 };
+    function vGen2() {
+      const U = GO.am ? 'ABCDEFGHJKLMNPQRSTUVWXYZ' : 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', Lw = GO.am ? 'abcdefghijkmnopqrstuvwxyz' : 'abcdefghijklmnopqrstuvwxyz', Di = GO.am ? '23456789' : '0123456789', Sy = '!@#$%^&*-_+=?';
+      const S2 = [GO.up && U, GO.lo && Lw, GO.di && Di, GO.sy && Sy].filter(Boolean); if (!S2.length) return '';
+      const o = S2.map(vPick), all = S2.join(''); while (o.length < GO.len) o.push(vPick(all));
+      for (let i = o.length - 1; i > 0; i--) { const j = vInt(i + 1);[o[i], o[j]] = [o[j], o[i]] }
+      return o.slice(0, Math.max(GO.len, S2.length)).join('')
+    }
+    async function vGenTool() {
+      let cur = vGen2();
+      const html = () => { const s = vStr(cur); return `<div class="gen"><output id="gt_o">${esc(cur) || 'Choose at least one type'}</output><button class="vib" id="gt_c" aria-label="Copy">${I('copy', 18)}</button><button class="vib" id="gt_r" aria-label="New password">${I('refresh', 18)}</button></div>
+    <div class="vmeter"><i style="width:${s[0]}%;background:${s[2]}"></i></div><span class="vml">${s[1] ? s[1] + ' password' : ''}</span>
+    <div class="gl"><span class="lb" style="margin:0">Length</span><b id="gt_n">${GO.len}</b></div><input type="range" id="gt_l" min="8" max="40" value="${GO.len}">
+    <div class="cks" style="grid-template-columns:repeat(2,1fr);margin-top:6px">${[['up', 'A-Z'], ['lo', 'a-z'], ['di', '0-9'], ['sy', '!@#$'], ['am', 'No look-alikes']].map(x => `<label class="ck"><input type="checkbox" data-o="${x[0]}" ${GO[x[0]] ? 'checked' : ''}><span>${x[1]}</span></label>`).join('')}</div>` };
+      await modal({
+        title: 'Password generator', icon: 'dice', ok: 'Done', cancel: null, noFocus: 1, html: '<div id="gt">' + html() + '</div>', onOpen: el => {
+          const box = el.querySelector('#gt'), re = () => { box.innerHTML = html() };
+          box.addEventListener('input', e => { if (e.target.id == 'gt_l') { GO.len = +e.target.value; $('#gt_n').textContent = GO.len; cur = vGen2(); $('#gt_o').textContent = cur; const s = vStr(cur), m = box.querySelector('.vmeter i'); m.style.width = s[0] + '%'; m.style.background = s[2]; box.querySelector('.vml').textContent = s[1] + ' password' } });
+          box.addEventListener('change', e => { const k = e.target.dataset.o; if (k) { GO[k] = e.target.checked ? 1 : 0; if (!GO.up && !GO.lo && !GO.di && !GO.sy) GO.lo = 1; cur = vGen2(); re() } });
+          box.addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; if (b.id == 'gt_r') { cur = vGen2(); re() } if (b.id == 'gt_c' && cur) vCopyTxt(cur, 'Password') })
+        }
+      })
+    }
+    async function vOpts() {
+      const html = () => `<div class="apx"><h4>Auto-lock after</h4><div class="seg c4">${[1, 3, 5, 15].map(m => `<button data-v="vlock:${m}" class="${UP.vlock == m ? 'on' : ''}">${m} min</button>`).join('')}</div>
+    <h4>Clear copied passwords from clipboard</h4><div class="seg c3">${[[0, 'Never'], [30, '30 sec'], [60, '60 sec']].map(m => `<button data-v="clip:${m[0]}" class="${UP.clip == m[0] ? 'on' : ''}">${m[1]}</button>`).join('')}</div></div>`;
+      await modal({ title: 'Vault settings', icon: 'sliders', ok: 'Done', cancel: null, noFocus: 1, html: '<div id="vo">' + html() + '</div>', onOpen: el => { const box = el.querySelector('#vo'); box.addEventListener('click', e => { const b = e.target.closest('[data-v]'); if (!b) return; const [k, v] = b.dataset.v.split(':'); UP[k] = +v; pfSave(); box.innerHTML = html(); vTouch() }) } })
+    }
+
+    function vHealthGo() { if (V.key) vHealth(); else { toast('Unlock the vault first', 'inf'); go('vault') } }
+    customAc();
+
     /* ---------- INIT ---------- */
-    document.documentElement.dataset.t = localStorage.th || (matchMedia('(prefers-color-scheme:dark)').matches ? 'dark' : 'light');
-    $('#tc').content = document.documentElement.dataset.t == 'dark' ? '#0b0f15' : '#0b1220'; barTheme();
+    applyPrefs();
     setTimeout(hideSplash, 7000);
-    $('#sp img').src = LOGO; applyAc();
+    $('#sp img').src = LOGO; applyAc(); applyPrefs();
     let Q = new URLSearchParams(location.search).get('a') || '';
     if (Q == 'expiring' || Q == 'veh') { S.tab = Q == 'veh' ? 'veh' : 'docs'; Q = '' }
+    if (!Q && ['docs', 'vault'].includes(UP.start)) S.tab = UP.start;
     try { history.replaceState(null, '', location.pathname) } catch (e) { }
     S.token ? load('sk') : authView('login');
     if (S.token && localStorage.nxpin) lockNow();
-  </script>
-  <script>
-/* =========================================================================
-   NEXUS PLUS  ·  18 themes, appearance options, calendar, insights, tools,
-   notes, vehicle log, bulk select, search palette and more.
-   Add this file AFTER the main <script> block in index.html.
-   ========================================================================= */
-(() => {
-  'use strict';
-  const LS = window.localStorage;
-
-  /* ---------- state ---------- */
-  const DEF = { th: 'default', ac: '', gs: 'classic', ff: 'modern', fs: 'm', rd: 'n', dn: 'c', cs: 'tint', bg: 'none', nl: 'act', w: 'n', mo: 'on', mask: 0, vbar: 1, date: 1, vw: 'list', grp: 'none', hs: { att: 1, tiles: 1, qa: 1, ins: 1, pin: 1, next: 1, recent: 1 } };
-  let NX;
-  try { NX = { ...DEF, ...JSON.parse(LS.nxp || '{}') } } catch (e) { NX = { ...DEF } }
-  NX.hs = { ...DEF.hs, ...(NX.hs || {}) };
-  const save = () => { try { LS.nxp = JSON.stringify(NX) } catch (e) { } };
-  const lsGet = (k, d) => { try { const v = JSON.parse(LS[k]); return v == null ? d : v } catch (e) { return d } };
-  const lsSet = (k, v) => { try { LS[k] = JSON.stringify(v) } catch (e) { } };
-  const money = n => '₹' + Math.round(n || 0).toLocaleString('en-IN');
-  const today = () => { const t = new Date(); return new Date(t.getFullYear(), t.getMonth(), t.getDate()) };
-  const pd = s => { const [y, m, d] = String(s).split('-').map(Number); return new Date(y, m - 1, d) };
-  const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
-  const rerender = () => { try { if (S.user && $('#shell.on')) go(S.tab, S.vid, 1) } catch (e) { } };
-  const fmtD = d => d.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
-
-  /* ---------- extra icons ---------- */
-  Object.assign(P, {
-    grid: '<rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/>',
-    list: '<path d="M8 6h13M8 12h13M8 18h13"/><circle cx="3.5" cy="6" r="1"/><circle cx="3.5" cy="12" r="1"/><circle cx="3.5" cy="18" r="1"/>',
-    rows: '<path d="M3 5h18M3 10h18M3 15h18M3 20h18"/>',
-    sel: '<rect x="3" y="3" width="18" height="18" rx="5"/><path d="M8 12l3 3 5-6"/>',
-    chart: '<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>',
-    calc: '<rect x="4" y="2" width="16" height="20" rx="3"/><path d="M8 6h8M8 11h.01M12 11h.01M16 11h.01M8 15h.01M12 15h.01M16 15h.01M8 19h.01M12 19h.01M16 19h.01"/>',
-    sos: '<path d="M12 21s-7-4.4-9.3-9A5.3 5.3 0 0 1 12 6.3 5.3 5.3 0 0 1 21.3 12C19 16.6 12 21 12 21z"/><path d="M12 9v5M9.5 11.5h5"/>',
-    sliders: '<path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M1 14h6M9 8h6M17 16h6"/>',
-    layout: '<rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 9h18M9 21V9"/>',
-    wrench: '<path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.5 2.5-2.4-.6-.6-2.4z"/>',
-    book: '<path d="M4 4h12a4 4 0 0 1 4 4v12H8a4 4 0 0 1-4-4z"/><path d="M4 16a4 4 0 0 1 4-4h12"/>'
-  });
-
-  /* ---------- THEMES ---------- */
-  const TH = {
-    default: { n: 'Default' },
-    auto: { n: 'Auto' },
-    snow: { n: 'Snow', d: 0, ac: '#3b5bfd', bg: '#f6f7fb', sf: '#ffffff', tx: '#10131c', t2: '#646e84', bd: '#e5e8f0', hd: '#0d1120' },
-    ocean: { n: 'Ocean', d: 0, ac: '#0891b2', bg: '#eaf6fb', sf: '#ffffff', tx: '#0b2a3a', t2: '#5b7d8d', bd: '#cfe6f0', hd: '#0b2a3a' },
-    mint: { n: 'Mint', d: 0, ac: '#10b981', bg: '#ecfaf4', sf: '#ffffff', tx: '#0c2b20', t2: '#5a7f70', bd: '#cdeee0', hd: '#0c2b20' },
-    sunset: { n: 'Sunset', d: 0, ac: '#ea580c', bg: '#fff4ec', sf: '#ffffff', tx: '#3b1d10', t2: '#8a6553', bd: '#f5dccd', hd: '#2b1206' },
-    rose: { n: 'Rose', d: 0, ac: '#e11d48', bg: '#fff1f4', sf: '#ffffff', tx: '#3a1220', t2: '#8c5a6b', bd: '#f7d4de', hd: '#3a1220' },
-    lavender: { n: 'Lavender', d: 0, ac: '#7c3aed', bg: '#f4f0ff', sf: '#ffffff', tx: '#1f1740', t2: '#6e6590', bd: '#e2daf8', hd: '#1f1740' },
-    paper: { n: 'Paper', d: 0, ac: '#b45309', bg: '#f3ecdd', sf: '#fbf6ea', tx: '#3a2f1f', t2: '#7d6b52', bd: '#e3d7bd', hd: '#3a2f1f' },
-    solar: { n: 'Solarized', d: 0, ac: '#268bd2', bg: '#fdf6e3', sf: '#fffcf2', tx: '#073642', t2: '#657b83', bd: '#eee8d5', hd: '#073642' },
-    midnight: { n: 'Midnight', d: 1, ac: '#5b7cff', bg: '#070b17', sf: '#101831', tx: '#e8ecff', t2: '#8a96c0', bd: '#1d2748', hd: '#060a14' },
-    amoled: { n: 'AMOLED', d: 1, ac: '#3b82f6', bg: '#000000', sf: '#0c0c0e', tx: '#f5f5f7', t2: '#8b8b95', bd: '#1c1c20', hd: '#000000' },
-    forest: { n: 'Forest', d: 1, ac: '#34d399', bg: '#08130e', sf: '#0f1f17', tx: '#e6f4ea', t2: '#86a594', bd: '#1b3326', hd: '#06100b' },
-    mocha: { n: 'Mocha', d: 1, ac: '#d4a373', bg: '#14100e', sf: '#1f1916', tx: '#f3e9e2', t2: '#a69486', bd: '#342b25', hd: '#0f0c0a' },
-    nord: { n: 'Nord', d: 1, ac: '#88c0d0', bg: '#2e3440', sf: '#3b4252', tx: '#eceff4', t2: '#a3adc2', bd: '#4c566a', hd: '#272c36' },
-    dracula: { n: 'Dracula', d: 1, ac: '#bd93f9', bg: '#1e1f29', sf: '#282a36', tx: '#f8f8f2', t2: '#a0a4c0', bd: '#3a3d52', hd: '#191a23' },
-    slate: { n: 'Slate', d: 1, ac: '#38bdf8', bg: '#0f172a', sf: '#1e293b', tx: '#f1f5f9', t2: '#94a3b8', bd: '#334155', hd: '#0b1222' },
-    cyber: { n: 'Cyber', d: 1, ac: '#e879f9', bg: '#0a0612', sf: '#150c24', tx: '#f4eaff', t2: '#a58fc9', bd: '#2a1847', hd: '#07040d' }
-  };
-  const VARS = [['--bg', 'bg'], ['--sf', 'sf'], ['--tx', 'tx'], ['--t2', 't2'], ['--bd', 'bd'], ['--hd', 'hd']];
-  const SW = ['#3b5bfd', '#2563eb', '#0891b2', '#0d9488', '#12a150', '#65a30d', '#ca8a04', '#e8590c', '#dc2626', '#e11d48', '#c026d3', '#7c3aed', '#4f46e5', '#475569', '#78350f', '#db2777'];
-  const sysDark = () => { try { return matchMedia('(prefers-color-scheme:dark)').matches } catch (e) { return false } };
-  const effTheme = () => NX.th === 'auto' ? (sysDark() ? TH.midnight : TH.snow) : (TH[NX.th] || TH.default);
-  const grad = a => NX.gs === 'flat' ? `linear-gradient(135deg,${a},${a})` : NX.gs === 'soft' ? `linear-gradient(135deg,${a},color-mix(in srgb,${a} 60%,#fff))` : `linear-gradient(135deg,color-mix(in srgb,${a} 30%,#070a18),${a} 72%,color-mix(in srgb,${a} 55%,#d946ef))`;
-  function applyAll() {
-    const r = document.documentElement, s = r.style, t = effTheme(), isDef = !t.bg;
-    if (isDef) { VARS.forEach(v => s.removeProperty(v[0])); r.dataset.t = LS.th || (sysDark() ? 'dark' : 'light') }
-    else { VARS.forEach(v => s.setProperty(v[0], t[v[1]])); r.dataset.t = t.d ? 'dark' : 'light' }
-    const A = NX.ac || t.ac || '';
-    if (!A && NX.gs === 'classic') applyAc();
-    else { const a = A || AC[curAc()][1]; s.setProperty('--ac', a); s.setProperty('--g', grad(a)) }
-    ['ff', 'fs', 'rd', 'dn', 'cs', 'bg', 'nl', 'w', 'mo'].forEach(k => r.setAttribute('data-' + k, NX[k]));
-    const tc = $('#tc'); if (tc) tc.content = isDef ? (r.dataset.t === 'dark' ? '#0b0f15' : '#0b1220') : t.hd;
-    try { barTheme() } catch (e) { }
-  }
-  window.theme = () => { const dark = document.documentElement.dataset.t === 'dark'; NX.th = 'default'; save(); LS.th = dark ? 'light' : 'dark'; applyAll() };
-  window.accentPick = () => appearance();
-
-  /* ---------- APPEARANCE ---------- */
-  const OPT = {
-    gs: [['classic', 'Classic'], ['soft', 'Soft'], ['flat', 'Flat']],
-    ff: [['modern', 'Modern'], ['display', 'Display'], ['system', 'System'], ['serif', 'Serif'], ['mono', 'Mono']],
-    fs: [['s', 'Small'], ['m', 'Normal'], ['l', 'Large'], ['xl', 'Extra large']],
-    rd: [['sharp', 'Sharp'], ['n', 'Soft'], ['round', 'Round']],
-    dn: [['compact', 'Compact'], ['c', 'Normal'], ['roomy', 'Roomy']],
-    cs: [['tint', 'Tinted'], ['outline', 'Outline'], ['flat', 'Flat'], ['glass', 'Glass']],
-    bg: [['none', 'Plain'], ['dots', 'Dots'], ['grid', 'Grid'], ['mesh', 'Mesh'], ['aurora', 'Aurora'], ['stripes', 'Stripes']],
-    nl: [['act', 'Active label'], ['all', 'All labels'], ['icon', 'Icons only']],
-    w: [['n', 'Normal'], ['narrow', 'Narrow'], ['wide', 'Wide']],
-    mo: [['on', 'On'], ['off', 'Off']]
-  };
-  const LAB = { gs: 'Gradient style', ff: 'Font', fs: 'Text size', rd: 'Corners', dn: 'Density', cs: 'Card style', bg: 'Background', nl: 'Bottom bar', w: 'Page width (desktop)', mo: 'Animations' };
-  const seg = k => `<span class="lb">${LAB[k]}</span><div class="nxs">${OPT[k].map(([v, t]) => `<button type="button" data-opt="${k}" data-v="${v}" class="${NX[k] === v ? 'on' : ''}">${t}</button>`).join('')}</div>`;
-  const accNow = () => NX.ac || effTheme().ac || AC[curAc()][1];
-  function apHTML() {
-    const tiles = Object.entries(TH).map(([k, t]) => {
-      const two = k === 'default' || k === 'auto';
-      return `<button type="button" class="nxth ${NX.th === k ? 'on' : ''}" data-th="${k}" style="--b:${two ? 'linear-gradient(135deg,#f4f5f9 50%,#0a0c12 50%)' : t.bg};--s:${two ? '#8d99b8' : t.sf};--a:${two ? '#3b5bfd' : t.ac}"><span class="pv"><i></i><i></i><u></u></span><b>${t.n}</b></button>`
-    }).join('');
-    const sw = SW.map(c => `<button type="button" style="background:${c}" data-ac="${c}" class="${NX.ac === c ? 'on' : ''}" aria-label="${c}">${NX.ac === c ? I('check', 18) : ''}</button>`).join('');
-    return `<span class="lb">Theme (${Object.keys(TH).length} available)</span><div class="nxthg">${tiles}</div>
-    <span class="lb">Accent colour</span><div class="nxswg"><button type="button" class="auto ${NX.ac ? '' : 'on'}" data-ac="">Theme</button>${sw}<label class="nxcc" title="Custom colour"><input type="color" data-cc value="${accNow().length === 7 ? accNow() : '#3b5bfd'}"></label></div>
-    ${['gs', 'ff', 'fs', 'rd', 'dn', 'cs', 'bg', 'nl', 'w', 'mo'].map(seg).join('')}
-    <div class="vact"><button type="button" class="btn sec sm" data-reset>${I('refresh', 16)} Reset appearance</button></div>`
-  }
-  async function appearance() {
-    await modal({
-      title: 'Appearance', icon: 'palette', wide: 1, ok: 'Done', cancel: null, noFocus: 1, html: '<div id="nxap"></div>',
-      onOpen: el => {
-        const box = el.querySelector('#nxap'), mb = el.querySelector('.mb');
-        const R = () => { const y = mb.scrollTop; box.innerHTML = apHTML(); mb.scrollTop = y };
-        R();
-        el.addEventListener('click', e => {
-          const b = e.target.closest('#nxap button'); if (!b) return;
-          if (b.dataset.th !== undefined) { NX.th = b.dataset.th; NX.ac = '' }
-          else if (b.dataset.ac !== undefined) NX.ac = b.dataset.ac;
-          else if (b.dataset.opt) NX[b.dataset.opt] = b.dataset.v;
-          else if (b.dataset.reset !== undefined) ['th', 'ac', 'gs', 'ff', 'fs', 'rd', 'dn', 'cs', 'bg', 'nl', 'w', 'mo'].forEach(k => NX[k] = DEF[k]);
-          else return;
-          save(); applyAll(); R()
-        });
-        el.addEventListener('input', e => { if (e.target.matches('[data-cc]')) { NX.ac = e.target.value; save(); applyAll() } });
-        el.addEventListener('change', e => { if (e.target.matches('[data-cc]')) R() })
-      }
-    });
-    rerender()
-  }
-
-  /* ---------- small data helpers ---------- */
-  const cnt = () => { const c = { er: 0, wn: 0, ok: 0, '': 0 }; S.docs.forEach(d => c[st(d.expiry)[0]]++); return c };
-  function stats() {
-    const D = S.docs, c = cnt(), n = D.length, badN = c.er + c.wn, score = n ? Math.round((n - badN) / n * 100) : 100;
-    return { D, c, n, badN, score, col: score >= 80 ? 'var(--ok)' : score >= 50 ? 'var(--wn)' : 'var(--er)' }
-  }
-  const nextExp = () => S.docs.filter(d => d.expiry && st(d.expiry)[2] >= 0).sort((a, b) => st(a.expiry)[2] - st(b.expiry)[2])[0];
-  const vNum = d => { const v = d.kind === 'vehicle' && S.vs.find(x => x.id == d.vehicleId); return v ? v.number : '' };
-
-  /* ---------- HOME ---------- */
-  const _pHome = pHome;
-  function healthCard() {
-    const h = stats(); if (!h.n) return '';
-    const nx = nextExp();
-    return `<div class="nxhc" onclick="NXP.open('ins')"><div class="nxring" style="--p:${h.score};--c:${h.col}"><b>${h.score}%</b></div><div class="in"><b>Document health</b><small>${h.badN ? h.badN + ' need attention' : 'Everything is in good shape'}</small>${nx ? `<span class="bd ${st(nx.expiry)[0]}">Next: ${esc(nx.title)} · ${st(nx.expiry)[1]}</span>` : ''}</div><span class="ch">${I('right', 20)}</span></div>`
-  }
-  const qb = (k, ic, t) => `<button onclick="NXP.open('${k}')">${I(ic, 24)}<span>${t}</span></button>`;
-  window.pHome = () => {
-    const box = document.createElement('div'); box.innerHTML = _pHome(); const hs = NX.hs;
-    if (!hs.tiles) box.querySelector('.bento')?.remove();
-    if (!hs.qa) box.querySelector('.qa')?.remove();
-    const H = { 'Needs attention': 'att', 'Pinned': 'pin', 'Next 90 days': 'next', 'Recent documents': 'recent' };
-    box.querySelectorAll('h3.h').forEach(h3 => {
-      const key = H[h3.textContent.trim()];
-      if (key && !hs[key]) { let n = h3.nextElementSibling; h3.remove(); while (n && !n.matches('h3.h')) { const x = n.nextElementSibling; n.remove(); n = x } }
-    });
-    const extra = `<div class="qa nxqa">${qb('search', 'search', 'Quick search')}${qb('cal', 'cal', 'Calendar view')}${qb('ins', 'chart', 'Insights')}${qb('tools', 'wrench', 'Tools')}${qb('ice', 'sos', 'Emergency')}${qb('notes', 'note', 'Notes')}${qb('ap', 'palette', 'Themes')}</div>` + (hs.ins ? healthCard() : '');
-    const anchor = box.querySelector('.qa') || box.querySelector('.bento') || box.querySelector('.gh');
-    anchor ? anchor.insertAdjacentHTML('afterend', extra) : box.insertAdjacentHTML('afterbegin', extra);
-    if (NX.date) { const s = box.querySelector('.gh small'); if (s) s.textContent += ' · ' + new Date().toLocaleDateString('en-IN', { weekday: 'short', day: 'numeric', month: 'short' }) }
-    return box.innerHTML
-  };
-
-  /* ---------- CARDS: mask numbers + validity bar ---------- */
-  const _card = card;
-  window.card = d => {
-    let dd = d;
-    if (NX.mask && d.number) { const n = String(d.number); dd = { ...d, number: n.length > 4 ? '•••• ' + n.slice(-4) : '••••' } }
-    let h = _card(dd);
-    if (NX.vbar && d.expiry) {
-      const s = st(d.expiry); let w;
-      if (d.issue) { const a = pd(d.issue), b = pd(d.expiry), tot = b - a; w = tot > 0 ? 1 - (today() - a) / tot : s[2] > 0 ? 1 : 0 }
-      else w = s[2] / 365;
-      w = Math.max(0, Math.min(1, w)); if (s[2] < 0) w = 0;
-      h = h.replace('</span></div><div class="rt">', `</span><div class="nxvb ${s[0]}"><i style="width:${Math.round(w * 100)}%"></i></div></div><div class="rt">`)
-    }
-    return h
-  };
-
-  /* ---------- DOCUMENTS PAGE: more sorts, views, grouping, select ---------- */
-  const _pDocs = pDocs; let SEL = null;
-  window.pDocs = () => {
-    let hh = _pDocs();
-    hh = hh.replace('<option value="az"', `<option value="far" ${S.so == 'far' ? 'selected' : ''}>Sort: Expiry (latest)</option><option value="iss" ${S.so == 'iss' ? 'selected' : ''}>Sort: Issue date</option><option value="az"`);
-    const vb = (v, ic) => `<button type="button" data-vw="${v}" class="${NX.vw == v ? 'on' : ''}" onclick="NXP.vw('${v}')" aria-label="${v} view">${I(ic, 18)}</button>`;
-    const G = [['none', 'No grouping'], ['type', 'Group: Type'], ['holder', 'Group: Person / vehicle'], ['status', 'Group: Status'], ['month', 'Group: Expiry month']];
-    const bar = `<div class="nxtb"><div class="nxs ico">${vb('list', 'list')}${vb('grid', 'grid')}${vb('cmp', 'rows')}</div><select onchange="NXP.grp(this.value)" aria-label="Group by">${G.map(([v, t]) => `<option value="${v}" ${NX.grp == v ? 'selected' : ''}>${t}</option>`).join('')}</select><button type="button" class="btn sm sec ${SEL ? 'on' : ''}" onclick="NXP.sel()">${I('sel', 16)} Select</button></div>`;
-    return hh.replace('<div id="dl">', bar + `<div id="dl" class="nxv-${NX.vw}">`)
-  };
-  window.dlist = () => {
-    const q = S.q.toLowerCase();
-    const a = S.docs.filter(d => (S.f == 'all' || d.kind == S.f) && (!S.fv || d.fav) && (S.hf == 'all' || d.holder == S.hf) && (S.st == 'all' || st(d.expiry)[0] == S.st) && (d.title + ' ' + d.number + ' ' + d.notes + ' ' + (d.holder || '')).toLowerCase().includes(q));
-    const k = d => d.expiry ? st(d.expiry)[2] : 9e9;
-    if (S.so == 'exp') a.sort((x, y) => k(x) - k(y));
-    else if (S.so == 'far') a.sort((x, y) => (y.expiry ? k(y) : -1e12) - (x.expiry ? k(x) : -1e12));
-    else if (S.so == 'iss') a.sort((x, y) => (y.issue || '').localeCompare(x.issue || ''));
-    else if (S.so == 'new') a.reverse();
-    else a.sort((x, y) => x.title.localeCompare(y.title));
-    if (!a.length) return empty('No documents found', 'search');
-    if (NX.grp == 'none') return a.map(card).join('');
-    const SL = { er: 'Expired', wn: 'Expiring soon', ok: 'Valid', '': 'No expiry date' };
-    const key = d => NX.grp == 'type' ? d.title : NX.grp == 'holder' ? (d.kind == 'vehicle' ? 'Vehicle · ' + (vNum(d) || 'Unknown') : (d.holder || 'Unassigned')) : NX.grp == 'status' ? SL[st(d.expiry)[0]] : (d.expiry ? pd(d.expiry).toLocaleDateString('en-IN', { month: 'long', year: 'numeric' }) : 'No expiry date');
-    const m = new Map(); a.forEach(d => { const x = key(d); if (!m.has(x)) m.set(x, []); m.get(x).push(d) });
-    let L = [...m.entries()];
-    if (NX.grp == 'status') { const o = Object.values(SL); L.sort((x, y) => o.indexOf(x[0]) - o.indexOf(y[0])) }
-    return L.map(([x, v]) => `<div class="nxgh"><span>${esc(x)}</span><small>${v.length}</small></div>` + v.map(card).join('')).join('')
-  };
-
-  /* ---------- bulk select ---------- */
-  function decorate() {
-    const m = $('#main'); if (!m) return;
-    m.querySelectorAll('.dc:not([data-id])').forEach(c => { const x = /^view\('([^']+)'\)/.exec(c.getAttribute('onclick') || ''); if (x) c.dataset.id = x[1] });
-    m.querySelectorAll('.dc[data-id]').forEach(c => c.classList.toggle('nxsel', !!SEL && SEL.has(c.dataset.id)));
-    m.classList.toggle('nxselmode', !!SEL);
-    if (SEL && !['docs', 'home', 'veh'].includes(S.tab)) { SEL = null; bulkBar() }
-  }
-  function bulkBar() {
-    let b = $('#nxbulk');
-    if (!SEL) { b && b.remove(); return }
-    if (!b) { b = document.createElement('div'); b.id = 'nxbulk'; document.body.appendChild(b); b.addEventListener('click', onBulk) }
-    const n = SEL.size, off = n ? '' : 'disabled';
-    b.innerHTML = `<b>${n} selected</b><button data-a="all">All</button><button data-a="star" ${off} aria-label="Star selected">${I('star', 16)}</button><button data-a="ics" ${off} aria-label="Add selected to calendar">${I('cal', 16)}</button><button class="dg" data-a="del" ${off} aria-label="Delete selected">${I('trash', 16)}</button><button data-a="done">Done</button>`
-  }
-  async function onBulk(e) {
-    const b = e.target.closest('button'); if (!b || b.disabled) return; const a = b.dataset.a, ids = [...SEL];
-    if (a == 'done') { SEL = null; bulkBar(); decorate(); return go(S.tab, S.vid, 1) }
-    if (a == 'all') { document.querySelectorAll('#main .dc[data-id]').forEach(c => SEL.add(c.dataset.id)); bulkBar(); decorate(); return }
-    if (a == 'ics') { const L = S.docs.filter(d => SEL.has(d.id) && d.expiry); if (!L.length) return toast('No expiry dates in the selection', 'inf'); dl2('nexus-selected-expiry.ics', icsOf(L), 'text/calendar'); return toast('Calendar file downloaded') }
-    if (a == 'star') { if (await busy(async () => { for (const id of ids) await api('toggleFav', { id, fav: true }); await sync() }, 'Starring…')) { SEL = null; bulkBar(); draw(); toast(ids.length + ' starred') } return }
-    if (a == 'del') {
-      if (!await confirmBox({ title: 'Delete ' + ids.length + ' document' + (ids.length > 1 ? 's' : '') + '?', text: 'All their files will be removed permanently.', ok: 'Delete', danger: 1, icon: 'trash' })) return;
-      if (await busy(async () => { for (const id of ids) await api('deleteDoc', { id }); await sync() }, 'Deleting…')) { SEL = null; bulkBar(); draw(); toast(ids.length + ' deleted') }
-    }
-  }
-  document.addEventListener('click', e => {
-    if (!SEL) return; const c = e.target.closest('#main .dc[data-id]'); if (!c) return;
-    e.preventDefault(); e.stopPropagation();
-    const id = c.dataset.id; SEL.has(id) ? SEL.delete(id) : SEL.add(id); decorate(); bulkBar()
-  }, true);
-  const mo = new MutationObserver(() => { if (mo.t) return; mo.t = requestAnimationFrame(() => { mo.t = 0; decorate() }) });
-  if ($('#main')) mo.observe($('#main'), { childList: true, subtree: true });
-
-  /* ---------- expiry quick-set chips inside the document form ---------- */
-  new MutationObserver(() => {
-    const ex = $('#ex'); if (!ex || ex.dataset.nx || !$('#is')) return; ex.dataset.nx = 1;
-    const row = document.createElement('div'); row.className = 'vpre';
-    row.innerHTML = '<span class="nxqe">Quick set:</span><button type="button" data-y="t">Issued today</button>' + [1, 3, 5, 10, 20].map(y => `<button type="button" data-y="${y}">+${y} yr</button>`).join('') + '<button type="button" data-y="x">Clear expiry</button>';
-    const two = ex.closest('.two'); two && two.insertAdjacentElement('afterend', row);
-    row.onclick = e => {
-      const b = e.target.closest('[data-y]'); if (!b) return; const y = b.dataset.y;
-      if (y == 'x') { ex.value = ''; return }
-      if (y == 't') { $('#is').value = ymd(new Date()); return }
-      const base = $('#is').value ? pd($('#is').value) : today(); base.setFullYear(base.getFullYear() + +y); ex.value = ymd(base)
-    }
-  }).observe(document.body, { childList: true, subtree: true });
-
-  /* ---------- PROFILE: personalise group ---------- */
-  const _pMe = pMe;
-  const prow = (i, t, s, fn) => `<button class="row" onclick="${fn}"><div class="ri">${I(i, 20)}</div><div class="rb"><b>${t}</b><small>${s}</small></div><span class="ch">${I('right', 18)}</span></button>`;
-  const psw = (i, t, s, k) => `<div class="row"><div class="ri">${I(i, 20)}</div><div class="rb"><b>${t}</b><small>${s}</small></div><label class="sw"><input type="checkbox" ${NX[k] ? 'checked' : ''} onchange="NXP.tg('${k}',this.checked)"><span></span></label></div>`;
-  window.pMe = () => {
-    let h = _pMe();
-    h = h.replace(/<p class="t2" style="text-align:center;font-size:12\.5px;margin:18px 0 4px">[^<]*<\/p>\s*/, '').replace('Nexus Document Hub · v3.2', 'Nexus Document Hub · v3.3 Plus');
-    h = h.replace(/(<b>Accent colour<\/b><small>)[^<]*/, '$1Colours, fonts and style');
-    const th = NX.th === 'default' ? 'Default' : NX.th === 'auto' ? 'Auto (follows phone)' : (TH[NX.th] || TH.default).n;
-    const hsN = Object.values(NX.hs).filter(Boolean).length;
-    const grp = `<h3 class="h">Personalise</h3><div class="card grp">${prow('palette', 'Appearance &amp; themes', 'Theme: ' + th + ' · ' + Object.keys(TH).length + ' themes', 'appearance()') + prow('layout', 'Home screen layout', hsN + ' of ' + Object.keys(NX.hs).length + ' sections shown', "NXP.open('hl')") + psw('eyeoff', 'Mask document numbers', 'Show only the last 4 characters', 'mask') + psw('clock', 'Validity bars on cards', 'Small bar showing time left', 'vbar') + psw('cal', 'Show date on home', 'Today\'s date next to the greeting', 'date')}</div>
-    <h3 class="h">Tools &amp; extras</h3><div class="card grp">${prow('wrench', 'Tools', 'Calendar, insights, generator, calculators', "NXP.open('tools')") + prow('sos', 'Emergency card', 'Blood group and contact on one screen', "NXP.open('ice')") + prow('note', 'Notes', 'Private notes saved on this device', "NXP.open('notes')") + prow('download', 'Backup &amp; restore settings', 'Export or import your preferences', "NXP.open('bk')") + prow('info', 'Help &amp; shortcuts', 'Tips and keyboard shortcuts', "NXP.open('help')")}</div>`;
-    return h.replace('<h3 class="h">Security &amp; data</h3>', grp + '<h3 class="h">Security &amp; data</h3>')
-  };
-
-  /* ---------- VEHICLE: service & expense log (stored on this device) ---------- */
-  const VT = ['Service', 'Fuel', 'Repair', 'Insurance', 'Tyres', 'Wash', 'Other'];
-  const getVL = () => lsGet('nxvl', {}), getVN = () => lsGet('nxvn', {});
-  const _pVD = pVD;
-  window.pVD = () => {
-    const h = _pVD(), v = S.vs.find(x => x.id == S.vid); if (!v) return h;
-    const L = (getVL()[v.id] || []).slice().sort((a, b) => b.d.localeCompare(a.d)), tot = L.reduce((s, x) => s + (+x.a || 0), 0), od = L.find(x => x.k), nx = getVN()[v.id], vid = esc(v.id);
-    const nxs = nx && nx.d ? `<p class="vmeta" style="margin:0 0 10px">Next service: <b>${fd(nx.d)}</b> · <span class="bd ${st(nx.d)[0] || 'ok'}">${st(nx.d)[2] < 9e9 ? (st(nx.d)[2] < 0 ? 'Overdue' : st(nx.d)[2] + ' days left') : ''}</span>${nx.k ? ' · at ' + Number(nx.k).toLocaleString('en-IN') + ' km' : ''}</p>` : '';
-    return h + `<h3 class="h">Service &amp; expenses</h3><div class="card"><div class="nxkv"><div><small>Total spent</small><b>${money(tot)}</b></div><div><small>Entries</small><b>${L.length}</b></div><div><small>Odometer</small><b>${od ? Number(od.k).toLocaleString('en-IN') + ' km' : '-'}</b></div></div>${nxs}${L.slice(0, 6).map(x => `<button class="nxlr" onclick="NXP.vlE('${vid}','${esc(x.id)}')"><div class="ri">${I(x.t == 'Fuel' ? 'drop' : x.t == 'Insurance' ? 'shield' : 'tool', 18)}</div><div class="rb"><b>${esc(x.t)}${x.n ? ' · ' + esc(x.n) : ''}</b><small>${fd(x.d)}${x.k ? ' · ' + Number(x.k).toLocaleString('en-IN') + ' km' : ''}</small></div><strong>${money(x.a)}</strong></button>`).join('') || '<p class="t2" style="margin:0 0 8px">No entries yet. Track fuel, service and repair costs.</p>'}<div class="vact"><button class="btn sm" onclick="NXP.vlE('${vid}')">${I('plus', 16)} Add entry</button><button class="btn sm sec" onclick="NXP.nextSvc('${vid}')">${I('cal', 16)} Next service</button></div><p class="vmeta">Saved on this device only.</p></div>`
-  };
-  async function vlEdit(vid, id) {
-    const all = getVL(), L = all[vid] || [], x = L.find(i => i.id == id);
-    if (x) {
-      const k = await sheet(esc(x.t) + ' · ' + money(x.a), [{ k: 'e', i: 'edit', t: 'Edit entry' }, { k: 'd', i: 'trash', t: 'Delete entry', cls: 'rd' }]);
-      if (k == 'd') { all[vid] = L.filter(i => i.id != id); lsSet('nxvl', all); rerender(); return toast('Entry deleted', 'inf') }
-      if (k != 'e') return
-    }
-    const e = x || {}, o = await modal({
-      title: x ? 'Edit entry' : 'Add entry', icon: 'car', sticky: 1, ok: 'Save', html: `<span class="lb">Type</span><select id="nl_t">${VT.map(t => `<option ${e.t == t ? 'selected' : ''}>${t}</option>`).join('')}</select>
-      <div class="two"><div><span class="lb">Date</span><input id="nl_d" type="date" value="${esc(e.d || ymd(new Date()))}"></div><div><span class="lb">Amount (₹)</span><input id="nl_a" type="number" inputmode="decimal" min="0" placeholder="0" value="${e.a ?? ''}"></div></div>
-      <span class="lb">Odometer (km, optional)</span><input id="nl_k" type="number" inputmode="numeric" min="0" value="${e.k ?? ''}">
-      <span class="lb">Note (optional)</span><input id="nl_n" value="${esc(e.n)}" placeholder="Workshop, litres, parts…">`,
-      pre: el => { if (!$('#nl_d').value) return fail(el, 'Pick a date'); return { t: $('#nl_t').value, d: $('#nl_d').value, a: +$('#nl_a').value || 0, k: $('#nl_k').value, n: $('#nl_n').value.trim() } }
-    });
-    if (!o) return; const a2 = getVL(), L2 = a2[vid] || [];
-    if (x) Object.assign(L2.find(i => i.id == id), o); else L2.push({ id: uid(), ...o });
-    a2[vid] = L2; lsSet('nxvl', a2); rerender(); toast(x ? 'Entry updated' : 'Entry added')
-  }
-  async function nextSvc(vid) {
-    const n = getVN(), e = n[vid] || {}, o = await modal({
-      title: 'Next service', icon: 'cal', sticky: 1, ok: 'Save', html: `<span class="lb">Due date</span><input id="ns_d" type="date" value="${esc(e.d || '')}"><span class="lb">Due at odometer (km, optional)</span><input id="ns_k" type="number" inputmode="numeric" value="${e.k ?? ''}">`,
-      pre: () => ({ d: $('#ns_d').value, k: $('#ns_k').value })
-    });
-    if (!o) return; n[vid] = o; lsSet('nxvn', n); rerender(); toast('Saved')
-  }
-
-  /* ---------- SEARCH PALETTE ---------- */
-  const ACTS = [['doc', 'Add document', 'file', 'new add'], ['veh', 'Add vehicle', 'car', 'new add'], ['cal', 'Calendar view', 'cal', 'calendar month'], ['ins', 'Insights', 'chart', 'stats health'], ['tools', 'Tools', 'wrench', 'utilities'], ['ice', 'Emergency card', 'sos', 'blood contact'], ['pw', 'Password generator', 'lock', 'password random'], ['notes', 'Notes', 'note', 'memo'], ['ap', 'Appearance & themes', 'palette', 'theme colour dark style font'], ['emi', 'EMI calculator', 'calc', 'loan'], ['dates', 'Date calculator', 'cal', 'age days between'], ['hl', 'Home screen layout', 'layout', 'sections'], ['bk', 'Backup settings', 'download', 'export import'], ['help', 'Help & shortcuts', 'info', 'tips keys']];
-  const getNotes = () => lsGet('nxnotes', []);
-  function buildIndex() {
-    const L = [];
-    [['home', 'Home', 'home'], ['docs', 'Documents', 'folder'], ['veh', 'Vehicles', 'car'], ['vault', 'Vault', 'key'], ['me', 'Profile', 'user']].forEach(a => L.push({ k: 'go:' + a[0], i: a[2], t: 'Go to ' + a[1], s: 'Page', x: a[1] + ' page go open' }));
-    ACTS.forEach(a => L.push({ k: 'act:' + a[0], i: a[2], t: a[1], s: 'Action', x: a[1] + ' ' + a[3] }));
-    S.docs.forEach(d => L.push({ k: 'doc:' + d.id, i: d.kind == 'vehicle' ? 'car' : 'file', t: d.title, s: [d.number, vNum(d) || d.holder, st(d.expiry)[1]].filter(Boolean).join(' · '), x: [d.title, d.number, d.notes, d.holder, vNum(d)].join(' ') }));
-    S.vs.forEach(v => L.push({ k: 'veh:' + v.id, i: 'car', t: v.number, s: v.model || 'Vehicle', x: [v.number, v.model, v.owner].join(' ') }));
-    getNotes().forEach(n => L.push({ k: 'note:' + n.id, i: 'note', t: n.t || 'Untitled note', s: 'Note', x: n.t + ' ' + n.b }));
-    try { if (V.key) V.items.filter(x => x.kind != 'folder').forEach(x => L.push({ k: 'vlt:' + x.id, i: 'key', t: x.title, s: 'Vault · ' + (x.user || ''), x: [x.title, x.user, x.url, x.cat].join(' ') })) } catch (e) { }
-    return L
-  }
-  async function palette() {
-    const IDX = buildIndex();
-    const r = await modal({
-      title: 'Search', icon: 'search', ok: null, cancel: null, html: `<div class="srch" style="margin-bottom:10px">${I('search', 18)}<input id="nxq" placeholder="Documents, vehicles, notes, actions…" autocomplete="off" autocapitalize="off"></div><div class="sl" id="nxr"></div>`,
-      onOpen: (el, close) => {
-        const q = $('#nxq'), out = $('#nxr');
-        const R = () => {
-          const t = q.value.toLowerCase().split(/\s+/).filter(Boolean);
-          let L = t.length ? IDX.filter(x => t.every(w => (x.t + ' ' + x.x).toLowerCase().includes(w))) : [...IDX.filter(x => x.k.startsWith('act:')).slice(0, 5), ...IDX.filter(x => x.k.startsWith('doc:')).slice(0, 5)];
-          out.innerHTML = L.slice(0, 40).map(x => `<button class="si" data-pk="${esc(x.k)}">${I(x.i, 22)}<span><b>${esc(x.t)}</b><small>${esc(x.s)}</small></span></button>`).join('') || empty('Nothing found', 'search')
-        };
-        q.addEventListener('input', R); R();
-        q.addEventListener('keydown', e => { if (e.key == 'Enter') { const f = out.querySelector('[data-pk]'); f && close(f.dataset.pk) } });
-        out.addEventListener('click', e => { const b = e.target.closest('[data-pk]'); b && close(b.dataset.pk) })
-      }
-    });
-    if (!r) return; const i = r.indexOf(':'), t = r.slice(0, i), id = r.slice(i + 1);
-    if (t == 'go') go(id); else if (t == 'act') open(id); else if (t == 'doc') view(id); else if (t == 'veh') go('veh', id); else if (t == 'note') noteEdit(id); else if (t == 'vlt') vView(id)
-  }
-  addEventListener('keydown', e => {
-    const t = e.target, typing = t && (/^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName) || t.isContentEditable), ready = S.user && $('#shell.on') && !MS.length && !$('#vw.on') && !$('#lk.on');
-    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() == 'k') { e.preventDefault(); if (ready) palette(); return }
-    if (typing || !ready || e.ctrlKey || e.metaKey || e.altKey) return;
-    if (e.key == '/') { e.preventDefault(); palette() } else if (e.key == 'n') docForm(); else if (e.key == 't') open('tools'); else if (e.key == '?') help(); else if (/^[1-5]$/.test(e.key)) go(['home', 'docs', 'veh', 'vault', 'me'][+e.key - 1])
-  });
-
-  /* ---------- CALENDAR ---------- */
-  function calendar() {
-    let cur = new Date(); cur = new Date(cur.getFullYear(), cur.getMonth(), 1); let sel = ymd(new Date());
-    modal({
-      title: 'Expiry calendar', icon: 'cal', wide: 1, ok: null, cancel: null, noFocus: 1, html: '<div id="nxcal"></div>',
-      onOpen: (el, close) => {
-        const box = el.querySelector('#nxcal');
-        const R = () => {
-          const y = cur.getFullYear(), m = cur.getMonth(), first = new Date(y, m, 1).getDay(), dim = new Date(y, m + 1, 0).getDate(), by = {}, td = ymd(new Date());
-          S.docs.forEach(d => { if (d.expiry) (by[d.expiry] = by[d.expiry] || []).push(d) });
-          let c = ['S', 'M', 'T', 'W', 'T', 'F', 'S'].map(x => `<div class="dow">${x}</div>`).join('') + '<span></span>'.repeat(first);
-          for (let d = 1; d <= dim; d++) { const k = y + '-' + p2(m + 1) + '-' + p2(d), L = by[k] || []; c += `<button type="button" data-d="${k}" class="${k == td ? 'today' : ''} ${k == sel ? 'sel' : ''}">${d}<span class="dts">${L.slice(0, 3).map(x => `<i class="${st(x.expiry)[0] || 'ok'}"></i>`).join('')}</span></button>` }
-          const day = by[sel] || [], inM = S.docs.filter(d => d.expiry && d.expiry.startsWith(y + '-' + p2(m + 1))).length;
-          box.innerHTML = `<div class="nxcl-h"><button type="button" class="ib" data-n="-1" aria-label="Previous month">${I('left', 18)}</button><b>${cur.toLocaleDateString('en-IN', { month: 'long', year: 'numeric' })}</b><button type="button" class="ib" data-n="1" aria-label="Next month">${I('right', 18)}</button></div><div class="nxcal">${c}</div>
-          <div class="nxcl-h" style="margin-top:14px"><b style="text-align:left;font-size:15px">${fd(sel)}</b><button type="button" class="btn sm sec" data-today>Today</button></div>
-          <div class="sl">${day.map(d => `<button type="button" class="si" data-id="${esc(d.id)}">${I(d.kind == 'vehicle' ? 'car' : 'file', 22)}<span><b>${esc(d.title)}</b><small>${esc([d.number, vNum(d) || d.holder].filter(Boolean).join(' · '))} · ${st(d.expiry)[1]}</small></span></button>`).join('') || `<p class="t2" style="padding:4px 2px 10px">Nothing expires on this day.</p>`}</div><p class="vmeta">${inM} document${inM == 1 ? '' : 's'} expire in this month.</p>`
-        };
-        R();
-        box.addEventListener('click', e => {
-          const b = e.target.closest('button'); if (!b) return;
-          if (b.dataset.d) { sel = b.dataset.d; R() }
-          else if (b.dataset.n) { cur = new Date(cur.getFullYear(), cur.getMonth() + +b.dataset.n, 1); R() }
-          else if (b.dataset.today !== undefined) { cur = new Date(); cur = new Date(cur.getFullYear(), cur.getMonth(), 1); sel = ymd(new Date()); R() }
-          else if (b.dataset.id) { close(null); view(b.dataset.id) }
-        })
-      }
-    })
-  }
-
-  /* ---------- INSIGHTS ---------- */
-  function insights() {
-    const h = stats(), D = h.D, c = h.c;
-    if (!h.n) return alertBox('Add a few documents first to see insights.', 'No data yet');
-    const by = {}; D.forEach(d => by[d.title] = (by[d.title] || 0) + 1);
-    const top = Object.entries(by).sort((a, b) => b[1] - a[1]).slice(0, 6), mx = top[0][1], t0 = today();
-    const months = []; for (let i = 0; i < 12; i++) { const m = new Date(t0.getFullYear(), t0.getMonth() + i, 1); months.push({ l: m.toLocaleDateString('en-IN', { month: 'short' }), n: D.filter(d => { if (!d.expiry) return false; const x = pd(d.expiry); return x.getFullYear() == m.getFullYear() && x.getMonth() == m.getMonth() }).length }) }
-    const mm = Math.max(1, ...months.map(x => x.n));
-    const a1 = c.er / h.n * 100, a2 = a1 + c.wn / h.n * 100, a3 = a2 + c.ok / h.n * 100;
-    const att = D.filter(bad).sort((a, b) => st(a.expiry)[2] - st(b.expiry)[2]).slice(0, 5);
-    const files = D.reduce((a, d) => a + d.files.length, 0), starred = D.filter(d => d.fav).length;
-    modal({
-      title: 'Insights', icon: 'chart', wide: 1, ok: null, cancel: null, noFocus: 1, html: `
-      <div class="nxin"><div class="nxdn" style="background:conic-gradient(var(--er) 0 ${a1}%,var(--wn) ${a1}% ${a2}%,var(--ok) ${a2}% ${a3}%,var(--bd) ${a3}% 100%)"><div><b>${h.score}%</b><small>healthy</small></div></div>
-      <div class="nxlg"><span><i style="background:var(--ok)"></i>Valid<em>${c.ok}</em></span><span><i style="background:var(--wn)"></i>Expiring soon<em>${c.wn}</em></span><span><i style="background:var(--er)"></i>Expired<em>${c.er}</em></span><span><i style="background:var(--bd)"></i>No expiry<em>${c['']}</em></span></div></div>
-      <div class="nxkv" style="margin-top:14px"><div><small>Documents</small><b>${h.n}</b></div><div><small>Files</small><b>${files}</b></div><div><small>Starred</small><b>${starred}</b></div></div>
-      <span class="nxsub">Expiring in the next 12 months</span><div class="nxcols">${months.map(x => `<div>${x.n ? `<b>${x.n}</b>` : ''}<i style="height:${x.n ? Math.max(8, x.n / mm * 70) : 3}px;${x.n ? '' : 'opacity:.25'}"></i>${x.l}</div>`).join('')}</div>
-      <span class="nxsub">Most common documents</span>${top.map(([k, n]) => `<div class="nxbr"><span>${esc(k)}</span><div><i style="width:${n / mx * 100}%"></i></div><em>${n}</em></div>`).join('')}
-      ${att.length ? `<span class="nxsub">Needs attention</span><div class="sl">${att.map(d => `<button class="si" data-id="${esc(d.id)}">${I(d.kind == 'vehicle' ? 'car' : 'file', 22)}<span><b>${esc(d.title)}</b><small>${st(d.expiry)[1]}</small></span></button>`).join('')}</div>` : ''}`,
-      onOpen: (el, close) => el.addEventListener('click', e => { const b = e.target.closest('[data-id]'); if (b) { close(null); view(b.dataset.id) } })
-    })
-  }
-
-  /* ---------- TOOLS HUB ---------- */
-  const TOOLS = [['cal', 'Calendar view', 'cal', 'Renewals by date'], ['ins', 'Insights', 'chart', 'Health and stats'], ['ice', 'Emergency card', 'sos', 'Blood group, contact'], ['pw', 'Password generator', 'lock', 'Strong and passphrase'], ['notes', 'Notes', 'note', 'Private notes'], ['emi', 'EMI calculator', 'calc', 'Loan planner'], ['dates', 'Date calculator', 'cal', 'Age, days, add'], ['ap', 'Appearance', 'palette', 'Themes and style'], ['hl', 'Home layout', 'layout', 'Choose sections'], ['bk', 'Backup', 'download', 'Export settings'], ['search', 'Quick search', 'search', 'Find anything'], ['help', 'Help', 'info', 'Tips and keys']];
-  async function tools() {
-    const k = await modal({ title: 'Tools', icon: 'wrench', wide: 1, ok: null, cancel: null, noFocus: 1, html: `<div class="nxtg">${TOOLS.map(t => `<button class="nxtt" data-tl="${t[0]}"><span class="ti2">${I(t[2], 20)}</span><b>${t[1]}</b><small>${t[3]}</small></button>`).join('')}</div>`, onOpen: (el, close) => el.addEventListener('click', e => { const b = e.target.closest('[data-tl]'); b && close(b.dataset.tl) }) });
-    if (k) open(k)
-  }
-
-  /* ---------- EMERGENCY CARD ---------- */
-  function ice() {
-    const u = S.user, ph = (/(\+?\d[\d\s-]{6,}\d)/.exec(u.emergency || '') || [])[1];
-    const L = [['Emergency contact', u.emergency], ['My phone', u.phone], ['Address', u.address], ['Date of birth', u.dob ? fd(u.dob) : '']].filter(x => x[1]);
-    const txt = ['EMERGENCY CARD', u.name, u.blood ? 'Blood group: ' + u.blood : '', ...L.map(x => x[0] + ': ' + x[1])].filter(Boolean).join('\n');
-    modal({
-      title: 'Emergency card', icon: 'sos', tone: 'er', ok: null, cancel: null, noFocus: 1, html: `<div class="nxice"><small>EMERGENCY CARD</small><h2>${esc(u.name)}</h2><div class="bg">${esc(u.blood || '—')}</div><small>BLOOD GROUP</small><dl>${L.map(x => `<div><dt>${x[0]}</dt><dd>${esc(x[1])}</dd></div>`).join('')}</dl></div>
-      ${L.length < 2 || !u.blood ? '<p class="vmeta wn">Add your blood group, address and emergency contact in your profile so this card is useful.</p>' : ''}
-      <div class="vact">${ph ? `<button class="btn sm" data-ia="call">${I('phone', 16)} Call contact</button>` : ''}<button class="btn sm sec" data-ia="copy">${I('copy', 16)} Copy</button><button class="btn sm sec" data-ia="share">${I('share', 16)} Share</button><button class="btn sm sec" data-ia="edit">${I('edit', 16)} Edit</button></div>`,
-      onOpen: (el, close) => el.addEventListener('click', async e => {
-        const b = e.target.closest('[data-ia]'); if (!b) return; const a = b.dataset.ia;
-        if (a == 'call') { const x = document.createElement('a'); x.href = 'tel:' + ph.replace(/[^\d+]/g, ''); document.body.appendChild(x); x.click(); x.remove() }
-        else if (a == 'copy') vCopyTxt(txt, 'Details')
-        else if (a == 'share') { try { if (navigator.share) await navigator.share({ title: 'Emergency card', text: txt }); else vCopyTxt(txt, 'Details') } catch (er) { } }
-        else if (a == 'edit') { close(null); prof() }
-      })
-    })
-  }
-
-  /* ---------- PASSWORD GENERATOR ---------- */
-  const WORDS = 'maple river cloud tiger orbit lemon pixel amber coral delta ember frost grove harbor iris jungle kite lunar mango noble olive pearl quartz raven solar tulip umber velvet willow xenon yacht zephyr anchor breeze candle dragon eagle falcon garden hazel island jasmine koala lotus meadow nectar oasis panda quill rocket saffron thunder unity violet walnut yonder zenith acorn bamboo cactus dune echo fjord glacier honey'.split(' ');
-  const rnd = n => { const m = Math.floor(4294967296 / n) * n; let x; do { x = crypto.getRandomValues(new Uint32Array(1))[0] } while (x >= m); return x % n };
-  const pick = s => s[rnd(s.length)];
-  function pwgen() {
-    const c = { mode: 'pw', len: 16, u: 1, l: 1, d: 1, s: 1, amb: 1, wn: 4, cap: 1, num: 1 };
-    const gen = () => {
-      if (c.mode == 'ph') { const w = Array.from({ length: c.wn }, () => { const x = pick(WORDS); return c.cap ? x[0].toUpperCase() + x.slice(1) : x }); return w.join('-') + (c.num ? '-' + (10 + rnd(90)) : '') }
-      const amb = /[Il1O0o]/g, set = [c.l && 'abcdefghijkmnpqrstuvwxyz', c.u && 'ABCDEFGHJKLMNPQRSTUVWXYZ', c.d && '23456789', c.s && '!@#$%^&*-_+=?'].filter(Boolean).map(x => c.amb ? x : x.replace('k', 'kl').replace('J', 'JIO').replace('2', '2101'));
-      if (!set.length) return ''; const all = set.join(''), o = set.map(pick);
-      while (o.length < c.len) o.push(pick(all)); o.length = Math.max(c.len, set.length);
-      for (let i = o.length - 1; i > 0; i--) { const j = rnd(i + 1);[o[i], o[j]] = [o[j], o[i]] }
-      return o.join('')
-    };
-    const T = (k, t) => `<button type="button" data-tg="${k}" class="${c[k] ? 'on' : ''}">${t}</button>`;
-    modal({
-      title: 'Password generator', icon: 'lock', wide: 1, ok: null, cancel: null, noFocus: 1, html: '<div id="nxg"></div>',
-      onOpen: el => {
-        const box = el.querySelector('#nxg'); let cur = '';
-        const out = () => { cur = gen(); const m = vStr(cur); $('#nxo').textContent = cur || 'Select at least one option'; const b = $('#nxm'); b.style.width = m[0] + '%'; b.style.background = m[2]; $('#nxml').textContent = cur ? m[1] + ' · ' + (c.mode == 'ph' ? c.wn + ' words' : cur.length + ' characters') : '' };
-        const R = () => {
-          box.innerHTML = `<div class="nxs"><button type="button" data-md="pw" class="${c.mode == 'pw' ? 'on' : ''}">Password</button><button type="button" data-md="ph" class="${c.mode == 'ph' ? 'on' : ''}">Passphrase</button></div><div class="nxpw" id="nxo"></div><div class="vmeter"><i id="nxm"></i></div><span class="vml" id="nxml"></span>
-          ${c.mode == 'pw' ? `<div class="nxrg"><span class="lb" style="margin:0">Length</span><input type="range" id="nxrl" min="8" max="64" value="${c.len}"><b id="nxln">${c.len}</b></div><div class="nxs">${T('l', 'abc')}${T('u', 'ABC')}${T('d', '123')}${T('s', '#$%')}${T('amb', 'Avoid look-alikes')}</div>` : `<div class="nxrg"><span class="lb" style="margin:0">Words</span><input type="range" id="nxrw" min="3" max="8" value="${c.wn}"><b id="nxwn">${c.wn}</b></div><div class="nxs">${T('cap', 'Capitalise')}${T('num', 'Add number')}</div>`}
-          <div class="vact"><button type="button" class="btn sm" data-ga="gen">${I('refresh', 16)} Generate</button><button type="button" class="btn sm sec" data-ga="copy">${I('copy', 16)} Copy</button></div>`;
-          out()
-        };
-        R();
-        el.addEventListener('click', e => {
-          const b = e.target.closest('button'); if (!b) return;
-          if (b.dataset.md) { c.mode = b.dataset.md; R() } else if (b.dataset.tg) { c[b.dataset.tg] = c[b.dataset.tg] ? 0 : 1; R() }
-          else if (b.dataset.ga == 'gen') out(); else if (b.dataset.ga == 'copy') cur && vCopyTxt(cur, 'Password')
-        });
-        el.addEventListener('input', e => {
-          if (e.target.id == 'nxrl') { c.len = +e.target.value; $('#nxln').textContent = c.len; out() }
-          if (e.target.id == 'nxrw') { c.wn = +e.target.value; $('#nxwn').textContent = c.wn; out() }
-        })
-      }
-    })
-  }
-
-  /* ---------- NOTES ---------- */
-  const NC = ['#f59e0b', '#ec4899', '#3b82f6', '#22c55e', '#8b5cf6', '#f97316', '#64748b'];
-  const setNotes = a => lsSet('nxnotes', a);
-  async function notes() {
-    for (; ;) {
-      const r = await modal({
-        title: 'Notes', icon: 'note', wide: 1, ok: 'New note', cancel: 'Close', noFocus: 1, html: `<div class="srch" style="margin-bottom:12px">${I('search', 18)}<input id="nn_q" placeholder="Search notes" style="margin:0" autocomplete="off"></div><div id="nn_l"></div><p class="vmeta">Notes are saved on this device only.</p>`,
-        onOpen: (el, close) => {
-          const R = () => {
-            const q = $('#nn_q').value.toLowerCase(), L = getNotes().filter(n => (n.t + ' ' + n.b).toLowerCase().includes(q)).sort((a, b) => (b.p ? 1 : 0) - (a.p ? 1 : 0) || b.u - a.u);
-            $('#nn_l').innerHTML = L.map(n => `<button class="nxnote" data-nid="${esc(n.id)}" style="--nc:${esc(n.c || NC[0])}"><b>${n.p ? I('pin', 14) : ''}${esc(n.t || 'Untitled')}</b>${n.b ? `<p>${esc(n.b)}</p>` : ''}<small>${new Date(n.u).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}</small></button>`).join('') || empty(q ? 'No matching notes' : 'No notes yet. Tap New note', 'note')
-          };
-          R(); $('#nn_q').addEventListener('input', R); $('#nn_l').addEventListener('click', e => { const b = e.target.closest('[data-nid]'); b && close('e:' + b.dataset.nid) })
-        }
-      });
-      if (r === true) await noteEdit(''); else if (typeof r == 'string') await noteEdit(r.slice(2)); else break
-    }
-  }
-  async function noteEdit(id) {
-    const all = getNotes(), n = all.find(x => x.id == id) || {}; let col = n.c || NC[0], pin = !!n.p;
-    const o = await modal({
-      title: id ? 'Edit note' : 'New note', icon: 'note', wide: 1, sticky: 1, ok: 'Save', html: `<span class="lb">Title</span><input id="ne_t" value="${esc(n.t)}" placeholder="Title" maxlength="80" autocomplete="off"><span class="lb">Note</span><textarea id="ne_b" rows="8" style="resize:vertical" placeholder="Write anything…">${esc(n.b)}</textarea>
-      <span class="lb">Colour</span><div class="nxswg" id="ne_c">${NC.map(c => `<button type="button" data-nc="${c}" style="background:${c}" class="${c == col ? 'on' : ''}" aria-label="${c}"></button>`).join('')}</div>
-      <div class="row" style="border:0;padding:4px 0"><div class="rb"><b>Pin to top</b></div><label class="sw"><input type="checkbox" id="ne_p" ${pin ? 'checked' : ''}><span></span></label></div>${id ? `<button type="button" class="btn sec sm" id="ne_d" style="color:var(--er);margin-top:6px">${I('trash', 16)} Delete note</button>` : ''}`,
-      onOpen: (el, close) => el.addEventListener('click', e => {
-        const b = e.target.closest('button'); if (!b) return;
-        if (b.dataset.nc) { col = b.dataset.nc; el.querySelectorAll('#ne_c button').forEach(x => x.classList.toggle('on', x.dataset.nc == col)) }
-        else if (b.id == 'ne_d') close('del')
-      }),
-      pre: el => { const t = $('#ne_t').value.trim(), b = $('#ne_b').value.trim(); if (!t && !b) return fail(el, 'Write something first'); return { t, b, c: col, p: $('#ne_p').checked } }
-    });
-    if (!o) return; const a = getNotes();
-    if (o === 'del') { if (await confirmBox({ title: 'Delete note?', text: 'This cannot be undone.', ok: 'Delete', danger: 1, icon: 'trash' })) { setNotes(a.filter(x => x.id != id)); toast('Note deleted', 'inf') } return }
-    if (id) Object.assign(a.find(x => x.id == id), o, { u: Date.now() }); else a.push({ id: uid(), ...o, u: Date.now() });
-    setNotes(a); toast('Note saved')
-  }
-
-  /* ---------- EMI CALCULATOR ---------- */
-  function emi() {
-    modal({
-      title: 'EMI calculator', icon: 'calc', wide: 1, ok: null, cancel: null, noFocus: 1, html: `<span class="lb">Loan amount (₹)</span><input id="em_a" type="number" inputmode="decimal" value="500000"><div class="two"><div><span class="lb">Interest (% per year)</span><input id="em_r" type="number" inputmode="decimal" step="0.1" value="9"></div><div><span class="lb">Tenure</span><div class="two" style="gap:6px"><input id="em_t" type="number" inputmode="numeric" value="5"><select id="em_u"><option value="y">Years</option><option value="m">Months</option></select></div></div></div><div id="em_o"></div>`,
-      onOpen: el => {
-        const R = () => {
-          const P0 = +$('#em_a').value || 0, r = (+$('#em_r').value || 0) / 1200, n = Math.round((+$('#em_t').value || 0) * ($('#em_u').value == 'y' ? 12 : 1)), o = $('#em_o');
-          if (P0 <= 0 || n <= 0) { o.innerHTML = '<p class="t2">Enter amount and tenure.</p>'; return }
-          const e = r ? P0 * r * Math.pow(1 + r, n) / (Math.pow(1 + r, n) - 1) : P0 / n, tot = e * n, int = tot - P0;
-          o.innerHTML = `<div class="nxbig"><small>Monthly EMI</small><b>${money(e)}</b></div><div class="nxsplit"><i style="width:${P0 / tot * 100}%;background:var(--ac)"></i><i style="flex:1;background:var(--wn)"></i></div><div class="nxkv"><div><small>Principal</small><b>${money(P0)}</b></div><div><small>Total interest</small><b>${money(int)}</b></div><div><small>Total payable</small><b>${money(tot)}</b></div></div><p class="vmeta">${n} monthly payments. The blue part of the bar is principal, the orange part is interest.</p>`
-        };
-        el.addEventListener('input', R); el.addEventListener('change', R); R()
-      }
-    })
-  }
-
-  /* ---------- DATE CALCULATOR ---------- */
-  function ymdDiff(a, b) {
-    if (a > b) [a, b] = [b, a]; let y = b.getFullYear() - a.getFullYear(), m = b.getMonth() - a.getMonth(), d = b.getDate() - a.getDate();
-    if (d < 0) { m--; d += new Date(b.getFullYear(), b.getMonth(), 0).getDate() } if (m < 0) { y--; m += 12 } return [y, m, d]
-  }
-  function dates() {
-    let tab = 'bt';
-    modal({
-      title: 'Date calculator', icon: 'cal', wide: 1, ok: null, cancel: null, noFocus: 1, html: '<div id="dc_b"></div>',
-      onOpen: el => {
-        const box = el.querySelector('#dc_b'), td = ymd(new Date());
-        const R = () => {
-          const T = [['bt', 'Between dates'], ['ad', 'Add / subtract'], ['ag', 'Age']];
-          box.innerHTML = `<div class="nxs">${T.map(t => `<button type="button" data-tb="${t[0]}" class="${tab == t[0] ? 'on' : ''}">${t[1]}</button>`).join('')}</div>` + (tab == 'bt' ? `<div class="two"><div><span class="lb">From</span><input id="dc_1" type="date" value="${td}"></div><div><span class="lb">To</span><input id="dc_2" type="date"></div></div>` : tab == 'ad' ? `<div class="two"><div><span class="lb">Start date</span><input id="dc_1" type="date" value="${td}"></div><div><span class="lb">Days (+ or -)</span><input id="dc_2" type="number" inputmode="numeric" value="90"></div></div>` : `<span class="lb">Date of birth</span><input id="dc_1" type="date" max="${td}" value="${esc(S.user.dob || '')}">`) + '<div id="dc_o"></div>'; U()
-        };
-        const U = () => {
-          const o = $('#dc_o'), a = $('#dc_1').value, b = $('#dc_2') && $('#dc_2').value; let h = '';
-          if (tab == 'bt' && a && b) { const A = pd(a), B = pd(b), n = Math.round(Math.abs(B - A) / 864e5), [y, m, d] = ymdDiff(A, B); h = `<div class="nxbig"><small>Difference</small><b>${n.toLocaleString('en-IN')} days</b></div><p class="vmeta">${y} years, ${m} months, ${d} days · ${(n / 7).toFixed(1)} weeks</p>` }
-          else if (tab == 'ad' && a && b !== '') { const A = pd(a); A.setDate(A.getDate() + (+b || 0)); h = `<div class="nxbig"><small>Result</small><b>${fmtD(A)}</b></div><p class="vmeta">${A.toLocaleDateString('en-IN', { weekday: 'long' })}</p>` }
-          else if (tab == 'ag' && a) { const A = pd(a), [y, m, d] = ymdDiff(A, today()); let nb = new Date(today().getFullYear(), A.getMonth(), A.getDate()); if (nb < today()) nb.setFullYear(nb.getFullYear() + 1); h = `<div class="nxbig"><small>Age</small><b>${y} years</b></div><p class="vmeta">${y} years, ${m} months, ${d} days<br>Next birthday in ${Math.round((nb - today()) / 864e5)} days (${nb.toLocaleDateString('en-IN', { weekday: 'long' })})</p>` }
-          o.innerHTML = h
-        };
-        R(); box.addEventListener('click', e => { const b = e.target.closest('[data-tb]'); if (b) { tab = b.dataset.tb; R() } }); box.addEventListener('input', U); box.addEventListener('change', U)
-      }
-    })
-  }
-
-  /* ---------- HOME LAYOUT ---------- */
-  async function homeLayout() {
-    const R = [['att', 'Needs attention', 'Expired and soon-to-expire'], ['tiles', 'Summary tiles', 'Counts for documents, vehicles'], ['qa', 'Quick actions', 'Add, search, export shortcuts'], ['ins', 'Document health card', 'Score and next expiry'], ['pin', 'Pinned documents', 'Your starred documents'], ['next', 'Next 90 days', 'Upcoming expiries'], ['recent', 'Recent documents', 'Latest five added']];
-    await modal({
-      title: 'Home screen layout', icon: 'layout', ok: 'Done', cancel: null, noFocus: 1, html: R.map(r => `<div class="row"><div class="rb"><b>${r[1]}</b><small>${r[2]}</small></div><label class="sw"><input type="checkbox" data-hs="${r[0]}" ${NX.hs[r[0]] ? 'checked' : ''}><span></span></label></div>`).join(''),
-      onOpen: el => el.addEventListener('change', e => { const k = e.target.dataset.hs; if (k) { NX.hs[k] = e.target.checked ? 1 : 0; save(); rerender() } })
-    }); rerender()
-  }
-
-  /* ---------- BACKUP, HELP ---------- */
-  async function backup() {
-    const k = await sheet('Backup & restore', [{ k: 'ex', i: 'download', t: 'Export preferences & local data', s: 'Appearance, notes, vehicle log' }, { k: 'im', i: 'upload', t: 'Import from a file', s: 'Restore a previous export' }, { k: 'rs', i: 'refresh', t: 'Reset appearance', s: 'Back to the default look', cls: 'rd' }]);
-    if (k == 'ex') { dl2('nexus-plus-backup-' + ymd(new Date()) + '.json', JSON.stringify({ app: 'nexus-plus', v: 1, prefs: NX, notes: getNotes(), vlog: getVL(), vnext: getVN() }, null, 2), 'application/json'); toast('Backup exported') }
-    if (k == 'im') {
-      const f = document.createElement('input'); f.type = 'file'; f.accept = 'application/json,.json';
-      f.onchange = async () => {
-        try {
-          const j = JSON.parse(await f.files[0].text()); if (j.app != 'nexus-plus') throw 0;
-          if (j.prefs) { NX = { ...DEF, ...j.prefs }; NX.hs = { ...DEF.hs, ...(j.prefs.hs || {}) }; save() }
-          if (Array.isArray(j.notes)) setNotes(j.notes); if (j.vlog) lsSet('nxvl', j.vlog); if (j.vnext) lsSet('nxvn', j.vnext);
-          applyAll(); rerender(); toast('Backup restored')
-        } catch (e) { alertBox('This is not a valid Nexus backup file.', 'Could not import') }
-      }; f.click()
-    }
-    if (k == 'rs' && await confirmBox({ title: 'Reset appearance?', text: 'Theme, colours and style options return to default. Your documents are not touched.', ok: 'Reset', icon: 'refresh' })) {
-      ['th', 'ac', 'gs', 'ff', 'fs', 'rd', 'dn', 'cs', 'bg', 'nl', 'w', 'mo'].forEach(x => NX[x] = DEF[x]); save(); applyAll(); rerender(); toast('Appearance reset', 'inf')
-    }
-  }
-  function help() {
-    const K = [['Ctrl / ⌘ + K  or  /', 'Search everything'], ['N', 'Add a document'], ['T', 'Open tools'], ['1 – 5', 'Switch between the tabs'], ['?', 'This help']];
-    modal({
-      title: 'Help & shortcuts', icon: 'info', ok: 'Got it', cancel: null, noFocus: 1, html: `<span class="nxsub" style="margin-top:2px">Keyboard shortcuts</span>${K.map(k => `<div class="row" style="padding:9px 0"><div class="rb"><b>${k[1]}</b></div><span class="bd">${k[0]}</span></div>`).join('')}
-      <span class="nxsub">Tips</span><p class="mt" style="line-height:1.7">• Pull down on any page to sync.<br>• Star a document to pin it on Home.<br>• In Documents, use Select to star, delete or export many at once.<br>• Group documents by type, person or expiry month.<br>• Mask numbers hides document numbers on cards.<br>• Add your blood group and emergency contact for the Emergency card.</p>`
-    })
-  }
-
-  /* ---------- public API used by onclick handlers ---------- */
-  function open(k) {
-    ({ doc: () => docForm(), veh: () => vehForm(), cal: calendar, ins: insights, tools, ice, pw: pwgen, notes, ap: appearance, emi, dates, hl: homeLayout, bk: backup, help, search: palette })[k]?.()
-  }
-  window.NXP = {
-    open, vlE: vlEdit, nextSvc,
-    tg: (k, v) => { NX[k] = v ? 1 : 0; save(); rerender() },
-    vw: v => { NX.vw = v; save(); const d = $('#dl'); if (d) d.className = 'nxv-' + v; document.querySelectorAll('.nxs.ico [data-vw]').forEach(b => b.classList.toggle('on', b.dataset.vw == v)) },
-    grp: v => { NX.grp = v; save(); dl() },
-    sel: () => { SEL = SEL ? null : new Set(); bulkBar(); decorate(); document.querySelectorAll('.nxtb .btn').forEach(b => b.classList.toggle('on', !!SEL)) }
-  };
-
-  /* ---------- go ---------- */
-  applyAll();
-  try { matchMedia('(prefers-color-scheme:dark)').addEventListener('change', () => { if (NX.th === 'auto') applyAll() }) } catch (e) { }
-})();
-
   </script>
 </body>
 
