@@ -23,7 +23,10 @@ jobs:
         run: |
           V=$(git rev-parse --short=8 HEAD)
           MSG=$(git log -1 --pretty=%s | head -c 140)
-          sed -i "s/__APP_VERSION__/$V/" www/index.html
+          sed -i "s/__APP_VERSION__/$V/g" www/index.html
+          grep -q "APP_VER = '$V'" www/index.html || { echo "Version stamp failed"; exit 1; }
+          # new cache name on every deploy so the service worker never serves old files
+          [ -f www/sw.js ] && sed -i "s/const V = 'nexus-[^']*'/const V = 'nexus-$V'/" www/sw.js || true
           jq -n --arg v "$V" --arg m "$MSG" --arg t "$(date -u +%FT%TZ)" '{v:$v,msg:$m,time:$t}' > www/version.json
           cat www/version.json
       - uses: actions/configure-pages@v5
