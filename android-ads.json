@@ -1,4 +1,4 @@
 {
-  "_note": "AdMob APP id (not an ad unit id). This is Google's official TEST app id. Replace it with your real AdMob app id before a production build (see MONETIZATION.md).",
-  "appId": "ca-app-pub-3940256099942544~3347511713"
+  "_note": "AdMob APP id (the one with ~). Production id of Nexus Docs. Changing this file rebuilds the APK.",
+  "appId": "ca-app-pub-3589063278418504~2684334584"
 }
