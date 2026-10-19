@@ -2684,138 +2684,68 @@ html, body { overflow-x: clip !important; }
     .adp .in small { display: block } .adp .bd { margin: 4px 6px 0 0 }
     body.adb #main { padding-bottom: 76px }
 
-
-
-
-    /* =====================================================================
-   RESPONSIVE FIX LAYER: paste at the very END of <style>
-   ===================================================================== */
-
-/* ---- 0) global safety: nothing can push the page sideways ---- */
-img, svg, video, canvas { max-width: 100%; height: auto }
-.i { max-width: none }
-.in, .rb, .rt, .pfi, .fld, .card, .row, .vrow, .dc, .vc, .tt, .pt, .st, .plh, .cp > div { min-width: 0 }
-.in b, .rb b, .tt b, .pt b, .emc b, .cp code, .row b, .vrow b { overflow-wrap: anywhere; word-break: normal }
-.row, .vrow, .dc, .vc { max-width: 100% }
-
-/* ---- 1) plan picker (the bug in your screenshot) ---- */
-.plc { box-sizing: border-box; height: auto; min-height: 0; border-radius: var(--rc) }
-.plc.pls {
-  display: block; width: 100%; padding: 14px 16px; margin: 0 0 10px; text-align: left; cursor: pointer;
-  background: var(--sf); border: 1.5px solid var(--bd); border-radius: var(--rc);
-  transition: border-color .15s, background .15s
-}
-.plc.pls.on { border-color: var(--ac); background: color-mix(in srgb, var(--ac) 9%, var(--sf)) }
-.plh { display: flex; justify-content: space-between; align-items: center; gap: 12px; min-width: 0 }
-.plh > b, .plh > div:first-child { flex: 1 1 auto; min-width: 0; overflow-wrap: break-word; word-break: normal; line-height: 1.25 }
-.plc.pls .plh > b { font-size: 16px; font-weight: 650 }
-.plc .pr { flex: none; text-align: right; white-space: nowrap }
-.plc.pls .pr b { display: block; font-size: 22px; line-height: 1.1; font-family: var(--fd) }
-.plc.pls .pr small { display: block; font-size: 12px; color: var(--t2) }
-/* big plan cards on the Premium page */
-.plc:not(.pls) .pr b { font-size: clamp(24px, 8vw, 30px) }
-.plc:not(.pls) .pr small { font-size: 13px }
-/* safety net: if any old markup still uses .plc.pick, undo the bulk-select styles */
-.plc.pick { width: 100%; height: auto; border-radius: var(--rc); display: block; color: var(--tx) }
-
-/* ---- 2) dialogs and bottom sheets ---- */
-.md { max-width: min(440px, 100%) }
-.md.wide { max-width: min(560px, 100%) }
-.mh { min-width: 0 }
-.mh h3 { min-width: 0; overflow-wrap: anywhere }
-.mb { overflow-x: hidden; overscroll-behavior: contain }
-.mf { flex-wrap: wrap }
-.mf .btn { min-width: 0; padding-left: 14px; padding-right: 14px }
-@media (max-width: 600px) {
-  .md, .md.wide { max-height: 92vh; max-height: 92dvh }
-  .mb { padding: 10px 16px }
-  .mh { padding: 16px 16px 6px }
-  .mf { padding: 12px 16px calc(16px + var(--sab)) }
-}
-
-/* ---- 3) bottom dock: 6 tabs + plus must fit on every width ---- */
-.tabs { box-sizing: border-box; width: calc(100% - 20px) }
-.tabs button { min-width: 0; flex: 0 1 auto }
-@media (max-width: 400px) {
-  .tabs { padding: 4px 4px }
-  .tabs button { min-width: 36px; padding: 0 6px; height: 42px }
-  .tabs button.on { padding: 0 10px }
-  .tabs .plus { width: 44px; height: 44px; min-width: 44px; margin: -8px 0 }
-}
-@media (max-width: 340px) {
-  .tabs button { min-width: 32px; padding: 0 4px }
-  .tabs button.on { padding: 0 8px }
-}
-[data-lb="1"] .tabs button span { font-size: 9.5px; max-width: 100% ; overflow: hidden; text-overflow: ellipsis }
-.bulk { width: calc(100% - 24px) }
-
-/* ---- 4) grids that must adapt to the screen width ---- */
-.two { grid-template-columns: repeat(2, minmax(0, 1fr)) }
-@media (max-width: 340px) { .two { grid-template-columns: minmax(0, 1fr) } }
-.pals { grid-template-columns: repeat(auto-fill, minmax(76px, 1fr)) }
-.presets { grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)) }
-.cks { grid-template-columns: repeat(auto-fit, minmax(88px, 1fr)) }
-.tgrid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)) }
-.fgrid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)) }
-.ptiles { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)) }
-.stats { grid-template-columns: repeat(auto-fit, minmax(76px, 1fr)) }
-.wgrid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)) }
-.seg button { min-width: 0; padding: 10px 6px; font-size: 13.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis }
-.seg.c4 button, .seg.c3 button { font-size: 12.5px; padding-left: 4px; padding-right: 4px }
-
-/* ---- 5) home ledger, tiles, headings on small phones ---- */
-@media (max-width: 380px) {
-  .ledger { grid-template-columns: 1fr; justify-items: center; padding: 16px }
-  .ledger .lrows, .ledger .lfoot { width: 100% }
-  .lring { width: 104px; height: 104px }
-  .lring i { width: 78px; height: 78px }
-  .ph h2, .gh h2 { letter-spacing: -.03em }
-  main { padding-left: 12px; padding-right: 12px }
-  .qa { gap: 14px 4px }
-  .qa button .i { width: 50px; height: 50px; padding: 14px }
-  .qa span { font-size: 11px }
-}
-.pt b { font-size: clamp(20px, 7vw, 28px) }
-.pya { font-size: clamp(30px, 10vw, 38px) }
-.pmh h2 { font-size: clamp(22px, 7vw, 28px) }
-.hero { flex-wrap: wrap }
-.hero.vh img { flex: none }
-
-/* ---- 6) cards, rows, long text ---- */
-.dc, .vc { flex-wrap: nowrap }
-.in small { max-width: 100% }
-.rt { flex-shrink: 0 }
-.row { flex-wrap: nowrap }
-.vrow .rb b { overflow-wrap: anywhere }
-.vact { flex-wrap: wrap }
-.vact .btn { min-width: 0 }
-.cf { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) 36px 36px }
-@media (max-width: 380px) { .cf { grid-template-columns: minmax(0, 1fr) 36px 36px } .cf input[data-f=k] { grid-column: 1 / -1 } }
-.cp { flex-wrap: wrap }
-.cp code { font-size: 14px }
-.pyq svg, .pyq img { width: min(200px, 70vw); height: auto; aspect-ratio: 1 }
-.reck { font-size: clamp(14px, 4.6vw, 20px) }
-
-/* ---- 7) inputs: no zoom-on-focus, no overflow ---- */
-input, select, textarea { max-width: 100%; font-size: 16px }
-input[type=date], input[type=time] { min-width: 0; -webkit-appearance: none; appearance: none; min-height: 48px }
-.fld input { font-size: 16px }
-
-/* ---- 8) big text / large font accessibility ---- */
-@media (max-width: 360px) { body { font-size: 14.5px } }
-.chips, .wallet, .qa { -webkit-overflow-scrolling: touch }
-
-/* ---- 9) landscape and tablets ---- */
-@media (orientation: landscape) and (max-height: 500px) {
-  .md { max-height: calc(100dvh - 16px) }
-  .tabs { bottom: calc(6px + var(--sab)) }
-  main { padding-bottom: calc(96px + var(--sab)) }
-}
-@media (min-width: 600px) and (max-width: 899px) {
-  main { max-width: 680px }
-  .tabs { max-width: 520px }
-}
-
+  
+    /* ===== v4c RESPONSIVE FIX LAYER ===== */
+    img, svg, video, canvas { max-width: 100%; height: auto }
+    .i { max-width: none }
+    .in, .rb, .rt, .pfi, .fld, .card, .row, .vrow, .dc, .vc, .tt, .pt, .st, .plh, .cp > div { min-width: 0 }
+    .in b, .rb b, .tt b, .pt b, .emc b, .cp code, .row b, .vrow b { overflow-wrap: anywhere; word-break: normal }
+    /* plan picker (was broken by the .pick bulk-select class) */
+    .plc.pls { display: block; width: 100%; height: auto; padding: 14px 16px; margin: 0 0 10px; text-align: left; cursor: pointer; background: var(--sf); border: 1.5px solid var(--bd); border-radius: var(--rc); transition: border-color .15s, background .15s }
+    .plc.pls.on { border-color: var(--ac); background: color-mix(in srgb, var(--ac) 9%, var(--sf)) }
+    .plh { display: flex; justify-content: space-between; align-items: center; gap: 12px; min-width: 0 }
+    .plh > b, .plh > div:first-child { flex: 1 1 auto; min-width: 0; line-height: 1.25 }
+    .plc.pls .plh > b { font-size: 16px; font-weight: 650 }
+    .plc .pr { flex: none; text-align: right; white-space: nowrap }
+    .plc.pls .pr b { display: block; font-size: 22px; line-height: 1.1; font-family: var(--fd) }
+    .plc.pls .pr small { display: block; font-size: 12px; color: var(--t2) }
+    .plc:not(.pls) .pr b { font-size: clamp(24px, 8vw, 30px) }
+    /* dialogs */
+    .md { max-width: min(440px, 100%) }
+    .md.wide { max-width: min(560px, 100%) }
+    .mh h3 { min-width: 0 }
+    .mb { overflow-x: hidden; overscroll-behavior: contain }
+    @media (max-width: 600px) { .mb { padding: 10px 16px } .mh { padding: 16px 16px 6px } .mf { padding-left: 16px; padding-right: 16px } }
+    /* bottom dock on narrow phones */
+    .tabs { box-sizing: border-box }
+    .tabs button { min-width: 0 }
+    @media (max-width: 400px) {
+      .tabs { padding: 4px }
+      .tabs button { min-width: 36px; padding: 0 6px; height: 42px }
+      .tabs button.on { padding: 0 10px }
+      .tabs .plus { width: 44px; height: 44px; min-width: 44px; margin: -8px 0 }
+    }
+    @media (max-width: 340px) { .tabs button { min-width: 32px; padding: 0 4px } .tabs button.on { padding: 0 8px } }
+    /* grids adapt to the screen width */
+    .two { grid-template-columns: repeat(2, minmax(0, 1fr)) }
+    @media (max-width: 340px) { .two { grid-template-columns: minmax(0, 1fr) } }
+    .pals { grid-template-columns: repeat(auto-fill, minmax(76px, 1fr)) }
+    .presets { grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)) }
+    .cks { grid-template-columns: repeat(auto-fit, minmax(88px, 1fr)) }
+    .tgrid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)) }
+    .fgrid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)) }
+    .ptiles { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)) }
+    .seg button { min-width: 0; padding: 10px 6px; font-size: 13.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis }
+    .seg.c3 button, .seg.c4 button { font-size: 12.5px; padding-left: 4px; padding-right: 4px }
+    /* small phones */
+    @media (max-width: 380px) {
+      .ledger { grid-template-columns: 1fr; justify-items: center; padding: 16px }
+      .ledger .lrows, .ledger .lfoot { width: 100% }
+      main { padding-left: 12px; padding-right: 12px }
+      .qa span { font-size: 11px }
+      .cf { grid-template-columns: minmax(0, 1fr) 36px 36px }
+      .cf input[data-f=k] { grid-column: 1 / -1 }
+    }
+    .pt b { font-size: clamp(20px, 7vw, 28px) }
+    .pya { font-size: clamp(30px, 10vw, 38px) }
+    .pmh h2 { font-size: clamp(22px, 7vw, 28px) }
+    .cp { flex-wrap: wrap }
+    .vact { flex-wrap: wrap }
+    .pyq svg, .pyq img { width: min(200px, 70vw); height: auto; aspect-ratio: 1 }
+    .reck { font-size: clamp(14px, 4.6vw, 20px) }
+    input, select, textarea { max-width: 100%; font-size: 16px }
+    input[type=date] { min-width: 0; min-height: 48px }
+    @media (orientation: landscape) and (max-height: 500px) { .md { max-height: calc(100dvh - 16px) } main { padding-bottom: calc(96px + var(--sab)) } }
   </style>
 </head>
 
@@ -3118,7 +3048,7 @@ input[type=date], input[type=time] { min-width: 0; -webkit-appearance: none; app
     <div class="row"><div class="ri">${I('bell', 20)}</div><div class="rb"><b>Email reminders</b><small>Sent by email every morning at 8 AM</small></div><label class="sw"><input type="checkbox" ${u.remind ? 'checked' : ''} onchange="tgRem(this)"><span></span></label></div>${notifRow()}${A('bell', 'Reminder timing', rdTxt(), 'remDays()')}<div class="row"><div class="ri">${I('lock', 20)}</div><div class="rb"><b>App lock</b><small>Ask for a 4-digit PIN when the app opens</small></div><label class="sw"><input type="checkbox" ${localStorage.nxpin ? 'checked' : ''} onchange="tgLock(this)"><span></span></label></div></div>
   <h3 class="h">Security &amp; data</h3><div class="card grp">${A('lock', 'Change password', 'Update your account password', 'chPw()') + A('devices', 'Logout from all devices', 'End every active session', 'logAll()') + A('download', 'Export my data', 'Download all your details as a file', 'exportData()') + A('table', 'Export documents (CSV)', 'Open in Excel or Google Sheets', 'exportCSV()') + A('cal', 'Add expiry dates to calendar', 'Download an .ics file for any calendar app', 'exportICS()')}</div>
   ${S.isAdmin ? `<h3 class="h">Admin</h3><div class="card grp">${A('dash', 'Admin dashboard', 'Payments, prices, settings, audit log', "go('adm')")}</div>` : ''}
-  <h3 class="h">Account</h3><div class="card grp">${A('logout', 'Logout', 'Sign out from this device', 'logout()') + A('trash', 'Delete account', 'Permanently remove all your data', 'delAcc()', 'rd')}</div><p class="t2" style="text-align:center;font-size:12.5px;margin:18px 0 4px">Nexus Docs · UI version 1.0.1 · build ${verTxt()}</p>`}
+  <h3 class="h">Account</h3><div class="card grp">${A('logout', 'Logout', 'Sign out from this device', 'logout()') + A('trash', 'Delete account', 'Permanently remove all your data', 'delAcc()', 'rd')}</div><p class="t2" onclick="adsWhy()" style="text-align:center;font-size:12.5px;margin:18px 0 4px">Nexus Docs · UI version 1.0.1 · build ${verTxt()}</p>`}
 
     /* ---------- PROFILE ACTIONS ---------- */
     const sq = f => new Promise((r, j) => { const i = new Image(); i.onload = () => { const m = Math.min(i.width, i.height), c = document.createElement('canvas'); c.width = c.height = 480; c.getContext('2d').drawImage(i, (i.width - m) / 2, (i.height - m) / 2, m, m, 0, 0, 480, 480); URL.revokeObjectURL(i.src); r(c.toDataURL('image/jpeg', .88).split(',')[1]) }; i.onerror = () => j(Error('Could not read this image')); i.src = URL.createObjectURL(f) });
@@ -5410,6 +5340,23 @@ html[data-glass="1"] .tabs{background:color-mix(in srgb,var(--dk) 72%,transparen
       if (S.user && ADS.hid && Date.now() - ADS.hid > 3e5) subRefresh(true).then(() => setTimeout(appOpenTry, 600)); else subRefresh()
     });
     function adsStop() { try { if (ADS.banner) bannerHide(true) } catch (e) { } }
+
+    function adsWhy() {
+      const c = ACF(), r = [];
+      if (!NATIVE()) r.push('This is not the Android app (browser or PWA). Ads only show in the APK');
+      else if (!adPlug()) r.push('AdMob plugin is missing from this APK. Rebuild the APK');
+      if (c.enabled === false) r.push('config.js has enabled:false');
+      if (!S.user) r.push('Not logged in');
+      if (S.adsOn === false) r.push('Admin > Settings > Ads enabled is OFF');
+      if (!SUBREF) r.push('Server did not send serverTime. Redeploy backend/Code.gs');
+      if (S.off) r.push('Offline mode');
+      if (isPremium()) r.push('Premium is active, so no ads');
+      if (ADS.dead) r.push('AdMob failed to start or consent was refused. Restart the app');
+      if (!adTest() && !adId('banner')) r.push('testMode is false but the banner ad unit ID is empty in config.js');
+      if (!adScreens.includes(S.tab)) r.push('Banner is not shown on this screen: ' + S.tab);
+      if (!r.length) r.push('Everything is OK. New ad units can take up to 24 hours to start filling');
+      mdl('Ads check', 'info', '<ul style="padding-left:18px;line-height:1.7">' + r.map(x => '<li>' + esc(x) + '</li>').join('') + '</ul>')
+    }
 
     /* ---------- INIT ---------- */
     applyPrefs();
