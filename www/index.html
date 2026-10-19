@@ -2682,7 +2682,9 @@ html, body { overflow-x: clip !important; }
     .mono { font-family: ui-monospace, Menlo, monospace; font-variant-numeric: tabular-nums }
     .adx { display: grid; gap: 8px } .adp { text-align: left; width: 100%; margin-bottom: 10px }
     .adp .in small { display: block } .adp .bd { margin: 4px 6px 0 0 }
-    body.adb #main { padding-bottom: 76px }
+    body.adb #main { padding-bottom: calc(120px + var(--sab) + var(--adh, 60px)) }
+    body.adb .tabs { margin-bottom: var(--adh, 60px) !important }
+    body.adb .bulk { margin-bottom: var(--adh, 60px) !important }
 
   
     /* ===== v4c RESPONSIVE FIX LAYER ===== */
@@ -5301,7 +5303,9 @@ html[data-glass="1"] .tabs{background:color-mix(in srgb,var(--dk) 72%,transparen
         else {
           if (!await adsInit()) return; const id = adId('banner'); if (!id) return;
           const t = $('#tabs'), sab = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--sab')) || 0;
-          await A.showBanner({ adId: id, adSize: 'ADAPTIVE_BANNER', position: 'BOTTOM_CENTER', margin: Math.max(0, Math.round((t ? t.offsetHeight : 0) - sab)), isTesting: adTest() }); /* sits just above the tab bar, never on top of it */
+          if (!ADS.lis) { ADS.lis = 1; try { A.addListener('bannerAdSizeChanged', i => { if (i && i.height) document.documentElement.style.setProperty('--adh', Math.round(i.height) + 'px') }) } catch (e) { } }
+          document.documentElement.style.setProperty('--adh', '60px'); /* provisional, replaced by the real height from the plugin */
+          await A.showBanner({ adId: id, adSize: 'ADAPTIVE_BANNER', position: 'BOTTOM_CENTER', margin: Math.max(0, Math.round(sab)), isTesting: adTest() }); /* banner at the very bottom; the tab bar is lifted above it by CSS (--adh) */
           ADS.banner = 1
         }
         ADS.hidden = 0; document.body.classList.add('adb'); ADS.fails = 0
@@ -5342,10 +5346,6 @@ html[data-glass="1"] .tabs{background:color-mix(in srgb,var(--dk) 72%,transparen
       if (prefer != 'interstitial' && !aoDue()) return;
       ADS.busy = 1; try { await fullAd(prefer || 'appOpen') } finally { ADS.busy = 0 }
     }
-    async function guestLaunchAd() { /* app opened on the login screen: nobody can be Premium yet */
-      if (!adPlug() || ADS.busy || ADS.dead || ACF().enabled === false || S.user || S.token || MS.length || !aoDue()) return;
-      ADS.busy = 1; try { await fullAd('appOpen') } finally { ADS.busy = 0 }
-    }
     function afterLoad() { /* called once the server answered after sign-in / app start */
       try { if (hasPendingLocal()) premLoad() } catch (e) { }
       if (S.justLogin) { S.justLogin = 0; setTimeout(() => appOpenTry('interstitial'), 1200) } /* ad right after a fresh login */
@@ -5383,7 +5383,6 @@ html[data-glass="1"] .tabs{background:color-mix(in srgb,var(--dk) 72%,transparen
     if (!Q && ['docs', 'vault'].includes(UP.start)) S.tab = UP.start;
     try { history.replaceState(null, '', location.pathname) } catch (e) { }
     S.token ? load('sk') : authView('login');
-    if (!S.token) setTimeout(guestLaunchAd, 1200);
     if (S.token && localStorage.nxpin) lockNow();
   </script>
 </body>
