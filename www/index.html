@@ -2641,6 +2641,23 @@ html, body { overflow-x: clip !important; }
 .crz input { margin: 0; flex: 1; }
 .crz .i { color: var(--t2); }
 
+
+
+
+.up-v { display: inline-flex; align-items: center; gap: 8px; margin: 12px 0 2px; padding: 6px 14px; border-radius: var(--rb); background: color-mix(in srgb, var(--ac) 10%, var(--sf)); font: 13px ui-monospace, Menlo, Consolas, monospace }
+.up-v s { opacity: .55 }
+.up-v b { color: var(--ac) }
+.up-n { margin-top: 14px; padding: 14px 16px; border-radius: var(--ri); background: color-mix(in srgb, var(--tx) 5%, var(--sf)) }
+.up-n small { display: block; margin-bottom: 6px; font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--ac) }
+.up-n strong { display: block; font-family: var(--fd); font-size: 17px; font-weight: 600 }
+.up-n ul { list-style: none; margin: 10px 0 0; padding: 0 }
+.up-n li { display: flex; gap: 8px; align-items: flex-start; margin: 6px 0; font-size: 14px }
+.up-n li .i { color: var(--ok); margin-top: 2px }
+
+
+
+
+
   </style>
 </head>
 
@@ -2940,7 +2957,7 @@ html, body { overflow-x: clip !important; }
   <h3 class="h">Preferences</h3><div class="card grp">${A('refresh', 'Check for updates', 'Version ' + verTxt(), 'checkUpdate(1)')}${standalone() ? '' : A('download', 'Install app', 'Add Nexus Docs to your home screen', 'installApp()')}
     <div class="row"><div class="ri">${I('bell', 20)}</div><div class="rb"><b>Email reminders</b><small>Sent by email every morning at 8 AM</small></div><label class="sw"><input type="checkbox" ${u.remind ? 'checked' : ''} onchange="tgRem(this)"><span></span></label></div>${notifRow()}${A('bell', 'Reminder timing', rdTxt(), 'remDays()')}<div class="row"><div class="ri">${I('lock', 20)}</div><div class="rb"><b>App lock</b><small>Ask for a 4-digit PIN when the app opens</small></div><label class="sw"><input type="checkbox" ${localStorage.nxpin ? 'checked' : ''} onchange="tgLock(this)"><span></span></label></div></div>
   <h3 class="h">Security &amp; data</h3><div class="card grp">${A('lock', 'Change password', 'Update your account password', 'chPw()') + A('devices', 'Logout from all devices', 'End every active session', 'logAll()') + A('download', 'Export my data', 'Download all your details as a file', 'exportData()') + A('table', 'Export documents (CSV)', 'Open in Excel or Google Sheets', 'exportCSV()') + A('cal', 'Add expiry dates to calendar', 'Download an .ics file for any calendar app', 'exportICS()')}</div>
-  <h3 class="h">Account</h3><div class="card grp">${A('logout', 'Logout', 'Sign out from this device', 'logout()') + A('trash', 'Delete account', 'Permanently remove all your data', 'delAcc()', 'rd')}</div><p class="t2" style="text-align:center;font-size:12.5px;margin:18px 0 4px">Nexus Docs · UI version 6.0.1 · build ${verTxt()}</p>`}
+  <h3 class="h">Account</h3><div class="card grp">${A('logout', 'Logout', 'Sign out from this device', 'logout()') + A('trash', 'Delete account', 'Permanently remove all your data', 'delAcc()', 'rd')}</div><p class="t2" style="text-align:center;font-size:12.5px;margin:18px 0 4px">Nexus Docs · UI version 1.0.1 · build ${verTxt()}</p>`}
 
     /* ---------- PROFILE ACTIONS ---------- */
     const sq = f => new Promise((r, j) => { const i = new Image(); i.onload = () => { const m = Math.min(i.width, i.height), c = document.createElement('canvas'); c.width = c.height = 480; c.getContext('2d').drawImage(i, (i.width - m) / 2, (i.height - m) / 2, m, m, 0, 0, 480, 480); URL.revokeObjectURL(i.src); r(c.toDataURL('image/jpeg', .88).split(',')[1]) }; i.onerror = () => j(Error('Could not read this image')); i.src = URL.createObjectURL(f) });
@@ -4039,7 +4056,7 @@ html, body { overflow-x: clip !important; }
       location.reload()
     }
     async function aboutApp() {
-      await mdl('About Nexus Docs', 'about', `<div class="emc"><b>Nexus Docs</b><span class="bg">6.0</span></div><p class="t2" style="margin:10px 0">All your personal and vehicle documents in one secure place, with an end-to-end encrypted password vault.</p><div class="tgl"><div class="rb"><b>Documents</b></div><span>${S.docs.length}</span></div><div class="tgl"><div class="rb"><b>Vehicles</b></div><span>${S.vs.length}</span></div><div class="tgl"><div class="rb"><b>Files stored</b></div><span>${S.docs.reduce((a, d) => a + d.files.length, 0)}</span></div><div class="tgl"><div class="rb"><b>Offline mode</b></div><span>${S.off ? 'Offline now' : 'Online'}</span></div><h4 style="margin:14px 0 6px;font-size:14px">Tips</h4><p class="t2" style="font-size:13.5px;line-height:1.6">Long-press nothing is needed: tap the + button for a new document. Star a document to pin it on Home. Use Appearance for themes. The vault locks itself when you are idle.</p>`)
+      await mdl('About Nexus Docs', 'about', `<div class="emc"><b>Nexus Docs</b><span class="bg">1.0</span></div><p class="t2" style="margin:10px 0">All your personal and vehicle documents in one secure place, with an end-to-end encrypted password vault.</p><div class="tgl"><div class="rb"><b>Documents</b></div><span>${S.docs.length}</span></div><div class="tgl"><div class="rb"><b>Vehicles</b></div><span>${S.vs.length}</span></div><div class="tgl"><div class="rb"><b>Files stored</b></div><span>${S.docs.reduce((a, d) => a + d.files.length, 0)}</span></div><div class="tgl"><div class="rb"><b>Offline mode</b></div><span>${S.off ? 'Offline now' : 'Online'}</span></div><h4 style="margin:14px 0 6px;font-size:14px">Tips</h4><p class="t2" style="font-size:13.5px;line-height:1.6">Long-press nothing is needed: tap the + button for a new document. Star a document to pin it on Home. Use Appearance for themes. The vault locks itself when you are idle.</p>`)
     }
     async function generalOpts() {
       const seg = (k, a, c = '') => `<div class="seg ${c}">${a.map(x => `<button data-g="${k}:${x[0]}" class="${UP[k] == x[0] ? 'on' : ''}">${x[1]}</button>`).join('')}</div>`;
@@ -4256,46 +4273,104 @@ function fitText() {
   addEventListener('resize', run);
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(run);
 })();
-    /* ---------- app update check ----------
-       Every deploy stamps the git commit id into APP_VER (see .github/workflows/pages.yml) and writes the same id to version.json.
-       If version.json differs from APP_VER, a newer version is live. "Later" is remembered per version, so the popup returns only for the next commit. */
-    const APP_VER = '__APP_VERSION__';
-    const VER_OK = /^[0-9a-f]{6,}$/i.test(APP_VER);
-    const verTxt = () => VER_OK ? APP_VER.slice(0, 7) : 'dev';
-    let UBUSY = 0, ULAST = 0;
-    async function applyUpdate() {
-      loader('Updating…');
+
+
+
+
+    /* ---------- app update manager ----------
+   Every deploy stamps the commit id into APP_VER and writes version.json:
+   { "v": "<commit>", "msg": "Short summary", "notes": ["Item 1","Item 2"], "force": false }
+   "Later" is remembered per version. "force": true removes the Later button. */
+const APP_VER = '__APP_VERSION__';
+const VER_OK = /^[0-9a-f]{6,}$/i.test(APP_VER);
+function verTxt() { return VER_OK ? APP_VER.slice(0, 7) : 'dev' }
+function checkUpdate(m) { return Updater.check(m === 1 || m === true) }
+
+const Updater = (() => {
+  const CFG = { file: 'version.json', every: 15 * 60 * 1000, gap: 10 * 60 * 1000, timeout: 8000, retries: 2, kSkip: 'nxskip', kDone: 'nxupd' };
+  const U = { busy: 0, last: 0, ask: 0 };
+  const short = v => String(v || '').slice(0, 7);
+  const ls = {
+    get(k) { try { return localStorage.getItem(k) || '' } catch (e) { return '' } },
+    set(k, v) { try { localStorage.setItem(k, v) } catch (e) { } },
+    del(k) { try { localStorage.removeItem(k) } catch (e) { } }
+  };
+
+  /* fetch version.json with timeout + retry (0.5s, 1s backoff) */
+  async function getInfo() {
+    let err;
+    for (let i = 0; i <= CFG.retries; i++) {
+      const ctl = new AbortController(), t = setTimeout(() => ctl.abort(), CFG.timeout);
       try {
-        const r = await fetch(location.pathname, { cache: 'reload' }); if (!r.ok) throw 0; /* refresh the browser's saved copy of the page */
-        try { const rg = await navigator.serviceWorker.getRegistrations(); await Promise.all(rg.map(x => x.unregister())); const c = await caches.keys(); await Promise.all(c.map(x => caches.delete(x))) } catch (e) { }
-        location.reload()
-      } catch (e) {
-        unload(); try { localStorage.removeItem('nxskip') } catch (x) { }
-        alertBox('Could not download the update. Check your internet and try again.', 'Update failed')
-      }
+        const r = await fetch(CFG.file + '?_=' + Date.now(), { cache: 'no-store', signal: ctl.signal });
+        if (!r.ok) throw Error('HTTP ' + r.status);
+        return await r.json()
+      } catch (e) { err = e; if (i < CFG.retries) await new Promise(res => setTimeout(res, 500 * 2 ** i)) }
+      finally { clearTimeout(t) }
     }
-    async function checkUpdate(manual) {
-      if (UBUSY) return;
-      if (!VER_OK) { if (manual === 1) toast('Development build. Updates are checked on the live app only', 'inf'); return }
-      if (manual !== 1 && (!S.user || !navigator.onLine || $('#lk.on') || MS.length || $('#vw.on') || Date.now() - ULAST < 6e5)) return;
-      UBUSY = 1;
-      try {
-        const r = await fetch('version.json?_=' + Date.now(), { cache: 'no-store' }); if (!r.ok) throw 0;
-        const j = await r.json(), v = String(j.v || ''); ULAST = Date.now(); if (!v) throw 0;
-        if (v === APP_VER) { if (manual === 1) toast('You are on the latest version'); return }
-        let skip = ''; try { skip = localStorage.nxskip || '' } catch (e) { }
-        if (manual !== 1 && skip === v) return;
-        const o = await modal({
-          title: 'New update available', icon: 'download', sticky: 1, ok: 'Update now', cancel: 'Later', noFocus: 1,
-          html: `<p class="mt">A newer version of Nexus Docs is ready.</p>${j.msg ? `<div class="res" style="display:block"><small style="margin:0 0 2px">What's new</small>${esc(j.msg)}</div>` : ''}<p class="t2" style="font-size:12.5px;margin-top:10px">Version ${esc(verTxt())} &rarr; ${esc(v.slice(0, 7))}</p>`
-        });
-        try { localStorage.nxskip = v } catch (e) { } /* Later or Update: do not ask again for this version */
-        if (o) await applyUpdate()
-      } catch (e) { if (manual === 1) toast('Could not check for updates', 'er') }
-      finally { UBUSY = 0 }
+    throw err
+  }
+
+  /* do not interrupt: logged out, offline, PIN lock, any popup, viewer, loader */
+  const quiet = () => S.user && navigator.onLine && !$('#lk.on') && !MS.length && !$('#vw.on') && !$('.ld.on');
+
+  async function apply(v) {
+    loader('Updating…');
+    try {
+      const r = await fetch(location.pathname, { cache: 'reload' }); if (!r.ok) throw Error('HTTP ' + r.status);
+      try { const rg = await navigator.serviceWorker.getRegistrations(); await Promise.all(rg.map(async x => { x.waiting && x.waiting.postMessage({ type: 'SKIP_WAITING' }); await x.unregister() })) } catch (e) { }
+      try { const c = await caches.keys(); await Promise.all(c.map(k => caches.delete(k))) } catch (e) { }
+      ls.set(CFG.kDone, short(v)); ls.del(CFG.kSkip);
+      location.reload()
+    } catch (e) {
+      unload(); ls.del(CFG.kSkip);
+      alertBox('Could not download the update. Check your internet and try again.', 'Update failed')
     }
-    document.addEventListener('visibilitychange', () => { if (!document.hidden) setTimeout(checkUpdate, 1500) });
-    setInterval(checkUpdate, 9e5);
+  }
+
+  async function prompt(j, v) {
+    if (U.ask) return; U.ask = 1;
+    const force = j.force === true, notes = (Array.isArray(j.notes) ? j.notes : []).slice(0, 6);
+    try {
+      const ok = await modal({
+        title: force ? 'Required update' : 'New update available', icon: 'download', sticky: 1, noFocus: 1,
+        ok: 'Update now', cancel: force ? null : 'Later',
+        html: `<p class="mt">A newer version of Nexus Docs is ready.</p>
+          <div class="up-v"><s>${esc(verTxt())}</s>${I('right', 14)}<b>${esc(short(v))}</b></div>
+          ${j.msg || notes.length ? `<div class="up-n"><small>What’s new</small>${j.msg ? `<strong>${esc(j.msg)}</strong>` : ''}${notes.length ? `<ul>${notes.map(n => `<li>${I('check', 15)}<span>${esc(n)}</span></li>`).join('')}</ul>` : ''}</div>` : ''}`,
+        onOpen: el => { if (force) { const x = el.querySelector('.mx'); x && x.remove() } }
+      });
+      if (ok) return await apply(v);
+      if (!force) ls.set(CFG.kSkip, v) /* Later: ask again only for the next version */
+    } finally { U.ask = 0 }
+  }
+
+  async function check(manual) {
+    if (U.busy) return;
+    if (!VER_OK) { if (manual) toast('Development build. Updates are checked on the live app only', 'inf'); return }
+    if (manual && !navigator.onLine) return toast('You are offline', 'er');
+    if (!manual && (!quiet() || Date.now() - U.last < CFG.gap)) return;
+    U.busy = 1;
+    try {
+      const j = await getInfo(), v = String((j && j.v) || ''); if (!v) throw Error('Bad version file');
+      U.last = Date.now();
+      if (v === APP_VER) { if (manual) toast('You are on the latest version'); return }
+      if (!manual && j.force !== true && ls.get(CFG.kSkip) === v) return;
+      await prompt(j, v)
+    } catch (e) { if (manual) toast('Could not check for updates', 'er') }
+    finally { U.busy = 0 }
+  }
+
+  function start() {
+    const done = ls.get(CFG.kDone);
+    if (done) { ls.del(CFG.kDone); if (done === short(APP_VER)) setTimeout(() => toast('Updated to version ' + done), 1200) }
+    document.addEventListener('visibilitychange', () => { if (!document.hidden) setTimeout(check, 1500) });
+    addEventListener('online', () => setTimeout(check, 2000));
+    setInterval(check, CFG.every)
+  }
+  return { start, check }
+})();
+Updater.start();
 
     /* ---------- INIT ---------- */
     applyPrefs();
