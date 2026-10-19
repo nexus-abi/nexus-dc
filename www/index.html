@@ -5016,9 +5016,11 @@ html[data-glass="1"] .tabs{background:color-mix(in srgb,var(--dk) 72%,transparen
     /* server time: the answer of the server plus the time that passed on this phone's monotonic clock since. The device date/time is never used. */
     const srvNow = () => SUBREF ? SUBREF.srv + (performance.now() - SUBREF.at) : 0;
     function setSub(d) {
-      S.sub = d.sub || { status: 'free' }; S.isAdmin = !!d.admin; S.adsOn = d.adsEnabled !== false;
-      const t = +(d.serverTime || (d.sub && d.sub.serverTime)) || 0; SUBREF = t ? { srv: t, at: performance.now() } : null
-    }
+  S.sub = d.sub || { status: 'free' }; S.isAdmin = !!d.admin; S.adsOn = d.adsEnabled !== false;
+  if (d.adScreens !== undefined) S.adScr = d.adScreens;
+  if (d.locks !== undefined) S.locks = d.locks;
+  const t = +(d.serverTime || (d.sub && d.sub.serverTime)) || 0; SUBREF = t ? { srv: t, at: performance.now() } : null
+}
     function clearSub() { S.sub = null; S.isAdmin = false; SUBREF = null }
     const subLeftMs = () => S.sub && S.sub.status == 'active' && SUBREF ? (S.sub.paidUntil || S.sub.expiry) - srvNow() : 0;
     const subKnown = () => !!SUBREF && !S.off && performance.now() - SUBREF.at < 6 * 36e5;   /* we hold a recent answer from the server */
@@ -5247,18 +5249,28 @@ html[data-glass="1"] .tabs{background:color-mix(in srgb,var(--dk) 72%,transparen
       const s = r.sub, st = s.status == 'active' ? 'Active until ' + fdt(s.paidUntil || s.expiry) : s.status == 'expired' ? 'Expired ' + fdt(s.expiry) : 'Free';
       mdl(r.user ? r.user.name : 'User history', 'user', `<p class="t2" style="margin-bottom:8px">${r.user ? esc(r.user.email) : 'Deleted account'} &middot; <b>${st}</b></p><h4 style="margin:10px 0 4px">Payments</h4>${r.payments.length ? r.payments.map(p => `<div class="row" style="padding:8px 0"><div class="rb"><b>${esc(p.planName)} &middot; ${inr(p.amount)}</b><small class="mono">${esc(p.utr || '–')} &middot; ${fdt(p.submitted || p.created)}</small></div><span class="bd ${stBd(p.status)[0]}">${stBd(p.status)[1]}</span></div>`).join('') : '<p class="t2">None</p>'}<h4 style="margin:12px 0 4px">Subscriptions</h4>${r.subs.length ? r.subs.map(x => `<div class="row" style="padding:8px 0"><div class="rb"><b>${esc(x.planName)}</b><small>${fdt(x.start)} to ${fdt(x.expiry)}</small></div><span class="bd ${x.status == 'active' ? 'ok' : x.status == 'queued' ? 'wn' : 'er'}">${x.status}</span></div>`).join('') : '<p class="t2">None</p>'}`, { ok: 'Close', wide: 1 })
     }
+
+    const AD_SC = [['home','Home'],['docs','Documents'],['veh','Vehicles'],['tools','Tools'],['cal','Calendar'],['ins','Insights'],['vault','Vault'],['me','Profile'],['prem','Premium page']];
+const LK = Object.keys(LOCK_LABEL).map(k => [k, LOCK_LABEL[k]]);
+const ckGrid = (id, arr, on) => `<div class="cks" id="${id}" style="grid-template-columns:repeat(auto-fill,minmax(140px,1fr))">${arr.map(x => `<label class="ck"><input type="checkbox" value="${x[0]}" ${on.includes(x[0]) ? 'checked' : ''}><span>${x[1]}</span></label>`).join('')}</div>`;
     function adSet(o) {
       const s = o.settings, T = (id, l, v, ph = '', ty = 'text') => `<label class="lb" for="${id}">${l}</label><div class="fld"><input id="${id}" type="${ty}" value="${esc(v)}" placeholder="${esc(ph)}" autocomplete="off"></div>`;
       const sw = (id, t, sub, on) => `<div class="tgl"><div class="rb"><b>${t}</b><small>${sub}</small></div><label class="sw"><input id="${id}" type="checkbox" ${on === '1' ? 'checked' : ''}><span></span></label></div>`;
+      `<h3 class="h" style="margin-top:0">Ads: where to show</h3><div class="card"><p class="t2" style="font-size:13px;margin-bottom:10px">Banner ads show only on the ticked screens (turn "Ads enabled" off below to hide everywhere).</p>${ckGrid('st_sc', AD_SC, String(s.adScreens || '').split(','))}</div>
+<h3 class="h">Premium-only features</h3><div class="card"><p class="t2" style="font-size:13px;margin-bottom:10px">Ticked features open only for Premium members. Free users see an upgrade screen.</p>${ckGrid('st_lk', LK, String(s.premLocks || '').split(','))}</div>`
       return `<h3 class="h" style="margin-top:0">Payment settings</h3><div class="card">${T('st_upi', 'Merchant UPI ID', s.upiId, 'name@bank') + T('st_name', 'Merchant display name', s.merchantName) + T('st_qr', 'Custom QR image (optional)', s.qrImage, 'https://... or upi-qr.png')}<small class="t2" style="display:block;margin:-6px 0 12px">Leave the QR empty to let the app draw a QR with the exact amount and reference.</small><label class="lb" for="st_ins">Payment instructions shown to users</label><textarea id="st_ins" rows="4" maxlength="600" style="width:100%">${esc(s.instructions)}</textarea><div style="height:12px"></div>${T('st_se', 'Support email', s.supportEmail, 'help@example.com', 'email') + T('st_sp', 'Support phone', s.supportPhone, '+91...', 'tel')}${sw('st_ss', 'Require a payment screenshot', 'Users must attach one (it is still never proof by itself)', s.requireScreenshot) + sw('st_ad', 'Ads enabled', 'Switch off to hide ads for everyone', s.adsEnabled) + sw('st_sa', 'Allow admins to approve their own payments', 'Keep off in production. Useful only for testing', s.allowSelfApprove)}${T('st_ma', 'Maximum stacked Premium time (days)', s.maxAheadDays, '365', 'number')}<button class="btn full" onclick="adSaveSet()">Save settings</button></div>
       <h3 class="h">Plans and prices (INR)</h3>${o.plans.map(p => `<div class="card" style="margin-bottom:10px"><b>${esc(p.name)}</b><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px"><div><label class="lb">Price (${'₹'})</label><div class="fld"><input id="pl_p_${esc(p.id)}" inputmode="decimal" value="${p.price}"></div></div><div><label class="lb">Days</label><div class="fld"><input id="pl_d_${esc(p.id)}" inputmode="numeric" value="${p.days}"></div></div></div>${sw('pl_a_' + esc(p.id), 'Available to buy', 'Switch off to hide this plan', p.active ? '1' : '0')}<button class="btn sm" data-id="${esc(p.id)}" onclick="adSavePlan(this.dataset.id)">Save ${esc(p.name)}</button><p class="t2" style="font-size:12px;margin-top:8px">Changing a price affects new payment requests only. Requests already created keep their price.</p></div>`).join('')}`
     }
     async function adSaveSet() {
       const g = id => $('#' + id), c = id => g(id).checked ? '1' : '0', old = AD.set.settings;
-      const v = { upiId: g('st_upi').value.trim(), merchantName: g('st_name').value.trim(), qrImage: g('st_qr').value.trim(), instructions: g('st_ins').value.trim(), supportEmail: g('st_se').value.trim(), supportPhone: g('st_sp').value.trim(), requireScreenshot: c('st_ss'), adsEnabled: c('st_ad'), allowSelfApprove: c('st_sa'), maxAheadDays: g('st_ma').value.trim() };
+      const v = { adScreens: [...$('#st_sc').querySelectorAll('input:checked')].map(x => x.value).join(','),
+premLocks: [...$('#st_lk').querySelectorAll('input:checked')].map(x => x.value).join(','), upiId: g('st_upi').value.trim(), merchantName: g('st_name').value.trim(), qrImage: g('st_qr').value.trim(), instructions: g('st_ins').value.trim(), supportEmail: g('st_se').value.trim(), supportPhone: g('st_sp').value.trim(), requireScreenshot: c('st_ss'), adsEnabled: c('st_ad'), allowSelfApprove: c('st_sa'), maxAheadDays: g('st_ma').value.trim() };
       if (v.upiId.toLowerCase() != (old.upiId || '').toLowerCase() && !await confirmBox({ title: 'Change the UPI ID?', text: 'Every NEW payment will go to <b>' + esc(v.upiId || '(none)') + '</b>. Check it carefully, a wrong UPI ID sends customers\' money to someone else.', ok: 'Yes, change it', icon: 'alert' })) return;
       const r = await busy(() => aapi('adminSetSettings', { values: v }), 'Saving…'); if (!r || r === true) return;
       AD.set.settings = r.settings; toast('Settings saved'); PM.info = null
+      S.adScr = String(r.settings.adScreens || '').split(',').filter(Boolean);
+S.locks = String(r.settings.premLocks || '').split(',').filter(Boolean);
+adsSync();
     }
     async function adSavePlan(id) {
       const price = $('#pl_p_' + id).value.trim(), days = $('#pl_d_' + id).value.trim(), active = $('#pl_a_' + id).checked;
@@ -5294,9 +5306,10 @@ html[data-glass="1"] .tabs{background:color-mix(in srgb,var(--dk) 72%,transparen
         ADS.init = 1; return true
       } catch (e) { ADS.dead = 1; return false }
     }
-    const adScreens = ['home', 'docs', 'veh', 'tools', 'cal', 'ins'];
-    const adQuiet = () => !!($('#shell.on') && !MS.length && !$('#vw.on') && !$('#lk.on') && !$('.ld.on') && !document.hidden && !S.selm);
+    const AD_ALL = ['home','docs','veh','tools','cal','ins','vault','me','prem'];
+const adScreenOk = t => (S.adScr || AD_ALL).includes(t);
     async function bannerShow() {
+      const ok = adScreens.includes(S.tab) && !S.vid && adQuiet();
       const A = adPlug(); if (!A || ADS.busyB) return; ADS.busyB = 1;
       try {
         if (ADS.banner) { await A.resumeBanner() }
@@ -5358,7 +5371,7 @@ html[data-glass="1"] .tabs{background:color-mix(in srgb,var(--dk) 72%,transparen
     function adsStop() { try { if (ADS.banner) bannerHide(true) } catch (e) { } }
 
     function adsWhy() {
-      const c = ACF(), r = [];
+      const ok = adScreenOk(S.tab) && adQuiet();
       if (!NATIVE()) r.push('This is not the Android app (browser or PWA). Ads only show in the APK');
       else if (!adPlug()) r.push('AdMob plugin is missing from this APK. Rebuild the APK');
       if (c.enabled === false) r.push('config.js has enabled:false');
@@ -5373,6 +5386,28 @@ html[data-glass="1"] .tabs{background:color-mix(in srgb,var(--dk) 72%,transparen
       if (!r.length) r.push('Everything is OK. New ad units can take up to 24 hours to start filling');
       mdl('Ads check', 'info', '<ul style="padding-left:18px;line-height:1.7">' + r.map(x => '<li>' + esc(x) + '</li>').join('') + '</ul>')
     }
+
+    /* ===== Admin-controlled premium locks ===== */
+const LOCK_LABEL = { vault:'Password vault', appearance:'Themes and colours', calendar:'Expiry calendar', insights:'Insights', planner:'Planner and checklist tools', exports:'Export and backup', family:'Family dates', tracker:'Vehicle service and fuel tracker', fileshare:'Share and download files' };
+/* locked only when the server answered recently (so offline users are not blocked by mistake) */
+const isLocked = k => !!(S.locks && S.locks.includes(k)) && subKnown() && !isPremium();
+async function premWall(t) {
+  const r = await modal({ icon: 'crown', title: 'Premium feature', ok: 'View plans', cancel: 'Not now', noFocus: 1,
+    html: `<p class="mt"><b>${esc(t)}</b> is available for Premium members. Upgrade to unlock it and remove ads.</p>` });
+  if (r) go('prem');
+}
+const lockPage = t => `<div class="card vlock" style="margin-top:20px"><div class="big">${I('crown', 34)}</div><h3>${esc(t)}</h3><p>This is a Premium feature. Upgrade to unlock it and remove ads.</p><button class="btn full" onclick="go('prem')">View Premium plans</button><button class="lnk" style="display:block;margin:14px auto 0" onclick="go('home')">Back to Home</button></div>`;
+/* whole pages */
+[['pVault','vault'],['pCal','calendar'],['pIns','insights']].forEach(([fn, k]) => {
+  const o = window[fn]; window[fn] = function () { return isLocked(k) ? lockPage(LOCK_LABEL[k]) : o.apply(this, arguments) };
+});
+/* actions (buttons, menus, shortcuts) */
+[['appearance','appearance'],['exportCSV','exports'],['exportData','exports'],['exportICS','exports'],['prefBackup','exports'],
+ ['renewPlan','planner'],['expCalc','planner'],['missingDocs','planner'],['dupFinder','planner'],['numBook','planner'],
+ ['famDates','family'],['vehTrack','tracker'],['vehPick','tracker'],['docFiles','fileshare'],['shareDoc','fileshare']].forEach(([fn, k]) => {
+  const o = window[fn]; if (typeof o != 'function') return;
+  window[fn] = function () { if (isLocked(k)) { premWall(LOCK_LABEL[k]); return } return o.apply(this, arguments) };
+});
 
     /* ---------- INIT ---------- */
     applyPrefs();
