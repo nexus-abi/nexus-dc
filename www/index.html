@@ -2658,6 +2658,32 @@ html, body { overflow-x: clip !important; }
 
 
 
+    /* ===== v4 premium / payments / admin ===== */
+    .prc { display: flex; gap: 14px; align-items: center; width: 100%; text-align: left; margin-bottom: 14px; background: var(--sf) }
+    .prc>span { flex: 1; min-width: 0 } .prc b { display: block } .prc small { display: block; color: var(--t2) }
+    .prc>.i { color: var(--ac) } .prc em { font-style: normal; font-weight: 650; color: var(--ac); font-size: 14px }
+    .prc.on { background: color-mix(in srgb, var(--ok) 10%, var(--sf)) } .prc.on>.i, .prc.on em { color: var(--ok) }
+    .prn .ib { margin-left: auto }
+    .pmh { background: var(--g); color: #fff; border-radius: var(--rc); padding: 22px; margin: 6px 0 14px }
+    .pmh h2 { font-size: 28px; margin: 12px 0 6px; color: #fff } .pmh p { opacity: .9; font-size: 14.5px; max-width: 36ch }
+    .pmh .cr { width: 46px; height: 46px; border-radius: 14px; background: #ffffff26; display: grid; place-items: center }
+    .plc { display: grid; gap: 10px; width: 100%; text-align: left; border: 1.5px solid var(--bd); border-radius: var(--rc); padding: 16px; background: var(--sf); margin-bottom: 10px }
+    .plc.best { border-color: var(--ac) } .plc.pick.on { border-color: var(--ac); background: color-mix(in srgb, var(--ac) 8%, var(--sf)) }
+    .plh { display: flex; justify-content: space-between; gap: 10px; align-items: flex-start } .plh small { display: block; color: var(--t2) }
+    .plc .pr b { font-size: 30px; font-family: var(--fd) } .plc .pr small { color: var(--t2) }
+    .pbl { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; font-size: 14px } .pbl li { display: flex; gap: 8px; align-items: center } .pbl .i { color: var(--ok) }
+    .pyh { text-align: center; padding: 4px 0 10px } .pya { font-size: 38px; font-weight: 800; font-family: var(--fd); color: var(--ac); line-height: 1.1 }
+    .pys { margin: 0 0 12px; padding-left: 20px; display: grid; gap: 6px; font-size: 14px }
+    .pyq { display: grid; justify-items: center; gap: 6px; margin: 8px 0 12px; text-align: center }
+    .pyq svg, .pyq img { width: 200px; height: 200px; border-radius: 12px; background: #fff; border: 1px solid var(--bd) }
+    .pyc { margin: 12px 0 } .cp { display: flex; gap: 10px; align-items: center; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid var(--bd) }
+    .cp code { font-size: 15px; font-weight: 700; word-break: break-all; font-family: ui-monospace, Menlo, monospace } .cp small { color: var(--t2) }
+    .pyw { display: flex; gap: 10px; align-items: flex-start; padding: 12px 14px; border-radius: 14px; background: color-mix(in srgb, var(--wn) 14%, var(--sf)); font-size: 13.5px } .pyw .i { color: var(--wn); margin-top: 1px }
+    .mono { font-family: ui-monospace, Menlo, monospace; font-variant-numeric: tabular-nums }
+    .adx { display: grid; gap: 8px } .adp { text-align: left; width: 100%; margin-bottom: 10px }
+    .adp .in small { display: block } .adp .bd { margin: 4px 6px 0 0 }
+    body.adb #main { padding-bottom: 76px }
+
   </style>
 </head>
 
@@ -2683,6 +2709,7 @@ html, body { overflow-x: clip !important; }
         id="vn"></span><button id="pn" onclick="step(1)" aria-label="Next"></button></div>
   </div>
   <script src="config.js"></script>
+  <script src="qr.js"></script>
   <script>
     const API = window.NEXUS_API || 'https://script.google.com/macros/s/AKfycbyoUI9XTWBGhkSbduh6Z4ck2WANW3Wcrok7zk4gOqZRePt5zKVAqrU21YM4S6tjW2A5WQ/exec', $ = s => document.querySelector(s);
     const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -2758,7 +2785,7 @@ html, body { overflow-x: clip !important; }
         });
         el.addEventListener('keydown', e => { if (e.key == 'Enter' && e.target.tagName == 'INPUT' && e.target.type != 'file' && o.ok !== null) { e.preventDefault(); const k = el.querySelector('[data-o]'); k && k.click() } });
         el.addEventListener('input', () => el.querySelector('.me').classList.remove('on'));
-        MS.push(ent); document.body.appendChild(el); document.body.style.overflow = 'hidden';
+        MS.push(ent); document.body.appendChild(el); document.body.style.overflow = 'hidden'; try { adsSync() } catch (e) { }
         requestAnimationFrame(() => el.classList.add('on'));
         o.onOpen && o.onOpen(el, ent.close);
         if (!o.noFocus) setTimeout(() => { const f = el.querySelector('input:not([type=file]):not([type=checkbox]):not([type=date]),select'); f && f.focus() }, 260)
@@ -2818,7 +2845,7 @@ html, body { overflow-x: clip !important; }
       const r = await busy(() => api('resend', { email: AE, purpose: p }));
       if (r) { toast('New code sent' + (r.left != null ? ` · ${r.left} resend(s) left today` : '')); cool() }
     }
-    function logout(q) { if (!q && S.token) api('logout').catch(() => { }); S.token = ''; localStorage.removeItem('tk'); localStorage.removeItem('nxc'); localStorage.removeItem('nxpin'); localStorage.removeItem('nxv'); try { V.key = null; V.items = []; V.raw = []; V.meta = null; V.ok = 0; V.err = ''; V.q = ''; V.cat = 'all'; V.fv = 0; V.fid = '' } catch (e) { } S.user = null; const lk = $('#lk'); lk && lk.classList.remove('on'); authView('login') }
+    function logout(q) { if (!q && S.token) api('logout').catch(() => { }); S.token = ''; localStorage.removeItem('tk'); localStorage.removeItem('nxc'); localStorage.removeItem('nxpin'); localStorage.removeItem('nxv'); try { V.key = null; V.items = []; V.raw = []; V.meta = null; V.ok = 0; V.err = ''; V.q = ''; V.cat = 'all'; V.fv = 0; V.fid = '' } catch (e) { } try { PM.info = null; PM.err = ''; AD.ov = AD.pays = AD.set = AD.aud = null; AD.init = 0; clearSub(); localStorage.removeItem('nxpay'); adsStop() } catch (e) { } S.user = null; const lk = $('#lk'); lk && lk.classList.remove('on'); authView('login') }
 
     /* ---------- SHELL & NAV ---------- */
     const HL = { cal: 'tools', ins: 'tools' };
@@ -2849,8 +2876,8 @@ html, body { overflow-x: clip !important; }
     }
     const MAP = d => ({ user: d.user && { ...d.user, dob: nd(d.user.dob) }, vs: d.vehicles, docs: (d.docs || []).map(x => ({ ...x, issue: nd(x.issue), expiry: nd(x.expiry), files: x.files || [] })) });
     async function sync() {
-      try { const d = await api('data'); Object.assign(S, MAP(d), { off: 0 }); try { localStorage.nxc = JSON.stringify(d) } catch (e) { } schedLocal() }
-      catch (e) { const c = localStorage.nxc; if (c && /network/i.test(e.message)) { try { Object.assign(S, MAP(JSON.parse(c)), { off: 1 }); toast('You are offline. Showing saved data', 'inf'); return } catch (x) { } } throw e }
+      try { const d = await api('data'); Object.assign(S, MAP(d), { off: 0 }); setSub(d); try { const c = { ...d }; delete c.sub; delete c.admin; localStorage.nxc = JSON.stringify(c) } catch (e) { } schedLocal() }
+      catch (e) { const c = localStorage.nxc; if (c && /network/i.test(e.message)) { try { clearSub(); Object.assign(S, MAP(JSON.parse(c)), { off: 1 }); toast('You are offline. Showing saved data', 'inf'); return } catch (x) { } } throw e }
     }
     const draw = () => { S.day = ymd(new Date()); chrome(); go(S.tab, S.vid, 1) };
     async function load(m) {
@@ -2860,9 +2887,9 @@ html, body { overflow-x: clip !important; }
         try { await sync() } catch (e) { if (!S.token) return; hideSplash(); $('#main').innerHTML = `<div class="card" style="text-align:center">${I('alert', 32)}<h3 style="margin:10px 0 6px">Could not load your data</h3><p class="t2" style="margin-bottom:16px">${esc(e.message)}</p><button class="btn" onclick="load('sk')">Try again</button></div>`; return }
       }
       else if (!await busy(sync)) return;
-      S.day = ymd(new Date()); chrome(); go(S.tab, S.vid); hideSplash(); if (Q == 'doc') { Q = ''; docForm() }; setTimeout(checkUpdate, 2500)
+      S.day = ymd(new Date()); chrome(); go(S.tab, S.vid); hideSplash(); if (Q == 'doc') { Q = ''; docForm() }; setTimeout(checkUpdate, 2500); try { afterLoad() } catch (e) { }
     }
-    function go(t, v, keep) { if (t != 'docs' && S.selm) { S.selm = 0; S.sel.clear() } S.tab = t; S.vid = v || null; document.querySelectorAll('[data-n]').forEach(b => b.classList.toggle('on', b.dataset.n == (HL[t] || t))); const m = $('#main'); m.innerHTML = ({ home: pHome, docs: pDocs, veh: pVeh, vault: pVault, me: pMe, cal: pCal, ins: pIns, tools: pTools })[t](); if (!keep) { m.style.animation = 'none'; m.offsetHeight; m.style.animation = ''; scrollTo(0, 0) } }
+    function go(t, v, keep) { if (t != 'docs' && S.selm) { S.selm = 0; S.sel.clear() } S.tab = t; S.vid = v || null; document.querySelectorAll('[data-n]').forEach(b => b.classList.toggle('on', b.dataset.n == (HL[t] || t))); const m = $('#main'); m.innerHTML = ({ home: pHome, docs: pDocs, veh: pVeh, vault: pVault, me: pMe, cal: pCal, ins: pIns, tools: pTools, prem: pPrem, adm: pAdm })[t](); if (!keep) { m.style.animation = 'none'; m.offsetHeight; m.style.animation = ''; scrollTo(0, 0) } try { adsSync() } catch (e) { } }
 
     /* ---------- HELPERS ---------- */
     let fd = x => { x = nd(x); if (!x) return ''; const [y, m, d] = x.split('-').map(Number); return new Date(y, m - 1, d).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }) };
@@ -2902,7 +2929,7 @@ html, body { overflow-x: clip !important; }
       const pn = D.filter(d => d.fav), sn = D.filter(d => { const n = st(d.expiry)[2]; return n > 30 && n <= 90 }).sort((a, b) => st(a.expiry)[2] - st(b.expiry)[2]);
       const sees = seenIds().map(id => D.find(d => d.id == id)).filter(Boolean);
       const date = new Date().toLocaleDateString('en-IN', { weekday: 'long', day: 'numeric', month: 'long' });
-      let out = banner() + `<div class="gh"><small>${date}</small><h2>${greet()},<br><i>${esc(u.name.split(' ')[0])}</i></h2></div>`;
+      let out = banner() + homeNudge() + `<div class="gh"><small>${date}</small><h2>${greet()},<br><i>${esc(u.name.split(' ')[0])}</i></h2></div>`;
       if (H.tiles) out += `<div class="ledger"><div class="lring" style="--p:${pc}"><i><b>${D.length ? pc + '%' : '–'}</b><small>healthy</small></i></div><div class="lrows">${[['ok', 'Valid', okn, 'ok'], ['wn', 'Expiring soon', wn, 'wn'], ['er', 'Expired', ex, 'er']].map(x => `<button class="lr" onclick="S.st='${x[0]}';S.f='all';S.fv=0;go('docs')"><i style="background:var(--${x[3]})"></i><span>${x[1]}</span><b>${x[2]}</b></button>`).join('')}</div><div class="lfoot"><button onclick="S.st='all';go('docs')">${I('file', 20)}<span><b>${D.length}</b>Document${D.length == 1 ? '' : 's'}</span></button><button onclick="go('veh')">${I('car', 20)}<span><b>${S.vs.length}</b>Vehicle${S.vs.length == 1 ? '' : 's'}</span></button></div></div>`;
       if (H.qa) out += `<div class="qa">${qaHtml()}</div>`;
       if (H.att) out += sec('Needs attention', take(att), 1, "S.st='all';S.so='exp';go('docs')");
@@ -2951,12 +2978,14 @@ html, body { overflow-x: clip !important; }
     <div class="pfi"><h2>${esc(u.name)} <span class="vb">${I('check', 12)} Verified</span></h2><small>${esc(u.email)}</small>${since ? `<small>Member since ${since}</small>` : ''}</div><button class="btn sm sec" onclick="prof()">${I('edit', 16)} Edit profile</button></div></div>
   <div class="stats"><div class="st"><b>${S.docs.length}</b><small>Documents</small></div><div class="st"><b>${S.docs.filter(d => d.fav).length}</b><small>Starred</small></div><div class="st"><b>${S.vs.length}</b><small>Vehicles</small></div><div class="st ${att ? 'wn' : ''}"><b>${att}</b><small>Need attention</small></div></div>
   ${pc < 100 ? `<div class="card" style="margin-bottom:14px"><div style="display:flex;justify-content:space-between"><b>Complete your profile</b><b style="color:var(--ac)">${pc}%</b></div><div class="pg2"><i style="width:${pc}%"></i></div><small>Add your ${miss.slice(0, 3).join(', ')}${miss.length > 3 ? ' and more' : ''} to finish.</small></div>` : ''}
+  ${premCard()}
   <h3 class="h">Personal information</h3><div class="card grp">${R('user', 'Full name', u.name) + R('mail', 'Email', u.email) + R('phone', 'Phone', u.phone) + R('cal', 'Date of birth', u.dob ? fd(u.dob) : '') + R('drop', 'Blood group', u.blood) + R('pin', 'Address', u.address) + R('phone', 'Emergency contact', u.emergency)}</div>
   <h3 class="h">Appearance</h3><div class="card grp">${A('palette', 'Theme and colours', prefSummary(), 'appearance()')}${A('sliders', 'General settings', 'Date format, sorting, week start', 'generalOpts()')}${A('sliders', 'Home screen', 'Choose which sections to show', 'homeOpts()')}${A('eye2', 'Privacy', UP.mask ? 'Document numbers hidden' : 'Numbers, vault lock, clipboard', 'privOpts()')}</div>
   <h3 class="h">Tools</h3><div class="card grp">${A('sparkle', 'All tools', 'Planner, checklist, notes, backup and more', "go('tools')")}${A('cal', 'Expiry calendar', 'See every renewal by date', "go('cal')")}${A('chart', 'Insights', 'Charts about your documents', "go('ins')")}${A('dice', 'Password generator', 'Strong random passwords', 'vGenTool()')}${A('health', 'Password health', 'Weak, reused and old logins', 'vHealthGo()')}</div>
   <h3 class="h">Preferences</h3><div class="card grp">${A('refresh', 'Check for updates', 'Version ' + verTxt(), 'checkUpdate(1)')}${standalone() ? '' : A('download', 'Install app', 'Add Nexus Docs to your home screen', 'installApp()')}
     <div class="row"><div class="ri">${I('bell', 20)}</div><div class="rb"><b>Email reminders</b><small>Sent by email every morning at 8 AM</small></div><label class="sw"><input type="checkbox" ${u.remind ? 'checked' : ''} onchange="tgRem(this)"><span></span></label></div>${notifRow()}${A('bell', 'Reminder timing', rdTxt(), 'remDays()')}<div class="row"><div class="ri">${I('lock', 20)}</div><div class="rb"><b>App lock</b><small>Ask for a 4-digit PIN when the app opens</small></div><label class="sw"><input type="checkbox" ${localStorage.nxpin ? 'checked' : ''} onchange="tgLock(this)"><span></span></label></div></div>
   <h3 class="h">Security &amp; data</h3><div class="card grp">${A('lock', 'Change password', 'Update your account password', 'chPw()') + A('devices', 'Logout from all devices', 'End every active session', 'logAll()') + A('download', 'Export my data', 'Download all your details as a file', 'exportData()') + A('table', 'Export documents (CSV)', 'Open in Excel or Google Sheets', 'exportCSV()') + A('cal', 'Add expiry dates to calendar', 'Download an .ics file for any calendar app', 'exportICS()')}</div>
+  ${S.isAdmin ? `<h3 class="h">Admin</h3><div class="card grp">${A('dash', 'Admin dashboard', 'Payments, prices, settings, audit log', "go('adm')")}</div>` : ''}
   <h3 class="h">Account</h3><div class="card grp">${A('logout', 'Logout', 'Sign out from this device', 'logout()') + A('trash', 'Delete account', 'Permanently remove all your data', 'delAcc()', 'rd')}</div><p class="t2" style="text-align:center;font-size:12.5px;margin:18px 0 4px">Nexus Docs · UI version 1.0.1 · build ${verTxt()}</p>`}
 
     /* ---------- PROFILE ACTIONS ---------- */
@@ -3361,6 +3390,7 @@ if (!ne && $('#is').value && $('#ex').value && $('#ex').value < $('#is').value) 
       if ($('#app').style.display == 'block') { const h = $('.auth h1'); if (h && !/Welcome back/.test(h.textContent)) { authView('login'); return true } return false }
       if (S.tab == 'veh' && S.vid) { go('veh'); return true }
       if (S.tab == 'vault' && V.fid) { V.fid = ''; V.q = ''; go('vault'); return true }
+      if (S.tab == 'prem' || S.tab == 'adm') { AD.init = 0; go('me'); return true }
       if (S.tab != 'home') { go('home'); return true }
       return false
     }
@@ -4901,6 +4931,353 @@ html[data-glass="1"] .tabs{background:color-mix(in srgb,var(--dk) 72%,transparen
   QA.fam = ['gift', 'Family dates', 'famDates()'];
   QA.svc = ['tool', 'Service', 'vehPick()'];
 })();
+
+    /* ==========================================================================================
+       v4  PREMIUM, MANUAL UPI PAYMENTS, ADMIN DASHBOARD, ADS
+       The phone NEVER decides premium by itself: the status comes from the server (data / subStatus / payInfo)
+       and is kept in memory only. Nothing about it is read back from localStorage. Premium only switches ads off.
+       ========================================================================================== */
+    Object.assign(P, {
+      crown: '<path d="M3 8l4 4 5-7 5 7 4-4-2 11H5z"/>',
+      qr2: '<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3M21 14v.01M14 21h3M21 17v4"/>',
+      dash: '<rect x="3" y="3" width="8" height="10" rx="1"/><rect x="13" y="3" width="8" height="6" rx="1"/><rect x="13" y="11" width="8" height="10" rx="1"/><rect x="3" y="15" width="8" height="6" rx="1"/>',
+      noads: '<circle cx="12" cy="12" r="9"/><path d="M5.6 5.6l12.8 12.8"/>'
+    });
+    HL.prem = 'me'; HL.adm = 'me';
+    const PM = { info: null, busy: 0, err: '', t: 0 }, AD = { tab: 'ov', ov: null, pays: null, filt: 'pending', q: '', set: null, aud: null, err: '', ld: 0 };
+    let SUBREF = null;
+    const inr = n => '₹' + Number(n).toLocaleString('en-IN', { minimumFractionDigits: Number(n) % 1 ? 2 : 0, maximumFractionDigits: 2 });
+    const fdt = ms => ms ? new Date(+ms).toLocaleString('en-IN', { day: 'numeric', month: 'short', year: 'numeric', hour: 'numeric', minute: '2-digit' }) : '–';
+    const fdd = ms => ms ? new Date(+ms).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }) : '–';
+    /* server time: the answer of the server plus the time that passed on this phone's monotonic clock since. The device date/time is never used. */
+    const srvNow = () => SUBREF ? SUBREF.srv + (performance.now() - SUBREF.at) : 0;
+    function setSub(d) {
+      S.sub = d.sub || { status: 'free' }; S.isAdmin = !!d.admin; S.adsOn = d.adsEnabled !== false;
+      const t = +(d.serverTime || (d.sub && d.sub.serverTime)) || 0; SUBREF = t ? { srv: t, at: performance.now() } : null
+    }
+    function clearSub() { S.sub = null; S.isAdmin = false; SUBREF = null }
+    const subLeftMs = () => S.sub && S.sub.status == 'active' && SUBREF ? (S.sub.paidUntil || S.sub.expiry) - srvNow() : 0;
+    const subKnown = () => !!SUBREF && !S.off && performance.now() - SUBREF.at < 6 * 36e5;   /* we hold a recent answer from the server */
+    const isPremium = () => subKnown() && subLeftMs() > 0;
+    const leftTxt = ms => { const d = ms > 864e5 ? Math.ceil(ms / 864e5) : 0; if (d >= 1) return d + (d == 1 ? ' day' : ' days'); const h = Math.max(1, Math.ceil(ms / 36e5)); return h + (h == 1 ? ' hour' : ' hours') };
+    async function subRefresh(force) {
+      if (!S.token || !S.user) return;
+      if (!force && SUBREF && performance.now() - SUBREF.at < 3e5) return;
+      try { const r = await api('subStatus'); setSub(r); adsSync(); if (S.tab == 'me') go('me', null, 1); if (S.tab == 'prem') go('prem', null, 1) } catch (e) { }
+    }
+    function watchPay(list) { /* only used to show a "your payment was checked" message. Never used to decide access. */
+      let m = {}; try { m = JSON.parse(localStorage.nxpay || '{}') } catch (e) { }
+      (list || []).forEach(p => {
+        if (m[p.id] == 'pending' && p.status == 'approved') toast('Your payment was verified. Premium is active');
+        else if (m[p.id] == 'pending' && p.status == 'rejected') toast('A payment was not accepted. Open Premium for details', 'er');
+        m[p.id] = p.status
+      });
+      try { localStorage.nxpay = JSON.stringify(m) } catch (e) { }
+    }
+    const hasPendingLocal = () => { try { return Object.values(JSON.parse(localStorage.nxpay || '{}')).includes('pending') } catch (e) { return false } };
+    async function premLoad(force) {
+      if (PM.busy) return; PM.busy = 1; PM.err = '';
+      try { const r = await api('payInfo'); PM.info = r; PM.t = Date.now(); setSub({ sub: r.sub, admin: S.isAdmin, adsEnabled: r.adsEnabled, serverTime: r.serverTime }); watchPay(r.payments); adsSync() }
+      catch (e) { PM.err = e.message }
+      PM.busy = 0; if (S.tab == 'prem') go('prem', null, 1); if (S.tab == 'me') go('me', null, 1); if (S.tab == 'home') go('home', null, 1)
+    }
+    const stBd = s => ({ pending: ['wn', 'Pending'], approved: ['ok', 'Approved'], rejected: ['er', 'Rejected'], created: ['', 'Not submitted'] }[s] || ['', s]);
+    const copyText = async (t, label) => {
+      try { await navigator.clipboard.writeText(t) } catch (e) { const a = document.createElement('textarea'); a.value = t; a.style.cssText = 'position:fixed;opacity:0'; document.body.appendChild(a); a.select(); let ok = 0; try { ok = document.execCommand('copy') } catch (x) { } a.remove(); if (!ok) return toast('Could not copy', 'er') }
+      toast((label || 'Text') + ' copied')
+    };
+    const supportHtml = i => { const a = []; if (i && i.supportEmail) a.push(`<a href="mailto:${esc(i.supportEmail)}">${esc(i.supportEmail)}</a>`); if (i && i.supportPhone) a.push(`<a href="tel:${esc(String(i.supportPhone).replace(/[^\d+]/g, ''))}">${esc(i.supportPhone)}</a>`); return a.length ? a.join(' &middot; ') : 'the app owner' };
+
+    /* ---------- profile card + home nudge ---------- */
+    function premCard() {
+      const s = S.sub, ok = subKnown(); let t, sub, b = 'View plans', cls = '';
+      if (ok && isPremium()) { t = 'Premium active'; sub = leftTxt(subLeftMs()) + ' left. No ads.'; b = 'Manage'; cls = 'on' }
+      else if (ok && s && s.status == 'expired') { t = 'Premium expired'; sub = 'Ended ' + fdd(s.expiry) + '. Ads are back. Renew any time.'; b = 'Renew' }
+      else if (ok) { t = 'Go ad-free with Premium'; sub = 'Weekly or monthly. You pay only when you choose to.' }
+      else { t = 'Nexus Premium'; sub = 'Open to check your membership status.'; b = 'Open' }
+      return `<button class="card prc ${cls}" onclick="go('prem')">${I('crown', 22)}<span><b>${t}</b><small>${sub}</small></span><em>${b}</em></button>`
+    }
+    function homeNudge() {
+      if (!subKnown() || isPremium()) return '';
+      let t = 0; try { t = +localStorage.nxpd || 0 } catch (e) { }
+      if (Date.now() - t < 3 * 864e5) return '';
+      return `<div class="ban prn"><div class="ri">${I('crown', 20)}</div><div class="in" onclick="go('prem')" style="cursor:pointer"><b>Go ad-free</b><small>See Premium plans</small></div><button class="ib" aria-label="Hide for now" onclick="try{localStorage.nxpd=Date.now()}catch(e){};go('home',null,1)">${I('x', 16)}</button></div>`
+    }
+
+    /* ---------- the Premium page ---------- */
+    function pPrem() {
+      const i = PM.info, s = (i && i.sub) || S.sub;
+      if (!i && !PM.err && !PM.busy) setTimeout(() => premLoad(), 0);
+      const head = `<button class="bk" onclick="go('me')">${I('left', 18)} Profile</button><div class="pmh"><div class="cr">${I('crown', 24)}</div><h2>Premium membership</h2><p>Use Nexus Docs without ads. Every feature stays free for everyone. Premium only removes the ads.</p></div>`;
+      if (PM.err && !i) return head + `<div class="card" style="text-align:center">${I('alert', 30)}<h3 style="margin:10px 0 6px">Could not check your membership</h3><p class="t2" style="margin-bottom:14px">${esc(PM.err)}</p><p class="t2" style="font-size:12.5px;margin-bottom:14px">Premium is never switched on from this screen without the server. Please try again when you are online.</p><button class="btn" onclick="PM.err='';premLoad()">Try again</button></div>`;
+      if (!i) return head + '<div class="sk" style="height:150px;margin-bottom:12px"></div><div class="sk" style="height:110px;margin-bottom:12px"></div><div class="sk" style="height:110px"></div>';
+      const act = s.status == 'active', left = act ? Math.max(0, (s.paidUntil || s.expiry) - srvNow()) : 0;
+      const pend = i.payments.filter(p => p.status == 'pending'), bd = act ? '<span class="bd ok">Premium active</span>' : s.status == 'expired' ? '<span class="bd er">Expired</span>' : '<span class="bd">Free plan</span>';
+      const R = (ic, l, v) => `<div class="row"><div class="ri">${I(ic, 20)}</div><div class="rb"><small>${l}</small><b>${v}</b></div></div>`;
+      let st = `<h3 class="h" style="margin-top:6px">Your membership</h3><div class="card grp"><div class="row"><div class="ri">${I('crown', 20)}</div><div class="rb"><small>Membership</small><b>${act ? esc(s.planName) : s.status == 'expired' ? 'Free (' + esc(s.planName || 'Premium') + ' ended)' : 'Free'}</b></div>${bd}</div>`;
+      if (act) st += R('cal', 'Started', fdt(s.start)) + R('clock', s.queued ? 'Current plan ends' : 'Expires', fdt(s.expiry)) + (s.queued ? R('plus', 'Renewal queued', 'Premium continues until ' + fdt(s.paidUntil)) : '') + R('refresh', 'Remaining', '<span style="color:var(--ok)">' + leftTxt(left) + '</span>');
+      else if (s.status == 'expired') st += R('cal', 'Last plan', esc(s.planName) + ' &middot; ended ' + fdt(s.expiry)) + R('noads', 'Ads', 'Showing again');
+      else st += R('noads', 'Ads', 'Shown on some screens');
+      st += `<div class="row"><div class="ri">${I('shield', 20)}</div><div class="rb"><small>Payment status</small><b>${pend.length ? pend.length + ' waiting for verification' : (i.payments[0] ? stBd(i.payments[0].status)[1] + ' (latest)' : 'No payments yet')}</b></div></div></div>`;
+      st += `<div style="display:flex;gap:10px;margin:12px 0 4px"><button class="btn" style="flex:1" onclick="choosePlan()" ${i.ready ? '' : 'disabled'}>${act ? 'Extend Premium' : s.status == 'expired' ? 'Renew Premium' : 'Upgrade to Premium'}</button><button class="btn sec" onclick="premRefresh()" aria-label="Refresh status">${I('refresh', 18)} Refresh</button></div><small class="t2" style="display:block;margin:4px 2px 0">Last checked with the server ${PM.t ? fdt(PM.t) : ''}. Restoring status is automatic: sign in on any phone with your account.</small>`;
+      if (!i.ready) st += `<div class="pyw" style="margin-top:12px">${I('info', 18)}<span>Payments are not open yet. Please check back soon or contact ${supportHtml(i)}.</span></div>`;
+      if (pend.length) st += `<div class="pyw" style="margin-top:12px">${I('clock', 18)}<span><b>Waiting for verification.</b> Premium turns on only after the payment is checked in our records, not when you submit.</span></div>`;
+      const per = p => p.price / p.days, hi = Math.max(...i.plans.map(per));
+      const pl = i.plans.map(p => { const sv = Math.round((1 - per(p) / hi) * 100); return `<div class="plc ${sv > 0 ? 'best' : ''}"><div class="plh"><div><b>${esc(p.name)}</b><small>${p.days} days &middot; no auto-renewal</small></div>${sv > 0 ? `<span class="bd ok">Save ${sv}%</span>` : ''}</div><div class="pr"><b>${inr(p.price)}</b><small> / ${p.days} days</small></div><ul class="pbl"><li>${I('check', 16)}No ads for ${p.days} days</li><li>${I('check', 16)}Ends by itself. You choose when to renew</li></ul><button class="btn sm" data-id="${esc(p.id)}" onclick="startPay(this.dataset.id)" ${i.ready ? '' : 'disabled'}>Choose ${esc(p.name.replace(/ premium$/i, ''))}</button></div>` }).join('');
+      const bn = `<h3 class="h">Why upgrade</h3><div class="card grp">${R('noads', 'No ads', 'Banner and app-open ads are switched off while Premium is active')}${R('shield', 'Same app, same data', 'Nothing is locked. Premium never touches your documents or vault')}${R('refresh', 'Paid time is never lost', 'Renew early and the new plan starts when the current one ends')}${R('check', 'No surprise charges', 'There is no automatic renewal. Each payment is a one-time UPI payment')}</div>`;
+      const hist = i.payments.length ? `<h3 class="h">Payment history</h3><div class="card grp">${i.payments.map(p => { const b = stBd(p.status); return `<button class="row" data-id="${esc(p.id)}" onclick="payOpen(this.dataset.id)"><div class="ri">${I('file', 20)}</div><div class="rb"><b>${esc(p.planName)} &middot; ${inr(p.amount)}</b><small>${p.status == 'created' ? 'Not submitted. Tap to continue' : fdt(p.submitted || p.created)}${p.status == 'rejected' && p.reason ? ' &middot; ' + esc(p.reason) : ''}</small></div><span class="bd ${b[0]}">${b[1]}</span></button>` }).join('')}</div>` : '';
+      const how = `<h3 class="h">How paying works</h3><div class="card"><ol class="pys"><li>Choose a plan. We show the exact amount and a payment reference.</li><li>Pay that amount with any UPI app (QR code, UPI link or UPI ID).</li><li>Enter the UPI transaction ID from your receipt and submit.</li><li>We check the payment in our UPI records. Premium turns on after that.</li></ol>${i.instructions ? `<p class="t2" style="font-size:13px;margin-top:8px">${esc(i.instructions)}</p>` : ''}<p class="t2" style="font-size:13px;margin-top:10px">Need help? Contact ${supportHtml(i)}.</p></div>`;
+      return head + st + `<h3 class="h">Plans</h3>${pl}` + bn + hist + how
+    }
+    async function premRefresh() { PM.err = ''; const ok = await busy(() => api('payInfo').then(r => { PM.info = r; PM.t = Date.now(); setSub({ sub: r.sub, admin: S.isAdmin, adsEnabled: r.adsEnabled, serverTime: r.serverTime }); watchPay(r.payments); adsSync() }), 'Checking with the server…'); if (ok) { go('prem', null, 1); toast('Status updated') } }
+    async function choosePlan() {
+      const i = PM.info; if (!i || !i.ready) return alertBox('Payments are not open yet. Please contact support.', 'Payments unavailable');
+      let sel = i.plans[i.plans.length - 1].id;
+      const html = () => i.plans.map(p => `<button class="plc pick ${sel == p.id ? 'on' : ''}" data-id="${esc(p.id)}"><div class="plh"><b>${esc(p.name)}</b><span class="pr"><b>${inr(p.price)}</b><small> / ${p.days} days</small></span></div></button>`).join('') + '<p class="t2" style="font-size:12.5px;margin-top:6px">One-time payment. No automatic renewal.</p>';
+      const r = await modal({ icon: 'crown', title: 'Choose a plan', ok: 'Continue', html: `<div id="cp">${html()}</div>`, noFocus: 1, onOpen: el => { el.querySelector('#cp').onclick = e => { const b = e.target.closest('[data-id]'); if (b) { sel = b.dataset.id; el.querySelector('#cp').innerHTML = html() } } } });
+      if (r) startPay(sel)
+    }
+    async function startPay(pid) {
+      const i = PM.info; if (!i || !i.ready) return alertBox('Payments are not open yet. Please contact support.', 'Payments unavailable');
+      const p = await busy(() => api('payCreate', { planId: pid }), 'Preparing your payment…'); if (!p) return; payScreen(p)
+    }
+    function payOpen(id) { const p = PM.info && PM.info.payments.find(x => x.id == id); if (!p) return; if (p.status == 'created') payScreen(p); else payDetail(p) }
+    const upiEnc = x => encodeURIComponent(x).replace(/%40/g, '@');
+    const upiLink = p => 'upi://pay?pa=' + upiEnc(PM.info.upiId) + '&pn=' + upiEnc(PM.info.merchantName) + '&am=' + Number(p.amount).toFixed(2) + '&cu=INR&tn=' + upiEnc(p.ref) + '&tr=' + upiEnc(p.ref);
+    function openUpi(link) {
+      try { location.href = link } catch (e) { }
+      setTimeout(() => { if (!document.hidden) toast('No UPI app opened? Scan the QR code or copy the UPI ID instead', 'inf') }, 1800)
+    }
+    function payDetail(p) {
+      const b = stBd(p.status), i = PM.info || {};
+      return mdl('Payment details', p.status == 'approved' ? 'check' : p.status == 'rejected' ? 'alert' : 'clock', `<div class="card grp" style="box-shadow:none;padding:0 4px"><div class="row"><div class="rb"><small>Status</small><b>${b[1]}</b></div><span class="bd ${b[0]}">${b[1]}</span></div><div class="row"><div class="rb"><small>Plan</small><b>${esc(p.planName)} &middot; ${p.days} days</b></div></div><div class="row"><div class="rb"><small>Amount</small><b>${inr(p.amount)}</b></div></div><div class="row"><div class="rb"><small>Payment reference</small><b class="mono">${esc(p.ref)}</b></div></div><div class="row"><div class="rb"><small>Transaction ID you entered</small><b class="mono">${esc(p.utr || '–')}</b></div></div><div class="row"><div class="rb"><small>Submitted</small><b>${fdt(p.submitted)}</b></div></div>${p.verified ? `<div class="row"><div class="rb"><small>Checked</small><b>${fdt(p.verified)}</b></div></div>` : ''}${p.reason ? `<div class="row"><div class="rb"><small>Reason</small><b>${esc(p.reason)}</b></div></div>` : ''}</div><p class="t2" style="font-size:13px;margin-top:10px">${p.status == 'pending' ? 'This payment is waiting to be checked in the merchant UPI records. Premium turns on only after it is approved.' : p.status == 'approved' ? 'This payment was verified and your Premium time was added.' : 'This payment was not accepted, so no Premium was added. If you believe this is a mistake, contact ' + supportHtml(i) + ' and quote the reference.'}</p>`, { ok: 'Close' })
+    }
+    async function payScreen(p) {
+      const i = PM.info, link = upiLink(p); let proof = '', qr;
+      try { qr = i.qrImage ? `<img src="${esc(i.qrImage)}" alt="UPI QR code of ${esc(i.merchantName)}" onerror="this.outerHTML='<small>QR image could not load. Use the UPI ID instead.</small>'">` : NexusQR.svg(link, { size: 200, label: 'UPI payment QR code' }) } catch (e) { qr = '<small>Could not draw the QR code. Use the UPI ID or the button instead.</small>' }
+      const cp = (l, v, k) => `<div class="cp"><div><small>${l}</small><br><code>${esc(v)}</code></div><button class="btn sm sec" data-cp="${esc(v)}" data-l="${k}">${I('copy', 15)} Copy</button></div>`;
+      const html = `<div class="pyh"><small>You are buying</small><b style="display:block">${esc(p.planName)}</b><div class="pya">${inr(p.amount)}</div><small>for ${p.days} days &middot; pay exactly this amount</small></div>
+        <ol class="pys"><li>Pay <b>${inr(p.amount)}</b> to the UPI ID below, with the QR code or the button.</li><li>Write <b class="mono">${esc(p.ref)}</b> in the payment note.</li><li>Copy the <b>UPI transaction ID</b> from your payment receipt.</li><li>Paste it below and submit. We verify it, then turn Premium on.</li></ol>
+        <div class="pyq">${qr}<small>${i.qrImage ? 'This QR code has no amount. Type ' + inr(p.amount) + ' yourself.' : 'Scan with any UPI app. Amount and reference are filled in.'}</small></div>
+        <button class="btn full" id="py_app">${I('phone', 18)} Pay ${inr(p.amount)} with a UPI app</button>
+        <div class="pyc">${cp('UPI ID (pay to ' + esc(i.merchantName) + ')', i.upiId, 'UPI ID')}${cp('Payment reference (put in the note)', p.ref, 'Reference')}</div>
+        <div class="pyw">${I('alert', 18)}<span>Opening a UPI app does <b>not</b> mean the payment worked. A screenshot or a message on this screen does not turn Premium on either. Only a payment we can see in our records is approved.</span></div>
+        <label class="lb" for="py_utr" style="margin-top:14px">UPI transaction ID (UTR)</label><div class="fld">${I('id', 18)}<input id="py_utr" autocomplete="off" autocapitalize="characters" maxlength="40" placeholder="Usually 12 digits, from your receipt"></div>
+        <label class="lb">Screenshot of the payment ${i.requireScreenshot ? '(required)' : '(optional, helps us check faster)'}</label><input id="py_f" type="file" accept="image/*" style="width:100%"><small id="py_fs" class="t2"></small>
+        <button class="btn full" id="py_go" style="margin-top:14px">Submit for verification</button><p class="t2" style="font-size:12.5px;margin-top:8px;text-align:center">Reference <b class="mono">${esc(p.ref)}</b>. Need help? ${supportHtml(i)}</p>`;
+      const r = await modal({
+        icon: 'qr2', title: 'Pay for Premium', ok: null, cancel: 'Close', sticky: 1, wide: 1, noFocus: 1, html,
+        onOpen: (el, close) => {
+          const q = s => el.querySelector(s), go_ = q('#py_go');
+          q('#py_app').onclick = () => openUpi(link);
+          el.querySelectorAll('[data-cp]').forEach(b => b.onclick = () => copyText(b.dataset.cp, b.dataset.l));
+          q('#py_f').onchange = async e => {
+            const f = e.target.files[0]; proof = ''; q('#py_fs').textContent = '';
+            if (!f) return;
+            if (!/^image\//.test(f.type)) { e.target.value = ''; return fail(el, 'Please choose an image (JPG or PNG)') }
+            try { proof = await img2b64(f); if (proof.length > 3.6e6) { proof = ''; e.target.value = ''; return fail(el, 'That image is too large') } q('#py_fs').textContent = 'Attached: ' + f.name } catch (x) { proof = ''; fail(el, 'Could not read that image') }
+          };
+          go_.onclick = async () => {
+            if (go_.disabled) return;
+            const utr = q('#py_utr').value.trim();
+            if (!utr) return fail(el, 'Enter the UPI transaction ID from your payment receipt');
+            if (i.requireScreenshot && !proof) return fail(el, 'Please attach a screenshot of your payment');
+            go_.disabled = true; go_.textContent = 'Submitting…';
+            try { const r = await api('paySubmit', { paymentId: p.id, utr, proof }); close(r) }
+            catch (e) { fail(el, e.message); go_.disabled = false; go_.textContent = 'Submit for verification' }
+          }
+        }
+      });
+      if (r && r.id) {
+        await premLoad(); go('prem', null, 1);
+        mdl('Waiting for verification', 'clock', `<p class="mt">We received your transaction ID <b class="mono">${esc(r.utr)}</b> for <b>${inr(r.amount)}</b>.</p><p class="mt" style="margin-top:8px"><b>Premium is not active yet.</b> It turns on after the payment is checked in our UPI records. Open Premium and tap Refresh to see the result. You can close this app meanwhile.</p>`, { ok: 'OK' })
+      } else if (r === null) { premLoad() }
+    }
+
+    /* ---------- ADMIN DASHBOARD (every call is authorised again on the server) ---------- */
+    async function adminUnlock() {
+      unload();
+      const pw = await modal({ icon: 'lock', title: 'Confirm it is you', ok: 'Unlock', sticky: 1, html: `<p class="mt">Admin tools ask for your password again. Access stays open for 15 minutes.</p>${inp('ad_pw', 'Your password', 'password', 'current-password', 'lock')}`, pre: el => { const v = el.querySelector('#ad_pw').value; return v ? v : fail(el, 'Enter your password') } });
+      if (!pw) return false;
+      loader('Checking…'); try { await api('adminUnlock', { password: pw }); return true } catch (e) { adminUnlock.err = e.message; return false }
+    }
+    async function aapi(action, d = {}) {
+      for (let n = 0; n < 2; n++) {
+        try { return await api(action, d) }
+        catch (e) { if (e.message !== 'ADMIN_LOCKED') throw e; if (n || !await adminUnlock()) throw Error(adminUnlock.err || 'Admin access is locked'); adminUnlock.err = '' }
+      }
+    }
+    async function adLock() { try { await api('adminLock') } catch (e) { } toast('Admin tools locked', 'inf'); go('me') }
+    function pAdm() {
+      if (!S.isAdmin) return `<button class="bk" onclick="go('me')">${I('left', 18)} Profile</button>${empty('Not available', 'lock')}`;
+      const T = [['ov', 'Overview'], ['pay', 'Payments'], ['set', 'Settings'], ['aud', 'Audit']];
+      if (!AD.init) { AD.init = 1; setTimeout(() => adLoad(AD.tab), 0) }
+      return `<button class="bk" onclick="AD.init=0;go('me')">${I('left', 18)} Profile</button><div class="ph"><h2>Admin</h2><button class="btn sm sec" onclick="adLock()">${I('lock', 16)} Lock</button></div><div class="seg c4" style="margin-bottom:14px">${T.map(t => `<button class="${AD.tab == t[0] ? 'on' : ''}" onclick="adTab('${t[0]}')">${t[1]}</button>`).join('')}</div><div id="admb">${adBody()}</div>`
+    }
+    function adTab(t) { AD.tab = t; AD.err = ''; go('adm', null, 1); if (!AD[{ ov: 'ov', pay: 'pays', set: 'set', aud: 'aud' }[t]]) adLoad(t) }
+    async function adLoad(t) {
+      if (AD.ld) return; AD.ld = 1; AD.err = ''; const b0 = $('#admb'); if (b0) b0.innerHTML = adBody();
+      try {
+        if (t == 'ov') AD.ov = await aapi('adminOverview');
+        if (t == 'pay') AD.pays = await aapi('adminPayments', { status: AD.filt, q: AD.q });
+        if (t == 'set') AD.set = await aapi('adminSettings');
+        if (t == 'aud') AD.aud = await aapi('adminAudit', { limit: 100 })
+      } catch (e) { AD.err = e.message }
+      unload(); AD.ld = 0; const b = $('#admb'); if (b) b.innerHTML = adBody()
+    }
+    function adBody() {
+      if (AD.err) return `<div class="card" style="text-align:center">${I('alert', 30)}<p class="t2" style="margin:10px 0 14px">${esc(AD.err)}</p><button class="btn" onclick="adLoad(AD.tab)">Try again</button></div>`;
+      const d = { ov: AD.ov, pay: AD.pays, set: AD.set, aud: AD.aud }[AD.tab];
+      if (!d) return '<div class="sk" style="height:90px;margin-bottom:10px"></div>'.repeat(3);
+      return { ov: adOv, pay: adPay, set: adSet, aud: adAud }[AD.tab](d)
+    }
+    function adOv(o) {
+      const T = (b, l, c = '') => `<div class="st ${c}"><b>${b}</b><small>${l}</small></div>`;
+      return `<div class="stats">${T(o.users, 'Registered users') + T(o.active, 'Active premium', 'ok') + T(o.pending, 'Pending payments', o.pending ? 'wn' : '') + T(o.approved, 'Approved payments') + T(o.rejected, 'Rejected payments') + T(o.expired, 'Expired subscriptions')}</div>
+        <div class="card" style="margin-top:6px"><small>Verified revenue (approved payments only)</small><div class="pya" style="text-align:left">${inr(o.revenue)}</div><small>Last 30 days: <b>${inr(o.revenue30)}</b>. Pending and rejected payments are never counted.</small></div>
+        <div style="display:flex;gap:10px;margin-top:12px"><button class="btn" style="flex:1" onclick="AD.filt='pending';adTab('pay');AD.pays=null;adLoad('pay')">Review pending${o.pending ? ' (' + o.pending + ')' : ''}</button><button class="btn sec" onclick="AD.ov=null;adLoad('ov')">${I('refresh', 18)}</button></div>`
+    }
+    function adPay(o) {
+      const F = [['pending', 'Pending'], ['approved', 'Approved'], ['rejected', 'Rejected'], ['all', 'All']];
+      const rows = o.items.map(p => { const b = stBd(p.status); return `<button class="dc adp" data-id="${esc(p.id)}" onclick="adPayOpen(this.dataset.id)"><div class="in"><b>${esc(p.userName)} &middot; ${inr(p.amount)}</b><small>${esc(p.userEmail)} &middot; ${esc(p.planName)}</small><small class="mono">UTR ${esc(p.utr || '–')} &middot; ${esc(p.ref)}</small><small>${fdt(p.submitted || p.created)}</small><span class="bd ${b[0]}">${b[1]}</span>${p.dupUtr ? '<span class="bd er">Same UTR used twice</span>' : ''}</div></button>` }).join('');
+      return `<div class="seg c4" style="margin-bottom:10px">${F.map(f => `<button class="${AD.filt == f[0] ? 'on' : ''}" onclick="AD.filt='${f[0]}';AD.pays=null;go('adm',null,1);adLoad('pay')">${f[1]}</button>`).join('')}</div><div class="fld" style="margin-bottom:12px">${I('search', 18)}<input id="ad_q" placeholder="Search name, email, UTR, reference" value="${esc(AD.q)}" onkeydown="if(event.key=='Enter'){AD.q=this.value.trim();AD.pays=null;adLoad('pay')}"></div>${o.items.length ? rows : empty('No payments here', 'file')}${o.total > o.items.length ? `<p class="t2" style="text-align:center">Showing ${o.items.length} of ${o.total}. Use search to narrow down.</p>` : ''}`
+    }
+    const adFind = id => AD.pays && AD.pays.items.find(x => x.id == id);
+    function adPayOpen(id) {
+      const p = adFind(id); if (!p) return; const b = stBd(p.status), R = (l, v) => `<div class="row"><div class="rb"><small>${l}</small><b>${v}</b></div></div>`;
+      const act = [p.status == 'pending' ? `<button class="btn" data-k="ok">Approve</button><button class="btn dg" data-k="no">Reject</button>` : '', p.hasProof ? `<button class="btn sec" data-k="pf">View screenshot</button>` : '', `<button class="btn sec" data-k="nt">${p.note ? 'Edit note' : 'Add note'}</button><button class="btn sec" data-k="us">User history</button>`].join('');
+      modal({
+        title: 'Payment request', icon: 'file', ok: null, cancel: 'Close', wide: 1, noFocus: 1,
+        html: `<div class="card grp" style="box-shadow:none;padding:0 4px">${R('Request ID', '<span class="mono" style="font-size:12px">' + esc(p.id) + '</span>') + R('User', esc(p.userName) + ' &middot; ' + esc(p.userEmail) + (p.userPhone ? ' &middot; ' + esc(p.userPhone) : '')) + R('User ID', '<span class="mono" style="font-size:12px">' + esc(p.userId) + '</span>') + R('Plan', esc(p.planName) + ' &middot; ' + p.days + ' days') + R('Expected amount', '<b style="font-size:18px">' + inr(p.amount) + '</b>') + R('Transaction ID submitted', '<span class="mono">' + esc(p.utr || '–') + '</span>' + (p.dupUtr ? ' <span class="bd er">used more than once</span>' : '')) + R('Payment reference', '<span class="mono">' + esc(p.ref) + '</span>') + R('Submitted', fdt(p.submitted)) + R('Status', `<span class="bd ${b[0]}">${b[1]}</span>`) + (p.verified ? R('Decided', fdt(p.verified) + (p.adminEmail ? ' by ' + esc(p.adminEmail) : '')) : '') + (p.received ? R('Amount received', inr(p.received)) : '') + (p.reason ? R('Reason shown to user', esc(p.reason)) : '') + (p.note ? R('Admin note', esc(p.note)) : '')}</div>
+          ${p.status == 'pending' ? `<div class="pyw" style="margin:12px 0">${I('alert', 18)}<span>Before approving, find <b class="mono">${esc(p.utr)}</b> for <b>${inr(p.amount)}</b> in your UPI app or bank statement. A screenshot alone is not proof.</span></div>` : ''}<div class="adx">${act}</div>`,
+        onOpen: (el, close) => el.querySelectorAll('[data-k]').forEach(x => x.onclick = () => { close(); ({ ok: () => adApprove(id), no: () => adReject(id), pf: () => adProof(id), nt: () => adNote(id), us: () => adUser(p.userId) })[x.dataset.k]() })
+      })
+    }
+    async function adApprove(id) {
+      const p = adFind(id); if (!p) return;
+      const v = await modal({ icon: 'check', title: 'Approve payment', ok: 'Approve and activate', sticky: 1, wide: 1, html: `<p class="mt">Premium will start for <b>${esc(p.userName)}</b>: <b>${esc(p.planName)}</b>, ${p.days} days.</p><label class="lb" style="margin-top:12px">Amount you received (${'₹'}) for UTR <span class="mono">${esc(p.utr)}</span></label><div class="fld">${I('table', 18)}<input id="ap_r" inputmode="decimal" placeholder="Expected ${inr(p.amount)}"></div><label style="display:flex;gap:10px;align-items:flex-start;margin:6px 0 12px"><input id="ap_c" type="checkbox" style="margin-top:3px;width:auto"><span>I checked this payment in my UPI app / bank statement and the amount and transaction ID match.</span></label><div class="fld">${I('edit', 18)}<input id="ap_n" maxlength="300" placeholder="Admin note (optional)"></div>`, pre: el => { const r = el.querySelector('#ap_r').value.trim().replace(',', '.'); if (!r) return fail(el, 'Type the amount you actually received'); if (Math.round(parseFloat(r) * 100) !== Math.round(p.amount * 100)) return fail(el, 'You typed ' + r + ' but the expected amount is ' + inr(p.amount) + '. If a different amount arrived, reject this payment instead.'); if (!el.querySelector('#ap_c').checked) return fail(el, 'Tick the box to confirm you checked the payment'); return { r, n: el.querySelector('#ap_n').value.trim() } } });
+      if (!v || v === true) return;
+      const ok = await busy(() => aapi('adminApprove', { paymentId: id, received: v.r, verified: true, note: v.n }), 'Approving…'); if (!ok) return;
+      toast('Approved. Premium is now active for the user'); AD.ov = null; AD.pays = null; adLoad('pay')
+    }
+    async function adReject(id) {
+      const p = adFind(id); if (!p) return;
+      const v = await modal({ icon: 'alert', tone: 'er', title: 'Reject payment', ok: 'Reject', danger: 1, sticky: 1, html: `<p class="mt">The user will see the reason. No Premium is added.</p><div class="fld" style="margin-top:10px">${I('edit', 18)}<input id="rj_r" maxlength="200" placeholder="Reason (for example: payment not received)"></div><div class="fld">${I('edit', 18)}<input id="rj_n" maxlength="300" placeholder="Internal note (optional)"></div>`, pre: el => { const r = el.querySelector('#rj_r').value.trim(); if (r.length < 3) return fail(el, 'Write a short reason'); return { r, n: el.querySelector('#rj_n').value.trim() } } });
+      if (!v || v === true) return;
+      const ok = await busy(() => aapi('adminReject', { paymentId: id, reason: v.r, note: v.n }), 'Rejecting…'); if (!ok) return;
+      toast('Payment rejected', 'inf'); AD.ov = null; AD.pays = null; adLoad('pay')
+    }
+    async function adNote(id) {
+      const p = adFind(id); if (!p) return;
+      const v = await modal({ icon: 'edit', title: 'Admin note', ok: 'Save', html: `<div class="fld">${I('edit', 18)}<input id="nt_n" maxlength="300" value="${esc(p.note)}" placeholder="Only admins see this"></div>`, pre: el => ({ n: el.querySelector('#nt_n').value.trim() }) });
+      if (!v || v === true) return;
+      if (await busy(() => aapi('adminNote', { paymentId: id, note: v.n }))) { toast('Note saved'); AD.pays = null; adLoad('pay') }
+    }
+    async function adProof(id) {
+      const r = await busy(() => aapi('adminProof', { paymentId: id }), 'Loading screenshot…'); if (!r || r === true) return;
+      if (!/^image\/(jpeg|png)$/.test(r.mime) || !/^[A-Za-z0-9+\/=]+$/.test(r.data)) return alertBox('Unexpected file');
+      mdl('Payment screenshot', 'image', `<img alt="Payment screenshot" style="width:100%;border-radius:12px" src="data:${r.mime};base64,${r.data}"><p class="t2" style="font-size:12.5px;margin-top:8px">A screenshot can be edited. Always confirm the payment in your own UPI / bank records.</p>`, { ok: 'Close', wide: 1 })
+    }
+    async function adUser(uid) {
+      const r = await busy(() => aapi('adminUser', { userId: uid }), 'Loading history…'); if (!r || r === true) return;
+      const s = r.sub, st = s.status == 'active' ? 'Active until ' + fdt(s.paidUntil || s.expiry) : s.status == 'expired' ? 'Expired ' + fdt(s.expiry) : 'Free';
+      mdl(r.user ? r.user.name : 'User history', 'user', `<p class="t2" style="margin-bottom:8px">${r.user ? esc(r.user.email) : 'Deleted account'} &middot; <b>${st}</b></p><h4 style="margin:10px 0 4px">Payments</h4>${r.payments.length ? r.payments.map(p => `<div class="row" style="padding:8px 0"><div class="rb"><b>${esc(p.planName)} &middot; ${inr(p.amount)}</b><small class="mono">${esc(p.utr || '–')} &middot; ${fdt(p.submitted || p.created)}</small></div><span class="bd ${stBd(p.status)[0]}">${stBd(p.status)[1]}</span></div>`).join('') : '<p class="t2">None</p>'}<h4 style="margin:12px 0 4px">Subscriptions</h4>${r.subs.length ? r.subs.map(x => `<div class="row" style="padding:8px 0"><div class="rb"><b>${esc(x.planName)}</b><small>${fdt(x.start)} to ${fdt(x.expiry)}</small></div><span class="bd ${x.status == 'active' ? 'ok' : x.status == 'queued' ? 'wn' : 'er'}">${x.status}</span></div>`).join('') : '<p class="t2">None</p>'}`, { ok: 'Close', wide: 1 })
+    }
+    function adSet(o) {
+      const s = o.settings, T = (id, l, v, ph = '', ty = 'text') => `<label class="lb" for="${id}">${l}</label><div class="fld"><input id="${id}" type="${ty}" value="${esc(v)}" placeholder="${esc(ph)}" autocomplete="off"></div>`;
+      const sw = (id, t, sub, on) => `<div class="tgl"><div class="rb"><b>${t}</b><small>${sub}</small></div><label class="sw"><input id="${id}" type="checkbox" ${on === '1' ? 'checked' : ''}><span></span></label></div>`;
+      return `<h3 class="h" style="margin-top:0">Payment settings</h3><div class="card">${T('st_upi', 'Merchant UPI ID', s.upiId, 'name@bank') + T('st_name', 'Merchant display name', s.merchantName) + T('st_qr', 'Custom QR image (optional)', s.qrImage, 'https://... or upi-qr.png')}<small class="t2" style="display:block;margin:-6px 0 12px">Leave the QR empty to let the app draw a QR with the exact amount and reference.</small><label class="lb" for="st_ins">Payment instructions shown to users</label><textarea id="st_ins" rows="4" maxlength="600" style="width:100%">${esc(s.instructions)}</textarea><div style="height:12px"></div>${T('st_se', 'Support email', s.supportEmail, 'help@example.com', 'email') + T('st_sp', 'Support phone', s.supportPhone, '+91...', 'tel')}${sw('st_ss', 'Require a payment screenshot', 'Users must attach one (it is still never proof by itself)', s.requireScreenshot) + sw('st_ad', 'Ads enabled', 'Switch off to hide ads for everyone', s.adsEnabled) + sw('st_sa', 'Allow admins to approve their own payments', 'Keep off in production. Useful only for testing', s.allowSelfApprove)}${T('st_ma', 'Maximum stacked Premium time (days)', s.maxAheadDays, '365', 'number')}<button class="btn full" onclick="adSaveSet()">Save settings</button></div>
+      <h3 class="h">Plans and prices (INR)</h3>${o.plans.map(p => `<div class="card" style="margin-bottom:10px"><b>${esc(p.name)}</b><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px"><div><label class="lb">Price (${'₹'})</label><div class="fld"><input id="pl_p_${esc(p.id)}" inputmode="decimal" value="${p.price}"></div></div><div><label class="lb">Days</label><div class="fld"><input id="pl_d_${esc(p.id)}" inputmode="numeric" value="${p.days}"></div></div></div>${sw('pl_a_' + esc(p.id), 'Available to buy', 'Switch off to hide this plan', p.active ? '1' : '0')}<button class="btn sm" data-id="${esc(p.id)}" onclick="adSavePlan(this.dataset.id)">Save ${esc(p.name)}</button><p class="t2" style="font-size:12px;margin-top:8px">Changing a price affects new payment requests only. Requests already created keep their price.</p></div>`).join('')}`
+    }
+    async function adSaveSet() {
+      const g = id => $('#' + id), c = id => g(id).checked ? '1' : '0', old = AD.set.settings;
+      const v = { upiId: g('st_upi').value.trim(), merchantName: g('st_name').value.trim(), qrImage: g('st_qr').value.trim(), instructions: g('st_ins').value.trim(), supportEmail: g('st_se').value.trim(), supportPhone: g('st_sp').value.trim(), requireScreenshot: c('st_ss'), adsEnabled: c('st_ad'), allowSelfApprove: c('st_sa'), maxAheadDays: g('st_ma').value.trim() };
+      if (v.upiId.toLowerCase() != (old.upiId || '').toLowerCase() && !await confirmBox({ title: 'Change the UPI ID?', text: 'Every NEW payment will go to <b>' + esc(v.upiId || '(none)') + '</b>. Check it carefully, a wrong UPI ID sends customers\' money to someone else.', ok: 'Yes, change it', icon: 'alert' })) return;
+      const r = await busy(() => aapi('adminSetSettings', { values: v }), 'Saving…'); if (!r || r === true) return;
+      AD.set.settings = r.settings; toast('Settings saved'); PM.info = null
+    }
+    async function adSavePlan(id) {
+      const price = $('#pl_p_' + id).value.trim(), days = $('#pl_d_' + id).value.trim(), active = $('#pl_a_' + id).checked;
+      const r = await busy(() => aapi('adminSavePlan', { id, price, days, active }), 'Saving…'); if (!r || r === true) return;
+      AD.set.plans = r.plans; toast('Plan saved'); PM.info = null
+    }
+    function adAud(a) {
+      return a.length ? `<div class="card grp">${a.map(x => `<div class="row" style="align-items:flex-start"><div class="rb"><b>${esc(x.action.replace(/_/g, ' '))}</b><small>${fdt(x.at)} &middot; ${esc(x.admin)}</small>${x.detail ? `<small class="mono" style="word-break:break-all">${esc(x.detail)}</small>` : ''}</div></div>`).join('')}</div>` : empty('No activity yet', 'file')
+    }
+
+    /* ==========================================================================================
+       ADS: Google AdMob through a native Capacitor plugin. Web pages cannot run the AdMob SDK, so nothing
+       happens in a normal browser or in an APK that does not contain the plugin: the app just works without ads.
+       Rules: never for verified Premium users, never before the server confirmed the status, never on
+       sign-in / vault / forms / pop-ups / viewer, app-open at most once per gap, ad failures are ignored.
+       ========================================================================================== */
+    const ACF = () => window.NEXUS_ADS || {};
+    const TEST_ADS = { appOpen: 'ca-app-pub-3940256099942544/9257395921', banner: 'ca-app-pub-3940256099942544/6300978111' }; /* Google's official test ad units */
+    const ADS = { init: 0, dead: 0, banner: 0, hidden: 1, busy: 0, busyB: 0, fails: 0, p: null, hid: 0 };
+    const adPlug = () => { if (!NATIVE()) return null; if (!ADS.p) ADS.p = plug('AdMob'); return ADS.p };
+    const adTest = () => ACF().testMode !== false;                                    /* test ads unless config.js explicitly says false */
+    const adId = k => adTest() ? TEST_ADS[k] : ((ACF()[k] || {}).android || '');
+    const adsEligible = () => !!(ACF().enabled !== false && S.user && S.adsOn !== false && subKnown() && !isPremium() && adPlug() && !ADS.dead);
+    async function adsInit() {
+      const A = adPlug(); if (!A || ADS.dead) return false; if (ADS.init) return true;
+      try {
+        await A.initialize({ initializeForTesting: adTest() });
+        try { /* EU / UK consent form (Google UMP). It only appears where the law requires it. */
+          let ci = await A.requestConsentInfo();
+          if (ci && ci.status === 'REQUIRED' && ci.isConsentFormAvailable) { await A.showConsentForm(); ci = await A.requestConsentInfo() }
+          if (ci && ci.canRequestAds === false) { ADS.dead = 1; return false }
+        } catch (e) { }
+        ADS.init = 1; return true
+      } catch (e) { ADS.dead = 1; return false }
+    }
+    const adScreens = ['home', 'docs', 'veh', 'tools', 'cal', 'ins'];
+    const adQuiet = () => !!($('#shell.on') && !MS.length && !$('#vw.on') && !$('#lk.on') && !$('.ld.on') && !document.hidden && !S.selm);
+    async function bannerShow() {
+      const A = adPlug(); if (!A || ADS.busyB) return; ADS.busyB = 1;
+      try {
+        if (ADS.banner) { await A.resumeBanner() }
+        else {
+          if (!await adsInit()) return; const id = adId('banner'); if (!id) return;
+          const t = $('#tabs'), sab = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--sab')) || 0;
+          await A.showBanner({ adId: id, adSize: 'ADAPTIVE_BANNER', position: 'BOTTOM_CENTER', margin: Math.max(0, Math.round((t ? t.offsetHeight : 0) - sab)), isTesting: adTest() }); /* sits just above the tab bar, never on top of it */
+          ADS.banner = 1
+        }
+        ADS.hidden = 0; document.body.classList.add('adb'); ADS.fails = 0
+      } catch (e) { if (++ADS.fails >= 3) ADS.dead = 1 } finally { ADS.busyB = 0 }
+    }
+    async function bannerHide(remove) {
+      const A = adPlug(); if (!A || !ADS.banner || ADS.busyB) return; ADS.busyB = 1;
+      try { if (remove) { await A.removeBanner(); ADS.banner = 0 } else await A.hideBanner(); ADS.hidden = 1; document.body.classList.remove('adb') } catch (e) { } finally { ADS.busyB = 0 }
+    }
+    function adsSync() {
+      if (!adPlug()) return;
+      if (!adsEligible()) { if (ADS.banner) bannerHide(true); return }
+      const ok = adScreens.includes(S.tab) && !S.vid && adQuiet();
+      if (ok && (!ADS.banner || ADS.hidden)) bannerShow(); else if (!ok && ADS.banner && !ADS.hidden) bannerHide(false)
+    }
+    setInterval(adsSync, 400);
+    const aoDue = () => { let t = 0; try { t = +localStorage.nxao || 0 } catch (e) { } const n = Date.now(); if (t > n) { t = n; try { localStorage.nxao = n } catch (e) { } } return n - t >= (ACF().appOpenGapMin || 180) * 6e4 };
+    async function appOpenTry() {
+      const A = adPlug(); if (!A || ADS.busy || !adsEligible() || !aoDue() || !adQuiet() || S.tab == 'vault') return;
+      const id = adId('appOpen'); if (!id) return; ADS.busy = 1; const t0 = Date.now();
+      try {
+        if (!await adsInit()) return;
+        await A.loadAppOpen({ adId: id, isTesting: adTest() });
+        if (Date.now() - t0 > 8000 || !adsEligible() || !adQuiet() || S.tab == 'vault') return; /* too slow or the user already started something: do not interrupt */
+        try { localStorage.nxao = Date.now() } catch (e) { }
+        await A.showAppOpen()
+      } catch (e) { /* no ad available, or this build has no app-open support: the app carries on */ } finally { ADS.busy = 0 }
+    }
+    function afterLoad() { /* called once the server answered after sign-in / app start */
+      try { if (hasPendingLocal()) premLoad() } catch (e) { }
+      let first = 0; try { first = !localStorage.nxfl; localStorage.nxfl = 1 } catch (e) { }
+      if (!first) setTimeout(appOpenTry, 1500) /* the very first launch after install never shows an app-open ad */
+    }
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) { ADS.hid = Date.now(); return }
+      if (S.user && ADS.hid && Date.now() - ADS.hid > 3e5) subRefresh(true).then(() => setTimeout(appOpenTry, 600)); else subRefresh()
+    });
+    function adsStop() { try { if (ADS.banner) bannerHide(true) } catch (e) { } }
 
     /* ---------- INIT ---------- */
     applyPrefs();

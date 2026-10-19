@@ -35,6 +35,26 @@ if extra:
         raise SystemExit('INTERNET permission line not found in AndroidManifest.xml')
     open(m, 'w').write(t)
 
+# 3b. AdMob: application id (meta-data) + minSdk 24 ------------------------------------
+import json
+ads = json.load(open('android-ads.json'))
+app_id = ads.get('appId', '')
+if not re.fullmatch(r'ca-app-pub-\d{16}~\d{10}', app_id):
+    raise SystemExit('android-ads.json: appId must look like ca-app-pub-1234567890123456~1234567890')
+t = open(m).read()
+if 'com.google.android.gms.ads.APPLICATION_ID' not in t:
+    t, n = re.subn(r'(<application\b[^>]*>)', lambda x: x.group(1) + '\n        <meta-data android:name="com.google.android.gms.ads.APPLICATION_ID" android:value="' + app_id + '"/>', t, count=1)
+    if n != 1:
+        raise SystemExit('<application> tag not found in AndroidManifest.xml')
+    open(m, 'w').write(t)
+vg = 'android/variables.gradle'
+if os.path.exists(vg):
+    g = open(vg).read()
+    g2 = re.sub(r'minSdkVersion\s*=\s*(\d+)', lambda x: 'minSdkVersion = 24' if int(x.group(1)) < 24 else x.group(0), g)
+    if g2 != g:
+        open(vg, 'w').write(g2)
+print('AdMob app id set (%s)' % ('TEST id' if app_id.startswith('ca-app-pub-3940256099942544') else 'PRODUCTION id'))
+
 # 4. MainActivity: keeps the app header below the status bar / camera cut-out ----------
 found = glob.glob('android/app/src/main/java/**/MainActivity.java', recursive=True)
 if not found:
