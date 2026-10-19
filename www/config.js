@@ -10,6 +10,6 @@ window.NEXUS_ADS = {
   enabled: true,
   testMode: true,
   appOpen: { android: '' },   // e.g. 'ca-app-pub-1234567890123456/1234567890'
-  banner: { android: 'ca-app-pub-3589063278418504/9373866014' },
+  banner: { android: 'ca-app-pub-3589063278418504/3319593550' },
   appOpenGapMin: 180          // an app-open ad is shown at most once per this many minutes
 };
