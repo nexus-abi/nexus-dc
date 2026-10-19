@@ -8,7 +8,7 @@ window.NEXUS_API = 'https://script.google.com/macros/s/AKfycbyoUI9XTWBGhkSbduh6Z
    and read MONETIZATION.md ("Going live with ads"). With testMode:false and an empty ID, that ad type is simply not shown. */
 window.NEXUS_ADS = {
   enabled: true,
-  testMode: false,
+  testMode: true,
   appOpen: { android: '' },   // e.g. 'ca-app-pub-1234567890123456/1234567890'
   banner: { android: 'ca-app-pub-3589063278418504/9373866014' },
   appOpenGapMin: 180          // an app-open ad is shown at most once per this many minutes
