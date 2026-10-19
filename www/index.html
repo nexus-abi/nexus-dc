@@ -2867,7 +2867,7 @@ html, body { overflow-x: clip !important; }
     /* ---------- HELPERS ---------- */
     let fd = x => { x = nd(x); if (!x) return ''; const [y, m, d] = x.split('-').map(Number); return new Date(y, m - 1, d).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }) };
     function st(x) {
-      x = nd(x); if (!x) return ['', 'No expiry date', 9e9];
+      x = nd(x); if (!x) return ['ok', 'No expiry', 9e9];
       const [y, m, dd] = x.split('-').map(Number), t = new Date(), d = Math.round((new Date(y, m - 1, dd) - new Date(t.getFullYear(), t.getMonth(), t.getDate())) / 864e5);
       return d < 0 ? ['er', `Expired ${-d} day${d < -1 ? 's' : ''} ago`, d] : d == 0 ? ['er', 'Expires today', 0] : d <= 30 ? ['wn', `${d} day${d > 1 ? 's' : ''} left`, d] : ['ok', 'Valid till ' + fd(x), d]
     }
@@ -3092,6 +3092,7 @@ html, body { overflow-x: clip !important; }
     let PF = [], K = 'person';
     function kind(k) { K = k; $('#kp').classList.toggle('on', k == 'person'); $('#kv').classList.toggle('on', k == 'vehicle'); $('#vsw').style.display = k == 'vehicle' ? 'block' : 'none'; $('#hsw').style.display = k == 'person' ? 'block' : 'none'; $('#ty').innerHTML = T[k].map(x => `<option>${x[0]}</option>`).join(''); oth() }
     const oth = () => $('#ct').style.display = $('#ty').value == 'Other' ? 'block' : 'none';
+    const neTg = () => { const b = $('#dts'); if (b) b.style.display = $('#ne').checked ? 'none' : '' };
     function slotHTML(lb) {
       const i = PF.findIndex(x => lbOf(x) == lb), x = PF[i];
       if (!x) return `<div class="slot"><span class="sl-l">${lb} side${lb == 'Back' ? ' (optional)' : ''}</span><div class="sl-b"><button type="button" onclick="pickPF('${lb}',1)">${I('camera', 18)}<span>Scan</span></button><button type="button" onclick="pickPF('${lb}',0)">${I('upload', 18)}<span>Upload</span></button></div></div>`;
@@ -3118,14 +3119,15 @@ html, body { overflow-x: clip !important; }
     }
     async function docForm(id, vid) {
       const d = S.docs.find(x => x.id == id) || {}; vid = d.vehicleId || vid || (!id && S.tab == 'veh' && S.vid) || '';
-      PF = (d.files || []).slice();
+      PF = (d.files || []).slice(); const NE = !!id && !d.expiry && !d.issue;
       const o = await modal({
         title: id ? 'Edit document' : 'Add document', icon: 'file', wide: 1, sticky: 1, ok: 'Save document', html: `
     <div class="seg"><button type="button" id="kp" onclick="kind('person')">${I('user', 16)} Personal</button><button type="button" id="kv" onclick="kind('vehicle')">${I('car', 16)} Vehicle</button></div>
     <div id="vsw"><span class="lb">Vehicle</span><select id="vs">${S.vs.map(v => `<option value="${v.id}" ${v.id == vid ? 'selected' : ''}>${esc(v.number)}</option>`).join('') || '<option value="">Add a vehicle first</option>'}</select></div>
     <div id="hsw"><span class="lb">Belongs to</span><input id="ho" list="hl" placeholder="Self, Spouse, Father…" value="${esc(d.holder)}" autocomplete="off"><datalist id="hl">${[...new Set(['Self', 'Spouse', 'Father', 'Mother', 'Son', 'Daughter', ...holders()])].map(x => `<option value="${esc(x)}">`).join('')}</datalist></div><span class="lb">Document type</span><select id="ty" onchange="oth()"></select><input id="ct" placeholder="Document name" style="display:none">
     <span class="lb">Document / policy number</span><input id="nu" value="${esc(d.number)}">
-    <div class="two"><div><span class="lb">Issue date</span><input id="is" type="date" value="${esc(d.issue)}"></div><div><span class="lb">Expiry date</span><input id="ex" type="date" value="${esc(d.expiry)}"></div></div>
+    <div class="tgl" style="padding:4px 0 10px;border:0"><div class="rb"><b>No expiry date</b><small>Lifetime valid, like Aadhaar or PAN</small></div><label class="sw"><input type="checkbox" id="ne" ${NE ? 'checked' : ''} onchange="neTg()"><span></span></label></div>
+    <div class="two" id="dts" style="${NE ? 'display:none' : ''}"><div><span class="lb">Issue date</span><input id="is" type="date" value="${esc(d.issue)}"></div><div><span class="lb">Expiry date</span><input id="ex" type="date" value="${esc(d.expiry)}"></div></div>
     <span class="lb">Notes (optional)</span><input id="no" value="${esc(d.notes)}">
     <span class="lb">Document pages</span>
     <div id="fl"></div>
@@ -3139,9 +3141,10 @@ html, body { overflow-x: clip !important; }
           const t = $('#ty').value == 'Other' ? $('#ct').value.trim() : $('#ty').value;
           if (!t) return fail(el, 'Enter the document name');
           if (K == 'vehicle' && !$('#vs').value) return fail(el, 'Add a vehicle first');
-          if ($('#is').value && $('#ex').value && $('#ex').value < $('#is').value) return fail(el, 'Expiry date cannot be before the issue date');
+          const ne = $('#ne').checked;
+if (!ne && $('#is').value && $('#ex').value && $('#ex').value < $('#is').value) return fail(el, 'Expiry date cannot be before the issue date');
           if (!PF.length) return fail(el, 'Add at least one file');
-          return { k: K, v: $('#vs').value, t, n: $('#nu').value.trim(), i: $('#is').value, x: $('#ex').value, no: $('#no').value.trim(), h: K == 'person' ? $('#ho').value.trim() : '' }
+          return { k: K, v: $('#vs').value, t, n: $('#nu').value.trim(), i: ne ? '' : $('#is').value, x: ne ? '' : $('#ex').value, no: $('#no').value.trim(), h: K == 'person' ? $('#ho').value.trim() : '' }
         }
       });
       if (!o) return;
@@ -4666,6 +4669,36 @@ html[data-glass="1"] .tabs{background:color-mix(in srgb,var(--dk) 72%,transparen
   /* ================= 5) VEHICLE SERVICE & FUEL TRACKER ================= */
   const svGet = id => { let a = {}; try { a = (JSON.parse(localStorage.getItem('nxsv') || '{}'))[id] || {} } catch (e) { } return { svc: a.svc || [], fuel: a.fuel || [], im: a.im || 6, ik: a.ik || 5000 } };
   const svPut = (id, v) => { try { const o = JSON.parse(localStorage.getItem('nxsv') || '{}'); o[id] = v; localStorage.setItem('nxsv', JSON.stringify(o)) } catch (e) { toast('Could not save', 'er') } };
+    const frGet = () => { try { return JSON.parse(localStorage.getItem('nxfr') || '{}') } catch (e) { return {} } };
+  const frPut = o => { try { localStorage.setItem('nxfr', JSON.stringify(o)) } catch (e) { } };
+  const ftGet = () => localStorage.getItem('nxft') == 'Diesel' ? 'Diesel' : 'Petrol';
+    const fuelBind = box => {
+    let last = '';
+    const q = i => box.querySelector('#' + i), r2 = n => Math.round(n * 100) / 100, rate = () => +((q('tk_r') || {}).value) || 0;
+    const typ = () => { const b = box.querySelector('#tk_ty .on'); return b ? b.dataset.ft : 'Petrol' };
+    const show = () => { const r = rate(); q('tk_rw').style.display = r > 0 ? 'none' : ''; q('tk_rs').style.display = r > 0 ? '' : 'none'; q('tk_rv').textContent = r };
+    box.addEventListener('input', e => {
+      const id = e.target.id, r = rate(); if (!['tk_a', 'tk_l', 'tk_r'].includes(id)) return;
+      if (id == 'tk_a') { last = 'a'; if (r > 0) { const a = +e.target.value; q('tk_l').value = a > 0 ? r2(a / r) : '' } }
+      else if (id == 'tk_l') { last = 'l'; if (r > 0) { const l = +e.target.value; q('tk_a').value = l > 0 ? r2(l * r) : '' } }
+      else if (r > 0) {
+        const a = +q('tk_a').value, l = +q('tk_l').value;
+        if (last == 'l' && l > 0) q('tk_a').value = r2(l * r); else if (a > 0) q('tk_l').value = r2(a / r); else if (l > 0) q('tk_a').value = r2(l * r)
+      }
+    });
+    box.addEventListener('change', e => {
+      if (e.target.id != 'tk_r') return; const v = +e.target.value;
+      if (v > 0) { const o = frGet(); o[typ()] = v; frPut(o); show(); toast(typ() + ' rate saved as default', 'inf') }
+    });
+    box.addEventListener('click', e => {
+      if (e.target.closest('[data-rc]')) { q('tk_rs').style.display = 'none'; q('tk_rw').style.display = ''; q('tk_r').focus(); q('tk_r').select(); return }
+      const b = e.target.closest('[data-ft]'); if (!b) return;
+      box.querySelectorAll('#tk_ty button').forEach(x => x.classList.toggle('on', x === b));
+      localStorage.setItem('nxft', b.dataset.ft);
+      q('tk_r').value = frGet()[b.dataset.ft] || ''; show();
+      q('tk_r').dispatchEvent(new Event('input', { bubbles: true }))
+    })
+  };
   function svSum(id) {
     const v = svGet(id), last = v.svc.slice().sort((a, b) => b.d.localeCompare(a.d))[0];
     const kms = [...v.svc, ...v.fuel].map(x => +x.km || 0).filter(Boolean), odo = kms.length ? Math.max(...kms) : 0;
@@ -4710,16 +4743,17 @@ html[data-glass="1"] .tabs{background:color-mix(in srgb,var(--dk) 72%,transparen
           + `<hr class="hr"><b style="font-size:15px">Add service</b><div style="margin-top:8px"><span class="lb">Date</span><input id="tk_d" type="date" value="${today}"><div class="two"><div><span class="lb">Odometer (km)</span><input id="tk_k" type="number" inputmode="numeric" min="0" placeholder="12500"></div><div><span class="lb">Cost (₹)</span><input id="tk_c" type="number" inputmode="decimal" min="0" placeholder="1800"></div></div><span class="lb">What was done</span><input id="tk_n" placeholder="Oil change, chain lube…" maxlength="60"><button class="btn full" data-add>${I('plus', 16)} Add service</button></div>`
           + `<hr class="hr"><b style="font-size:15px">Remind me every</b><div class="two" style="margin-top:8px"><div><span class="lb">Months</span><input id="tk_im" type="number" min="1" max="36" value="${v.im}"></div><div><span class="lb">Kilometres</span><input id="tk_ik" type="number" min="100" step="100" value="${v.ik}"></div></div>`;
       } else {
-        const L = v.fuel.slice().sort((a, b) => b.d.localeCompare(a.d)).map(x => `<div class="vrow"><div class="ri">${I('drop', 18)}</div><div class="rb"><b>${x.l} L${x.a ? ' · ₹' + num(x.a) : ''}</b><small>${fd(x.d)}${x.km ? ' · ' + num(x.km) + ' km' : ''}${x.a && x.l ? ' · ₹' + (x.a / x.l).toFixed(1) + '/L' : ''}</small></div><button class="vib" data-del="fuel:${x.i}" aria-label="Delete">${I('trash', 16)}</button></div>`).join('');
+        const L = v.fuel.slice().sort((a, b) => b.d.localeCompare(a.d)).map(x => `<div class="vrow"><div class="ri">${I('drop', 18)}</div><div class="rb"><b>${x.t ? esc(x.t) + ' · ' : ''}${x.l} L${x.a ? ' · ₹' + num(x.a) : ''}</b><small>${fd(x.d)}${x.km ? ' · ' + num(x.km) + ' km' : ''}${x.a && x.l ? ' · ₹' + (x.a / x.l).toFixed(1) + '/L' : ''}</small></div><button class="vib" data-del="fuel:${x.i}" aria-label="Delete">${I('trash', 16)}</button></div>`).join('');
+                const ft0 = ftGet(), r0 = frGet()[ft0] || '';
         body = (L || '<p class="mt" style="margin:8px 0">No fuel entries yet.</p>')
-          + `<hr class="hr"><b style="font-size:15px">Add fuel</b><div style="margin-top:8px"><span class="lb">Date</span><input id="tk_d" type="date" value="${today}"><div class="two"><div><span class="lb">Litres</span><input id="tk_l" type="number" inputmode="decimal" min="0" step="0.01" placeholder="4.5"></div><div><span class="lb">Amount (₹)</span><input id="tk_a" type="number" inputmode="decimal" min="0" placeholder="450"></div></div><span class="lb">Odometer (km)</span><input id="tk_k" type="number" inputmode="numeric" min="0" placeholder="12500"><button class="btn full" data-add>${I('plus', 16)} Add fuel</button></div><p class="t2" style="font-size:12.5px;margin-top:8px">Fill the tank fully each time and enter the km. Mileage is worked out from the entries.</p>`;
-      }
+          + `<hr class="hr"><b style="font-size:15px">Add fuel</b><div style="margin-top:8px"><span class="lb">Date</span><input id="tk_d" type="date" value="${today}"><span class="lb">Fuel type</span><div class="seg c2" id="tk_ty" style="margin-bottom:12px"><button type="button" data-ft="Petrol" class="${ft0 == 'Petrol' ? 'on' : ''}">Petrol</button><button type="button" data-ft="Diesel" class="${ft0 == 'Diesel' ? 'on' : ''}">Diesel</button></div><div class="tgl" id="tk_rs" style="border:0;padding:2px 0 12px;${r0 ? '' : 'display:none'}"><div class="rb"><b>Rate: ₹<span id="tk_rv">${r0}</span> per litre</b><small>Saved as default. Tap Change only when the price changes</small></div><button type="button" class="btn sec sm" data-rc>Change</button></div><div id="tk_rw" style="${r0 ? 'display:none' : ''}"><span class="lb">Rate (₹ per litre)</span><input id="tk_r" type="number" inputmode="decimal" min="0" step="0.01" value="${r0}" placeholder="Enter rate once"></div><div class="two"><div><span class="lb">Litres</span><input id="tk_l" type="number" inputmode="decimal" min="0" step="0.01" placeholder="4.5"></div><div><span class="lb">Amount (₹)</span><input id="tk_a" type="number" inputmode="decimal" min="0" placeholder="450"></div></div><span class="lb">Odometer (km)</span><input id="tk_k" type="number" inputmode="numeric" min="0" placeholder="12500"><button class="btn full" data-add>${I('plus', 16)} Add fuel</button></div><p class="t2" style="font-size:12.5px;margin-top:8px">Enter the rate once. It is saved as the default for that fuel type. Type the amount to get litres, or litres to get the amount. Fill the tank fully and enter km for mileage.</p>`;
+        }
       return tiles + seg + '<div style="margin-top:10px">' + body + '</div>';
     };
     await modal({
       title: esc(veh.number), icon: 'tool', wide: 1, ok: 'Done', cancel: null, noFocus: 1, html: '<div id="tkb">' + html() + '</div>',
       onOpen: el => {
-        const box = el.querySelector('#tkb'), re = () => { box.innerHTML = html() };
+        const box = el.querySelector('#tkb'), re = () => { box.innerHTML = html() }; fuelBind(box);
         box.addEventListener('click', e => {
           const b = e.target.closest('button'); if (!b) return;
           if (b.dataset.t) { tab = b.dataset.t; re(); return }
@@ -4731,7 +4765,9 @@ html[data-glass="1"] .tabs{background:color-mix(in srgb,var(--dk) 72%,transparen
               v.svc.push({ i: uid(), d: g('tk_d'), km: +g('tk_k') || 0, c: +g('tk_c') || 0, n: g('tk_n').trim().slice(0, 60) });
             } else {
               if (!g('tk_d') || !(+g('tk_l') > 0)) return toast('Enter the date and litres', 'er');
-              v.fuel.push({ i: uid(), d: g('tk_d'), l: +g('tk_l'), a: +g('tk_a') || 0, km: +g('tk_k') || 0 });
+              const ft = (box.querySelector('#tk_ty .on') || {}).dataset.ft || 'Petrol', rr = +g('tk_r') || 0;
+              if (rr > 0) { const o = frGet(); o[ft] = rr; frPut(o) } localStorage.setItem('nxft', ft);
+              v.fuel.push({ i: uid(), d: g('tk_d'), l: +g('tk_l'), a: +g('tk_a') || 0, km: +g('tk_k') || 0, t: ft, r: rr });
             }
             svPut(id, v); re(); toast(tab == 'svc' ? 'Service added' : 'Fuel entry added');
           }
@@ -4814,8 +4850,8 @@ html[data-glass="1"] .tabs{background:color-mix(in srgb,var(--dk) 72%,transparen
     const okn = D.filter(d => !['er', 'wn'].includes(st(d.expiry)[0])).length, pc = D.length ? Math.round(okn / D.length * 100) : 0;
     const nx = D.filter(d => nd(d.expiry) && st(d.expiry)[2] >= 0).sort((p, q) => st(p.expiry)[2] - st(q.expiry)[2])[0];
     const tiles = `<div class="ptiles">
-      <button class="pt" onclick="prof()"><small>Blood group</small><b style="color:${u.blood ? 'var(--er)' : 'var(--t2)'}">${u.blood ? esc(u.blood) : '–'}</b><em>${u.blood ? 'Tap to edit' : 'Add in profile'}</em></button>
-      <button class="pt" onclick="prof()"><small>Age</small><b>${a == null ? '–' : a}</b><em>${a == null ? 'Add date of birth' : 'years'}</em></button>
+      <div class="pt"><small>Blood group</small><b style="color:${u.blood ? 'var(--er)' : 'var(--t2)'}">${u.blood ? esc(u.blood) : '–'}</b><em>${u.blood ? 'Your blood group' : 'Not added yet'}</em></div>
+      <div class="pt"><small>Age</small><b>${a == null ? '–' : a}</b><em>${a == null ? 'Date of birth not added' : 'years'}</em></div>
       <button class="pt" onclick="go('docs')"><small>Documents healthy</small><b>${D.length ? pc + '%' : '–'}</b><em>${okn} of ${D.length} valid</em></button>
       <button class="pt" ${nx ? `onclick="view('${nx.id}')"` : ''}><small>Next expiry</small><b>${nx ? st(nx.expiry)[2] + 'd' : '–'}</b><em>${nx ? esc(nx.title) : 'Nothing upcoming'}</em></button></div>`;
     const R = (ic, l, v, extra, acts) => `<div class="row"><div class="ri">${I(ic, 20)}</div><div class="rb"><small>${l}</small><b>${v || '<i>Not added</i>'}</b>${v ? extra || '' : ''}</div>${v ? (acts ? `<div class="vqa">${acts}</div>` : '') : `<button class="vib" onclick="prof()" aria-label="Add ${l}">${I('plus', 16)}</button>`}</div>`;
