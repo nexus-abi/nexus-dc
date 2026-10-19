@@ -2898,7 +2898,7 @@ html, body { overflow-x: clip !important; }
       if ($('#e')) AE = v('e').toLowerCase();
       const M = { login: ['login', () => ({ email: AE, password: $('#p').value })], signup: ['register', () => ({ name: v('n'), email: AE, phone: v('ph'), password: $('#p').value })], forgot: ['forgot', () => ({ email: AE })], verify: ['verify', () => ({ email: AE, otp: v('o') })], reset: ['reset', () => ({ email: AE, otp: v('o'), password: $('#p').value })] }[m];
       const r = await busy(() => api(M[0], M[1]())); if (!r) return;
-      if (r.token) { S.token = r.token; localStorage.tk = r.token; S.tab = 'home'; load('sk') }
+      if (r.token) { S.token = r.token; localStorage.tk = r.token; S.tab = 'home'; S.justLogin = 1; load('sk') }
       else if (r.verify) authView('verify', 'Verification code sent to your email')
       else if (m == 'forgot') authView('reset', 'If this email is registered, a code has been sent' + (r.left != null ? ` (${r.left} left today)` : ''))
       else if (m == 'reset') authView('login', 'Password updated. Please login')
@@ -5274,7 +5274,7 @@ html[data-glass="1"] .tabs{background:color-mix(in srgb,var(--dk) 72%,transparen
        sign-in / vault / forms / pop-ups / viewer, app-open at most once per gap, ad failures are ignored.
        ========================================================================================== */
     const ACF = () => window.NEXUS_ADS || {};
-    const TEST_ADS = { appOpen: 'ca-app-pub-3940256099942544/9257395921', banner: 'ca-app-pub-3940256099942544/6300978111' }; /* Google's official test ad units */
+    const TEST_ADS = { appOpen: 'ca-app-pub-3940256099942544/9257395921', interstitial: 'ca-app-pub-3940256099942544/1033173712', banner: 'ca-app-pub-3940256099942544/6300978111' }; /* Google's official test ad units */
     const ADS = { init: 0, dead: 0, banner: 0, hidden: 1, busy: 0, busyB: 0, fails: 0, p: null, hid: 0 };
     const adPlug = () => { if (!NATIVE()) return null; if (!ADS.p) ADS.p = plug('AdMob'); return ADS.p };
     const adTest = () => ACF().testMode !== false;                                    /* test ads unless config.js explicitly says false */
@@ -5319,21 +5319,37 @@ html[data-glass="1"] .tabs{background:color-mix(in srgb,var(--dk) 72%,transparen
     }
     setInterval(adsSync, 400);
     const aoDue = () => { let t = 0; try { t = +localStorage.nxao || 0 } catch (e) { } const n = Date.now(); if (t > n) { t = n; try { localStorage.nxao = n } catch (e) { } } return n - t >= (ACF().appOpenGapMin || 180) * 6e4 };
-    async function appOpenTry() {
-      const A = adPlug(); if (!A || ADS.busy || !adsEligible() || !aoDue() || !adQuiet() || S.tab == 'vault') return;
-      const id = adId('appOpen'); if (!id) return; ADS.busy = 1; const t0 = Date.now();
-      try {
-        if (!await adsInit()) return;
-        await A.loadAppOpen({ adId: id, isTesting: adTest() });
-        if (Date.now() - t0 > 8000 || !adsEligible() || !adQuiet() || S.tab == 'vault') return; /* too slow or the user already started something: do not interrupt */
-        try { localStorage.nxao = Date.now() } catch (e) { }
-        await A.showAppOpen()
-      } catch (e) { /* no ad available, or this build has no app-open support: the app carries on */ } finally { ADS.busy = 0 }
+    /* Full-screen ad helper. Launch -> app-open unit first, post-login -> interstitial unit first.
+       Falls back to the other unit if one is not configured or fails (e.g. plugin build without app-open support). */
+    async function fullAd(prefer) {
+      const A = adPlug(); if (!A) return false;
+      const order = prefer == 'interstitial' ? ['interstitial', 'appOpen'] : ['appOpen', 'interstitial'];
+      for (const k of order) {
+        const id = adId(k); if (!id) continue; const t0 = Date.now();
+        try {
+          if (!await adsInit()) return false;
+          if (k == 'appOpen') await A.loadAppOpen({ adId: id, isTesting: adTest() }); else await A.prepareInterstitial({ adId: id, isTesting: adTest() });
+          if (Date.now() - t0 > 8000 || MS.length) return false; /* too slow, or the user already started something */
+          try { localStorage.nxao = Date.now() } catch (e) { }
+          if (k == 'appOpen') await A.showAppOpen(); else await A.showInterstitial();
+          return true
+        } catch (e) { /* try the next unit */ }
+      }
+      return false
+    }
+    async function appOpenTry(prefer) { /* logged-in user: only after the server confirmed the status (not Premium) */
+      if (ADS.busy || !adsEligible() || !adQuiet() || S.tab == 'vault') return;
+      if (prefer != 'interstitial' && !aoDue()) return;
+      ADS.busy = 1; try { await fullAd(prefer || 'appOpen') } finally { ADS.busy = 0 }
+    }
+    async function guestLaunchAd() { /* app opened on the login screen: nobody can be Premium yet */
+      if (!adPlug() || ADS.busy || ADS.dead || ACF().enabled === false || S.user || S.token || MS.length || !aoDue()) return;
+      ADS.busy = 1; try { await fullAd('appOpen') } finally { ADS.busy = 0 }
     }
     function afterLoad() { /* called once the server answered after sign-in / app start */
       try { if (hasPendingLocal()) premLoad() } catch (e) { }
-      let first = 0; try { first = !localStorage.nxfl; localStorage.nxfl = 1 } catch (e) { }
-      if (!first) setTimeout(appOpenTry, 1500) /* the very first launch after install never shows an app-open ad */
+      if (S.justLogin) { S.justLogin = 0; setTimeout(() => appOpenTry('interstitial'), 1200) } /* ad right after a fresh login */
+      else setTimeout(() => appOpenTry('appOpen'), 1500) /* app opened while already logged in */
     }
     document.addEventListener('visibilitychange', () => {
       if (document.hidden) { ADS.hid = Date.now(); return }
@@ -5367,6 +5383,7 @@ html[data-glass="1"] .tabs{background:color-mix(in srgb,var(--dk) 72%,transparen
     if (!Q && ['docs', 'vault'].includes(UP.start)) S.tab = UP.start;
     try { history.replaceState(null, '', location.pathname) } catch (e) { }
     S.token ? load('sk') : authView('login');
+    if (!S.token) setTimeout(guestLaunchAd, 1200);
     if (S.token && localStorage.nxpin) lockNow();
   </script>
 </body>

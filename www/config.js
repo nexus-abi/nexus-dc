@@ -9,7 +9,8 @@ window.NEXUS_API = 'https://script.google.com/macros/s/AKfycbyoUI9XTWBGhkSbduh6Z
 window.NEXUS_ADS = {
   enabled: true,
   testMode: true,
-  appOpen: { android: '' },   // e.g. 'ca-app-pub-1234567890123456/1234567890'
+  appOpen: { android: '' },   // optional: a real "App open" ad unit. If empty, the interstitial unit below is used for the launch ad too
+  interstitial: { android: 'ca-app-pub-3589063278418504/9373866014' },   // AdMob unit "NEXUS DOCS" (check Format = Interstitial in AdMob)
   banner: { android: 'ca-app-pub-3589063278418504/3319593550' },
-  appOpenGapMin: 180          // an app-open ad is shown at most once per this many minutes
+  appOpenGapMin: 10           // launch ad is shown at most once per this many minutes (set 0 for every open)
 };
