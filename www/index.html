@@ -4275,8 +4275,6 @@ function fitText() {
 })();
 
 
-
-
     /* ---------- app update manager ----------
    Every deploy stamps the commit id into APP_VER and writes version.json:
    { "v": "<commit>", "msg": "Short summary", "notes": ["Item 1","Item 2"], "force": false }
@@ -4371,6 +4369,502 @@ const Updater = (() => {
   return { start, check }
 })();
 Updater.start();
+
+/* ===== Verified badge v2: profile, home, sidebar, documents, vault, tap popup ===== */
+(() => {
+  if (window.__vbOn) return; window.__vbOn = 1;
+
+  /* ---- settings: maathikalaam ---- */
+  const STYLE = 1;       /* 1 = wavy edge, 2 = sharp star edge */
+  const ACCENT = true;   /* true = app accent colour, false = fixed Instagram blue */
+  const DOCS = true;     /* valid (not expired) documents ku small badge */
+  const VAULT = true;    /* 2FA irukkura vault logins ku small badge */
+
+  const badge = (s = 22, kind = 'acct') => {
+    const pts = [], col = ACCENT ? 'var(--ac)' : '#1da1f2';
+    if (STYLE == 2) {
+      const n = 30;
+      for (let i = 0; i < n * 2; i++) {
+        const r = i % 2 ? 43 : 48.5, a = Math.PI * i / n - Math.PI / 2;
+        pts.push((50 + r * Math.cos(a)).toFixed(1) + ',' + (50 + r * Math.sin(a)).toFixed(1));
+      }
+    } else {
+      for (let i = 0; i < 240; i++) {
+        const a = Math.PI * 2 * i / 240, r = 44 + 4 * Math.cos(8 * a);
+        pts.push((50 + r * Math.cos(a)).toFixed(1) + ',' + (50 + r * Math.sin(a)).toFixed(1));
+      }
+    }
+    return `<svg class="vbadge" width="${s}" height="${s}" viewBox="0 0 100 100" role="button" aria-label="Verified" onclick="event.stopPropagation();vbInfo('${kind}')"><polygon points="${pts.join(' ')}" style="fill:${col};stroke:${col}" stroke-width="2" stroke-linejoin="round"/><path d="M30 52L44 66L71 36" fill="none" stroke="#fff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+  };
+
+  /* ---- css ---- */
+  const css = document.createElement('style');
+  css.textContent = '.vbadge{display:inline-block;vertical-align:-3px;flex:none;cursor:pointer}'
+    + '.gh h2 .vbadge{width:.7em;height:.7em;vertical-align:-.02em;margin-left:.12em}'
+    + '.dc .in b .vbadge,.vtag-b .vbadge{width:15px;height:15px;vertical-align:-2px;margin-left:4px}'
+    + '.side .me b .vbadge{width:14px;height:14px;vertical-align:-2px;margin-left:3px}';
+  document.head.appendChild(css);
+
+  /* ---- tap popup ---- */
+  const INFO = {
+    acct: ['Verified account', 'Your email address is verified and this account is protected with your password. Expiry reminders are sent to your verified email.'],
+    doc: ['Valid document', 'This document has not expired. It will show a warning here when the expiry date comes close.'],
+    '2fa': ['2FA protected', 'This login has an authenticator key saved, so you can see its live 6-digit code in the vault.']
+  };
+  window.vbInfo = function (k) {
+    const t = INFO[k] || INFO.acct;
+    modal({
+      title: t[0], icon: 'shield', ok: 'Got it', cancel: null, noFocus: 1,
+      html: `<div style="display:flex;justify-content:center;margin:6px 0 14px">${badge(64, k).replace(/onclick="[^"]*"/, '')}</div><p class="mt" style="text-align:center">${t[1]}</p>`
+    });
+  };
+
+  /* ---- profile page ---- */
+  const oldMe = pMe;
+  pMe = function () {
+    return oldMe().replace(/<span class="vb">[\s\S]*?<\/span>/, badge(22));
+  };
+
+  /* ---- home page ---- */
+  const oldHome = pHome;
+  pHome = function () {
+    return oldHome().replace(/(<h2>[^<]*<br><i>[^<]*<\/i>)(<\/h2>)/, '$1 ' + badge(28) + '$2');
+  };
+
+  /* ---- desktop sidebar name ---- */
+  const oldChrome = chrome;
+  chrome = function () {
+    oldChrome.apply(this, arguments);
+    const b = document.querySelector('#side .me b');
+    if (b && !b.querySelector('.vbadge')) b.insertAdjacentHTML('beforeend', badge(14));
+  };
+
+  /* ---- document rows: only valid documents ---- */
+  if (DOCS) {
+    const oldCard = card;
+    card = function (d) {
+      let h = oldCard.apply(this, arguments);
+      try {
+        if (st(d.expiry)[0] == 'ok') {
+          const key = '<b>' + esc(d.title) + '</b>';
+          h = h.replace(key, () => '<b>' + esc(d.title) + badge(15, 'doc') + '</b>');
+        }
+      } catch (e) { }
+      return h;
+    };
+  }
+
+  /* ---- vault list: logins that have a 2FA key ---- */
+  if (VAULT) {
+    const oldVList = vList;
+    vList = function () {
+      const h = oldVList.apply(this, arguments);
+      try {
+        return h.replace(/(onclick="vView\('([^']+)'\)">[\s\S]*?)(<span class="vtag">)/g, (m, a, id, tag) => {
+          const x = V.items.find(i => i.id == id);
+          return x && x.totp ? a + '<span class="vtag-b">' + badge(15, '2fa') + '</span> ' + tag : m;
+        });
+      } catch (e) { return h; }
+    };
+  }
+})();
+
+
+
+/* ===== Nexus extras v3: progress bar, security, themes, family dates, vehicle tracker, profile ===== */
+(() => {
+  if (window.__nxX) return; window.__nxX = 1;
+
+  /* ---- settings ---- */
+  const BAR = true;          /* expiry progress bar on document rows */
+  const MAXTRY = 5, LOCKSEC = 30;
+
+  /* ---- helpers ---- */
+  const BIO = () => NATIVE() && plug('BiometricAuth');
+  const PS = () => NATIVE() && plug('PrivacyScreen');
+  const T0 = () => { const n = new Date(); return new Date(n.getFullYear(), n.getMonth(), n.getDate()) };
+  const pd = s => { const [y, m, d] = String(s).split('-').map(Number); return new Date(y, m - 1, d) };
+  const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+  const num = n => Number(n || 0).toLocaleString('en-IN');
+  const whenTxt = n => n < 0 ? Math.abs(n) + ' day' + (n < -1 ? 's' : '') + ' ago' : n == 0 ? 'Today' : n == 1 ? 'Tomorrow' : 'in ' + n + ' days';
+  const tel = s => String(s || '').replace(/[^\d+]/g, '');
+  const ageOf = s => { if (!s) return null; const [y, m, d] = s.split('-').map(Number), t = T0(); let a = t.getFullYear() - y; if (t < new Date(t.getFullYear(), m - 1, d)) a--; return a >= 0 && a < 130 ? a : null };
+
+  Object.assign(P, {
+    sunrise: '<path d="M17 18a5 5 0 0 0-10 0M12 2v7M4.2 10.2l1.4 1.4M1 18h2M21 18h2M18.4 11.6l1.4-1.4M23 22H1M8 6l4-4 4 4"/>',
+    sunset: '<path d="M17 18a5 5 0 0 0-10 0M12 9V2M4.2 10.2l1.4 1.4M1 18h2M21 18h2M18.4 11.6l1.4-1.4M23 22H1M16 5l-4 4-4-4"/>',
+    gift: '<path d="M20 12v10H4V12M2 7h20v5H2zM12 22V7M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7zM12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/>'
+  });
+
+  /* ================= CSS ================= */
+  const css = document.createElement('style');
+  css.textContent = `
+@keyframes vbpop{0%{transform:scale(0) rotate(-50deg);opacity:0}55%{transform:scale(1.28) rotate(8deg);opacity:1}80%{transform:scale(.94) rotate(-3deg)}100%{transform:none;opacity:1}}
+html:not(.vb-done) .vbadge{animation:vbpop .7s cubic-bezier(.2,.9,.3,1.2) .25s both}
+.gi{display:inline-flex;vertical-align:-4px;margin-right:6px}
+.xbar{height:5px;border-radius:5px;background:color-mix(in srgb,var(--tx) 10%,transparent);overflow:hidden;margin-top:8px}
+.xbar i{display:block;height:100%;border-radius:5px;background:var(--ok)}
+.xbar.wn i{background:var(--wn)}.xbar.er i{background:var(--er)}
+.ptiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:0 0 4px}
+.pt{display:block;width:100%;text-align:left;padding:14px;border-radius:var(--rc);background:var(--sf);border:1px solid var(--bd)}
+.pt small{display:block;font-size:11.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--t2)}
+.pt b{display:block;margin-top:4px;font-family:var(--fd);font-size:28px;font-weight:600;line-height:1.1;overflow-wrap:anywhere}
+.pt em{display:block;margin-top:2px;font-style:normal;font-size:12.5px;color:var(--t2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ptiles.sm .pt b{font-size:20px}
+/* Instagram gradient accent */
+.sws button[aria-label="Instagram"]{background:linear-gradient(45deg,#f9a03c,#ee2a7b 50%,#6228d7)!important}
+html[data-ig] .btn:not(.sec):not(.dg),html[data-ig] .tabs button.on,html[data-ig] .cam{background:var(--g)}
+html[data-ig] .sw input:checked+span,html[data-ig] .pg2 i{background:var(--g)}
+html[data-ig] .gh h2 i{background:var(--g);-webkit-background-clip:text;background-clip:text;color:transparent}
+/* Glass cards */
+html[data-glass="1"]{--gb:color-mix(in srgb,#fff 40%,transparent)}
+html[data-glass="1"][data-t=dark]{--gb:color-mix(in srgb,#fff 11%,transparent)}
+html[data-glass="1"] body{background:radial-gradient(70% 45% at 8% -5%,color-mix(in srgb,var(--ac) 42%,transparent),transparent 70%),radial-gradient(60% 40% at 105% 25%,color-mix(in srgb,#ec4899 30%,transparent),transparent 70%),radial-gradient(70% 45% at 50% 108%,color-mix(in srgb,#06b6d4 28%,transparent),transparent 70%),var(--bg);background-attachment:fixed}
+html[data-glass="1"] .card,html[data-glass="1"] .dc,html[data-glass="1"] .vc,html[data-glass="1"] .ledger,html[data-glass="1"] .tt,html[data-glass="1"] .st,html[data-glass="1"] .cal,html[data-glass="1"] .pt,html[data-glass="1"] .ftile{background:color-mix(in srgb,var(--sf) 52%,transparent);-webkit-backdrop-filter:blur(18px) saturate(170%);backdrop-filter:blur(18px) saturate(170%);border:1px solid var(--gb)}
+html[data-glass="1"] .dc[data-s=er]{background:color-mix(in srgb,var(--er) 16%,transparent)}
+html[data-glass="1"] .dc[data-s=wn]{background:color-mix(in srgb,var(--wn) 16%,transparent)}
+html[data-glass="1"] .tb{background:color-mix(in srgb,var(--bg) 55%,transparent);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px)}
+html[data-glass="1"] .tabs{background:color-mix(in srgb,var(--dk) 72%,transparent);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px)}
+`;
+  document.head.appendChild(css);
+
+  /* badge pop: plays once, then stops */
+  const mo = new MutationObserver(() => {
+    if (document.querySelector('.vbadge')) { mo.disconnect(); setTimeout(() => document.documentElement.classList.add('vb-done'), 1800) }
+  });
+  mo.observe(document.body, { childList: true, subtree: true });
+
+  /* ================= 1) EXPIRY PROGRESS BAR ================= */
+  const bar = d => {
+    if (!d.issue || !d.expiry) return '';
+    const a = pd(d.issue), b = pd(d.expiry), t = T0(); if (!(b > a)) return '';
+    const p = Math.max(0, Math.min(1, (t - a) / (b - a))), c = st(d.expiry)[0] || 'ok';
+    return `<div class="xbar ${c}" title="${Math.round(p * 100)}% of validity used"><i style="width:${Math.max(3, Math.round(p * 100))}%"></i></div>`;
+  };
+  if (BAR) {
+    const oldCard = card;
+    card = function (d) {
+      let h = oldCard.apply(this, arguments);
+      try { const b = bar(d); if (b) h = h.replace(/(<span class="bd [^"]*">[^<]*<\/span>)(<\/div>)/, (m, a, z) => a + b + z) } catch (e) { }
+      return h;
+    };
+  }
+
+  /* ================= 2) SECURITY ================= */
+  /* 2a) PIN lock: biometric first, 5 wrong PINs = 30 sec lock */
+  lockNow = async function () {
+    const h = localStorage.nxpin; if (!h || LOCKED || !S.token) return; LOCKED = 1;
+    const B = localStorage.nxbio == '1' && BIO();
+    if (B) {
+      let el = $('#lk'); if (!el) { el = document.createElement('div'); el.id = 'lk'; document.body.appendChild(el) }
+      el.innerHTML = `<img src="${LOGO}" width="56" height="56" alt="" style="border-radius:16px"><h2 style="margin:0">Nexus Docs</h2><p style="margin:0;opacity:.85">Unlock with fingerprint or face</p>`;
+      el.classList.add('on');
+      try {
+        await B.authenticate({ reason: 'Unlock Nexus Docs', cancelTitle: 'Use PIN', allowDeviceCredential: false, androidTitle: 'Nexus Docs', androidSubtitle: 'Unlock with fingerprint or face' });
+        el.classList.remove('on'); LOCKED = 0; return;
+      } catch (e) { /* cancelled or failed: fall back to PIN */ }
+    }
+    const wait = () => Math.max(0, Math.ceil(((+localStorage.nxuntil || 0) - Date.now()) / 1000));
+    const r = await pinPad({
+      title: 'Enter PIN', sub: 'Nexus Document Hub is locked', forgot: 1,
+      check: async p => {
+        const w = wait(); if (w > 0) { toast('Too many wrong PINs. Wait ' + w + ' seconds', 'er'); return false }
+        if (await sha(p) == h) { localStorage.removeItem('nxfail'); localStorage.removeItem('nxuntil'); return true }
+        const n = (+localStorage.nxfail || 0) + 1;
+        if (n >= MAXTRY) { localStorage.nxfail = '0'; localStorage.nxuntil = String(Date.now() + LOCKSEC * 1000); toast(MAXTRY + ' wrong PINs. Locked for ' + LOCKSEC + ' seconds', 'er') }
+        else { localStorage.nxfail = String(n); toast('Wrong PIN. ' + (MAXTRY - n) + ' attempt' + (MAXTRY - n > 1 ? 's' : '') + ' left', 'er') }
+        return false;
+      }
+    });
+    LOCKED = 0;
+    if (r == 'forgot') { if (await confirmBox({ title: 'Forgot your PIN?', text: 'You will be logged out. Login again with your password to continue.', ok: 'Logout', icon: 'logout' })) logout(1); else lockNow() }
+  };
+
+  /* 2b) block screenshots while vault is unlocked or a document is open */
+  let psOn = false;
+  setInterval(() => {
+    try {
+      const ps = PS(); if (!ps) return;
+      const want = localStorage.nxss !== '0' && !!(V.key || $('#vw.on'));
+      if (want !== psOn) { psOn = want; Promise.resolve(want ? ps.enable() : ps.disable()).catch(() => { }) }
+    } catch (e) { }
+  }, 800);
+
+  window.xBio = async el => {
+    if (!el.checked) { localStorage.nxbio = '0'; toast('Biometric unlock turned off', 'inf'); return }
+    if (!localStorage.nxpin) { el.checked = false; return alertBox('Turn on App lock (PIN) first. The PIN stays as your backup.', 'PIN needed') }
+    const B = BIO(); if (!B) { el.checked = false; return alertBox('Biometric works only in the Android app.', 'Not available') }
+    try {
+      const r = await B.checkBiometry();
+      if (!r.isAvailable) { el.checked = false; return alertBox('No fingerprint or face is set up on this phone. Add one in Android Settings.', 'Not available') }
+      await B.authenticate({ reason: 'Confirm to turn on biometric unlock', cancelTitle: 'Cancel', androidTitle: 'Nexus Docs', androidSubtitle: 'Confirm your fingerprint or face' });
+      localStorage.nxbio = '1'; toast('Biometric unlock turned on');
+    } catch (e) { el.checked = false; toast('Could not verify biometrics', 'er') }
+  };
+  window.xSS = el => { localStorage.nxss = el.checked ? '1' : '0'; toast(el.checked ? 'Screenshots blocked in vault and viewer' : 'Screenshots allowed', 'inf') };
+
+  /* ================= 3) DESIGN ================= */
+  AC.insta = ['Instagram', '#dd2a7b', '#8134af', '#f58529', '#2a0a2a'];
+  const oldAC = applyAc;
+  applyAc = function () {
+    oldAC.apply(this, arguments);
+    const ig = curAc() == 'insta'; document.documentElement.toggleAttribute('data-ig', ig);
+    if (ig) document.documentElement.style.setProperty('--g', 'linear-gradient(45deg,#f9a03c,#ee2a7b 50%,#6228d7)');
+  };
+  const oldAP = applyPrefs;
+  applyPrefs = function () { oldAP.apply(this, arguments); document.documentElement.dataset.glass = UP.glass ? '1' : '' };
+  PRESETS.push(
+    ['Insta', { mode: 'light', pal: 'snow', rad: 'round', card: 'plain', den: 'cozy', font: 'clean', glass: 0 }, 'insta'],
+    ['Glass', { mode: 'dark', pal: 'snow', rad: 'round', card: 'plain', den: 'cozy', font: 'clean', glass: 1 }, 'indigo']
+  );
+  window.xGlass = el => { UP.glass = el.checked ? 1 : 0; pfSave(); applyPrefs(); toast(el.checked ? 'Glass cards on' : 'Glass cards off', 'inf') };
+
+  const gIcon = () => {
+    const h = new Date().getHours(), k = h < 5 || h >= 20 ? ['moon', 'var(--ac)'] : h < 12 ? ['sunrise', '#f59e0b'] : h < 17 ? ['sun', '#f59e0b'] : ['sunset', '#f97316'];
+    return `<span class="gi" style="color:${k[1]}">${I(k[0], 17)}</span>`;
+  };
+
+  /* ================= 4) FAMILY DATES ================= */
+  const evKey = () => 'nxev:' + ((S.user && S.user.email) || '');
+  const evGet = () => { try { return JSON.parse(localStorage.getItem(evKey()) || '[]') } catch (e) { return [] } };
+  const evPut = a => { try { localStorage.setItem(evKey(), JSON.stringify(a)) } catch (e) { toast('Could not save', 'er') } };
+  const evIc = t => t == 'Birthday' ? 'gift' : t == 'Anniversary' ? 'heart' : 'cal';
+  function evNext(e) {
+    const [y, m, d] = e.d.split('-').map(Number), t = T0(); let c = new Date(t.getFullYear(), m - 1, d);
+    if (c < t) c = new Date(t.getFullYear() + 1, m - 1, d);
+    return { days: Math.round((c - t) / 864e5), date: c, yrs: c.getFullYear() - y };
+  }
+  const evSub = (e, n) => e.t + (e.t == 'Birthday' && n.yrs > 0 ? ' · turns ' + n.yrs : e.t == 'Anniversary' && n.yrs > 0 ? ' · ' + n.yrs + ' years' : '');
+
+  window.famDates = async function () {
+    const form = `<hr class="hr"><b style="font-size:15px">Add a date</b><div style="margin-top:8px"><span class="lb">Name</span><input id="ev_n" placeholder="Amma, Raju, Wedding…" maxlength="40" autocomplete="off"><div class="two"><div><span class="lb">Type</span><select id="ev_t"><option>Birthday</option><option>Anniversary</option><option>Other</option></select></div><div><span class="lb">Date</span><input id="ev_d" type="date"></div></div><button class="btn full" data-add>${I('plus', 16)} Add</button></div>`;
+    const html = () => {
+      const L = evGet().map(e => ({ e, n: evNext(e) })).sort((a, b) => a.n.days - b.n.days);
+      return `<p class="t2" style="font-size:13px;margin-bottom:6px">Saved only on this phone. With Phone notifications on, you get a reminder at 9 AM on the day and the day before.</p>`
+        + (L.map(({ e, n }) => `<div class="vrow"><div class="ri">${I(evIc(e.t), 20)}</div><div class="rb"><b>${esc(e.n)}</b><small>${esc(evSub(e, n))} · ${fd(ymd(n.date))}</small></div><span class="bd ${n.days <= 7 ? 'wn' : 'ok'}">${whenTxt(n.days)}</span><button class="vib" data-evd="${e.i}" aria-label="Delete">${I('trash', 16)}</button></div>`).join('') || '<p class="mt" style="margin:10px 0">No dates yet. Add one below.</p>')
+        + form;
+    };
+    await modal({
+      title: 'Family dates', icon: 'gift', wide: 1, ok: 'Done', cancel: null, noFocus: 1, html: '<div id="evb">' + html() + '</div>',
+      onOpen: el => {
+        const box = el.querySelector('#evb'), re = () => { box.innerHTML = html() }, g = i => (box.querySelector('#' + i) || {}).value || '';
+        box.addEventListener('click', e => {
+          const b = e.target.closest('button'); if (!b) return;
+          if (b.dataset.evd) { evPut(evGet().filter(x => x.i != b.dataset.evd)); re(); schedLocal(); return }
+          if (b.dataset.add !== undefined) {
+            const n = g('ev_n').trim(), t = g('ev_t') || 'Birthday', d = g('ev_d');
+            if (!n) return toast('Enter a name', 'er'); if (!d) return toast('Pick the date', 'er');
+            const a = evGet(); a.push({ i: uid(), n: n.slice(0, 40), t, d }); evPut(a); re(); schedLocal(); toast('Date added');
+          }
+        });
+        box.addEventListener('keydown', e => { if (e.key == 'Enter' && e.target.tagName == 'INPUT') { e.preventDefault(); e.stopPropagation(); const a = box.querySelector('[data-add]'); a && a.click() } });
+      }
+    });
+    if (['home', 'me'].includes(S.tab)) go(S.tab, S.vid, 1);
+  };
+
+  /* ================= 5) VEHICLE SERVICE & FUEL TRACKER ================= */
+  const svGet = id => { let a = {}; try { a = (JSON.parse(localStorage.getItem('nxsv') || '{}'))[id] || {} } catch (e) { } return { svc: a.svc || [], fuel: a.fuel || [], im: a.im || 6, ik: a.ik || 5000 } };
+  const svPut = (id, v) => { try { const o = JSON.parse(localStorage.getItem('nxsv') || '{}'); o[id] = v; localStorage.setItem('nxsv', JSON.stringify(o)) } catch (e) { toast('Could not save', 'er') } };
+  function svSum(id) {
+    const v = svGet(id), last = v.svc.slice().sort((a, b) => b.d.localeCompare(a.d))[0];
+    const kms = [...v.svc, ...v.fuel].map(x => +x.km || 0).filter(Boolean), odo = kms.length ? Math.max(...kms) : 0;
+    let due = '', nk = 0;
+    if (last) { const t = pd(last.d); due = ymd(new Date(t.getFullYear(), t.getMonth() + v.im, t.getDate())); if (+last.km) nk = +last.km + v.ik }
+    const f = v.fuel.filter(x => +x.km > 0).sort((a, b) => a.km - b.km); let tk = 0, tl = 0;
+    for (let i = 1; i < f.length; i++) { const dk = f[i].km - f[i - 1].km; if (dk > 0 && f[i].l > 0) { tk += dk; tl += f[i].l } }
+    const spent = v.svc.reduce((a, x) => a + (+x.c || 0), 0) + v.fuel.reduce((a, x) => a + (+x.a || 0), 0);
+    return { v, last, odo, due, nk, days: due ? Math.round((pd(due) - T0()) / 864e5) : null, kleft: nk && odo ? nk - odo : null, kmpl: tl ? tk / tl : 0, spent };
+  }
+  const dueCls = s => {
+    if (s.days == null && s.kleft == null) return '';
+    const late = (s.days != null && s.days < 0) || (s.kleft != null && s.kleft <= 0);
+    const soon = (s.days != null && s.days <= 14) || (s.kleft != null && s.kleft <= 300);
+    return late ? 'er' : soon ? 'wn' : 'ok';
+  };
+  const dueTxt = s => {
+    const a = [];
+    if (s.days != null) a.push(s.days < 0 ? 'Overdue by ' + (-s.days) + ' day' + (s.days < -1 ? 's' : '') : s.days == 0 ? 'Due today' : 'Due in ' + s.days + ' days');
+    if (s.kleft != null) a.push(s.kleft <= 0 ? (-s.kleft) + ' km over' : num(s.kleft) + ' km left');
+    return a.join(' · ') || 'No service logged yet';
+  };
+
+  window.vehPick = async function () {
+    if (!S.vs.length) { toast('Add a vehicle first', 'inf'); return go('veh') }
+    if (S.vs.length == 1) return vehTrack(S.vs[0].id);
+    const k = await sheet('Choose vehicle', S.vs.map(v => ({ k: v.id, i: 'car', t: esc(v.number), s: esc(v.model || '') })));
+    if (k) vehTrack(k);
+  };
+
+  window.vehTrack = async function (id) {
+    const veh = S.vs.find(x => x.id == id); if (!veh) return;
+    let tab = 'svc';
+    const html = () => {
+      const s = svSum(id), v = s.v, today = ymd(new Date()), cls = dueCls(s);
+      const tiles = `<div class="ptiles sm" style="margin-bottom:12px"><div class="pt"><small>Next service</small><b style="color:var(--${cls == 'er' ? 'er' : cls == 'wn' ? 'wn' : 'tx'})">${s.due ? fd(s.due) : '–'}</b><em>${esc(dueTxt(s))}</em></div><div class="pt"><small>Odometer</small><b>${s.odo ? num(s.odo) : '–'}</b><em>${s.odo ? 'km' : 'Add a km reading'}</em></div><div class="pt"><small>Mileage</small><b>${s.kmpl ? s.kmpl.toFixed(1) : '–'}</b><em>${s.kmpl ? 'km per litre' : 'Needs 2 fuel entries with km'}</em></div><div class="pt"><small>Total spent</small><b>₹${num(Math.round(s.spent))}</b><em>Service + fuel</em></div></div>`;
+      const seg = `<div class="seg c2"><button data-t="svc" class="${tab == 'svc' ? 'on' : ''}">${I('tool', 16)} Service</button><button data-t="fuel" class="${tab == 'fuel' ? 'on' : ''}">${I('drop', 16)} Fuel</button></div>`;
+      let body;
+      if (tab == 'svc') {
+        const L = v.svc.slice().sort((a, b) => b.d.localeCompare(a.d)).map(x => `<div class="vrow"><div class="ri">${I('tool', 18)}</div><div class="rb"><b>${esc(x.n || 'Service')}</b><small>${fd(x.d)}${x.km ? ' · ' + num(x.km) + ' km' : ''}${x.c ? ' · ₹' + num(x.c) : ''}</small></div><button class="vib" data-del="svc:${x.i}" aria-label="Delete">${I('trash', 16)}</button></div>`).join('');
+        body = (L || '<p class="mt" style="margin:8px 0">No service logged yet.</p>')
+          + `<hr class="hr"><b style="font-size:15px">Add service</b><div style="margin-top:8px"><span class="lb">Date</span><input id="tk_d" type="date" value="${today}"><div class="two"><div><span class="lb">Odometer (km)</span><input id="tk_k" type="number" inputmode="numeric" min="0" placeholder="12500"></div><div><span class="lb">Cost (₹)</span><input id="tk_c" type="number" inputmode="decimal" min="0" placeholder="1800"></div></div><span class="lb">What was done</span><input id="tk_n" placeholder="Oil change, chain lube…" maxlength="60"><button class="btn full" data-add>${I('plus', 16)} Add service</button></div>`
+          + `<hr class="hr"><b style="font-size:15px">Remind me every</b><div class="two" style="margin-top:8px"><div><span class="lb">Months</span><input id="tk_im" type="number" min="1" max="36" value="${v.im}"></div><div><span class="lb">Kilometres</span><input id="tk_ik" type="number" min="100" step="100" value="${v.ik}"></div></div>`;
+      } else {
+        const L = v.fuel.slice().sort((a, b) => b.d.localeCompare(a.d)).map(x => `<div class="vrow"><div class="ri">${I('drop', 18)}</div><div class="rb"><b>${x.l} L${x.a ? ' · ₹' + num(x.a) : ''}</b><small>${fd(x.d)}${x.km ? ' · ' + num(x.km) + ' km' : ''}${x.a && x.l ? ' · ₹' + (x.a / x.l).toFixed(1) + '/L' : ''}</small></div><button class="vib" data-del="fuel:${x.i}" aria-label="Delete">${I('trash', 16)}</button></div>`).join('');
+        body = (L || '<p class="mt" style="margin:8px 0">No fuel entries yet.</p>')
+          + `<hr class="hr"><b style="font-size:15px">Add fuel</b><div style="margin-top:8px"><span class="lb">Date</span><input id="tk_d" type="date" value="${today}"><div class="two"><div><span class="lb">Litres</span><input id="tk_l" type="number" inputmode="decimal" min="0" step="0.01" placeholder="4.5"></div><div><span class="lb">Amount (₹)</span><input id="tk_a" type="number" inputmode="decimal" min="0" placeholder="450"></div></div><span class="lb">Odometer (km)</span><input id="tk_k" type="number" inputmode="numeric" min="0" placeholder="12500"><button class="btn full" data-add>${I('plus', 16)} Add fuel</button></div><p class="t2" style="font-size:12.5px;margin-top:8px">Fill the tank fully each time and enter the km. Mileage is worked out from the entries.</p>`;
+      }
+      return tiles + seg + '<div style="margin-top:10px">' + body + '</div>';
+    };
+    await modal({
+      title: esc(veh.number), icon: 'tool', wide: 1, ok: 'Done', cancel: null, noFocus: 1, html: '<div id="tkb">' + html() + '</div>',
+      onOpen: el => {
+        const box = el.querySelector('#tkb'), re = () => { box.innerHTML = html() };
+        box.addEventListener('click', e => {
+          const b = e.target.closest('button'); if (!b) return;
+          if (b.dataset.t) { tab = b.dataset.t; re(); return }
+          if (b.dataset.del) { const [k, i] = b.dataset.del.split(':'), v = svGet(id); v[k] = v[k].filter(x => x.i != i); svPut(id, v); re(); return }
+          if (b.dataset.add !== undefined) {
+            const g = i => (box.querySelector('#' + i) || {}).value || '', v = svGet(id);
+            if (tab == 'svc') {
+              if (!g('tk_d')) return toast('Pick the service date', 'er');
+              v.svc.push({ i: uid(), d: g('tk_d'), km: +g('tk_k') || 0, c: +g('tk_c') || 0, n: g('tk_n').trim().slice(0, 60) });
+            } else {
+              if (!g('tk_d') || !(+g('tk_l') > 0)) return toast('Enter the date and litres', 'er');
+              v.fuel.push({ i: uid(), d: g('tk_d'), l: +g('tk_l'), a: +g('tk_a') || 0, km: +g('tk_k') || 0 });
+            }
+            svPut(id, v); re(); toast(tab == 'svc' ? 'Service added' : 'Fuel entry added');
+          }
+        });
+        box.addEventListener('change', e => {
+          if (e.target.id == 'tk_im' || e.target.id == 'tk_ik') {
+            const v = svGet(id); v.im = Math.max(1, Math.min(36, +box.querySelector('#tk_im').value || 6)); v.ik = Math.max(100, +box.querySelector('#tk_ik').value || 5000);
+            svPut(id, v); re(); toast('Reminder interval saved', 'inf');
+          }
+        });
+        box.addEventListener('keydown', e => { if (e.key == 'Enter' && e.target.tagName == 'INPUT') { e.preventDefault(); e.stopPropagation(); const a = box.querySelector('[data-add]'); a && a.click() } });
+      }
+    });
+    if (['home', 'veh'].includes(S.tab)) go(S.tab, S.vid, 1);
+    schedLocal();
+  };
+
+  /* vehicle page: tracker card above the documents */
+  const oldVD = pVD;
+  pVD = function () {
+    let h = oldVD.apply(this, arguments);
+    try {
+      const v = S.vs.find(x => x.id == S.vid); if (!v) return h;
+      const s = svSum(v.id), c = dueCls(s);
+      const box = `<h3 class="h">Service &amp; fuel</h3><div class="dc" onclick="vehTrack('${v.id}')"><div class="ic ${c}">${I('tool', 22)}</div><div class="in"><b>Service &amp; fuel tracker</b><small>${s.odo ? num(s.odo) + ' km' : 'No km reading yet'}${s.kmpl ? ' · ' + s.kmpl.toFixed(1) + ' km/l' : ''}</small><span class="bd ${c}">${esc(dueTxt(s))}</span></div><span class="ch">${I('right', 22)}</span></div>`;
+      h = h.replace('<h3 class="h">Documents</h3>', () => box + '<h3 class="h">Documents</h3>');
+    } catch (e) { }
+    return h;
+  };
+
+  /* phone notifications for family dates + service due (extra to the document ones) */
+  const oldSched = schedLocal;
+  schedLocal = async function () {
+    await oldSched.apply(this, arguments);
+    try {
+      const P2 = LN(); if (!P2 || localStorage.nxln != '1' || !S.user) return;
+      const out = [], now = Date.now(); let id = 2000;
+      const add = (at, title, body) => { if (at.getTime() > now) out.push({ id: id++, title, body, schedule: { at, allowWhileIdle: true } }) };
+      evGet().forEach(e => {
+        const n = evNext(e), D = n.date;
+        add(new Date(D.getFullYear(), D.getMonth(), D.getDate() - 1, 9), e.t + ' tomorrow', e.n);
+        add(new Date(D.getFullYear(), D.getMonth(), D.getDate(), 9), e.t + ' today', e.n + (e.t == 'Birthday' && n.yrs > 0 ? ' turns ' + n.yrs : ''));
+      });
+      S.vs.forEach(v => {
+        const s = svSum(v.id); if (!s.due) return; const D = pd(s.due);
+        add(new Date(D.getFullYear(), D.getMonth(), D.getDate() - 3, 9), 'Service due soon', v.number + ' service is due in 3 days');
+        add(new Date(D.getFullYear(), D.getMonth(), D.getDate(), 9), 'Service due today', v.number + ' service is due today');
+      });
+      if (out.length) await P2.schedule({ notifications: out.slice(0, 40) });
+    } catch (e) { }
+  };
+
+  /* ================= 6) HOME: greeting icon + upcoming ================= */
+  const upcoming = () => {
+    const L = [];
+    evGet().forEach(e => { const n = evNext(e); if (n.days <= 30) L.push({ days: n.days, ic: evIc(e.t), t: e.n, sub: evSub(e, n), when: whenTxt(n.days), cls: n.days <= 3 ? 'wn' : 'ok', oc: 'famDates()' }) });
+    S.vs.forEach(v => { const s = svSum(v.id); if (s.last) { const c = dueCls(s); if (c == 'er' || c == 'wn') L.push({ days: s.days == null ? 0 : s.days, ic: 'tool', t: 'Service · ' + v.number, sub: v.model || 'Vehicle', when: dueTxt(s), cls: c, oc: `vehTrack('${v.id}')` }) } });
+    if (!L.length) return '';
+    L.sort((a, b) => a.days - b.days);
+    return `<div class="sh"><h3 class="h">Upcoming</h3><button class="lnk" onclick="famDates()">Family dates</button></div>`
+      + L.slice(0, 4).map(x => `<div class="dc" onclick="${x.oc}"><div class="ic ${x.cls == 'ok' ? '' : x.cls}">${I(x.ic, 22)}</div><div class="in"><b>${esc(x.t)}</b><small>${esc(x.sub)}</small><span class="bd ${x.cls}">${esc(x.when)}</span></div></div>`).join('');
+  };
+  const oldHome2 = pHome;
+  pHome = function () {
+    let h = oldHome2.apply(this, arguments);
+    try {
+      h = h.replace('<div class="gh"><small>', () => '<div class="gh"><small>' + gIcon());
+      const up = upcoming();
+      if (up) { const i = h.indexOf('<div class="sh">'); h = i > -1 ? h.slice(0, i) + up + h.slice(i) : h + up }
+    } catch (e) { }
+    return h;
+  };
+
+  /* ================= 7) PROFILE ================= */
+  $('#main').addEventListener('click', e => {
+    const b = e.target.closest('[data-xcp]'); if (!b) return; e.preventDefault(); vCopyTxt(b.dataset.xcp, b.dataset.lb || 'Text');
+  });
+  const profBlock = () => {
+    const u = S.user, D = S.docs, a = ageOf(u.dob), nb = u.dob ? evNext({ d: u.dob }) : null;
+    const okn = D.filter(d => !['er', 'wn'].includes(st(d.expiry)[0])).length, pc = D.length ? Math.round(okn / D.length * 100) : 0;
+    const nx = D.filter(d => nd(d.expiry) && st(d.expiry)[2] >= 0).sort((p, q) => st(p.expiry)[2] - st(q.expiry)[2])[0];
+    const tiles = `<div class="ptiles">
+      <button class="pt" onclick="prof()"><small>Blood group</small><b style="color:${u.blood ? 'var(--er)' : 'var(--t2)'}">${u.blood ? esc(u.blood) : '–'}</b><em>${u.blood ? 'Tap to edit' : 'Add in profile'}</em></button>
+      <button class="pt" onclick="prof()"><small>Age</small><b>${a == null ? '–' : a}</b><em>${a == null ? 'Add date of birth' : 'years'}</em></button>
+      <button class="pt" onclick="go('docs')"><small>Documents healthy</small><b>${D.length ? pc + '%' : '–'}</b><em>${okn} of ${D.length} valid</em></button>
+      <button class="pt" ${nx ? `onclick="view('${nx.id}')"` : ''}><small>Next expiry</small><b>${nx ? st(nx.expiry)[2] + 'd' : '–'}</b><em>${nx ? esc(nx.title) : 'Nothing upcoming'}</em></button></div>`;
+    const R = (ic, l, v, extra, acts) => `<div class="row"><div class="ri">${I(ic, 20)}</div><div class="rb"><small>${l}</small><b>${v || '<i>Not added</i>'}</b>${v ? extra || '' : ''}</div>${v ? (acts ? `<div class="vqa">${acts}</div>` : '') : `<button class="vib" onclick="prof()" aria-label="Add ${l}">${I('plus', 16)}</button>`}</div>`;
+    const cp = (t, l) => `<button class="vib" data-xcp="${esc(t)}" data-lb="${l}" aria-label="Copy ${l}">${I('copy', 16)}</button>`;
+    const call = n => `<a class="vib" href="tel:${esc(n)}" aria-label="Call">${I('phone', 16)}</a>`;
+    const ep = ((/\+?\d[\d\s\-]{6,}\d/.exec(u.emergency || '') || [''])[0]).replace(/[^\d+]/g, '');
+    return tiles + `<h3 class="h">Personal information</h3><div class="card grp">`
+      + R('mail', 'Email', esc(u.email), '', cp(u.email, 'Email'))
+      + R('phone', 'Phone', esc(u.phone), '', u.phone ? call(tel(u.phone)) + cp(u.phone, 'Phone') : '')
+      + R('cal', 'Date of birth', u.dob ? esc(fd(u.dob)) + (a != null ? ' <i>· ' + a + ' yrs</i>' : '') : '', nb ? `<small>${nb.days == 0 ? 'Happy birthday today' : 'Next birthday ' + whenTxt(nb.days)}</small>` : '', '')
+      + R('drop', 'Blood group', u.blood ? `<span class="bd er" style="font-size:13px">${esc(u.blood)}</span>` : '', '', u.blood ? cp(u.blood, 'Blood group') : '')
+      + R('pin', 'Address', esc(u.address), '', u.address ? `<a class="vib" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(u.address)}" target="_blank" rel="noopener" aria-label="Open map">${I('pin', 16)}</a>` + cp(u.address, 'Address') : '')
+      + R('sos', 'Emergency contact', esc(u.emergency), '', u.emergency ? (ep ? call(ep) : '') + cp(u.emergency, 'Emergency contact') : '')
+      + `</div><button class="btn sec full" style="margin-top:12px" onclick="emCard()">${I('sos', 18)} Open emergency card</button>`;
+  };
+  const moreRows = () => {
+    const sw = (ic, t, s, on, fn) => `<div class="row"><div class="ri">${I(ic, 20)}</div><div class="rb"><b>${t}</b><small>${s}</small></div><label class="sw"><input type="checkbox" ${on ? 'checked' : ''} onchange="${fn}(this)"><span></span></label></div>`;
+    const A = (ic, t, s, fn) => `<button class="row" onclick="${fn}"><div class="ri">${I(ic, 20)}</div><div class="rb"><b>${t}</b><small>${s}</small></div><span class="ch">${I('right', 18)}</span></button>`;
+    return `<h3 class="h">More features</h3><div class="card grp">`
+      + (NATIVE() ? sw('lock', 'Fingerprint / Face unlock', 'Use phone biometrics. PIN stays as backup', localStorage.nxbio == '1', 'xBio') : '')
+      + (NATIVE() ? sw('shield', 'Block screenshots', 'Vault and document viewer cannot be captured', localStorage.nxss !== '0', 'xSS') : '')
+      + sw('palette', 'Glass cards', 'Frosted blur look', !!UP.glass, 'xGlass')
+      + A('gift', 'Family dates', evGet().length + ' saved', 'famDates()')
+      + A('tool', 'Vehicle service &amp; fuel', S.vs.length ? S.vs.length + ' vehicle' + (S.vs.length > 1 ? 's' : '') : 'Add a vehicle first', 'vehPick()')
+      + `</div>`;
+  };
+  const oldMe2 = pMe;
+  pMe = function () {
+    let h = oldMe2.apply(this, arguments);
+    try {
+      h = h.replace(/<h3 class="h">Personal information<\/h3>[\s\S]*?(?=<h3 class="h">Appearance<\/h3>)/, () => profBlock());
+      h = h.replace('<h3 class="h">Security &amp; data</h3>', () => moreRows() + '<h3 class="h">Security &amp; data</h3>');
+    } catch (e) { }
+    return h;
+  };
+
+  /* ================= 8) TOOLS PAGE + HOME SHORTCUTS ================= */
+  const oldTools = pTools;
+  pTools = function () {
+    let h = oldTools.apply(this, arguments);
+    try {
+      const t = tile('gift', 'Family dates', 'Birthdays and anniversaries', 'famDates()') + tile('tool', 'Service tracker', 'Fuel and service log', 'vehPick()');
+      h = h.replace('<button class="tt " onclick="qaOpts()">', () => t + '<button class="tt " onclick="qaOpts()">');
+    } catch (e) { }
+    return h;
+  };
+  QA.fam = ['gift', 'Family dates', 'famDates()'];
+  QA.svc = ['tool', 'Service', 'vehPick()'];
+})();
 
     /* ---------- INIT ---------- */
     applyPrefs();
