@@ -5165,7 +5165,7 @@ html[data-glass="1"] .tabs{background:color-mix(in srgb,var(--dk) 72%,transparen
     async function choosePlan() {
       const i = PM.info; if (!i || !i.ready) return alertBox('Payments are not open yet. Please contact support.', 'Payments unavailable');
       let sel = i.plans[i.plans.length - 1].id;
-      const html = () => i.plans.map(p => `<button class="plc pick ${sel == p.id ? 'on' : ''}" data-id="${esc(p.id)}"><div class="plh"><b>${esc(p.name)}</b><span class="pr"><b>${inr(p.price)}</b><small> / ${p.days} days</small></span></div></button>`).join('') + '<p class="t2" style="font-size:12.5px;margin-top:6px">One-time payment. No automatic renewal.</p>';
+      const html = () => i.plans.map(p => `<button type="button" class="plc pls ${sel == p.id ? 'on' : ''}" data-id="${esc(p.id)}"><div class="plh"><b>${esc(p.name)}</b><span class="pr"><b>${inr(p.price)}</b><small> / ${p.days} days</small></span></div></button>`).join('') + '<p class="t2" style="font-size:12.5px;margin-top:6px">One-time payment. No automatic renewal.</p>';
       const r = await modal({ icon: 'crown', title: 'Choose a plan', ok: 'Continue', html: `<div id="cp">${html()}</div>`, noFocus: 1, onOpen: el => { el.querySelector('#cp').onclick = e => { const b = e.target.closest('[data-id]'); if (b) { sel = b.dataset.id; el.querySelector('#cp').innerHTML = html() } } } });
       if (r) startPay(sel)
     }
