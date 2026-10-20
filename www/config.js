@@ -8,7 +8,7 @@ window.NEXUS_API = 'https://script.google.com/macros/s/AKfycbyoUI9XTWBGhkSbduh6Z
    and read MONETIZATION.md ("Going live with ads"). With testMode:false and an empty ID, that ad type is simply not shown. */
 window.NEXUS_ADS = {
   enabled: true,
-  testMode: true,
+  testMode: false,
   appOpen: { android: '' },   // optional: a real "App open" ad unit. If empty, the interstitial unit below is used for the launch ad too
   interstitial: { android: 'ca-app-pub-3589063278418504/9373866014' },   // AdMob unit "NEXUS DOCS" (check Format = Interstitial in AdMob)
   banner: { android: 'ca-app-pub-3589063278418504/3319593550' },
