@@ -12,11 +12,11 @@ Everything here was added **on top of** your app. No existing screen, action or 
 | Local storage | Used only for session token, cached data, prefs. |
 | Base file | Built on your latest `Code.gs` (login limit, file-owner checks, UTC reminders) and your latest `index.html`. |
 
-**Integration approach:** new sheets + new actions in the same `Code.gs` (same URL, so no APK change for the backend); new screens in `index.html` using the existing modal/card/row styles; AdMob through the official community Capacitor plugin (the only supported way: AdMob's SDK cannot run in page JavaScript).
+**Integration approach:** new sheets + new actions in the same `Code.gs` (same URL, so no APK change for the backend); new screens in `index.html` using the existing modal/card/row styles; Start.io through a small native Capacitor plugin (the SDK cannot run in page JavaScript).
 
 ## 2. Files
 **Modified:** `backend/Code.gs`, `www/index.html`, `www/config.js`, `www/sw.js`, `package.json`, `scripts/prep_android.py`, `.github/workflows/main.yml`
-**New:** `www/qr.js` (offline QR generator), `android-ads.json`, `MONETIZATION.md`, `tests/backend/*` (mock + 124 checks), `tests/qr/*`, `tests/e2e.js`
+**New:** `www/qr.js` (offline QR generator), `android-startio.json`, `MONETIZATION.md`, `tests/backend/*` (mock + 124 checks), `tests/qr/*`, `tests/e2e.js`
 
 ## 3. How it works
 * **Server is the only authority.** The app asks `data`/`subStatus`/`payInfo`; the answer is kept in memory only. Local-storage edits, JS variable edits, URL parameters, screenshots and "success" messages cannot activate anything. Server time (`Date.now()` on Apps Script) is used for every start/expiry; the phone clock is never used (the app counts elapsed time with the monotonic clock and re-checks on resume).
@@ -45,24 +45,26 @@ Notes: a personal UPI ID works for P2P links/QR; merchants UPI IDs behave the sa
 ## 7. Admin dashboard
 Overview (users, active premium, pending/approved/rejected, expired subscriptions, verified revenue + last 30 days), Payments (filter, search, approve, reject with user-visible reason, internal notes, screenshot viewer, user history), Settings & prices, Audit log. Revenue counts **approved** payments only. Screenshots are stored in a private Drive folder "Nexus Payment Proofs" (never shared by link).
 
-## 8. Ads: how it works and honest limits
-* Native plugin `@capacitor-community/admob` (Capacitor 7 line) is added in `package.json`; `prep_android.py` adds the AdMob **app id** to the manifest from `android-ads.json` and sets minSdk 24.
-* App-open ad: after login/app start, at most once per `appOpenGapMin` (180 min), never on the first launch after install, never while a pop-up/viewer/lock/vault/loader is open, dropped if it loads too slowly. Banner: above the tab bar on Home, Documents, Vehicles, Tools, Calendar, Insights only; hidden on forms, pop-ups, viewer, vault, profile, premium and admin screens.
+## 8. Ads (Start.io): how it works and honest limits
+* Ads come from **Start.io** (portal.start.io). The Android SDK `com.startapp:inapp-sdk:5.+` is added to the APK by `scripts/prep_android.py`, together with a small native Capacitor plugin called `StartIo` (`StartIoPlugin.java`, written into the generated Android project). The Start.io **App ID** is in `android-startio.json` (currently `209780893`). Start.io has no ad-unit IDs, only the App ID.
+* The web UI (`www/index.html`) decides when an ad may appear; the plugin only loads and shows it. Start.io's own automatic *return ads* and *splash ads* are switched off in the manifest, so nothing can bypass Premium.
+* **Banner:** above the tab bar on Home, Documents, Vehicles, Tools, Calendar, Insights only; hidden on forms, pop-ups, viewer, vault, profile, premium and admin screens.
+* **Full-screen (interstitial):** once right after a fresh login, and when the app is opened while already logged in (at most once per `appOpenGapMin` minutes, never on the first launch after install, never while a pop-up/viewer/lock/vault/loader is open, dropped if it loads too slowly). Start.io has no separate "App Open" format, so the interstitial is used for both.
 * Never shown to a user whose active Premium was confirmed by the server, and never before the server has answered. A server kill-switch ("Ads enabled") is in admin settings. Load failures are swallowed.
-* **Test ads by default** (`testMode:true` in `www/config.js` uses Google's official test units). Do not click live ads.
-* **Not verified here:** I could not build an APK or run AdMob in this environment (no Android SDK/network to Maven or npm). The JS is feature-detected, so an APK without the plugin simply shows no ads. **Do not consider ads working until you test the built APK on a phone** (test banner at the bottom above the tabs; test app-open after reopening the app).
-* The pinned plugin range `^7.0.0` and its app-open methods (`loadAppOpen`/`showAppOpen`) are from the plugin's current docs; if CI fails on the plugin version or app-open is missing in that release, banner still works and app-open is skipped; adjust the version in `package.json`.
+* `www/config.js`: `testMode:true` shows Start.io **test ads** (use for the first build, never click live ads). Set `testMode:false` for real ads. `banner`, `interstitial`, `launchAd` can each be set to `false`. config.js is served live, so changing it needs no APK rebuild.
+* **Consent:** Start.io shows its own disclosure/consent box shortly after the app starts. Mention advertising and Start.io in your privacy policy.
+* **Not verified here:** the APK could not be built in the environment where this was written (no Android SDK / Maven access). **Do not consider ads working until you test the built APK on a phone** (test banner at the bottom above the tabs; test full-screen ad after login / reopening the app). The in-app diagnostic (Profile > tap the version line) lists the usual reasons why no ad is shown.
+* A newly added app can take time to be reviewed in the Start.io portal before real ads fill well; "Missing URL" in the portal is only the store link and can be added later.
 
 ### Distribution reality (important)
-* **AdMob and sideloaded APKs:** Google's help says an app that is not listed in a supported store gets only **limited ad serving** until approved, and approval requires a store listing. Your debug-signed APK shared directly will likely show few or no live ads. Test ads work.
-* **Google Play:** if you ever publish on Play, Play's payments policy generally requires Play Billing for digital subscriptions, and manual UPI for an in-app premium would not be allowed there (check the current policy and any India-specific alternatives). The manual UPI design is for direct distribution only.
-* **Compliant alternative while sideloaded:** Premium via UPI works; for ad income without a store listing there is no equivalent. Options: publish on Play (then use Play Billing + AdMob), or keep the app ad-free and sell Premium features instead.
+* **Google Play:** if you ever publish on Play, Play's payments policy generally requires Play Billing for digital subscriptions, and manual UPI for an in-app premium would not be allowed there (check the current policy). The manual UPI design is for direct distribution only.
+* Check Start.io's current publisher policies for apps distributed outside a store.
 
 ### Going live with ads (checklist)
-1. Create the app in AdMob (choose "unpublished" if not in a store), note the **app id**; create one App Open and one Banner ad unit.
-2. Put the app id in `android-ads.json`; put ad unit ids and `testMode:false` in `www/config.js`.
-3. Publish a privacy policy that mentions advertising/AdMob; complete AdMob consent (UMP) messages if you serve EEA/UK users (the code shows the form when required); add `app-ads.txt` on your developer site if required.
-4. Rebuild the APK, test on a real phone with your device registered as a test device, then switch to live.
+1. Start.io portal: app added (App ID in `android-startio.json`), later add the store URL and `app-ads.txt` if you have a developer website.
+2. Rebuild the APK (GitHub Actions) and test with `testMode:true` on a real phone.
+3. Publish a privacy policy that mentions advertising / Start.io.
+4. Set `testMode:false` in `www/config.js` and push (no rebuild needed).
 
 ## 9. Build the APK
 Commit to GitHub as before. Actions → "Build Android APK" runs automatically (package.json changed) or press Run workflow. Install from Releases. UI-only changes later deploy without a rebuild.
@@ -83,5 +85,5 @@ Run on any PC with Node: `node tests/backend/run.js` (124 checks of the real `Co
 - [ ] `setup()`, `installTrigger()`, new deployment version
 - [ ] Admin created, UPI ID, name, support contact set; send a ₹ test payment and approve it
 - [ ] `allowSelfApprove` OFF; only trusted people in `Admins`; sheet itself shared with nobody
-- [ ] Test ads checked on a phone; privacy policy ready; AdMob ids + `testMode:false` only after review
+- [ ] Test ads checked on a phone; privacy policy ready; `testMode:false` only after review
 - [ ] APK rebuilt from this version and distributed

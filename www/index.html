@@ -5088,7 +5088,7 @@ html[data-glass="1"] .tabs{background:color-mix(in srgb,var(--dk) 72%,transparen
       if (pend.length) st += `<div class="pyw" style="margin-top:12px">${I('clock', 18)}<span><b>Waiting for verification.</b> Premium turns on only after the payment is checked in our records, not when you submit.</span></div>`;
       const per = p => p.price / p.days, hi = Math.max(...i.plans.map(per));
       const pl = i.plans.map(p => { const sv = Math.round((1 - per(p) / hi) * 100); return `<div class="plc ${sv > 0 ? 'best' : ''}"><div class="plh"><div><b>${esc(p.name)}</b><small>${p.days} days &middot; no auto-renewal</small></div>${sv > 0 ? `<span class="bd ok">Save ${sv}%</span>` : ''}</div><div class="pr"><b>${inr(p.price)}</b><small> / ${p.days} days</small></div><ul class="pbl"><li>${I('check', 16)}No ads for ${p.days} days</li><li>${I('check', 16)}Ends by itself. You choose when to renew</li></ul><button class="btn sm" data-id="${esc(p.id)}" onclick="startPay(this.dataset.id)" ${i.ready ? '' : 'disabled'}>Choose ${esc(p.name.replace(/ premium$/i, ''))}</button></div>` }).join('');
-      const bn = `<h3 class="h">Why upgrade</h3><div class="card grp">${R('noads', 'No ads', 'Banner and app-open ads are switched off while Premium is active')}${R('shield', 'Same app, same data', 'Nothing is locked. Premium never touches your documents or vault')}${R('refresh', 'Paid time is never lost', 'Renew early and the new plan starts when the current one ends')}${R('check', 'No surprise charges', 'There is no automatic renewal. Each payment is a one-time UPI payment')}</div>`;
+      const bn = `<h3 class="h">Why upgrade</h3><div class="card grp">${R('noads', 'No ads', 'Banner and full-screen ads are switched off while Premium is active')}${R('shield', 'Same app, same data', 'Nothing is locked. Premium never touches your documents or vault')}${R('refresh', 'Paid time is never lost', 'Renew early and the new plan starts when the current one ends')}${R('check', 'No surprise charges', 'There is no automatic renewal. Each payment is a one-time UPI payment')}</div>`;
       const hist = i.payments.length ? `<h3 class="h">Payment history</h3><div class="card grp">${i.payments.map(p => { const b = stBd(p.status); return `<button class="row" data-id="${esc(p.id)}" onclick="payOpen(this.dataset.id)"><div class="ri">${I('file', 20)}</div><div class="rb"><b>${esc(p.planName)} &middot; ${inr(p.amount)}</b><small>${p.status == 'created' ? 'Not submitted. Tap to continue' : fdt(p.submitted || p.created)}${p.status == 'rejected' && p.reason ? ' &middot; ' + esc(p.reason) : ''}</small></div><span class="bd ${b[0]}">${b[1]}</span></button>` }).join('')}</div>` : '';
       const how = `<h3 class="h">How paying works</h3><div class="card"><ol class="pys"><li>Choose a plan. We show the exact amount and a payment reference.</li><li>Pay that amount with any UPI app (QR code, UPI link or UPI ID).</li><li>Enter the UPI transaction ID from your receipt and submit.</li><li>We check the payment in our UPI records. Premium turns on after that.</li></ol>${i.instructions ? `<p class="t2" style="font-size:13px;margin-top:8px">${esc(i.instructions)}</p>` : ''}<p class="t2" style="font-size:13px;margin-top:10px">Need help? Contact ${supportHtml(i)}.</p></div>`;
       return head + st + `<h3 class="h">Plans</h3>${pl}` + bn + hist + how
@@ -5270,29 +5270,22 @@ html[data-glass="1"] .tabs{background:color-mix(in srgb,var(--dk) 72%,transparen
     }
 
     /* ==========================================================================================
-       ADS: Google AdMob through a native Capacitor plugin. Web pages cannot run the AdMob SDK, so nothing
-       happens in a normal browser or in an APK that does not contain the plugin: the app just works without ads.
+       ADS: Start.io through a native Capacitor plugin named "StartIo" (written into the APK by scripts/prep_android.py).
+       Web pages cannot run the Start.io SDK, so nothing happens in a normal browser or in an APK that does not
+       contain the plugin: the app just works without ads.
        Rules: never for verified Premium users, never before the server confirmed the status, never on
-       sign-in / vault / forms / pop-ups / viewer, app-open at most once per gap, ad failures are ignored.
+       sign-in / vault / forms / pop-ups / viewer, launch ad at most once per gap, ad failures are ignored.
        ========================================================================================== */
     const ACF = () => window.NEXUS_ADS || {};
-    const TEST_ADS = { appOpen: 'ca-app-pub-3940256099942544/9257395921', interstitial: 'ca-app-pub-3940256099942544/1033173712', banner: 'ca-app-pub-3940256099942544/6300978111' }; /* Google's official test ad units */
     const ADS = { init: 0, dead: 0, banner: 0, hidden: 1, busy: 0, busyB: 0, fails: 0, p: null, hid: 0 };
-    const adPlug = () => { if (!NATIVE()) return null; if (!ADS.p) ADS.p = plug('AdMob'); return ADS.p };
+    const adPlug = () => { if (!NATIVE()) return null; if (!ADS.p) ADS.p = plug('StartIo'); return ADS.p };
     const adTest = () => ACF().testMode !== false;                                    /* test ads unless config.js explicitly says false */
-    const adId = k => adTest() ? TEST_ADS[k] : ((ACF()[k] || {}).android || '');
+    const adOn = k => ACF()[k] !== false;                                            /* per-format switch in config.js (banner / interstitial / launchAd) */
     const adsEligible = () => !!(ACF().enabled !== false && S.user && S.adsOn !== false && subKnown() && !isPremium() && adPlug() && !ADS.dead);
     async function adsInit() {
       const A = adPlug(); if (!A || ADS.dead) return false; if (ADS.init) return true;
-      try {
-        await A.initialize({ initializeForTesting: adTest() });
-        try { /* EU / UK consent form (Google UMP). It only appears where the law requires it. */
-          let ci = await A.requestConsentInfo();
-          if (ci && ci.status === 'REQUIRED' && ci.isConsentFormAvailable) { await A.showConsentForm(); ci = await A.requestConsentInfo() }
-          if (ci && ci.canRequestAds === false) { ADS.dead = 1; return false }
-        } catch (e) { }
-        ADS.init = 1; return true
-      } catch (e) { ADS.dead = 1; return false }
+      try { await A.initialize({ testMode: adTest() }); ADS.init = 1; return true } /* Start.io shows its own consent box where the law requires it */
+      catch (e) { ADS.dead = 1; return false }
     }
     const adScreens = ['home', 'docs', 'veh', 'tools', 'cal', 'ins'];
     const adQuiet = () => !!($('#shell.on') && !MS.length && !$('#vw.on') && !$('#lk.on') && !$('.ld.on') && !document.hidden && !S.selm);
@@ -5301,11 +5294,11 @@ html[data-glass="1"] .tabs{background:color-mix(in srgb,var(--dk) 72%,transparen
       try {
         if (ADS.banner) { await A.resumeBanner() }
         else {
-          if (!await adsInit()) return; const id = adId('banner'); if (!id) return;
+          if (!adOn('banner') || !await adsInit()) return;
           const t = $('#tabs'), sab = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--sab')) || 0;
           if (!ADS.lis) { ADS.lis = 1; try { A.addListener('bannerAdSizeChanged', i => { if (i && i.height) document.documentElement.style.setProperty('--adh', Math.round(i.height) + 'px') }) } catch (e) { } }
           document.documentElement.style.setProperty('--adh', '60px'); /* provisional, replaced by the real height from the plugin */
-          await A.showBanner({ adId: id, adSize: 'ADAPTIVE_BANNER', position: 'BOTTOM_CENTER', margin: Math.max(0, Math.round(sab)), isTesting: adTest() }); /* banner at the very bottom; the tab bar is lifted above it by CSS (--adh) */
+          await A.showBanner({ position: 'BOTTOM_CENTER', margin: Math.max(0, Math.round(sab)) }); /* banner at the very bottom; the tab bar is lifted above it by CSS (--adh) */
           ADS.banner = 1
         }
         ADS.hidden = 0; document.body.classList.add('adb'); ADS.fails = 0
@@ -5323,33 +5316,27 @@ html[data-glass="1"] .tabs{background:color-mix(in srgb,var(--dk) 72%,transparen
     }
     setInterval(adsSync, 400);
     const aoDue = () => { let t = 0; try { t = +localStorage.nxao || 0 } catch (e) { } const n = Date.now(); if (t > n) { t = n; try { localStorage.nxao = n } catch (e) { } } return n - t >= (ACF().appOpenGapMin || 180) * 6e4 };
-    /* Full-screen ad helper. Launch -> app-open unit first, post-login -> interstitial unit first.
-       Falls back to the other unit if one is not configured or fails (e.g. plugin build without app-open support). */
-    async function fullAd(prefer) {
-      const A = adPlug(); if (!A) return false;
-      const order = prefer == 'interstitial' ? ['interstitial', 'appOpen'] : ['appOpen', 'interstitial'];
-      for (const k of order) {
-        const id = adId(k); if (!id) continue; const t0 = Date.now();
-        try {
-          if (!await adsInit()) return false;
-          if (k == 'appOpen') await A.loadAppOpen({ adId: id, isTesting: adTest() }); else await A.prepareInterstitial({ adId: id, isTesting: adTest() });
-          if (Date.now() - t0 > 8000 || MS.length) return false; /* too slow, or the user already started something */
-          try { localStorage.nxao = Date.now() } catch (e) { }
-          if (k == 'appOpen') await A.showAppOpen(); else await A.showInterstitial();
-          return true
-        } catch (e) { /* try the next unit */ }
-      }
-      return false
+    /* Full-screen ad helper (Start.io interstitial). Used right after login and when the app is opened. */
+    async function fullAd() {
+      const A = adPlug(); if (!A || !adOn('interstitial')) return false; const t0 = Date.now();
+      try {
+        if (!await adsInit()) return false;
+        await A.prepareInterstitial();
+        if (Date.now() - t0 > 8000 || MS.length) return false; /* too slow, or the user already started something */
+        try { localStorage.nxao = Date.now() } catch (e) { }
+        await A.showInterstitial();
+        return true
+      } catch (e) { return false } /* no fill / not ready: ignore */
     }
     async function appOpenTry(prefer) { /* logged-in user: only after the server confirmed the status (not Premium) */
       if (ADS.busy || !adsEligible() || !adQuiet() || S.tab == 'vault') return;
       if (prefer != 'interstitial' && !aoDue()) return;
-      ADS.busy = 1; try { await fullAd(prefer || 'appOpen') } finally { ADS.busy = 0 }
+      ADS.busy = 1; try { await fullAd() } finally { ADS.busy = 0 }
     }
     function afterLoad() { /* called once the server answered after sign-in / app start */
       try { if (hasPendingLocal()) premLoad() } catch (e) { }
       if (S.justLogin) { S.justLogin = 0; setTimeout(() => appOpenTry('interstitial'), 1200) } /* ad right after a fresh login */
-      else setTimeout(() => appOpenTry('appOpen'), 1500) /* app opened while already logged in */
+      else if (adOn('launchAd')) setTimeout(() => appOpenTry('appOpen'), 1500) /* app opened while already logged in */
     }
     document.addEventListener('visibilitychange', () => {
       if (document.hidden) { ADS.hid = Date.now(); return }
@@ -5360,17 +5347,18 @@ html[data-glass="1"] .tabs{background:color-mix(in srgb,var(--dk) 72%,transparen
     function adsWhy() {
       const c = ACF(), r = [];
       if (!NATIVE()) r.push('This is not the Android app (browser or PWA). Ads only show in the APK');
-      else if (!adPlug()) r.push('AdMob plugin is missing from this APK. Rebuild the APK');
+      else if (!adPlug()) r.push('Start.io plugin is missing from this APK. Rebuild the APK');
       if (c.enabled === false) r.push('config.js has enabled:false');
       if (!S.user) r.push('Not logged in');
       if (S.adsOn === false) r.push('Admin > Settings > Ads enabled is OFF');
       if (!SUBREF) r.push('Server did not send serverTime. Redeploy backend/Code.gs');
       if (S.off) r.push('Offline mode');
       if (isPremium()) r.push('Premium is active, so no ads');
-      if (ADS.dead) r.push('AdMob failed to start or consent was refused. Restart the app');
-      if (!adTest() && !adId('banner')) r.push('testMode is false but the banner ad unit ID is empty in config.js');
+      if (ADS.dead) r.push('Start.io failed to start. Restart the app');
+      if (adTest()) r.push('testMode is true in config.js, so only Start.io TEST ads are shown. Set it to false for real ads');
+      if (!adOn('banner')) r.push('config.js has banner:false');
       if (!adScreens.includes(S.tab)) r.push('Banner is not shown on this screen: ' + S.tab);
-      if (!r.length) r.push('Everything is OK. New ad units can take up to 24 hours to start filling');
+      if (!r.length) r.push('Everything is OK. A new app can take a while to be approved and start filling in the Start.io portal');
       mdl('Ads check', 'info', '<ul style="padding-left:18px;line-height:1.7">' + r.map(x => '<li>' + esc(x) + '</li>').join('') + '</ul>')
     }
 
