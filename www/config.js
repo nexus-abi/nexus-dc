@@ -9,7 +9,7 @@ window.NEXUS_API = 'https://script.google.com/macros/s/AKfycbyoUI9XTWBGhkSbduh6Z
    banner / interstitial / launchAd: set any of them to false to switch that format off. */
 window.NEXUS_ADS = {
   enabled: true,
-  testMode: true,
+  testMode: false,
   banner: true,           // small banner above the bottom tabs
   interstitial: true,     // full-screen ad right after a fresh login
   launchAd: true,         // full-screen ad when the app is opened while already logged in
