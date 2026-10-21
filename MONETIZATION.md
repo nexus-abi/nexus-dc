@@ -87,3 +87,45 @@ Run on any PC with Node: `node tests/backend/run.js` (124 checks of the real `Co
 - [ ] `allowSelfApprove` OFF; only trusted people in `Admins`; sheet itself shared with nobody
 - [ ] Test ads checked on a phone; privacy policy ready; `testMode:false` only after review
 - [ ] APK rebuilt from this version and distributed
+
+
+## 13. Your own ads (v5): make ads inside the app with an image link or a video link
+You no longer depend only on Start.io. You can create ads yourself, with any image or video link, and the app shows them to free users as a **banner** (small strip above the tabs) and as a **full-screen ad** (after login / when the app is opened). They work in the Android app **and** in the browser/PWA. Premium users never see them (the server sends them an empty list).
+
+### Make an ad (no code, no APK rebuild)
+1. App > Profile > **Admin dashboard** > **Ads** tab > **New ad**.
+2. Fill in: name (only you see it), type **Image** or **Video**, the **link** (https://), optional website to open when tapped + button text, **where** to show (banner / full-screen / both), optional start and end date, "skip after" seconds, "show more often" (1 to 10).
+3. Tap **Preview banner** / **Preview full-screen** to check it before saving. Previews are never counted.
+4. **Save ad**. It is live at once for free users (they get the new list the next time the app opens or within about 10 minutes).
+In the list: tap an ad to **Edit, Preview, Pause/Resume, Delete**. You see views, taps and tap rate for each ad.
+
+### Which links work
+* **Image:** direct link to .jpg / .png / .webp / .gif, or a public Google Drive share link. Best banner size: wide strip about 640 x 100 (it is cropped to fill a 56 px strip). Best full-screen size: portrait 1080 x 1920 or any size (it is shown whole, never cut).
+* **Video:** direct .mp4 / .webm link, a YouTube link (watch, youtu.be, shorts) or a public Google Drive video link. Videos play **without sound** and loop in the banner. Keep videos short and small (a few MB) so they load fast. Drive videos cannot autoplay (the user taps play).
+* The link must be **https** and **public** (anyone with the link can open it). If a link does not load, the app silently skips that ad and falls back (to Start.io in Mixed mode). Admin > Profile > tap the version line > "Ads check" lists failed links.
+* You must have the right to use the image / video in your ad.
+
+### Which ads free users see (Admin > Settings)
+* **My own ads first, Start.io when I have no live ad** (default, "mixed")
+* **Only my own ads**
+* **Only Start.io ads**
+The existing "Ads enabled" switch is still the master kill-switch for everything.
+
+### Rules built in
+* Server is the authority: `adsFeed` returns nothing for Premium users, when ads are disabled, or in Start.io-only mode.
+* Banner only on Home, Documents, Vehicles, Tools, Calendar, Insights. Full-screen at most once per `appOpenGapMin` minutes, never while a pop-up / viewer / lock / vault / loader is open. Full-screen ads always show an **Ad** label and a **Close** button that unlocks after the "skip after" seconds (the phone back button works only after that). Banners have no hidden or fake close buttons.
+* Counting: a view is counted when the ad appears (banner: once per ad per 5 minutes per phone), a tap when the ad or its button is pressed. Per user at most 400 counted events a day. Counts are for your information, not billing-grade.
+* Every ad change (create, edit, pause, resume, delete) is written to the Audit log. Only admins with the `ads` permission (or `all`) can change ads. Links are checked on the server (https only, no quotes / spaces / scripts) and the app builds the image / video with safe DOM calls.
+* New sheet **Ads** is created automatically (run `setup()` once after pasting the new Code.gs, then Deploy > New version).
+
+### Deploy for v5
+1. Paste new `backend/Code.gs`, run `setup()`, Deploy > Manage deployments > New version.
+2. Commit `www/` (UI deploys by itself in about a minute). **No APK rebuild is needed** for own ads; the APK only needs a rebuild for Start.io changes.
+3. Make your first ad and check it on a free test account (a second email), then on your Premium/admin account (you should see nothing).
+
+### Tests
+`node tests/backend/run.js` (165 checks incl. 41 for ads). `NODE_PATH=$(npm root -g) CHROME=/path/to/chromium node tests/e2e-ads.js` (admin makes an ad in the real UI, free user sees banner + full-screen, taps counted, pause works, Premium sees nothing).
+### Honest limits
+* Not tested on a real phone here: please test the built app once (banner position above the Android gesture bar, video autoplay on your phone's WebView).
+* Selling ads to other advertisers and billing them is manual (you take their image/video link and create the ad). There is no advertiser self-service, payment or invoice system.
+* Play Store: if you ever publish there, check Google's ad policies (no deceptive ads, labelled, etc.) and the payments policy mentioned above.

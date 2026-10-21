@@ -173,4 +173,45 @@ good(call('deleteAccount', { token: T.a, password: 'password1' }), 'user A delet
 ok(ev("rows('Payments').filter(p=>p.status==='approved').length") === 2, 'approved payments remain in the sheet for audit / revenue');
 ok(call('adminOverview', { token: T.admin }).data.revenue === 68, 'revenue unchanged after account deletion');
 
+sec('13. Own ads (admin creates, users see, counters, Premium never sees)');
+relog(); unlock();
+const AD1 = { title: 'Diwali Sale', type: 'image', media: 'https://example.com/banner.jpg', click: 'https://example.com/shop', cta: 'Shop now', placement: 'both', skip: 5, weight: 2 };
+err(call('adminSaveAd', Object.assign({ token: T.b }, AD1)), /Not authorized/, 'normal user cannot create an ad');
+err(call('adsFeed', {}), /Session expired/, 'adsFeed needs a login');
+const a1 = call('adminSaveAd', Object.assign({ token: T.admin }, AD1)); good(a1, 'admin creates an image ad'); const ad1 = a1.data;
+ok(ad1.state === 'live' && ad1.views === 0 && ad1.clicks === 0, 'new ad is live with zero counters');
+err(call('adminSaveAd', { token: T.admin, title: 'X1', type: 'image', media: 'http://insecure.com/a.jpg' }), /https/, 'http:// media link refused');
+err(call('adminSaveAd', { token: T.admin, title: 'X2', type: 'image', media: 'javascript:alert(1)' }), /https/, 'javascript: link refused');
+err(call('adminSaveAd', { token: T.admin, title: 'X3', type: 'image', media: 'https://a.com/x.jpg', click: 'ftp://a.com' }), /Website link/, 'non-https website link refused');
+err(call('adminSaveAd', { token: T.admin, title: 'X4', type: 'gif', media: 'https://a.com/x.jpg' }), /image or video/, 'bad type refused');
+err(call('adminSaveAd', { token: T.admin, title: 'X5', type: 'image', media: 'https://a.com/x.jpg', start: 2000, end: 1000 }), /End date/, 'end before start refused');
+err(call('adminSaveAd', { token: T.admin, title: 'X6', type: 'image', media: 'https://a.com/x"onerror=1' }), /https/, 'quote characters in link refused');
+const a2 = call('adminSaveAd', { token: T.admin, title: 'Video promo', type: 'video', media: 'https://example.com/clip.mp4', placement: 'fullscreen', skip: 8 }); good(a2, 'admin creates a video ad (fullscreen only)');
+let feed = call('adsFeed', { token: T.b }).data;
+ok(feed.ads.length === 2 && feed.ads.every(a => a.views === undefined && a.clicks === undefined), 'free user receives both live ads without counters');
+good(call('adTrack', { token: T.b, adId: ad1.id, ev: 'view' }), 'view tracked'); call('adTrack', { token: T.b, adId: ad1.id, ev: 'view' }); good(call('adTrack', { token: T.b, adId: ad1.id, ev: 'click' }), 'click tracked');
+err(call('adTrack', { token: T.b, adId: ad1.id, ev: 'hack' }), /Invalid event/, 'unknown event refused');
+let lst = call('adminAds', { token: T.admin }).data, row1 = lst.ads.find(a => a.id === ad1.id);
+ok(row1.views === 2 && row1.clicks === 1 && row1.ctr === 50, 'admin sees views 2, clicks 1, CTR 50%');
+const sc = call('adminSaveAd', { token: T.admin, title: 'Future', type: 'image', media: 'https://a.com/f.png', start: clock.t + 2 * DAY }); ok(sc.data.state === 'scheduled', 'future ad is scheduled');
+ok(call('adsFeed', { token: T.b }).data.ads.length === 2, 'scheduled ad is not delivered yet');
+const pa = call('adminAdStatus', { token: T.admin, id: ad1.id, status: 'paused' }); ok(pa.data.state === 'paused', 'admin pauses an ad');
+ok(call('adsFeed', { token: T.b }).data.ads.length === 1, 'paused ad disappears from the feed');
+ok(call('adTrack', { token: T.b, adId: ad1.id, ev: 'view' }).data === 0 && call('adminAds', { token: T.admin }).data.ads.find(a => a.id === ad1.id).views === 2, 'paused ad no longer counts views');
+good(call('adminAdStatus', { token: T.admin, id: ad1.id, status: 'active' }), 'admin resumes the ad');
+const ed = call('adminSaveAd', { token: T.admin, id: ad1.id, title: 'Diwali Sale 2', cta: 'Open' }); ok(ed.ok === 1 && ed.data.title === 'Diwali Sale 2' && ed.data.media === AD1.media && ed.data.views === 2, 'edit changes only given fields and keeps counters');
+ok(call('adminOverview', { token: T.admin }).ok === 1 && call('adminSettings', { token: T.admin }).data.settings.adMode === 'mixed', 'ad source defaults to mixed');
+good(call('adminSetSettings', { token: T.admin, values: { adMode: 'own' } }), 'admin sets ad source = own'); err(call('adminSetSettings', { token: T.admin, values: { adMode: 'evil' } }), /Ad source/, 'bad ad source refused');
+ok(call('data', { token: T.b }).data.adMode === 'own' && call('subStatus', { token: T.b }).data.adMode === 'own', 'data() and subStatus() tell the app the ad source');
+good(call('adminSetSettings', { token: T.admin, values: { adMode: 'startio' } }), 'ad source = startio'); ok(call('adsFeed', { token: T.b }).data.ads.length === 0, 'startio only: no own ads are delivered');
+call('adminSetSettings', { token: T.admin, values: { adMode: 'mixed', adsEnabled: '0' } }); ok(call('adsFeed', { token: T.b }).data.ads.length === 0, 'kill-switch off: no own ads');
+call('adminSetSettings', { token: T.admin, values: { adsEnabled: '1' } }); ok(call('adsFeed', { token: T.b }).data.ads.length === 2, 'kill-switch on again: ads return');
+T.d = user('divya@example.com', 'Divya'); const pc = call('payCreate', { token: T.d, planId: 'weekly' }); good(pc, 'new user D starts a payment'); call('paySubmit', { token: T.d, paymentId: pc.data.id, utr: '556677889900' });
+good(call('adminApprove', { token: T.admin, paymentId: pc.data.id, verified: true, received: 19 }), 'user D buys Premium');
+ok(call('adsFeed', { token: T.d }).data.ads.length === 0, 'Premium user receives NO ads from the server');
+ok(call('adsFeed', { token: T.c }).data.ads.length === 2, 'free user still receives ads');
+good(call('adminDeleteAd', { token: T.admin, id: a2.data.id }), 'admin deletes an ad'); ok(call('adminAds', { token: T.admin }).data.ads.length === 2, 'deleted ad is gone from the list');
+let nAudit = call('adminAudit', { token: T.admin, limit: 300 }).data.map(x => x.action); ok(['ad_created', 'ad_changed', 'ad_paused', 'ad_resumed', 'ad_deleted'].every(a => nAudit.includes(a)), 'every ad change is in the audit log');
+for (let i = 0; i < 450; i++) { const r = call('adTrack', { token: T.c, adId: ad1.id, ev: 'view' }); if (r.ok === 0) { ok(i <= 400, 'ad tracking is rate limited per user per day (stopped at ' + i + ')'); break; } }
+
 console.log(`\n${pass} passed, ${fail} failed`); process.exit(fail ? 1 : 0);

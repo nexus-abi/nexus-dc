@@ -56,7 +56,7 @@ if 'com.startapp.sdk.APPLICATION_ID' not in t:
 bg = 'android/app/build.gradle'
 g = open(bg).read()
 if 'com.startapp:inapp-sdk' not in g:
-    g, n = re.subn(r'^dependencies\s*\{', lambda x: x.group(0) + "\n    implementation 'com.startapp:inapp-sdk:5.2.2'", g, count=1, flags=re.M)
+    g, n = re.subn(r'^dependencies\s*\{', lambda x: x.group(0) + "\n    implementation 'com.startapp:inapp-sdk:5.+'", g, count=1, flags=re.M)
     if n != 1:
         raise SystemExit('dependencies block not found in android/app/build.gradle')
     open(bg, 'w').write(g)

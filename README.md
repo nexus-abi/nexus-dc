@@ -1,3 +1,5 @@
+# Nexus Docs v5: your OWN ads (image / video link) made inside the app. See MONETIZATION.md section 13.
+
 # Nexus Docs v4: see MONETIZATION.md for Premium, UPI payments, admin dashboard and ads.
 
 # Nexus Docs v3.3 - Android APK (cloud build + live updates)

@@ -2686,6 +2686,28 @@ html, body { overflow-x: clip !important; }
     body.adb .tabs { margin-bottom: var(--adh, 60px) !important }
     body.adb .bulk { margin-bottom: var(--adh, 60px) !important }
 
+    /* ===== v5 own ads (banner + full-screen) ===== */
+    .seg.c5 { grid-template-columns: repeat(5, 1fr) } .seg.c5 button { font-size: 12px; padding-left: 2px; padding-right: 2px }
+    .oab { position: fixed; left: 0; right: 0; bottom: 0; height: var(--adh, 56px); padding-bottom: var(--sab); z-index: 40; background: #0b1020; display: none; overflow: hidden; cursor: pointer; box-shadow: 0 -8px 22px -12px #0007 }
+    body.oa .oab { display: block }
+    .oam { position: absolute; inset: 0; overflow: hidden }
+    .oab .oam { bottom: var(--sab) }
+    .oam img, .oam video { width: 100%; height: 100%; object-fit: cover; display: block; -webkit-user-drag: none; user-select: none }
+    .oab iframe { position: absolute; left: 0; top: 50%; width: 100%; height: 56.25vw; min-height: 100%; transform: translateY(-50%); border: 0; pointer-events: none }
+    .oat { position: absolute; top: 4px; right: 6px; z-index: 3; font-size: 10px; font-weight: 700; letter-spacing: .04em; color: #fff; background: #000a; padding: 1px 6px; border-radius: 5px; pointer-events: none }
+    .oaf { position: fixed; inset: 0; z-index: 300; background: #000; display: flex; flex-direction: column; opacity: 0; transition: opacity .2s }
+    .oaf.on { opacity: 1 }
+    .oaf .ofm { flex: 1; min-height: 0; position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden }
+    .oaf .ofm .oam { position: relative; inset: auto; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: #000 }
+    .oaf .ofm img, .oaf .ofm video { width: 100%; height: 100%; object-fit: contain }
+    .oaf .ofm iframe { width: 100%; aspect-ratio: 16/9; height: auto; border: 0 }
+    .oaf .oat { top: calc(12px + env(safe-area-inset-top, 0px)); left: 12px; right: auto; font-size: 11px }
+    .oaf .ofx { position: absolute; top: calc(8px + env(safe-area-inset-top, 0px)); right: 10px; z-index: 4; min-width: 44px; height: 38px; padding: 0 14px; border-radius: 19px; border: 0; background: #000b; color: #fff; font-weight: 700; font-size: 14px; display: inline-flex; align-items: center; gap: 6px }
+    .oaf .ofx[disabled] { opacity: .85 }
+    .oaf .ofb { padding: 12px 16px calc(14px + var(--sab)); display: flex; background: #000 } .oaf .ofb .btn { flex: 1 }
+    .oapv { position: relative; height: 56px; border-radius: 12px; overflow: hidden; background: #0b1020; margin-top: 10px }
+    .adth { width: 56px; height: 56px; border-radius: 12px; object-fit: cover; background: var(--bd); flex: none }
+
   
     /* ===== v4c RESPONSIVE FIX LAYER ===== */
     img, svg, video, canvas { max-width: 100%; height: auto }
@@ -2909,7 +2931,7 @@ html, body { overflow-x: clip !important; }
       const r = await busy(() => api('resend', { email: AE, purpose: p }));
       if (r) { toast('New code sent' + (r.left != null ? ` · ${r.left} resend(s) left today` : '')); cool() }
     }
-    function logout(q) { if (!q && S.token) api('logout').catch(() => { }); S.token = ''; localStorage.removeItem('tk'); localStorage.removeItem('nxc'); localStorage.removeItem('nxpin'); localStorage.removeItem('nxv'); try { V.key = null; V.items = []; V.raw = []; V.meta = null; V.ok = 0; V.err = ''; V.q = ''; V.cat = 'all'; V.fv = 0; V.fid = '' } catch (e) { } try { PM.info = null; PM.err = ''; AD.ov = AD.pays = AD.set = AD.aud = null; AD.init = 0; clearSub(); localStorage.removeItem('nxpay'); adsStop() } catch (e) { } S.user = null; const lk = $('#lk'); lk && lk.classList.remove('on'); authView('login') }
+    function logout(q) { if (!q && S.token) api('logout').catch(() => { }); S.token = ''; localStorage.removeItem('tk'); localStorage.removeItem('nxc'); localStorage.removeItem('nxpin'); localStorage.removeItem('nxv'); try { V.key = null; V.items = []; V.raw = []; V.meta = null; V.ok = 0; V.err = ''; V.q = ''; V.cat = 'all'; V.fv = 0; V.fid = '' } catch (e) { } try { PM.info = null; PM.err = ''; AD.ov = AD.pays = AD.set = AD.aud = AD.ads = null; AD.init = 0; clearSub(); localStorage.removeItem('nxpay'); adsStop() } catch (e) { } S.user = null; const lk = $('#lk'); lk && lk.classList.remove('on'); authView('login') }
 
     /* ---------- SHELL & NAV ---------- */
     const HL = { cal: 'tools', ins: 'tools' };
@@ -3049,7 +3071,7 @@ html, body { overflow-x: clip !important; }
   <h3 class="h">Preferences</h3><div class="card grp">${A('refresh', 'Check for updates', 'Version ' + verTxt(), 'checkUpdate(1)')}${standalone() ? '' : A('download', 'Install app', 'Add Nexus Docs to your home screen', 'installApp()')}
     <div class="row"><div class="ri">${I('bell', 20)}</div><div class="rb"><b>Email reminders</b><small>Sent by email every morning at 8 AM</small></div><label class="sw"><input type="checkbox" ${u.remind ? 'checked' : ''} onchange="tgRem(this)"><span></span></label></div>${notifRow()}${A('bell', 'Reminder timing', rdTxt(), 'remDays()')}<div class="row"><div class="ri">${I('lock', 20)}</div><div class="rb"><b>App lock</b><small>Ask for a 4-digit PIN when the app opens</small></div><label class="sw"><input type="checkbox" ${localStorage.nxpin ? 'checked' : ''} onchange="tgLock(this)"><span></span></label></div></div>
   <h3 class="h">Security &amp; data</h3><div class="card grp">${A('lock', 'Change password', 'Update your account password', 'chPw()') + A('devices', 'Logout from all devices', 'End every active session', 'logAll()') + A('download', 'Export my data', 'Download all your details as a file', 'exportData()') + A('table', 'Export documents (CSV)', 'Open in Excel or Google Sheets', 'exportCSV()') + A('cal', 'Add expiry dates to calendar', 'Download an .ics file for any calendar app', 'exportICS()')}</div>
-  ${S.isAdmin ? `<h3 class="h">Admin</h3><div class="card grp">${A('dash', 'Admin dashboard', 'Payments, prices, settings, audit log', "go('adm')")}</div>` : ''}
+  ${S.isAdmin ? `<h3 class="h">Admin</h3><div class="card grp">${A('dash', 'Admin dashboard', 'Payments, your own ads, prices, settings, audit log', "go('adm')")}</div>` : ''}
   <h3 class="h">Account</h3><div class="card grp">${A('logout', 'Logout', 'Sign out from this device', 'logout()') + A('trash', 'Delete account', 'Permanently remove all your data', 'delAcc()', 'rd')}</div><p class="t2" onclick="adsWhy()" style="text-align:center;font-size:12.5px;margin:18px 0 4px">Nexus Docs · UI version 1.0.1 · build ${verTxt()}</p>`}
 
     /* ---------- PROFILE ACTIONS ---------- */
@@ -3448,6 +3470,7 @@ if (!ne && $('#is').value && $('#ex').value && $('#ex').value < $('#is').value) 
     /* ---------- v3: hardware back button ---------- */
     let BX = 0;
     function handleBack() {
+      if (typeof OA !== 'undefined' && OA.full) { OA.close && OA.close(false); return true } /* own full-screen ad: back closes it only after the skip timer */
       if ($('#lk.on') || $('.ld.on')) return true;
       if (MS.length) { MS[MS.length - 1].close(null); return true }
       if ($('#vw.on')) { closeV(); return true }
@@ -5008,7 +5031,7 @@ html[data-glass="1"] .tabs{background:color-mix(in srgb,var(--dk) 72%,transparen
       noads: '<circle cx="12" cy="12" r="9"/><path d="M5.6 5.6l12.8 12.8"/>'
     });
     HL.prem = 'me'; HL.adm = 'me';
-    const PM = { info: null, busy: 0, err: '', t: 0 }, AD = { tab: 'ov', ov: null, pays: null, filt: 'pending', q: '', set: null, aud: null, err: '', ld: 0 };
+    const PM = { info: null, busy: 0, err: '', t: 0 }, AD = { tab: 'ov', ov: null, pays: null, filt: 'pending', q: '', set: null, aud: null, ads: null, err: '', ld: 0 };
     let SUBREF = null;
     const inr = n => '₹' + Number(n).toLocaleString('en-IN', { minimumFractionDigits: Number(n) % 1 ? 2 : 0, maximumFractionDigits: 2 });
     const fdt = ms => ms ? new Date(+ms).toLocaleString('en-IN', { day: 'numeric', month: 'short', year: 'numeric', hour: 'numeric', minute: '2-digit' }) : '–';
@@ -5016,7 +5039,7 @@ html[data-glass="1"] .tabs{background:color-mix(in srgb,var(--dk) 72%,transparen
     /* server time: the answer of the server plus the time that passed on this phone's monotonic clock since. The device date/time is never used. */
     const srvNow = () => SUBREF ? SUBREF.srv + (performance.now() - SUBREF.at) : 0;
     function setSub(d) {
-      S.sub = d.sub || { status: 'free' }; S.isAdmin = !!d.admin; S.adsOn = d.adsEnabled !== false;
+      S.sub = d.sub || { status: 'free' }; S.isAdmin = !!d.admin; S.adsOn = d.adsEnabled !== false; if (d.adMode) S.adMode = d.adMode;
       const t = +(d.serverTime || (d.sub && d.sub.serverTime)) || 0; SUBREF = t ? { srv: t, at: performance.now() } : null
     }
     function clearSub() { S.sub = null; S.isAdmin = false; SUBREF = null }
@@ -5174,16 +5197,17 @@ html[data-glass="1"] .tabs{background:color-mix(in srgb,var(--dk) 72%,transparen
     async function adLock() { try { await api('adminLock') } catch (e) { } toast('Admin tools locked', 'inf'); go('me') }
     function pAdm() {
       if (!S.isAdmin) return `<button class="bk" onclick="go('me')">${I('left', 18)} Profile</button>${empty('Not available', 'lock')}`;
-      const T = [['ov', 'Overview'], ['pay', 'Payments'], ['set', 'Settings'], ['aud', 'Audit']];
+      const T = [['ov', 'Overview'], ['pay', 'Payments'], ['ads', 'Ads'], ['set', 'Settings'], ['aud', 'Audit']];
       if (!AD.init) { AD.init = 1; setTimeout(() => adLoad(AD.tab), 0) }
-      return `<button class="bk" onclick="AD.init=0;go('me')">${I('left', 18)} Profile</button><div class="ph"><h2>Admin</h2><button class="btn sm sec" onclick="adLock()">${I('lock', 16)} Lock</button></div><div class="seg c4" style="margin-bottom:14px">${T.map(t => `<button class="${AD.tab == t[0] ? 'on' : ''}" onclick="adTab('${t[0]}')">${t[1]}</button>`).join('')}</div><div id="admb">${adBody()}</div>`
+      return `<button class="bk" onclick="AD.init=0;go('me')">${I('left', 18)} Profile</button><div class="ph"><h2>Admin</h2><button class="btn sm sec" onclick="adLock()">${I('lock', 16)} Lock</button></div><div class="seg c5" style="margin-bottom:14px">${T.map(t => `<button class="${AD.tab == t[0] ? 'on' : ''}" onclick="adTab('${t[0]}')">${t[1]}</button>`).join('')}</div><div id="admb">${adBody()}</div>`
     }
-    function adTab(t) { AD.tab = t; AD.err = ''; go('adm', null, 1); if (!AD[{ ov: 'ov', pay: 'pays', set: 'set', aud: 'aud' }[t]]) adLoad(t) }
+    function adTab(t) { AD.tab = t; AD.err = ''; go('adm', null, 1); if (!AD[{ ov: 'ov', pay: 'pays', ads: 'ads', set: 'set', aud: 'aud' }[t]]) adLoad(t) }
     async function adLoad(t) {
       if (AD.ld) return; AD.ld = 1; AD.err = ''; const b0 = $('#admb'); if (b0) b0.innerHTML = adBody();
       try {
         if (t == 'ov') AD.ov = await aapi('adminOverview');
         if (t == 'pay') AD.pays = await aapi('adminPayments', { status: AD.filt, q: AD.q });
+        if (t == 'ads') AD.ads = await aapi('adminAds');
         if (t == 'set') AD.set = await aapi('adminSettings');
         if (t == 'aud') AD.aud = await aapi('adminAudit', { limit: 100 })
       } catch (e) { AD.err = e.message }
@@ -5191,9 +5215,9 @@ html[data-glass="1"] .tabs{background:color-mix(in srgb,var(--dk) 72%,transparen
     }
     function adBody() {
       if (AD.err) return `<div class="card" style="text-align:center">${I('alert', 30)}<p class="t2" style="margin:10px 0 14px">${esc(AD.err)}</p><button class="btn" onclick="adLoad(AD.tab)">Try again</button></div>`;
-      const d = { ov: AD.ov, pay: AD.pays, set: AD.set, aud: AD.aud }[AD.tab];
+      const d = { ov: AD.ov, pay: AD.pays, ads: AD.ads, set: AD.set, aud: AD.aud }[AD.tab];
       if (!d) return '<div class="sk" style="height:90px;margin-bottom:10px"></div>'.repeat(3);
-      return { ov: adOv, pay: adPay, set: adSet, aud: adAud }[AD.tab](d)
+      return { ov: adOv, pay: adPay, ads: adAds, set: adSet, aud: adAud }[AD.tab](d)
     }
     function adOv(o) {
       const T = (b, l, c = '') => `<div class="st ${c}"><b>${b}</b><small>${l}</small></div>`;
@@ -5250,12 +5274,12 @@ html[data-glass="1"] .tabs{background:color-mix(in srgb,var(--dk) 72%,transparen
     function adSet(o) {
       const s = o.settings, T = (id, l, v, ph = '', ty = 'text') => `<label class="lb" for="${id}">${l}</label><div class="fld"><input id="${id}" type="${ty}" value="${esc(v)}" placeholder="${esc(ph)}" autocomplete="off"></div>`;
       const sw = (id, t, sub, on) => `<div class="tgl"><div class="rb"><b>${t}</b><small>${sub}</small></div><label class="sw"><input id="${id}" type="checkbox" ${on === '1' ? 'checked' : ''}><span></span></label></div>`;
-      return `<h3 class="h" style="margin-top:0">Payment settings</h3><div class="card">${T('st_upi', 'Merchant UPI ID', s.upiId, 'name@bank') + T('st_name', 'Merchant display name', s.merchantName) + T('st_qr', 'Custom QR image (optional)', s.qrImage, 'https://... or upi-qr.png')}<small class="t2" style="display:block;margin:-6px 0 12px">Leave the QR empty to let the app draw a QR with the exact amount and reference.</small><label class="lb" for="st_ins">Payment instructions shown to users</label><textarea id="st_ins" rows="4" maxlength="600" style="width:100%">${esc(s.instructions)}</textarea><div style="height:12px"></div>${T('st_se', 'Support email', s.supportEmail, 'help@example.com', 'email') + T('st_sp', 'Support phone', s.supportPhone, '+91...', 'tel')}${sw('st_ss', 'Require a payment screenshot', 'Users must attach one (it is still never proof by itself)', s.requireScreenshot) + sw('st_ad', 'Ads enabled', 'Switch off to hide ads for everyone', s.adsEnabled) + sw('st_sa', 'Allow admins to approve their own payments', 'Keep off in production. Useful only for testing', s.allowSelfApprove)}${T('st_ma', 'Maximum stacked Premium time (days)', s.maxAheadDays, '365', 'number')}<button class="btn full" onclick="adSaveSet()">Save settings</button></div>
+      return `<h3 class="h" style="margin-top:0">Payment settings</h3><div class="card">${T('st_upi', 'Merchant UPI ID', s.upiId, 'name@bank') + T('st_name', 'Merchant display name', s.merchantName) + T('st_qr', 'Custom QR image (optional)', s.qrImage, 'https://... or upi-qr.png')}<small class="t2" style="display:block;margin:-6px 0 12px">Leave the QR empty to let the app draw a QR with the exact amount and reference.</small><label class="lb" for="st_ins">Payment instructions shown to users</label><textarea id="st_ins" rows="4" maxlength="600" style="width:100%">${esc(s.instructions)}</textarea><div style="height:12px"></div>${T('st_se', 'Support email', s.supportEmail, 'help@example.com', 'email') + T('st_sp', 'Support phone', s.supportPhone, '+91...', 'tel')}${sw('st_ss', 'Require a payment screenshot', 'Users must attach one (it is still never proof by itself)', s.requireScreenshot) + sw('st_ad', 'Ads enabled', 'Switch off to hide ads for everyone', s.adsEnabled) + `<label class="lb" for="st_am">Which ads free users see</label><select id="st_am" style="width:100%;margin-bottom:12px">${[['mixed', 'My own ads first, Start.io when I have no live ad'], ['own', 'Only my own ads'], ['startio', 'Only Start.io ads']].map(o => `<option value="${o[0]}" ${(s.adMode || 'mixed') == o[0] ? 'selected' : ''}>${o[1]}</option>`).join('')}</select>` + sw('st_sa', 'Allow admins to approve their own payments', 'Keep off in production. Useful only for testing', s.allowSelfApprove)}${T('st_ma', 'Maximum stacked Premium time (days)', s.maxAheadDays, '365', 'number')}<button class="btn full" onclick="adSaveSet()">Save settings</button></div>
       <h3 class="h">Plans and prices (INR)</h3>${o.plans.map(p => `<div class="card" style="margin-bottom:10px"><b>${esc(p.name)}</b><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px"><div><label class="lb">Price (${'₹'})</label><div class="fld"><input id="pl_p_${esc(p.id)}" inputmode="decimal" value="${p.price}"></div></div><div><label class="lb">Days</label><div class="fld"><input id="pl_d_${esc(p.id)}" inputmode="numeric" value="${p.days}"></div></div></div>${sw('pl_a_' + esc(p.id), 'Available to buy', 'Switch off to hide this plan', p.active ? '1' : '0')}<button class="btn sm" data-id="${esc(p.id)}" onclick="adSavePlan(this.dataset.id)">Save ${esc(p.name)}</button><p class="t2" style="font-size:12px;margin-top:8px">Changing a price affects new payment requests only. Requests already created keep their price.</p></div>`).join('')}`
     }
     async function adSaveSet() {
       const g = id => $('#' + id), c = id => g(id).checked ? '1' : '0', old = AD.set.settings;
-      const v = { upiId: g('st_upi').value.trim(), merchantName: g('st_name').value.trim(), qrImage: g('st_qr').value.trim(), instructions: g('st_ins').value.trim(), supportEmail: g('st_se').value.trim(), supportPhone: g('st_sp').value.trim(), requireScreenshot: c('st_ss'), adsEnabled: c('st_ad'), allowSelfApprove: c('st_sa'), maxAheadDays: g('st_ma').value.trim() };
+      const v = { upiId: g('st_upi').value.trim(), merchantName: g('st_name').value.trim(), qrImage: g('st_qr').value.trim(), instructions: g('st_ins').value.trim(), supportEmail: g('st_se').value.trim(), supportPhone: g('st_sp').value.trim(), requireScreenshot: c('st_ss'), adsEnabled: c('st_ad'), adMode: g('st_am').value, allowSelfApprove: c('st_sa'), maxAheadDays: g('st_ma').value.trim() };
       if (v.upiId.toLowerCase() != (old.upiId || '').toLowerCase() && !await confirmBox({ title: 'Change the UPI ID?', text: 'Every NEW payment will go to <b>' + esc(v.upiId || '(none)') + '</b>. Check it carefully, a wrong UPI ID sends customers\' money to someone else.', ok: 'Yes, change it', icon: 'alert' })) return;
       const r = await busy(() => aapi('adminSetSettings', { values: v }), 'Saving…'); if (!r || r === true) return;
       AD.set.settings = r.settings; toast('Settings saved'); PM.info = null
@@ -5281,14 +5305,17 @@ html[data-glass="1"] .tabs{background:color-mix(in srgb,var(--dk) 72%,transparen
     const adPlug = () => { if (!NATIVE()) return null; if (!ADS.p) ADS.p = plug('StartIo'); return ADS.p };
     const adTest = () => ACF().testMode !== false;                                    /* test ads unless config.js explicitly says false */
     const adOn = k => ACF()[k] !== false;                                            /* per-format switch in config.js (banner / interstitial / launchAd) */
-    const adsEligible = () => !!(ACF().enabled !== false && S.user && S.adsOn !== false && subKnown() && !isPremium() && adPlug() && !ADS.dead);
+    const startMode = () => (S.adMode || 'mixed') != 'own';                          /* Start.io allowed by the admin's "ad source" setting */
+    const ownMode = () => (S.adMode || 'mixed') != 'startio';                        /* own ads allowed */
+    const adsEligible = () => !!(ACF().enabled !== false && S.user && S.adsOn !== false && subKnown() && !isPremium() && adPlug() && !ADS.dead && startMode());
+    const ownEligible = () => !!(ACF().enabled !== false && ACF().ownAds !== false && S.user && S.adsOn !== false && subKnown() && !isPremium() && ownMode());
     async function adsInit() {
       const A = adPlug(); if (!A || ADS.dead) return false; if (ADS.init) return true;
       try { await A.initialize({ testMode: adTest() }); ADS.init = 1; return true } /* Start.io shows its own consent box where the law requires it */
       catch (e) { ADS.dead = 1; return false }
     }
     const adScreens = ['home', 'docs', 'veh', 'tools', 'cal', 'ins'];
-    const adQuiet = () => !!($('#shell.on') && !MS.length && !$('#vw.on') && !$('#lk.on') && !$('.ld.on') && !document.hidden && !S.selm);
+    const adQuiet = () => !!($('#shell.on') && !OA.full && !MS.length && !$('#vw.on') && !$('#lk.on') && !$('.ld.on') && !document.hidden && !S.selm);
     async function bannerShow() {
       const A = adPlug(); if (!A || ADS.busyB) return; ADS.busyB = 1;
       try {
@@ -5309,16 +5336,31 @@ html[data-glass="1"] .tabs{background:color-mix(in srgb,var(--dk) 72%,transparen
       try { if (remove) { await A.removeBanner(); ADS.banner = 0 } else await A.hideBanner(); ADS.hidden = 1; document.body.classList.remove('adb') } catch (e) { } finally { ADS.busyB = 0 }
     }
     function adsSync() {
+      const quiet = adScreens.includes(S.tab) && !S.vid && adQuiet();
+      let own = null;
+      if (ownEligible()) { oaLoad(); if (adOn('banner')) own = oaPick('banner') }
+      if (own && quiet) oaBannerShow(); else oaBannerHide();            /* your own banner has priority over Start.io */
       if (!adPlug()) return;
-      if (!adsEligible()) { if (ADS.banner) bannerHide(true); return }
-      const ok = adScreens.includes(S.tab) && !S.vid && adQuiet();
-      if (ok && (!ADS.banner || ADS.hidden)) bannerShow(); else if (!ok && ADS.banner && !ADS.hidden) bannerHide(false)
+      const wait = ownEligible() && !OA.t;                               /* wait for the own-ad answer first, so Start.io does not flash and then switch */
+      if (!adsEligible() || own || wait) { if (ADS.banner) bannerHide(true); return }
+      if (quiet && (!ADS.banner || ADS.hidden)) bannerShow(); else if (!quiet && ADS.banner && !ADS.hidden) bannerHide(false)
     }
     setInterval(adsSync, 400);
     const aoDue = () => { let t = 0; try { t = +localStorage.nxao || 0 } catch (e) { } const n = Date.now(); if (t > n) { t = n; try { localStorage.nxao = n } catch (e) { } } return n - t >= (ACF().appOpenGapMin || 180) * 6e4 };
     /* Full-screen ad helper (Start.io interstitial). Used right after login and when the app is opened. */
     async function fullAd() {
-      const A = adPlug(); if (!A || !adOn('interstitial')) return false; const t0 = Date.now();
+      if (!adOn('interstitial')) return false;
+      if (ownEligible()) {
+        await oaLoad();
+        for (let i = 0; i < 3 && ownEligible(); i++) { /* if the chosen ad's file does not load it is marked bad and another live ad is tried */
+          const a = oaPick('fullscreen'); if (!a || !adQuiet()) break;
+          try { localStorage.nxao = Date.now() } catch (e) { } if (await oaFull(a)) return true
+        }
+      }
+      return startMode() ? nativeFull() : false
+    }
+    async function nativeFull() {
+      const A = adPlug(); if (!A || !adsEligible()) return false; const t0 = Date.now();
       try {
         if (!await adsInit()) return false;
         await A.prepareInterstitial();
@@ -5329,7 +5371,7 @@ html[data-glass="1"] .tabs{background:color-mix(in srgb,var(--dk) 72%,transparen
       } catch (e) { return false } /* no fill / not ready: ignore */
     }
     async function appOpenTry(prefer) { /* logged-in user: only after the server confirmed the status (not Premium) */
-      if (ADS.busy || !adsEligible() || !adQuiet() || S.tab == 'vault') return;
+      if (ADS.busy || !(ownEligible() || adsEligible()) || !adQuiet() || S.tab == 'vault') return;
       if (prefer != 'interstitial' && !aoDue()) return;
       ADS.busy = 1; try { await fullAd() } finally { ADS.busy = 0 }
     }
@@ -5342,11 +5384,13 @@ html[data-glass="1"] .tabs{background:color-mix(in srgb,var(--dk) 72%,transparen
       if (document.hidden) { ADS.hid = Date.now(); return }
       if (S.user && ADS.hid && Date.now() - ADS.hid > 3e5) subRefresh(true).then(() => setTimeout(appOpenTry, 600)); else subRefresh()
     });
-    function adsStop() { try { if (ADS.banner) bannerHide(true) } catch (e) { } }
+    function adsStop() { try { if (ADS.banner) bannerHide(true) } catch (e) { } try { OA.list = []; OA.t = 0; OA.bad = {}; oaBannerHide() } catch (e) { } }
 
     function adsWhy() {
       const c = ACF(), r = [];
-      if (!NATIVE()) r.push('This is not the Android app (browser or PWA). Ads only show in the APK');
+      r.push('Ad source (set by admin): ' + (S.adMode || 'mixed') + '. Own ads loaded: ' + OA.list.length + ' (banner ' + OA.list.filter(a => a.placement != 'fullscreen').length + ', full-screen ' + OA.list.filter(a => a.placement != 'banner').length + ')' + (OA.bad && Object.keys(OA.bad).length ? ', ' + Object.keys(OA.bad).length + ' failed to load (check the image / video link)' : ''));
+      if (c.ownAds === false) r.push('config.js has ownAds:false, so your own ads are off');
+      if (!NATIVE()) r.push('This is not the Android app (browser or PWA). Start.io ads only show in the APK; your own ads show everywhere');
       else if (!adPlug()) r.push('Start.io plugin is missing from this APK. Rebuild the APK');
       if (c.enabled === false) r.push('config.js has enabled:false');
       if (!S.user) r.push('Not logged in');
@@ -5360,6 +5404,160 @@ html[data-glass="1"] .tabs{background:color-mix(in srgb,var(--dk) 72%,transparen
       if (!adScreens.includes(S.tab)) r.push('Banner is not shown on this screen: ' + S.tab);
       if (!r.length) r.push('Everything is OK. A new app can take a while to be approved and start filling in the Start.io portal');
       mdl('Ads check', 'info', '<ul style="padding-left:18px;line-height:1.7">' + r.map(x => '<li>' + esc(x) + '</li>').join('') + '</ul>')
+    }
+
+
+    /* ==========================================================================================
+       OWN ADS (v5): ads made by the administrator in Admin > Ads (image link or video link).
+       The server decides who may see them (never Premium users) and counts views / taps.
+       Works in the Android app AND in the browser. Start.io is only used when the admin's
+       "Which ads free users see" is Start.io or Mixed with no live own ad.
+       ========================================================================================== */
+    const OA = { list: [], t: 0, ld: 0, bad: {}, seen: {}, full: 0, close: null, preview: 0 }, OAB = { ad: null, t: 0, on: 0, busy: 0 };
+    async function oaLoad(force) {
+      if (OA.ld || !ownEligible()) return; const n = Date.now();
+      if (!force && OA.t && n - OA.t < 6e5) return; OA.ld = 1;
+      try { const r = await api('adsFeed'); OA.list = Array.isArray(r.ads) ? r.ads : []; if (r.adMode) S.adMode = r.adMode; OA.t = Date.now() }
+      catch (e) { OA.t = Date.now() - 6e5 + 6e4 } /* offline / server error: try again in 1 minute, never block the app */
+      finally { OA.ld = 0 }
+    }
+    function oaPick(place, not) { /* weighted random choice among live ads for this place; ads whose file would not load are skipped */
+      const L = OA.list.filter(a => (a.placement == place || a.placement == 'both') && !OA.bad[a.id] && a.id != not), tot = L.reduce((t, a) => t + (+a.weight || 1), 0);
+      if (!L.length) return null; let r = Math.random() * tot; for (const a of L) { r -= (+a.weight || 1); if (r <= 0) return a } return L[0]
+    }
+    function oaSrc(ad) { /* turns the link the admin pasted into something a phone can play */
+      const u = String(ad.media || ''); let m;
+      if (ad.type == 'video') {
+        if (m = u.match(/(?:youtube\.com\/(?:watch\?(?:[^#]*&)?v=|shorts\/|embed\/|live\/)|youtu\.be\/)([\w-]{11})/)) return { k: 'yt', src: 'https://www.youtube.com/embed/' + m[1] + '?autoplay=1&mute=1&controls=0&playsinline=1&rel=0&modestbranding=1&loop=1&playlist=' + m[1] };
+        if (m = u.match(/drive\.google\.com\/file\/d\/([\w-]+)/)) return { k: 'drive', src: 'https://drive.google.com/file/d/' + m[1] + '/preview' };
+        return { k: 'video', src: u }
+      }
+      if (m = u.match(/drive\.google\.com\/(?:file\/d\/|open\?id=|uc\?(?:[^#]*&)?id=)([\w-]+)/)) return { k: 'img', src: 'https://drive.google.com/thumbnail?id=' + m[1] + '&sz=w1600' };
+      return { k: 'img', src: u }
+    }
+    function oaMedia(ad, mode) { /* returns { node, ready:Promise<boolean> }. Built with DOM calls (never innerHTML) so a link can not inject anything. */
+      const s = oaSrc(ad), box = document.createElement('div'); box.className = 'oam'; let el;
+      const ready = new Promise(res => {
+        if (!/^https:\/\/[^\s"'<>]+$/.test(s.src)) return res(false);
+        if (s.k == 'img') { el = new Image(); el.alt = ''; el.draggable = false; el.onload = () => res(true); el.onerror = () => res(false); el.referrerPolicy = 'no-referrer' }
+        else if (s.k == 'video') { el = document.createElement('video'); el.muted = true; el.defaultMuted = true; el.autoplay = true; el.loop = mode == 'b'; el.playsInline = true; el.setAttribute('playsinline', ''); el.preload = 'auto'; el.disablePictureInPicture = true; el.onloadeddata = () => { res(true); try { const p = el.play(); p && p.catch && p.catch(() => { }) } catch (e) { } }; el.onerror = () => res(false) }
+        else { el = document.createElement('iframe'); el.setAttribute('allow', 'autoplay; encrypted-media; picture-in-picture'); el.setAttribute('sandbox', 'allow-scripts allow-same-origin allow-presentation'); el.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin'); el.setAttribute('loading', 'eager'); if (s.k == 'yt') el.style.pointerEvents = 'none'; el.onload = () => res(true) }
+        el.src = s.src
+      });
+      box.appendChild(el); return { node: box, el, ready, kind: s.k }
+    }
+    const oaWait = (p, ms) => Promise.race([p, new Promise(r => setTimeout(() => r(false), ms))]);
+    function oaTrack(ad, ev) { if (OA.preview || !ad || !ad.id) return; try { api('adTrack', { adId: ad.id, ev }).catch(() => { }) } catch (e) { } }
+    function oaOpen(ad) { /* same way the Vault opens a saved website */
+      if (!ad || !/^https:\/\/[^\s"'<>]+$/.test(ad.click || '')) return; oaTrack(ad, 'click'); if (OA.preview) return;
+      const a = document.createElement('a'); a.href = ad.click; a.target = '_blank'; a.rel = 'noopener noreferrer'; document.body.appendChild(a); a.click(); a.remove()
+    }
+    /* ---- banner ---- */
+    function oaBannerHide() {
+      if (!OAB.on && !OAB.ad) return; OAB.on = 0; OAB.ad = null; const b = $('#oab'); if (b) b.innerHTML = '';
+      document.body.classList.remove('oa'); if (ADS.hidden || !ADS.banner) document.body.classList.remove('adb')
+    }
+    async function oaBannerShow() {
+      let box = $('#oab'); if (!box) { box = document.createElement('div'); box.id = 'oab'; box.className = 'oab'; box.onclick = () => OAB.ad && oaOpen(OAB.ad); document.body.appendChild(box) }
+      if (!OAB.on) { OAB.on = 1; document.documentElement.style.setProperty('--adh', 'calc(56px + var(--sab))'); document.body.classList.add('adb', 'oa') }
+      const n = Date.now(), cur = OAB.ad && OA.list.find(a => a.id == OAB.ad.id), rot = (ACF().bannerRotateSec || 12) * 1e3;
+      if (OAB.busy || (cur && (n - OAB.t < rot || OA.list.filter(a => a.placement != 'fullscreen').length < 2))) return;
+      const ad = oaPick('banner', cur && cur.id); if (!ad) return; OAB.busy = 1;
+      try {
+        const m = oaMedia(ad, 'b'), ok = await oaWait(m.ready, 6000);
+        if (!ok) { OA.bad[ad.id] = 1; return }
+        if (!OAB.on) return; /* hidden while loading */
+        box.innerHTML = ''; box.appendChild(m.node); const t = document.createElement('span'); t.className = 'oat'; t.textContent = 'Ad'; box.appendChild(t);
+        OAB.ad = ad; OAB.t = Date.now();
+        if (!OA.seen[ad.id] || Date.now() - OA.seen[ad.id] > 3e5) { OA.seen[ad.id] = Date.now(); oaTrack(ad, 'view') } /* one view per ad per 5 minutes */
+      } finally { OAB.busy = 0 }
+    }
+    /* ---- full-screen ---- */
+    async function oaFull(ad, opt = {}) { /* resolves true when it was shown (and closed), false when it could not be shown */
+      if (OA.full) return false; OA.preview = opt.preview ? 1 : 0;
+      const m = oaMedia(ad, 'f'), ok = await oaWait(m.ready, 6000);
+      if (!ok) { if (!opt.preview) OA.bad[ad.id] = 1; OA.preview = 0; return false }
+      if (!opt.preview && (!adQuiet() || OA.full)) { OA.preview = 0; return false } /* user already started something */
+      return new Promise(res => {
+        const ov = document.createElement('div'); ov.className = 'oaf'; ov.setAttribute('role', 'dialog'); ov.setAttribute('aria-label', 'Advertisement');
+        const fm = document.createElement('div'); fm.className = 'ofm'; fm.appendChild(m.node);
+        const tag = document.createElement('span'); tag.className = 'oat'; tag.textContent = 'Ad';
+        const x = document.createElement('button'); x.className = 'ofx'; x.type = 'button'; x.disabled = true;
+        ov.append(fm, tag, x);
+        let left = Math.max(0, parseInt(ad.skip, 10) || 0), tm = 0, closed = 0;
+        const label = () => { if (left > 0) { x.disabled = true; x.textContent = 'Skip in ' + left } else { x.disabled = false; x.innerHTML = 'Close ' + I('x', 16) } };
+        const close = force => { if (closed || (force === false && left > 0)) return; closed = 1; clearInterval(tm); OA.full = 0; OA.close = null; OA.preview = 0; ov.classList.remove('on'); setTimeout(() => ov.remove(), 200); res(true) };
+        if (ad.click) { const b = document.createElement('div'); b.className = 'ofb'; const bt = document.createElement('button'); bt.className = 'btn'; bt.type = 'button'; bt.textContent = ad.cta || 'Learn more'; bt.onclick = () => { oaOpen(ad); if (!opt.preview) close(true) }; b.appendChild(bt); ov.appendChild(b) }
+        x.onclick = () => close(true); OA.full = 1; OA.close = close; label();
+        if (m.kind == 'video') m.el.onended = () => { left = 0; label() };
+        tm = setInterval(() => { if (left > 0) left--; label() }, 1000);
+        document.body.appendChild(ov); requestAnimationFrame(() => ov.classList.add('on'));
+        oaTrack(ad, 'view')
+      })
+    }
+
+    /* ---- admin: Ads tab ---- */
+    const adGet = id => AD.ads && AD.ads.ads.find(x => x.id == id);
+    const AD_PL = { banner: 'Banner', fullscreen: 'Full-screen', both: 'Banner + full-screen' };
+    const adDateIn = ms => ms ? new Date(+ms + 19800000).toISOString().slice(0, 10) : '';           /* shown in Indian time */
+    const adDateMs = (v, end) => v ? Date.parse(v + (end ? 'T23:59:59+05:30' : 'T00:00:00+05:30')) : 0;
+    function adAds(o) {
+      const T = (b, l, c = '') => `<div class="st ${c}"><b>${b}</b><small>${l}</small></div>`, B = { live: ['ok', 'Live'], scheduled: ['wn', 'Scheduled'], ended: ['', 'Ended'], paused: ['', 'Paused'] };
+      const list = o.ads.map(a => { const b = B[a.state] || ['', a.state]; return `<button class="dc adp" data-id="${esc(a.id)}" onclick="adMenu(this.dataset.id)"><div class="in"><b>${esc(a.title)}</b><small>${a.type == 'video' ? 'Video' : 'Image'} &middot; ${AD_PL[a.placement] || ''} &middot; ${a.start ? fdd(a.start) : 'From now'} to ${a.end ? fdd(a.end) : 'no end date'}</small><small>${a.views} views &middot; ${a.clicks} taps &middot; ${a.ctr}% tap rate</small><span class="bd ${b[0]}">${b[1]}</span></div></button>` }).join('');
+      return `<div class="stats">${T(o.live, 'Live ads', o.live ? 'ok' : '') + T(o.views, 'Total views') + T(o.clicks, 'Total taps')}</div><div style="display:flex;gap:10px;margin:6px 0 12px"><button class="btn" style="flex:1" onclick="adEdit()">${I('plus', 18)} New ad</button><button class="btn sec" onclick="AD.ads=null;adLoad('ads')" aria-label="Refresh">${I('refresh', 18)}</button></div>${o.ads.length ? list : empty('No ads yet. Tap New ad to make your first one.', 'image')}<p class="t2" style="font-size:12.5px;margin-top:8px">Free users only: Premium users never see ads. A view is counted when the ad appears, a tap when someone presses the ad or its button. Choose which ads are used in Settings &gt; Which ads free users see.</p>`
+    }
+    async function adMenu(id) {
+      const a = adGet(id); if (!a) return;
+      const k = await sheet(esc(a.title), [{ k: 'ed', i: 'edit', t: 'Edit' }, { k: 'pv', i: 'eye', t: 'Preview full-screen' }, { k: 'st', i: 'clock', t: a.status == 'paused' ? 'Resume' : 'Pause', s: a.status == 'paused' ? 'Show this ad again' : 'Stop showing without deleting' }, { k: 'dl', i: 'trash', t: 'Delete', cls: 'dg' }]);
+      if (!k) return; ({ ed: () => adEdit(id), pv: () => oaFull(a, { preview: 1 }), st: () => adToggle(id), dl: () => adDel(id) })[k]()
+    }
+    async function adToggle(id) {
+      const a = adGet(id); if (!a) return;
+      const r = await busy(() => aapi('adminAdStatus', { id, status: a.status == 'paused' ? 'active' : 'paused' })); if (!r || r === true) return;
+      toast(r.status == 'paused' ? 'Ad paused' : 'Ad is live again', 'inf'); AD.ads = null; adLoad('ads'); oaLoad(true)
+    }
+    async function adDel(id) {
+      const a = adGet(id); if (!a || !await confirmBox({ title: 'Delete this ad?', text: '<b>' + esc(a.title) + '</b> and its view / tap counts will be removed. You can not undo this.', ok: 'Delete', danger: 1, icon: 'trash' })) return;
+      if (!await busy(() => aapi('adminDeleteAd', { id }), 'Deleting…')) return; toast('Ad deleted', 'inf'); AD.ads = null; adLoad('ads'); oaLoad(true)
+    }
+    function adDraft(el) {
+      const g = id => el.querySelector('#' + id), n = (g('ad_sk').value.trim() === '' ? 5 : parseInt(g('ad_sk').value, 10));
+      return { title: g('ad_t').value.trim(), type: g('ad_ty').value, media: g('ad_m').value.trim(), click: g('ad_c').value.trim(), cta: g('ad_b').value.trim() || 'Learn more', placement: g('ad_pl').value, start: adDateMs(g('ad_s').value, 0), end: adDateMs(g('ad_e').value, 1), skip: isFinite(n) ? Math.min(30, Math.max(0, n)) : 5, weight: Math.min(10, Math.max(1, parseInt(g('ad_w').value, 10) || 1)) }
+    }
+    async function adEdit(id) {
+      const a = id ? adGet(id) : null, v = a || { title: '', type: 'image', media: '', click: '', cta: 'Learn more', placement: 'both', start: 0, end: 0, skip: 5, weight: 1 };
+      const F = (i, l, val, ph = '', ty = 'text', ex = '') => `<label class="lb" for="${i}">${l}</label><div class="fld"><input id="${i}" type="${ty}" value="${esc(val)}" placeholder="${esc(ph)}" autocomplete="off" ${ex}></div>`;
+      const Sel = (i, l, o, cur) => `<label class="lb" for="${i}">${l}</label><select id="${i}" style="width:100%;margin-bottom:12px">${o.map(x => `<option value="${x[0]}" ${x[0] == cur ? 'selected' : ''}>${x[1]}</option>`).join('')}</select>`;
+      const r = await modal({
+        icon: 'image', title: a ? 'Edit ad' : 'New ad', ok: 'Save ad', sticky: 1, wide: 1, noFocus: 1,
+        html: F('ad_t', 'Ad name (only you see this)', v.title, 'Diwali sale', 'text', 'maxlength="60"')
+          + Sel('ad_ty', 'Type', [['image', 'Image'], ['video', 'Video']], v.type)
+          + F('ad_m', 'Image or video link (https://)', v.media, 'https://...')
+          + `<small class="t2" style="display:block;margin:-6px 0 12px;font-size:12.5px">Image: a direct link to .jpg / .png / .webp / .gif, or a public Google Drive link. Video: a direct .mp4 / .webm link, a YouTube link or a public Drive link. The link must stay public. Videos play without sound.</small>`
+          + F('ad_c', 'Website to open when tapped (optional)', v.click, 'https://...') + F('ad_b', 'Button text (full-screen ad)', v.cta, 'Learn more', 'text', 'maxlength="24"')
+          + Sel('ad_pl', 'Where to show', [['both', 'Banner + full-screen'], ['banner', 'Banner only (small strip above the tabs)'], ['fullscreen', 'Full-screen only']], v.placement)
+          + `<div class="two"><div>${F('ad_s', 'Start date', adDateIn(v.start), '', 'date')}</div><div>${F('ad_e', 'End date', adDateIn(v.end), '', 'date')}</div></div><small class="t2" style="display:block;margin:-6px 0 12px;font-size:12.5px">Leave dates empty to run from now with no end. Indian time.</small>`
+          + `<div class="two"><div>${F('ad_sk', 'Skip after (seconds)', v.skip, '5', 'number', 'min="0" max="30" inputmode="numeric"')}</div><div>${F('ad_w', 'Show more often (1-10)', v.weight, '1', 'number', 'min="1" max="10" inputmode="numeric"')}</div></div>`
+          + `<div style="display:flex;gap:8px"><button class="btn sec sm" type="button" data-pv="b" style="flex:1">Preview banner</button><button class="btn sec sm" type="button" data-pv="f" style="flex:1">Preview full-screen</button></div><div id="ad_pv"></div>`,
+        onOpen: el => el.querySelectorAll('[data-pv]').forEach(b => b.onclick = async () => {
+          const d = adDraft(el), bx = el.querySelector('#ad_pv'), e = el.querySelector('.me'); e.classList.remove('on');
+          if (!/^https:\/\/[^\s"'<>]{4,}$/.test(d.media)) { e.textContent = 'Paste an https:// image or video link first'; e.classList.add('on'); return }
+          if (b.dataset.pv == 'f') { if (!await oaFull(d, { preview: 1 })) { e.textContent = 'This link did not load. Check that it is public and is really an ' + d.type; e.classList.add('on') } return }
+          const m = oaMedia(d, 'b'); bx.innerHTML = '<div class="oapv"></div>'; const pv = bx.firstChild; pv.appendChild(m.node); const t = document.createElement('span'); t.className = 'oat'; t.textContent = 'Ad'; pv.appendChild(t);
+          if (!await oaWait(m.ready, 6000)) { bx.innerHTML = ''; e.textContent = 'This link did not load. Check that it is public and is really an ' + d.type; e.classList.add('on') }
+        }),
+        pre: el => {
+          const d = adDraft(el);
+          if (d.title.length < 2) return fail(el, 'Give the ad a short name');
+          if (!/^https:\/\/[^\s"'<>\\]{4,480}$/.test(d.media)) return fail(el, 'Image / video link must start with https://');
+          if (d.click && !/^https:\/\/[^\s"'<>\\]{4,480}$/.test(d.click)) return fail(el, 'Website link must start with https://');
+          if (d.start && d.end && d.end <= d.start) return fail(el, 'End date must be after the start date');
+          return d
+        }
+      });
+      if (!r || r === true) return;
+      const res = await busy(() => aapi('adminSaveAd', Object.assign({}, r, a ? { id: a.id } : {})), 'Saving…'); if (!res || res === true) return;
+      toast('Ad saved'); AD.ads = null; adLoad('ads'); oaLoad(true)
     }
 
     /* ---------- INIT ---------- */

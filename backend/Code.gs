@@ -17,7 +17,9 @@ const H = {
   Payments: ['id', 'userId', 'planId', 'planName', 'amount', 'days', 'ref', 'utr', 'status', 'created', 'submitted', 'verified', 'adminId', 'reason', 'note', 'proof', 'received', 'subId'],
   Subscriptions: ['id', 'userId', 'planId', 'planName', 'start', 'expiry', 'status', 'paymentId', 'created'],
   Admins: ['id', 'userId', 'email', 'perms', 'added'],
-  Audit: ['id', 'at', 'action', 'adminId', 'target', 'detail']
+  Audit: ['id', 'at', 'action', 'adminId', 'target', 'detail'],
+  /* ---- v5 own ads: the administrator creates ads in the app (Admin > Ads). Each row is one ad. ---- */
+  Ads: ['id', 'title', 'type', 'media', 'click', 'cta', 'placement', 'status', 'start', 'end', 'skip', 'weight', 'views', 'clicks', 'created', 'updated'] // type: image|video, placement: banner|fullscreen|both, status: active|paused, start/end: epoch ms (0 = no limit)
 };
 
 function setup() { // RUN ONCE (and again after every update): creates/upgrades sheets + asks permissions
@@ -203,7 +205,7 @@ const A = {
     const u = auth(d), now = Date.now();
     return {
       user: pub(u),
-      sub: userSub(u.id, now), admin: isAdmin(u.id), adsEnabled: settings().adsEnabled === '1', serverTime: now, // v4: the ONLY trusted source of premium status
+      sub: userSub(u.id, now), admin: isAdmin(u.id), adsEnabled: settings().adsEnabled === '1', adMode: settings().adMode, serverTime: now, // v4: the ONLY trusted source of premium status
       vehicles: rows('Vehicles').filter(r => r.userId === u.id).map(v => ({ id: v.id, number: v.number, owner: v.owner, phone: v.phone, photo: v.photo, model: v.model })),
       docs: rows('Documents').filter(r => r.userId === u.id).map(r => ({ id: r.id, kind: r.kind, vehicleId: r.vehicleId, title: r.title, number: r.number, issue: r.issue, expiry: r.expiry, notes: r.notes, holder: r.holder || '', fav: r.fav === '1', files: files(r) }))
     };
@@ -399,7 +401,8 @@ const SET_DEFAULTS = {
   upiId: '', // EMPTY ON PURPOSE: payments stay switched off until the administrator enters the real merchant UPI ID
   merchantName: 'Nexus Docs', qrImage: '',
   instructions: 'Pay the exact amount shown, using any UPI app. Write the payment reference in the payment note. Then enter the UPI transaction ID (UTR) from your payment receipt and submit it. Premium switches on only after we check the payment in our records, usually within a few hours.',
-  supportEmail: '', supportPhone: '', requireScreenshot: '0', maxAheadDays: '365', adsEnabled: '1', allowSelfApprove: '0'
+  supportEmail: '', supportPhone: '', requireScreenshot: '0', maxAheadDays: '365', adsEnabled: '1', allowSelfApprove: '0',
+  adMode: 'mixed' // which ads the app shows: own (only your own ads), startio (only Start.io), mixed (your own ad first, Start.io when you have no live ad)
 };
 const SET_RULES = { // every admin-editable setting is validated here, on the server
   upiId: v => { v = cl(v, 100).toLowerCase(); if (v && !/^[a-z0-9._-]{2,64}@[a-z][a-z0-9]{1,31}$/.test(v)) throw 'Enter a valid UPI ID, for example name@bank'; return v; },
@@ -410,6 +413,7 @@ const SET_RULES = { // every admin-editable setting is validated here, on the se
   supportPhone: v => { v = cl(v, 20); if (v && !/^[+\d][\d ()-]{5,19}$/.test(v)) throw 'Enter a valid support phone number'; return v; },
   requireScreenshot: v => (String(v) === '1' || v === true ? '1' : '0'),
   adsEnabled: v => (String(v) === '1' || v === true ? '1' : '0'),
+  adMode: v => { v = String(v || ''); if (['mixed', 'own', 'startio'].indexOf(v) < 0) throw 'Ad source must be own, startio or mixed'; return v; },
   allowSelfApprove: v => (String(v) === '1' || v === true ? '1' : '0'),
   maxAheadDays: v => { const n = parseInt(v, 10); if (!(n >= 30 && n <= 1000)) throw 'Maximum stacked Premium time must be between 30 and 1000 days'; return String(n); }
 };
@@ -493,16 +497,39 @@ function adminPayView(p, users, admins) {
   return Object.assign(payView(p), { userId: p.userId, userName: u.name || '(deleted account)', userEmail: u.email || '', userPhone: u.phone || '', adminId: p.adminId || '', adminEmail: a.email || '', note: p.note || '', received: p.received || '', subId: p.subId || '' });
 }
 
+/* ---------- v5 own ads (server is the authority: Premium users and the kill-switch get an empty list) ---------- */
+const AD_MAX = 60, AD_URL = /^https:\/\/[^\s"'<>\\]{4,480}$/;
+const adState = (a, now) => a.status !== 'active' ? 'paused' : (+a.end > 0 && +a.end <= now) ? 'ended' : (+a.start > now) ? 'scheduled' : 'live';
+const adView = a => ({ id: a.id, title: a.title, type: a.type, media: a.media, click: a.click, cta: a.cta, placement: a.placement, skip: +a.skip || 5, weight: +a.weight || 1 }); // what the app receives (no counters)
+const adAdmin = (a, now) => Object.assign(adView(a), { status: a.status, state: adState(a, now), start: +a.start || 0, end: +a.end || 0, views: +a.views || 0, clicks: +a.clicks || 0, ctr: (+a.views > 0 ? Math.round(1000 * (+a.clicks || 0) / +a.views) / 10 : 0), created: +a.created || 0 });
+function adClean(d, cur) { // validates an ad submitted by an administrator; returns the columns to store
+  const o = {}, has = k => d[k] !== undefined;
+  if (!cur || has('title')) { o.title = cl(d.title, 60); if (o.title.length < 2) throw 'Give the ad a short name (2 to 60 letters)'; }
+  if (!cur || has('type')) { o.type = String(d.type || 'image'); if (o.type !== 'image' && o.type !== 'video') throw 'Ad type must be image or video'; }
+  if (!cur || has('media')) { o.media = cl(d.media, 500); if (!AD_URL.test(o.media)) throw 'Image / video link must start with https:// (no spaces)'; }
+  if (!cur || has('click')) { o.click = cl(d.click, 500); if (o.click && !AD_URL.test(o.click)) throw 'Website link must start with https://'; }
+  if (!cur || has('cta')) { o.cta = cl(d.cta, 24) || 'Learn more'; }
+  if (!cur || has('placement')) { o.placement = String(d.placement || 'both'); if (['banner', 'fullscreen', 'both'].indexOf(o.placement) < 0) throw 'Placement must be banner, fullscreen or both'; }
+  if (!cur || has('status')) { o.status = d.status === 'paused' ? 'paused' : 'active'; }
+  if (!cur || has('start')) { o.start = Math.max(0, +d.start || 0); }
+  if (!cur || has('end')) { o.end = Math.max(0, +d.end || 0); }
+  const st = o.start !== undefined ? o.start : (+(cur || {}).start || 0), en = o.end !== undefined ? o.end : (+(cur || {}).end || 0);
+  if (st > 0 && en > 0 && en <= st) throw 'End date must be after the start date';
+  if (!cur || has('skip')) { const n = parseInt(d.skip, 10); o.skip = String(isFinite(n) ? Math.min(30, Math.max(0, n)) : 5); }
+  if (!cur || has('weight')) { const n = parseInt(d.weight, 10); o.weight = String(isFinite(n) ? Math.min(10, Math.max(1, n)) : 1); }
+  return o;
+}
+
 const P = {
   subStatus(d) { // tiny re-check used when the app comes back to the foreground
     const u = auth(d), now = Date.now();
-    return { sub: userSub(u.id, now), admin: isAdmin(u.id), adsEnabled: settings().adsEnabled === '1', serverTime: now };
+    return { sub: userSub(u.id, now), admin: isAdmin(u.id), adsEnabled: settings().adsEnabled === '1', adMode: settings().adMode, serverTime: now };
   },
   /* ---------- user: plans, payment instructions, my payments ---------- */
   payInfo(d) {
     const u = auth(d), now = Date.now(); settleSubs(now);
     const s = settings(), mine = rows('Payments').filter(p => p.userId === u.id && p.status !== 'cancelled' && !(p.status === 'created' && now - +p.created > DRAFT_MS)).sort((a, b) => +b.created - +a.created);
-    return { ready: !!s.upiId, upiId: s.upiId, merchantName: s.merchantName, qrImage: s.qrImage, instructions: s.instructions, supportEmail: s.supportEmail, supportPhone: s.supportPhone, requireScreenshot: s.requireScreenshot === '1', adsEnabled: s.adsEnabled === '1', plans: plans().filter(p => p.active), sub: userSub(u.id, now), payments: mine.slice(0, 30).map(payView), serverTime: now };
+    return { ready: !!s.upiId, upiId: s.upiId, merchantName: s.merchantName, qrImage: s.qrImage, instructions: s.instructions, supportEmail: s.supportEmail, supportPhone: s.supportPhone, requireScreenshot: s.requireScreenshot === '1', adsEnabled: s.adsEnabled === '1', adMode: s.adMode, plans: plans().filter(p => p.active), sub: userSub(u.id, now), payments: mine.slice(0, 30).map(payView), serverTime: now };
   },
   payCreate(d) { // step 1: choose a plan. Creates (or refreshes) ONE unsubmitted request that carries the unique reference and a price snapshot
     const u = auth(d), now = Date.now(), s = settings();
@@ -543,6 +570,20 @@ const P = {
     if (!p) throw 'Payment request not found';
     if (p.status !== 'created') throw 'Only a request that has not been submitted can be cancelled';
     upd('Payments', p._row, { status: 'cancelled' }); return 1;
+  },
+
+  /* ---------- v5 own ads: user side ---------- */
+  adsFeed(d) { // the live ads this user may see. Empty for Premium users, when ads are switched off, or when only Start.io is selected.
+    const u = auth(d), now = Date.now(), s = settings();
+    if (s.adsEnabled !== '1' || s.adMode === 'startio' || userSub(u.id, now).status === 'active') return { ads: [], adMode: s.adMode, serverTime: now };
+    return { ads: rows('Ads').filter(a => adState(a, now) === 'live').slice(0, 20).map(adView), adMode: s.adMode, serverTime: now };
+  },
+  adTrack(d) { // counts one view or one tap. Rate limited per user per day; unknown / paused ads are ignored.
+    const u = auth(d); if (d.ev !== 'view' && d.ev !== 'click') throw 'Invalid event';
+    hit('adt|' + u.id + '|' + day(), 400, 'Limit reached');
+    const a = rows('Ads').find(x => x.id === String(d.adId)); if (!a || adState(a, Date.now()) !== 'live') return 0;
+    if (d.ev === 'view') upd('Ads', a._row, { views: (+a.views || 0) + 1 }); else upd('Ads', a._row, { clicks: (+a.clicks || 0) + 1 });
+    return 1;
   },
 
   /* ---------- admin: step-up login ---------- */
@@ -637,6 +678,34 @@ const P = {
     changed.forEach(k => setSetting(k, out[k]));
     if (changed.length) audit('settings_changed', c.a.id, '', changed.map(k => (k === 'upiId' || k === 'merchantName' || k === 'qrImage') ? k + ': ' + cur[k] + ' -> ' + out[k] : k).join('; '));
     return { settings: settings() };
+  },
+  /* ---------- v5 own ads: administrator side ---------- */
+  adminAds(d) {
+    adminCtx(d, 'view'); const now = Date.now();
+    const L = rows('Ads').sort((a, b) => +b.created - +a.created).map(a => adAdmin(a, now));
+    return { ads: L, live: L.filter(a => a.state === 'live').length, views: L.reduce((t, a) => t + a.views, 0), clicks: L.reduce((t, a) => t + a.clicks, 0), serverTime: now };
+  },
+  adminSaveAd(d) { // create (no id) or edit (id)
+    const c = adminCtx(d, 'ads'), now = Date.now(), all = rows('Ads'), cur = d.id ? all.find(x => x.id === String(d.id)) : null;
+    if (d.id && !cur) throw 'Ad not found';
+    const o = adClean(d, cur);
+    if (!cur) {
+      if (all.length >= AD_MAX) throw 'You have ' + AD_MAX + ' ads already. Delete old ones first';
+      const a = Object.assign({ id: uid(), views: 0, clicks: 0, created: now, updated: now }, o); add('Ads', a);
+      audit('ad_created', c.a.id, a.id, { title: a.title, type: a.type, placement: a.placement }); return adAdmin(a, now);
+    }
+    o.updated = now; upd('Ads', cur._row, o);
+    audit('ad_changed', c.a.id, cur.id, Object.keys(o).filter(k => k !== 'updated' && String(o[k]) !== String(cur[k])).join(', '));
+    return adAdmin(Object.assign({}, cur, o), now);
+  },
+  adminAdStatus(d) { // pause / resume
+    const c = adminCtx(d, 'ads'), a = rows('Ads').find(x => x.id === String(d.id)); if (!a) throw 'Ad not found';
+    const st = d.status === 'paused' ? 'paused' : 'active'; upd('Ads', a._row, { status: st, updated: Date.now() });
+    audit('ad_' + (st === 'paused' ? 'paused' : 'resumed'), c.a.id, a.id, a.title); return adAdmin(Object.assign({}, a, { status: st }), Date.now());
+  },
+  adminDeleteAd(d) {
+    const c = adminCtx(d, 'ads'), a = rows('Ads').find(x => x.id === String(d.id)); if (!a) throw 'Ad not found';
+    del('Ads', a._row); audit('ad_deleted', c.a.id, a.id, { title: a.title, views: a.views, clicks: a.clicks }); return 1;
   },
   adminSavePlan(d) {
     const c = adminCtx(d, 'settings'), r = rows('Plans').find(x => x.id === String(d.id)); if (!r) throw 'Plan not found';
